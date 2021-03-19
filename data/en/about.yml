@@ -1,0 +1,17 @@
+############################# About ###################################
+about:
+  enable : true
+  title : Why Use
+  about_item :
+  - icon : ti-ruler-pencil # themify icon pack : https://themify.me/themify-icons
+    title : Creative
+    content : Cross-cluster applications managements based on K8s native API, allow user migrate apps from single cluser to multi-cluster conveniently and quickly.
+
+  - icon : ti-cup # themify icon pack : https://themify.me/themify-icons
+    title : Professional
+    content : Support provisioning or attaching Kubernetes clusters for centralized operations and management.
+
+  - icon : ti-thought # themify icon pack : https://themify.me/themify-icons
+    title : Genius
+    content : Cross-cluster applications auto-scaling, failover and load-balancing on multi-cluster.
+    

@@ -1,0 +1,10 @@
+################################# Service #################################
+service:
+  enable : true
+  title : Get Started
+  service_item :
+    # service item loop
+    - name : Read More...
+      icon : ti-pulse # themify icon pack : https://themify.me/themify-icons
+      content : <a href="https://github.com/karmada-io/karmada/blob/master/README.md"/>
+      link: https://github.com/karmada-io/karmada/blob/master/README.md
