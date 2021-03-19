@@ -1,0 +1,22 @@
+#################################### portfolio ###############################
+portfolio:
+  enable : true
+  title : Supporters
+  portfolio_item :
+    # portfolio item loop
+    # - name : redbook
+      # image : img/redbook.png
+      # image_webp : img/redbook.png
+
+    - name : ICBC
+      image : img/icbc.png
+      image_webp : img/icbc.png
+    - name : VIPKID
+      image : img/VIPKID.png
+      image_webp : img/VIPKID.png 
+    - name : fun
+      image : img/fun.png
+      image_webp : img/fun.png
+    - name : t3
+      image : img/T3-logo2.png
+      image_webp : img/T3-logo2.png
