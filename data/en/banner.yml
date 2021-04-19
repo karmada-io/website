@@ -1,12 +1,9 @@
 ############################### Banner ################################
 banner:
   enable : true
-  bg_image_webp : "img/yacht.jpg"
-  bg_image : "img/yacht.jpg"
-  icon : "" # themify icon pack : https://themify.me/themify-icons
   title : "Walk into Karmada"
   content : "Karmada (Kubernetes Armada) is a multi-cluster management system speaks Kubernetes native API"
   button:
     enable : true
-    label : "Explore Us"
-    link : "#about"
+    label : "Github"
+    link : "https://github.com/karmada-io/karmada/"

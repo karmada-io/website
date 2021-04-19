@@ -2,9 +2,5 @@
 service:
   enable : true
   title : Get Started
-  service_item :
-    # service item loop
-    - name : Read More...
-      icon : ti-pulse # themify icon pack : https://themify.me/themify-icons
-      content : <a href="https://github.com/karmada-io/karmada/blob/master/README.md"/>
-      link: https://github.com/karmada-io/karmada/blob/master/README.md
+  content : 1. Download Karmada - latest release, x86_64, ARMv7, and ARM64 are supported <br/> 2. Run server
+  cli: "sudo Karmada server & <br/># Kubeconfig is written to /etc/rancher/Karmada/Karmada.yaml <br/>sudo Karmada kubectl get node <br/># On a different node run the below. NODE_TOKEN comes from /var/lib/rancher/k3s/server/node-token <br/># on your server <br/>sudo Karmada agent --server https://myserver:6443 --token ${NODE_TOKEN}"

@@ -1,6 +1,6 @@
-<section class="sticky-top navigation">
+<section class="sticky-top navigation navbarHead">
 	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-dark">
+		<nav class="navbar  ">
 			<a class="navbar-brand p-0" href="{{ .Site.BaseURL | relLangURL }}">
 				{{ if site.Params.logo }}
 				<img class="lozad" data-src="{{ site.Params.logo | absURL }}" alt="{{ .Site.Title }}" height="42">
@@ -46,3 +46,9 @@
 		</nav>
 	</div>
 </section>
+<style>
+.navbarHead {
+	width: 1920px;
+   background: #30344e;
+}
+</style>

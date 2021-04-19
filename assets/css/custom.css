@@ -7,6 +7,20 @@
  .measure-wide {
   max-width:1200px
  }
+ .bg-one {
+    background-color: #ffff; 
+}
+@media (min-width: 1200px) and (max-width:2000px) {
+    .container {
+        max-width: 1180px;
+    }
+}
+.color {
+    color: #d8b278  !important;
+}
+.border-meghna::before {
+    background-color: #d8b278  !important;
+}
 
  /*************************************************
  *  Custom css

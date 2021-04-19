@@ -1,27 +1,27 @@
 ############################# feature ###################################
 feature:
   enable : true
-  image : img/karmada-arc-5.jpg
-  image_webp : img/karmada-arc-5.jpg
+  image : img/flow.png
+  image_webp : img/flow.png
   title : How Work
   content : 
   feature_item : 
       # feature item loop
-    - title : applications
+    - title : Karmada API server
       icon : ti-world # themify icon pack : https://themify.me/themify-icons
-      content : Cross-cluster applications managements based on K8s native API, allow user migrate apps from single cluser to multi-cluster conveniently and quickly.
+      content : ● Cross-cluster applications managements based on K8s native API, allow user migrate apps
       
       # feature item loop
-    - title : management
+    - title : Karmada Scheduler
       icon : ti-panel # themify icon pack : https://themify.me/themify-icons
-      content : Support provisioning or attaching Kubernetes clusters for centralized operations and management.
+      content : ● Different cluster resources are stored separately to isolate permissions
 
       # feature item loop
-    - title : multi-cluste
+    - title : Karmada Scheduler
       icon : ti-stats-up # themify icon pack : https://themify.me/themify-icons
-      content : Cross-cluster applications auto-scaling, failover and load-balancing on multi-cluster.
+      content : ● Different cluster resources are stored separately to isolate permissions
       
       # feature item loop
-    - title : scheduling
+    - title : Karmada API server
       icon : ti-announcement # themify icon pack : https://themify.me/themify-icons
-      content : Advanced scheduling strategy ":" region, available zone, cloud provider, cluster affinity/anti-affinity.
+      content : ● Different cluster resources are stored separately to isolate permissions

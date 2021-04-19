@@ -3,7 +3,7 @@
 {{ if $data.support.portfolio.enable }}
 {{ with $data.support.portfolio }}
 {{"<!-- Portfolio Section -->" | safeHTML}}
-<section class="portfolio section" id="portfolio">
+<section class=" section cooperate" id="portfolio">
 	<div class="container">
 		<div class="row ">
 			<div class="col-xl-12">
@@ -16,35 +16,14 @@
 				{{"<!-- /section title -->" | safeHTML}}
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="btn-group portfolio-filter btn-group-toggle justify-content-center d-flex flex-wrap"
-					data-toggle="buttons">
-					<label class="btn active">
-						<input type="radio" name="shuffle-filter" value="all" checked="checked" />{{ i18n "all"}}
-					</label>
-					{{ $categories := slice }}
-					{{ range .portfolio_item }}
-					{{ range .categories }}
-					{{ $categories = $categories | append . }}
-					{{ end }}
-					{{ end }}
-					{{ range ( $categories | uniq ) }}
-					<label class="btn">
-						<input type="radio" name="shuffle-filter" value="{{ . | urlize }}" />{{ . | humanize }}
-					</label>
-					{{ end }}
-				</div>
-			</div>
-		</div>
 
 		<div class="row shuffle-wrapper justify-content-center">
 			{{"<!-- portfolio item -->" | safeHTML}}
 			{{ range .portfolio_item }}
-			<div class="col-lg-4 col-md-6 shuffle-item"
+			<div class="col-lg-2 col-md-6 shuffle-item"
 				data-groups="[{{range $index, $element:= .categories }}{{if ne $index 0}},{{end}}&quot;{{. | urlize}}&quot;{{ end }}]">
 				<div class="portfolio-block mb-4">
-					<img class="img-fluid" src="{{ .image_webp | absURL }}" onerror="this.onerror=null;this.src='{{ .image | absURL }}'" alt="{{ .name }}">
+					<img class="img-fluid supportImg" src="{{ .image_webp | absURL }}" onerror="this.onerror=null;this.src='{{ .image | absURL }}'" alt="{{ .name }}">
 					<div class="caption">
 						<a class="search-icon image-popup" data-effect="mfp-with-zoom" href="{{ .image | relURL }}"
 							data-lightbox="image-1">
@@ -68,3 +47,16 @@
 {{"<!-- /Portfolio -->" | safeHTML}}
 {{ end }}
 {{ end }}
+<style>
+	.cooperate {
+		width: 1920px;
+		height: 282px;
+		opacity: 1;
+		background: #f1f3ff;
+		padding-top: 20px;
+	}
+	.supportImg {
+		width: 103px !important;
+		height: 58px !important;
+	}
+</style>

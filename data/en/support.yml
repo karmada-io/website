@@ -1,35 +1,19 @@
 #################################### portfolio ###############################
 portfolio:
   enable : true
-  title : Support
+  title : Supporters
   portfolio_item :
     # portfolio item loop
-    - name : huawei cloud
-      image : img/hwcloud.jpg
-      image_webp : img/hwcloud.jpg
-      categories : ["CLoud"]
-      content : 华为云.
-      link : "https://themefisher.com"
-      
-    # portfolio item loop
-    - name : Ali
-      image : img/alicloud.jpg
-      image_webp : img/alicloud.jpg
-      categories : ["CLoud"]
-      content : 阿里云.
+    - name : redbook
+      image : img/redbook.png
+      image_webp : img/redbook.png
+      content : 小红书
       link : ""
-      
-    # portfolio item loop
-    - name : Tencent CLoud
-      image : img/tencentcloud.jpg
-      image_webp : img/tencentcloud.jpg
-      categories : ["CLoud"]
-      content : 腾讯云.
-      link : "#"
 
-    - name : K8s
-      image : img/k8scloud.jpg
-      image_webp : img/k8scloud.jpg
-      categories : ["Private"]
-      content : 腾讯云.
-      link : "#"
+    - name : ICBC
+      image : img/icbc.png
+      image_webp : img/icbc.png
+      content : 中国工商银行
+      link : ""
+
+      

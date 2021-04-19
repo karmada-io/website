@@ -58,7 +58,7 @@ weight = 7
 
 ############################# Default Parameters ##########################
 [params]
-logo = "img/logo.png"
+logo = "img/karmada.png"
 # Meta data
 description = "Karmada"
 author = "Karmada"
@@ -70,7 +70,7 @@ post_share = true
 # preloader
 [params.preloader]
 enable = false
-preloader = "img/logo.png"
+preloader = "img/karmada.png"
 
 # cookies
 [params.cookies]
@@ -98,4 +98,4 @@ languageCode = "en-us"
 contentDir = "content/en"
 weight = 1
 home = "Home"
-copyright = "Copyright &copy; 2020 Designed by [Karmada](https://github.com/karmada-io/karmada)"
+copyright = "Copyright &copy; 2021 Designed by [Karmada](https://github.com/karmada-io/karmada)"

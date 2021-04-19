@@ -1,17 +1,22 @@
 ############################# About ###################################
 about:
   enable : true
-  title : Why Use
+  title : Why Karmada
   about_item :
-  - icon : ti-ruler-pencil # themify icon pack : https://themify.me/themify-icons
-    title : Creative
-    content : Cross-cluster applications managements based on K8s native API, allow user migrate apps from single cluser to multi-cluster conveniently and quickly.
+  - title : K8s Native API Compatible
+    content : Zero change upgrade  single-cluster multi-cluster,Seamless integration of existing K8s tool chain
 
-  - icon : ti-cup # themify icon pack : https://themify.me/themify-icons
-    title : Professional
-    content : Support provisioning or attaching Kubernetes clusters for centralized operations and management.
+  - title : Open and Neutral
+    content : Jointly initiated by Internet, finance, manufacturing, teleco, cloud providers, etc. Target for open governance with CNCF
 
-  - icon : ti-thought # themify icon pack : https://themify.me/themify-icons
-    title : Genius
-    content : Cross-cluster applications auto-scaling, failover and load-balancing on multi-cluster.
+  - title : Avoid Vendor Lock-in
+    content : Integration with mainstream cloud providers Automatic allocation, migration across clusters,Not tied to proprietary vendor orchestration
+
+  - title : Out of the Box
+    content : Built-in policy sets for scenarios:GDPS, Active-active, Remote Disaster Recovery
     
+  - title : Fruitful Multi-Cluster Scheduling Policies
+    content : Cluster Affinity, Multi Cluster Splitting/Rebalancing, Multi-Dimension HA  Region/AZ/Cluster/Provider
+
+  - title : Centralized Manageme
+    content : Cluster location agnostic,Support clusters in Public cloud, on-prem or edge

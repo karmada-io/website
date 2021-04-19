@@ -1,9 +1,10 @@
 ############################## Contact #############################
 contact:
-  enable : true
+  enable : false
   title : Contact Us
-  subtitle : Contact Details
-  content : 
+  subtitle :  
+  icon : img/icon_slack.png
+  content : https://karmada-io.slack.com
 
   # Contact details
   contact_list:
@@ -11,10 +12,4 @@ contact:
 
   # Contact form
   contact_form:
-    enable : true
-    form_action : "#" #contact form works with https://formspree.io
-    name : "Your Name"
-    email : "Your Email"
-    subject : "Subject"
-    message : "Message"
-    submit : "Submit"
+    enable : false
