@@ -4,16 +4,12 @@ portfolio:
   title : Supporters
   portfolio_item :
     # portfolio item loop
-    - name : redbook
-      image : img/redbook.png
-      image_webp : img/redbook.png
-      content : 小红书
-      link : ""
+    # - name : redbook
+      # image : img/redbook.png
+      # image_webp : img/redbook.png
 
     - name : ICBC
       image : img/icbc.png
       image_webp : img/icbc.png
-      content : 中国工商银行
-      link : ""
 
       
