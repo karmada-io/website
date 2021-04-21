@@ -2,7 +2,7 @@
 <html lang="{{ with site.LanguageCode }}{{ . }}{{ else }}en-us{{ end }}">
 {{ partial "head.html" . }}
 
-<body id="body" data-spy="scroll" data-target=".navbar" data-offset="55">
+<body id="body" style="display: inline-block;" data-spy="scroll" data-target=".navbar" data-offset="55">
   <div id="content">
     {{ partial "preloader.html" . }}
     {{- block "main" . }}{{- end }}

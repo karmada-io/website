@@ -87,8 +87,12 @@ map_marker = "img/marker.png"
 
 ############################# social icons ##########################
 [[params.social]]
-icon = "ti-github" # themify icon pack : https://themify.me/themify-icons
+icon = "img/icon-github.svg" # themify icon pack : https://themify.me/themify-icons
 link = "https://github.com/karmada-io/karmada"
+[[params.social]]
+icon = "img/icon_slack.png" # themify icon pack : https://themify.me/themify-icons
+link = "https://karmada-io.slack.com"
+
 
 
 ################################ English Language ########################

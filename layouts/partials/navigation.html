@@ -8,11 +8,11 @@
 				{{ site.Title }}
 				{{ end }}
 			</a>
-
-			<button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
+			<ul class="list-inline">
+				{{ range site.Params.social }}
+				<li class="list-inline-item"><a href="{{ .link | safeURL }}"><img class="lozad" data-src="{{.icon | absURL }}" height="24"></a></li>
+				{{ end }}
+			</ul>
 			<div class="collapse navbar-collapse" id="navigation">
 				<ul class="navbar-nav ml-auto">
 					{{ range site.Menus.main }}
