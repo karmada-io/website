@@ -17,12 +17,11 @@
 			</div>
 		</div>
 
-		<div class="row shuffle-wrapper justify-content-center">
+		<div class="row justify-content-center">
 			{{"<!-- portfolio item -->" | safeHTML}}
 			{{ range .portfolio_item }}
-			<div class="col-lg-2 col-md-6 shuffle-item"
-				data-groups="[{{range $index, $element:= .categories }}{{if ne $index 0}},{{end}}&quot;{{. | urlize}}&quot;{{ end }}]">
-				<div class="block mb-4">
+			<div class="col-lg-2 col-md-6 ">
+				<div class="supportLogo">
 					<img class="img-fluid supportImg" src="{{ .image_webp | absURL }}" onerror="this.onerror=null;this.src='{{ .image | absURL }}'" >
 					<!-- <div class="caption"> 
 						 <a class="search-icon image-popup" data-effect="mfp-with-zoom" href="{{ .image | relURL }}"
@@ -48,8 +47,10 @@
 {{ end }}
 {{ end }}
 <style>
+	.supportLogo {
+		text-align: center;
+	}
 	.cooperate {
-		width: 1920px;
 		height: 282px;
 		opacity: 1;
 		background: #f1f3ff;
