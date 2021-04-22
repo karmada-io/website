@@ -102,4 +102,4 @@ languageCode = "en-us"
 contentDir = "content/en"
 weight = 1
 home = "Home"
-copyright = "Copyright &copy; 2021 Designed by [Karmada](https://github.com/karmada-io/karmada)"
+copyright = "Copyright &copy; 2021 Karmada Project Authors."

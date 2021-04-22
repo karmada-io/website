@@ -8,15 +8,27 @@ portfolio:
       # image : img/redbook.png
       # image_webp : img/redbook.png
 
+    - name : HW
+      image : img/hw.png
+      image_webp : img/hw.png
     - name : ICBC
       image : img/icbc.png
       image_webp : img/icbc.png
+    - name : SPDBANK
+      image : img/spdb.png
+      image_webp : img/spdb.png
+    - name : redbook
+      image : img/redbook.png
+      image_webp : img/redbook.png
     - name : VIPKID
       image : img/VIPKID.png
       image_webp : img/VIPKID.png 
     - name : fun
       image : img/fun.png
       image_webp : img/fun.png
+    - name : yq
+      image : img/yq.png
+      image_webp : img/yq.png
     - name : t3
       image : img/T3-logo2.png
       image_webp : img/T3-logo2.png

@@ -5,5 +5,5 @@ banner:
   content : "Karmada (Kubernetes Armada) is a multi-cluster management system speaks Kubernetes native API"
   button:
     enable : true
-    label : "Github"
+    label : "GitHub"
     link : "https://github.com/karmada-io/karmada/"
