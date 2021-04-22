@@ -1,0 +1,15 @@
+############################## Contact #############################
+contact:
+  enable : false
+  title : Contact Us
+  subtitle :  
+  icon : img/icon_slack.png
+  content : https://karmada-io.slack.com
+
+  # Contact details
+  contact_list:
+
+
+  # Contact form
+  contact_form:
+    enable : false

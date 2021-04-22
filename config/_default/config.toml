@@ -1,0 +1,105 @@
+
+# Title of your site
+title = "Karmada"
+
+################################# Default configuration ###################
+baseURL = "/"
+theme = "meghna-hugo"
+# post pagination
+paginate = "6"
+# post excerpt
+summaryLength = "15"
+# disqus short name
+disqusShortname = "" # get your shortname form here : https://disqus.com
+# disable language
+disableLanguages = []
+
+############################# Plugins ##########################
+# css plugins
+[[params.plugins.css]]
+link = "plugins/bootstrap/bootstrap.min.css"
+[[params.plugins.css]]
+link = "plugins/themify-icons/themify-icons.css"
+[[params.plugins.css]]
+link = "plugins/magnific-popup/magnific-popup.css"
+[[params.plugins.css]]
+link = "plugins/slick/slick.css"
+[[params.plugins.css]]
+link = "https://fonts.googleapis.com/css?family=Anaheim|Quattrocento+Sans:400,700&display=swap"
+
+# js plugins
+[[params.plugins.js]]
+link = "plugins/jquery/jquery.min.js"
+[[params.plugins.js]]
+link = "plugins/bootstrap/bootstrap.min.js"
+[[params.plugins.js]]
+link = "plugins/slick/slick.min.js"
+[[params.plugins.js]]
+link = "plugins/shuffle/shuffle.min.js"
+[[params.plugins.js]]
+link = "plugins/magnific-popup/jquery.magnific-popup.min.js"
+[[params.plugins.js]]
+link = "plugins/lazy-load/lozad.min.js"
+[[params.plugins.js]]
+link = "plugins/google-map/map.js"
+
+################### English Navigation ########################
+[[Languages.en.menu.main]]
+name = "about"
+pre = "#"
+url = "about"
+weight = 1
+
+[[Languages.en.menu.main]]
+name = "contact"
+pre = "#"
+url = "contact"
+weight = 7
+
+############################# Default Parameters ##########################
+[params]
+logo = "img/karmada.png"
+# Meta data
+description = "Karmada"
+author = "Karmada"
+# Google Analytics
+google_analytics_id = "" # Your ID
+# post share
+post_share = true
+
+# preloader
+[params.preloader]
+enable = false
+preloader = "img/karmada.png"
+
+# cookies
+[params.cookies]
+enable = false
+expire_days = 2
+
+# google map
+[params.map]
+enable = false
+gmap_api = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"
+map_latitude = "51.5223477"
+map_longitude = "-0.1622023"
+map_marker = "img/marker.png"
+
+############################# social icons ##########################
+[[params.social]]
+icon = "img/icon-github.svg" # themify icon pack : https://themify.me/themify-icons
+link = "https://github.com/karmada-io/karmada"
+[[params.social]]
+icon = "img/icon_slack.png" # themify icon pack : https://themify.me/themify-icons
+link = "https://join.slack.com/t/karmada-io/shared_invite/zt-omhy1wfa-LmAkCLfpDMnBjVXp3_U~0w"
+
+
+
+################################ English Language ########################
+[Languages.en]
+languageName = "En"
+languageCode = "en-us"
+contentDir = "content/en"
+weight = 1
+home = "Home"
+copyright = "Copyright &copy; 2021 Karmada Project Authors."

@@ -1,0 +1,22 @@
+############################# feature ###################################
+feature:
+  enable : true
+  image : img/flow.png
+  image_webp : img/flow.png
+  title : How it Works
+  content : 
+  feature_item : 
+      # feature item loop
+    - title : Karmada API server
+      icon : ti-world # themify icon pack : https://themify.me/themify-icons
+      content : ● Provide REST endpoint for resource template and policies based on Kubernetes native API.
+      
+      # feature item loop
+    - title : Karmada Controller
+      icon : ti-panel # themify icon pack : https://themify.me/themify-icons
+      content : ● Implements policy APIs, watches resources in the Karmada API server then talks to underlying clusters to create regular Kubernetes resources.
+
+      # feature item loop
+    - title : Karmada Scheduler
+      icon : ti-stats-up # themify icon pack : https://themify.me/themify-icons
+      content : ● Schedule resource template across clusters according to constraints and available resources.
