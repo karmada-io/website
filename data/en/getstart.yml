@@ -1,6 +1,6 @@
 ################################# Service #################################
 service:
-  enable : true
+  enable : false
   title : Get Started
   content : 
   cli: 
