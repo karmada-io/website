@@ -63,7 +63,7 @@ logo = "img/karmada.png"
 description = "Karmada"
 author = "Karmada"
 # Google Analytics
-google_analytics_id = "" # Your ID
+google_analytics_id = "G-M2BZ0XV9B4" # Your ID
 # post share
 post_share = true
 
