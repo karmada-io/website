@@ -4,19 +4,19 @@ about:
   title : Why Karmada
   about_item :
   - title : K8s Native API Compatible
-    content : "Zero change upgrade  single-cluster multi-cluster,Seamless integration of existing K8s tool chain"
+    content : "Zero change upgrade: from single-cluster to multi-cluster; Seamless integration of existing K8s tool chain"
 
   - title : Open and Neutral
     content : "Jointly initiated by Internet, finance, manufacturing, teleco, cloud providers, etc. Target for open governance with CNCF"
 
   - title : Avoid Vendor Lock-in
-    content : "Integration with mainstream cloud providers Automatic allocation, migration across clusters,Not tied to proprietary vendor orchestration"
+    content : "Integration with mainstream cloud providers; Automatic allocation, migration across clusters; Not tied to proprietary vendor orchestration"
 
   - title : Out of the Box
-    content : "Built-in policy sets for scenarios:GDPS, Active-active, Remote Disaster Recovery"
+    content : "Built-in policy sets for scenarios: Active-active, Remote DR, Geo Redundant"
     
   - title : Fruitful Scheduling Policies
-    content : "Cluster Affinity, Multi Cluster Splitting/Rebalancing, Multi-Dimension HA: Region/AZ/Cluster/Provider"
+    content : "Cluster Affinity; Multi Cluster Splitting/Rebalancing; Multi-Dimension HA: Region/AZ/Cluster/Provider"
 
   - title : Centralized Management
-    content : "Cluster location agnostic,Support clusters in Public cloud, on-prem or edge"
+    content : "Cluster location agnostic; Support clusters in public cloud, on-prem or edge"
