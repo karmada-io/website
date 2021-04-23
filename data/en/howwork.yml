@@ -1,8 +1,8 @@
 ############################# feature ###################################
 feature:
   enable : true
-  image : img/flow.png
-  image_webp : img/flow.png
+  image : img/flow.svg
+  image_webp : img/flow.svg
   title : How it Works
   content : 
   feature_item : 

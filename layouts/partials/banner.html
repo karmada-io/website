@@ -19,7 +19,7 @@
 		<p class="contentClass">{{ .content | markdownify }}</p>
 		{{ if .button.enable }}
 		{{ with .button }}
-		<a href="{{ .link }}" class="btn  githubClass">{{ .label }}</a>
+		<a href="{{ .link }}" class="githubClass">{{ .label }}</a>
 		{{ end }}
 		{{ end }}
 	</div>
@@ -108,5 +108,6 @@ karmada kubectl get node</p>
 		border-radius: 2px;
 		margin-top: 50px;
 		float: left;
+		padding-top: 8px;
 	}
 </style>
