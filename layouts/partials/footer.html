@@ -1,3 +1,7 @@
+{{ $data := index site.Data site.Language.Lang }}
+
+{{ if $data.footer.footer.enable }}
+{{ with $data.footer.footer }}
 {{"<!-- end Contact Area -->" | safeHTML}}
 <footer id="footer" class="section-bg">
 	<div class="container">
@@ -15,17 +19,47 @@
 
 				{{"<!-- copyright -->" | safeHTML}}
 				<div class="copyright text-center">
-					<a href="{{ site.Home.Permalink }}">
-						<img src="{{ site.Params.logo | absURL }}" alt="{{ site.Title }}" height="42" />
-					</a>
-					<br>
-					<p>{{ site.Params.copyright | markdownify }}</p>
+					<p style="margin-top: 40px;margin-bottom: 52px;font-size: 18px;line-height: 24px;">
+						{{ range .title_item }}
+						{{ if .href }}
+						<a href='{{ .href | safeURL }}' style="color: {{ .color }}">
+							{{ .content | markdownify }}
+						</a>
+						{{ else }}
+						<span style="color: {{ .color }}">
+							{{ .content | markdownify }}
+						</span>
+	        	{{ end }}
+						{{ end }}
+					</p>
+					<img src="{{ .image_webp | absURL }}" onerror="this.onerror=null;this.parentElement.style.backgroundImage= 'url({{ .image | absURL }})'" />
+					<div>
+						{{ range .description_item }}
+						{{ if .href }}
+						<a href='{{ .href | safeURL }}' style="color: {{ .color }}">
+							{{ .content | markdownify }}
+						</a>
+						{{ else }}
+						<span style="color: {{ .color }}">
+							{{ .content | markdownify }}
+						</span>
+	        	{{ end }}
+						{{ end }}
+					</div>
+					<div>{{ site.Params.copyright | markdownify }}</div>
+					<div class="icon_up">
+						<a href="#">
+							<img src="/img/icon_up.png" width="auto;" height="auto;" style="margin:0px auto;">
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </footer>
 {{"<!-- /footer -->" | safeHTML}}
+{{end}}
+{{end}}
 
 {{ "<!-- Google Map API -->" | safeHTML }}
 {{ if site.Params.map.enable }}

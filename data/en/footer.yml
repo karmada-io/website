@@ -1,0 +1,23 @@
+#################################### footer ###############################
+footer:
+  enable : true
+  title : Karmada is a Cloud Native Computing Foundation sandbox project.
+  image : img/cloud-native.png
+  image_webp : img/cloud-native.png
+  description: The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page.
+  title_item :
+    - content : Karmada is a 
+      color : '#fff'
+    - content : Cloud Native Computing Foundation 
+      color : '#d8b278'
+      href : https://cncf.io/
+    - content : sandbox project.
+      color : '#fff'
+  description_item :
+    - content : The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our 
+      color : '#fff'
+    - content : Trademark Usage 
+      color : '#d8b278'
+      href : https://www.linuxfoundation.org/trademark-usage
+    - content : page.
+      color : '#fff'
