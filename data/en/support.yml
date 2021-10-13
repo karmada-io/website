@@ -32,3 +32,6 @@ portfolio:
     - name : T3
       image : img/T3-logo2.png
       image_webp : img/T3-logo2.png
+    - name : CM
+      image: img/chinamobile.png
+      image_webp : img/chinamobile.png
