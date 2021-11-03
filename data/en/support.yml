@@ -35,3 +35,6 @@ portfolio:
     - name : CM
       image: img/chinamobile.png
       image_webp : img/chinamobile.png
+    - name : AIML
+      image: img/aiml.png
+      image_webp : img/aiml.png
