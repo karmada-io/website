@@ -102,4 +102,4 @@ languageCode = "en-us"
 contentDir = "content/en"
 weight = 1
 home = "Home"
-copyright = "Copyright &copy; 2021 Karmada Project Authors."
+copyright = "Copyright &copy; 2022 Karmada Project Authors."
