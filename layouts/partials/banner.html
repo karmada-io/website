@@ -19,11 +19,11 @@
 		<p class="contentClass">{{ .content | markdownify }}</p>
 		{{ if .button.enable }}
 		{{ with .button }}
-		<a href="{{ .link }}" class="githubClass">{{ .label }}</a>
+		<a href="{{ .link }}" class="buttonClass">{{ .label }}</a>
 		{{ end }}
 		{{ end }}
 	</div>
-	<div class="block" style="visibility:hidden;">
+	<div class="block" style="visibility:hidden">
 		<h5 class="describeClass">This won't take long…</h5>
 		<div class="codeblock exp-left">
 		<p class="bannerText">curl -sfL https://get.karmada.io | sh - 
@@ -100,7 +100,7 @@ karmada kubectl get node</p>
 		line-height: 18px;
 		margin: 0 !important;
 	}
-	.githubClass {
+	.buttonClass {
 		width: 116px;
 		height: 40px;
 		opacity: 1;

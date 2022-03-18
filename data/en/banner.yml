@@ -5,5 +5,5 @@ banner:
   content : "Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration"
   button:
     enable : true
-    label : "GitHub"
-    link : "https://github.com/karmada-io/karmada/"
+    label : "Learn More"
+    link : "https://github.com/karmada-io/karmada/tree/master/docs"
