@@ -17,6 +17,7 @@ body {
   font-family: "Anaheim", sans-serif;
   color: #737f8a;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1,
@@ -443,6 +444,16 @@ a:hover {
   align-items: center;
 }
 
+.hero-area .hero-area-content {
+  margin-left: 40px;
+}
+
+@media (max-width: 992px) {
+  .hero-area .hero-area-content {
+    margin-top: 150px;
+  }
+}
+
 .hero-area:before {
   content: '';
   background: rgba(0, 0, 0, 0.63);
@@ -490,8 +501,7 @@ a:hover {
 .hero-area .block p {
   color: #fff;
   font-size: 20px;
-  width: 70%;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .hero-area .block .btn-transparent {
