@@ -5,33 +5,42 @@
 {{"<!-- Welcome Slider-->" | safeHTML}}
 <section class="hero-area" style='background-image: url("{{ .bg_image_webp | absURL }}")'>
 	<!-- this image is for trigger this section fallback background image -->
-	<img class="d-none" src="{{ .bg_image_webp | absURL }}" onerror="this.onerror=null;this.parentElement.style.backgroundImage= 'url({{ .bg_image | absURL }})'"/>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="hero-area-content">
+					<img class="d-none" src="{{ .bg_image_webp | absURL }}" onerror="this.onerror=null;this.parentElement.style.backgroundImage= 'url({{ .bg_image | absURL }})'"/>
 
-	<div class="block" style="
-    margin-right: 100px;
-">
-		{{ if .icon }}
-		<div class="video-button">
-			<i class="{{ .icon }}"></i>
+					<div class="block">
+						{{ if .icon }}
+						<div class="video-button">
+							<i class="{{ .icon }}"></i>
+						</div>
+						{{ end }}
+						<h1 class="titleClass">{{ .title | markdownify }}</h1>
+						<p class="contentClass">{{ .content | markdownify }}</p>
+						{{ if .button.enable }}
+						{{ with .button }}
+						<a href="{{ .link }}" class="githubClass">{{ .label }}</a>
+						{{ end }}
+						{{ end }}
+					</div>
+				</div>
+
+			</div>
+			<div class="col-lg-4">
+				<div class="block" style="visibility:hidden;">
+					<h5 class="describeClass">This won't take long…</h5>
+					<div class="codeblock exp-left">
+						<p class="bannerText">curl -sfL https://get.karmada.io | sh -
+							<br/># Check for Ready node,
+							takes maybe 30 seconds<br/>
+							karmada kubectl get node</p>
+					</div>
+					<p class="describeClass">For detailed installation, <a href="https://github.com/karmada-io/karmada/tree/master/docs" style="text-decoration: underline;">refer to the docs</a></p>
+				</div>
+			</div>
 		</div>
-		{{ end }}
-		<h1 class="titleClass">{{ .title | markdownify }}</h1>
-		<p class="contentClass">{{ .content | markdownify }}</p>
-		{{ if .button.enable }}
-		{{ with .button }}
-		<a href="{{ .link }}" class="buttonClass">{{ .label }}</a>
-		{{ end }}
-		{{ end }}
-	</div>
-	<div class="block" style="visibility:hidden">
-		<h5 class="describeClass">This won't take long…</h5>
-		<div class="codeblock exp-left">
-		<p class="bannerText">curl -sfL https://get.karmada.io | sh - 
-<br/># Check for Ready node, 
-takes maybe 30 seconds<br/>
-karmada kubectl get node</p>
-      </div>
-	<p class="describeClass">For detailed installation, <a href="https://github.com/karmada-io/karmada/tree/master/docs" style="text-decoration: underline;">refer to the docs</a></p>
 	</div>
 </section>
 {{"<!-- /Welcome Slider-->" | safeHTML}}
@@ -66,7 +75,6 @@ karmada kubectl get node</p>
 		text-align:left;
     }
 	.contentClass {
-		width: 669px !important;
 		height: 23px;
 		opacity: 1;
 		font-size: 14px !important;
@@ -78,7 +86,7 @@ karmada kubectl get node</p>
 	}
 	.codeblock {
 		height: 128px;
-		width: 400px;
+		width: 100%;
 		opacity: 1;
 		background: #22232f;
 		border-style: solid;
@@ -90,7 +98,7 @@ karmada kubectl get node</p>
 
 	.describeClass {
 		height: 18px;
-		width: 280px !important;
+		width: 100% !important;
 		opacity: 1;
 		font-size: 12px !important;
 		font-family: PingFangSC, PingFangSC-Medium;
@@ -100,7 +108,7 @@ karmada kubectl get node</p>
 		line-height: 18px;
 		margin: 0 !important;
 	}
-	.buttonClass {
+	.githubClass {
 		width: 116px;
 		height: 40px;
 		opacity: 1;
