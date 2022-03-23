@@ -38,3 +38,6 @@ portfolio:
     - name : AIML
       image: img/aiml.png
       image_webp : img/aiml.png
+    - name : Hualala
+      image: img/hualala.png
+      image_webp : img/hualala.png
