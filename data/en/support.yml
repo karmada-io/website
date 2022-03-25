@@ -41,3 +41,6 @@ portfolio:
     - name : Hualala
       image: img/hualala.png
       image_webp : img/hualala.png
+    - name : Youzan
+      image: img/youzan.png
+      image_webp : img/youzan.png
