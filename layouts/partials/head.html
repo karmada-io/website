@@ -23,8 +23,16 @@
   <link rel="stylesheet" href="{{ $custom.Permalink }}" media="screen">
 
 	{{ "<!--Favicon-->" | safeHTML }}
-	<link rel="shortcut icon" href="{{ `images/favicon.png` | absURL }}" type="image/x-icon">
-	<link rel="icon" href="{{ `images/favicon.png` | absURL }}" type="image/x-icon">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ `/favicons/apple-touch-icon.png` | absURL }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ `/favicons/favicon-32x32.png` | absURL }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ `/favicons/favicon-16x16.png` | absURL }}">
+	<link rel="manifest" href="{{ `/favicons/site.webmanifest` | absURL }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ `/favicons/favicon.ico` | absURL }}"/>
+	<link rel="mask-icon" href="{{ `/favicons/safari-pinned-tab.svg` | absURL }}" color="#30344e">
+	<meta name="msapplication-config" content="{{ `/favicons/browserconfig.xml` | absURL }}" />
+	<meta name="msapplication-TileColor" content="#30344e">
+	<meta name="theme-color" content="#30344e">
+
 
 	{{ with site.Params.google_analytics_id }}
 	{{ "<!-- Global Site Tag (gtag.js) - Google Analytics -->" | safeHTML }}
