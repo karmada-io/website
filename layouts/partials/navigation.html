@@ -10,7 +10,7 @@
 			</a>
 			<ul class="list-inline">
 				{{ range site.Params.social }}
-				<li class="list-inline-item"><a href="{{ .link | safeURL }}"><img class="lozad" data-src="{{.icon | absURL }}" height="24"></a></li>
+				<li class="list-inline-item"><a href="{{ .link | safeURL }}" aria-label="icon"><img class="lozad" data-src="{{.icon | absURL }}" height="24"></a></li>
 				{{ end }}
 			</ul>
 			<div class="collapse navbar-collapse" id="navigation">
