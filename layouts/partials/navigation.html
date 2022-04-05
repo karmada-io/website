@@ -1,6 +1,17 @@
 <section class="sticky-top navigation navbarHead">
 	<div class="container">
 		<nav class="navbar  ">
+			<!-- header section starts  -->
+				<header>
+					<a href="#" class="logo">BEFIT</a>
+					<div id="menu" class="fas fa-bars"></div>
+    					<ul>
+        					<li><a class="active" href="#about"><h1>About</h1></a></li>
+       						 <li><a href="#works"><h1>Works</h1></a></li>
+     						   <li><a href="#service"><h1>service</h1></a></li>
+      						  <li><a href="#architecture"><h1>Architecture</h1></a></li>
+       						 <li><a href="#supporters"><h1>Supporters</h1></a></li
+    					</ul>
 			<a class="navbar-brand p-0" href="{{ .Site.BaseURL | relLangURL }}">
 				{{ if site.Params.logo }}
 				<img class="lozad" data-src="{{ site.Params.logo | absURL }}" alt="{{ .Site.Title }}" height="42">
@@ -32,6 +43,7 @@
       						  <li><a href="#architecture"><h1>Architecture</h1></a></li>
        						 <li><a href="#supporters"><h1>Supporters</h1></a></li
     					</ul>
+				</header>			 
 				  <!-- Language List -->
 				  {{- if site.IsMultiLingual }}
 				  <select id="select-language" onchange="location = this.value;">
