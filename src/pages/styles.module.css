@@ -23,6 +23,20 @@
   transform: translateX(-50%);
 }
 
+.heroHowItWorks {
+  position: relative;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1024px;
+  height: 512px;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  border-radius: 48px;
+  transform: translateX(-50%);
+}
+
 @media screen and (max-width: 768px) {
   .heroLogoWrapper {
     width: 192px;

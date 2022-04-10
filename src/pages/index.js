@@ -82,6 +82,12 @@ export default function Home() {
       </main>
       <div className={clsx('hero', styles.hero)}>
         <div className="container text--center">
+        <h3 className="hero__subtitle">
+            <Translate>How It Works</Translate>
+          </h3>
+        <div className={styles.heroHowItWorks}>
+        <img className={styles.heroLogo} src={useBaseUrl('img/how-it-works.png')} alt="Karmada Control Plane" />
+        </div>
           <h3 className="hero__subtitle">
             <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>sandbox project</Translate>
           </h3>
