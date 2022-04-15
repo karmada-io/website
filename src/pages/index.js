@@ -67,7 +67,7 @@ export default function Home() {
         </div>
       </header>
 
-      <WhatIs />
+      <WhatIs />   
 
       <main className={clsx('hero', styles.hero)}>
         <div className="container">
@@ -87,6 +87,12 @@ export default function Home() {
           </h3>
         <div className={styles.heroHowItWorks}>
         <img className={styles.heroLogo} src={useBaseUrl('img/how-it-works.png')} alt="Karmada Control Plane" />
+        </div>
+        <h3 className="hero__subtitle">
+            <Translate>Supporters</Translate>
+          </h3>
+        <div className={styles.heroSupporter}>
+        <img className={styles.heroLogo} src={useBaseUrl('img/supporters.png')} alt="Karmada Supporters" />
         </div>
           <h3 className="hero__subtitle">
             <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>sandbox project</Translate>
