@@ -69,6 +69,11 @@ export default function Home() {
 
       <WhatIs />   
 
+      <div className="container text--center">
+        <h3 className="hero__subtitle">
+            <Translate>Why Karmada</Translate>
+          </h3>
+      </div>    
       <main className={clsx('hero', styles.hero)}>
         <div className="container">
           <section className={styles.features}>
