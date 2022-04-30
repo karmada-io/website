@@ -4,7 +4,7 @@ import Translate, { translate } from '@docusaurus/Translate';
 const features = [
   {
     title: <><Translate>Kubernetes Native API Compatible</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>
@@ -17,7 +17,7 @@ const features = [
   },
   {
     title: <><Translate>Open and Neutral</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>
@@ -31,7 +31,7 @@ const features = [
   },
   {
     title: <><Translate>Avoid Vendor Lock-in</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>
@@ -44,7 +44,7 @@ const features = [
   },
   {
     title: <><Translate>Out of the Box</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>
@@ -58,7 +58,7 @@ const features = [
   },
   {
     title: <><Translate>Fruitful Scheduling Policies</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>
@@ -71,7 +71,7 @@ const features = [
   },
   {
     title: <><Translate>Centralized Management</Translate></>,
-    imgUrl: 'img/logo.svg',
+    // imgUrl: 'img/logo.svg',
     description: (
       <>
         <p>

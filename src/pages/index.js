@@ -8,22 +8,19 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import GitHubButton from 'react-github-btn';
 import styles from './styles.module.css';
+import { Grid } from '@mui/material';
 
-function Feature({ imgUrl, title, description, reverse }) {
+function Feature({ imgUrl, title, description}) {
   return (
-    <div className={clsx('row', styles.feature, reverse ? styles.featureReverse : '')}>
       <div className="col col--3">
         <div className="text--center">
           {imgUrl && <img className={styles.featureImage} src={useBaseUrl(imgUrl)} alt={title} />}
         </div>
-      </div>
-      <div className={clsx('col col--9', styles.featureDesc)}>
-        <div>
+      <div className="container">
           <h2>{title}</h2>
           <div>{description}</div>
-        </div>
       </div>
-    </div>
+      </div>
   )
 }
 
@@ -78,9 +75,14 @@ export default function Home() {
         <div className="container">
           <section className={styles.features}>
             <div className="container">
+              <Grid container>
               {features.map((f, idx) => (
-                <Feature key={idx} {...f} />
+                <Grid item key={idx} xs={12} md={6} lg={4}>
+                  <Feature title={f.title} description={f.description} />
+                </Grid>
               ))}
+              </Grid>
+              
             </div>
           </section>
         </div>
