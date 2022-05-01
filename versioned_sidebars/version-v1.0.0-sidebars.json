@@ -1,0 +1,107 @@
+{
+  "version-v1.0.0/docs": [
+    {
+      "collapsed": false,
+      "type": "category",
+      "label": "Getting Started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/getting-started/introduction"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/getting-started/core-concept"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/getting-started/architecture"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Installation",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/installation/installation"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/installation/install-kubectl-karmada"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/installation/fromsource"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "User Guide",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/cluster-registration"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/aggregated-api-endpoint"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/configure-controllers"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/customizing-resource-interpreter"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/failover"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/promote-legacy-workload"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/resource-propagating"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Developer Guide",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/developers/guide/github-workflow"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/developers/guide/cherry-picks"
+        }
+      ]
+    },
+    {
+      "collapsed": true,
+      "type": "category",
+      "label": "Roadmap",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/roadmap"
+        }
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-v1.0.0/developers/devel/faq"
+    }
+  ]
+}

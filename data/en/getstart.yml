@@ -1,6 +1,0 @@
-################################# Service #################################
-service:
-  enable : false
-  title : Get Started
-  content : 
-  cli: 
