@@ -37,21 +37,6 @@
   transform: translateX(-50%);
 }
 
-.heroSupporter {
-  width: 1800px;
-  height: 512px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 0rem;
-  margin-bottom: 1.5rem;
-  background: #fff;
-  border-radius: 48px;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-
 @media screen and (max-width: 768px) {
   .heroLogoWrapper {
     width: 192px;

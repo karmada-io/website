@@ -9,6 +9,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import GitHubButton from 'react-github-btn';
 import styles from './styles.module.css';
 import { Grid } from '@mui/material';
+import SupportersBlock from "../data/supporters";
 
 function Feature({ imgUrl, title, description}) {
   return (
@@ -98,9 +99,9 @@ export default function Home() {
         <h3 className="hero__subtitle">
             <Translate>Supporters</Translate>
           </h3>
-        <div className={styles.heroSupporter}>
-        <img className={styles.heroLogo} src={useBaseUrl('img/supporters.png')} alt="Karmada Supporters" />
-        </div>
+
+        <SupportersBlock />
+
           <h3 className="hero__subtitle">
             <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>sandbox project</Translate>
           </h3>
