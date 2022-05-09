@@ -116,8 +116,8 @@ const WhatIs = () => (
   <div className={clsx('hero', styles.hero)}>
     <div className="container">
       <div className="row">
-        <div className="col col--6">
-          <h1><Translate>What is Karmada?</Translate></h1>
+        <div className="col">
+          <h1 className="text-center"><Translate>What is Karmada?</Translate></h1>
           <p className="hero__subtitle">
             <small>
               <Translate>
