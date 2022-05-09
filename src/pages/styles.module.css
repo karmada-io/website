@@ -11,16 +11,10 @@
 
 .heroLogoWrapper {
   position: relative;
-  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 256px;
-  height: 256px;
   margin-bottom: 1.5rem;
-  background: #fff;
-  border-radius: 48px;
-  transform: translateX(-50%);
 }
 
 .heroHowItWorks {
@@ -45,12 +39,8 @@
 }
 
 .heroLogo {
-  width: 80%;
-  height: 80%;
-}
-
-.heroTitle {
-  padding-left: 1.5rem;
+  width: 100%;
+  max-width: 256px;
 }
 
 .installTextWrapper {
