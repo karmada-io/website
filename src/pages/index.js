@@ -94,7 +94,7 @@ export default function Home() {
             <Translate>How It Works</Translate>
           </h3>
         <div className={styles.heroHowItWorks}>
-        <img src={useBaseUrl('img/how-it-works.png')} alt="Karmada Control Plane" />
+        <img className={styles.heroHowItWorksImg} src={useBaseUrl('img/how-it-works.png')} alt="Karmada Control Plane" />
         </div>
         <h3 className="hero__subtitle">
             <Translate>Supporters</Translate>
