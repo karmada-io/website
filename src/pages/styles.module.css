@@ -23,12 +23,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1024px;
-  height: 512px;
   margin-bottom: 1.5rem;
   background: #fff;
   border-radius: 48px;
   transform: translateX(-50%);
+}
+
+.heroHowItWorksImg {
+  margin: 40px 0 35px;
 }
 
 @media screen and (max-width: 768px) {
