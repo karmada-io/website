@@ -1,5 +1,3 @@
-import React from "react";
-
 import aiml from "../../static/img/supporters/aiml.png"
 import chinamobile from "../../static/img/supporters/chinamobile.png"
 import faw from "../../static/img/supporters/faw.png"
@@ -13,7 +11,7 @@ import xiaohongshu from "../../static/img/supporters/xiaohongshu.png"
 import hualala from "../../static/img/supporters/hualala.png"
 import youzan from "../../static/img/supporters/youzan.png"
 
-const supporters = [
+const supportersData = [
     {
         logo: huawei,
         alt: 'huawei',
@@ -64,18 +62,4 @@ const supporters = [
     },
 ]
 
-const SupportersBlock = () => {
-    return (
-        <ul className="support-wrapper">
-            {
-                supporters.map(({logo, alt}, index) => (
-                    <li key={index}>
-                        <img src={logo} alt={alt}/>
-                    </li>
-                ))
-            }
-        </ul>
-    )
-}
-
-export default SupportersBlock
+export default supportersData
