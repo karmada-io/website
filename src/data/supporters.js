@@ -10,6 +10,7 @@ import VIPKID from "../../static/img/supporters/VIPKID.png"
 import xiaohongshu from "../../static/img/supporters/xiaohongshu.png"
 import hualala from "../../static/img/supporters/hualala.png"
 import youzan from "../../static/img/supporters/youzan.png"
+import jointcloud from "../../static/img/supporters/jointcloud.png"
 
 const supportersData = [
     {
@@ -59,6 +60,10 @@ const supportersData = [
     {
         logo: youzan,
         alt: 'youzan',
+    },
+    {
+        logo: jointcloud,
+        alt: 'jointcloud',
     },
 ]
 
