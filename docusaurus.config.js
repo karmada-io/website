@@ -112,6 +112,7 @@ module.exports = {
       theme: require("prism-react-renderer/themes/dracula"),
     },
   },
+  plugins: ['./src/plugins/rfg'],
   presets: [
     [
       "@docusaurus/preset-classic",
