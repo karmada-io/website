@@ -1,4 +1,4 @@
-module.exports = function rfg() {
+module.exports = function faviconCustomPlugin() {
     return {
         injectHtmlTags() {
             return {
@@ -27,6 +27,14 @@ module.exports = function rfg() {
                             type: "image/png",
                             sizes: "16x16",
                             href: "/favicons/favicon-16x16.png",
+                        },
+                    },
+                    {
+                        tagName: "link",
+                        attributes: {
+                            rel: "shortcut icon",
+                            type: "image/x-icon",
+                            href: "/favicons/favicon.ico",
                         },
                     },
                     {
