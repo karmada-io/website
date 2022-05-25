@@ -5,8 +5,7 @@ module.exports = {
   url: "https://karmada.io",
   baseUrl: "/",
   onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn", 
-  favicon: "img/favicon.ico",
+  onBrokenMarkdownLinks: "warn",
   organizationName: "karmada-io",
   projectName: "website",
   i18n: {
@@ -112,6 +111,7 @@ module.exports = {
       theme: require("prism-react-renderer/themes/dracula"),
     },
   },
+  plugins: ['./src/plugins/faviconCustomPlugin'],
   presets: [
     [
       "@docusaurus/preset-classic",
