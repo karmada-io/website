@@ -34,6 +34,7 @@ module.exports = {
         "userguide/failover",
         "userguide/promote-legacy-workload",
         "userguide/resource-propagating",
+        "userguide/override-policy",
       ],
     },
     {
