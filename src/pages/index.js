@@ -67,15 +67,14 @@ export default function Home() {
 
       <WhatIs />   
 
-      <div className="container text--center">
-        <h3 className="hero__subtitle">
-            <Translate>Why Karmada</Translate>
-          </h3>
-      </div>    
       <main className={clsx('hero', styles.hero)}>
         <div className="container">
-          <section className={styles.features}>
-            <div className="container">
+            <h3 className="hero__subtitle text-center">
+                <Translate>Why Karmada</Translate>
+            </h3>
+
+            <section className={styles.features}>
+            <div className="container features-container">
               <Grid container>
               {features.map((f, idx) => (
                 <Grid item key={idx} xs={12} md={6} lg={4}>
