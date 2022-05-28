@@ -70,6 +70,10 @@
         {
           "type": "doc",
           "id": "version-v1.0.0/userguide/resource-propagating"
+        },
+        {
+          "type": "doc",
+          "id": "version-v1.0.0/userguide/override-policy"
         }
       ]
     },
