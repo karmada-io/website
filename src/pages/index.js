@@ -48,7 +48,7 @@ export default function Home() {
           <div className={styles.heroLogoWrapper}>
             <img className={styles.heroLogo} src={useBaseUrl('img/karmada-icon-color.png')} alt="Karmada Logo" />
           </div>
-          <h2 className={clsx('hero__title', styles.heroTitle)}>{siteConfig.title}</h2>
+          <h1 className={clsx('hero__title', styles.heroTitle)}>{siteConfig.title}</h1>
           <GitHubButton
             href="https://github.com/karmada-io/karmada"
             data-icon="octicon-star"
@@ -69,9 +69,9 @@ export default function Home() {
 
       <main className={clsx('hero', styles.hero)}>
         <div className="container">
-            <h3 className="hero__subtitle text-center">
+            <h2 className="title text-center">
                 <Translate>Why Karmada</Translate>
-            </h3>
+            </h2>
 
             <section className={styles.features}>
             <div className="container features-container">
@@ -89,21 +89,21 @@ export default function Home() {
       </main>
       <div className={clsx('hero', styles.hero)}>
         <div className="container text--center">
-        <h3 className="hero__subtitle">
+        <h2 className="title">
             <Translate>How It Works</Translate>
-          </h3>
+          </h2>
         <div className={styles.heroHowItWorks}>
         <img className={styles.heroHowItWorksImg} src={useBaseUrl('img/how-it-works.png')} alt="Karmada Control Plane" />
         </div>
-        <h3 className="hero__subtitle">
+        <h2 className="title">
             <Translate>Supporters</Translate>
-          </h3>
+          </h2>
 
         <SupportersList />
 
-          <h3 className="hero__subtitle">
+          <h2 className="hero__subtitle">
             <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>sandbox project</Translate>
-          </h3>
+          </h2>
           <div className={clsx('cncf-logo', styles.cncfLogo)} />
         </div>
       </div>
@@ -116,7 +116,7 @@ const WhatIs = () => (
     <div className="container">
       <div className="row">
         <div className="col">
-          <h1 className="text-center"><Translate>What is Karmada?</Translate></h1>
+          <h1 className="text-center title"><Translate>What is Karmada?</Translate></h1>
           <p className="hero__subtitle">
             <small>
               <Translate>
