@@ -137,3 +137,7 @@ article header h1 {
 .features-container {
   margin-top: 2.5rem;
 }
+
+.title {
+  font-size: 2rem;
+}
