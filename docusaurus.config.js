@@ -36,7 +36,7 @@ module.exports = {
       logo: {
         alt: "Karmada",
         src: "img/logo.svg",
-        srcDark: "img/logoDark.svg",
+        srcDark: "img/artwork/karmada-icon-white.svg",
       },
       items: [
         {
