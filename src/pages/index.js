@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import features from '../data/features'
+import Feature from '../components/featuresList'
 import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
@@ -10,20 +11,6 @@ import GitHubButton from 'react-github-btn';
 import styles from './styles.module.css';
 import { Grid } from '@mui/material';
 import SupportersList from "../components/supportersList";
-
-function Feature({ imgUrl, title, description}) {
-  return (
-      <div className="col col--3">
-        <div className="text--center">
-          {imgUrl && <img className={styles.featureImage} src={useBaseUrl(imgUrl)} alt={title} />}
-        </div>
-      <div className="container">
-          <h2>{title}</h2>
-          <div>{description}</div>
-      </div>
-      </div>
-  )
-}
 
 const Button = ({ children, href }) => {
   return (
