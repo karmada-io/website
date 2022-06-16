@@ -1,20 +1,30 @@
 ---
-title: Core Concept
+title: Core Concepts
 ---
 
+This page introduces some core concepts about Karmada.
 
-**Resource template**: Karmada uses Kubernetes Native API definition for federated resource template, to make it easy to integrate with existing tools that already adopt on Kubernetes
+## Resource Template
 
-**Propagation Policy**: Karmada offers standalone Propagation(placement) Policy API to define multi-cluster scheduling and spreading requirements.
-- Support 1:n mapping of Policy: workload, users don't need to indicate scheduling constraints every time creating federated applications.
-- With default policies, users can just interact with K8s API
+Karmada uses the Kubernetes Native API definition for the federated resource template, to make it easy to integrate with existing tools that have already been adopted by Kubernetes.
 
-**Override Policy**: Karmada provides standalone Override Policy API for specializing cluster relevant configuration automation. E.g.:
-- Override image prefix according to member cluster region
-- Override StorageClass according to cloud provider
+### Propagation Policy
 
+Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster scheduling and spreading requirements.
 
-The following diagram shows how Karmada resources are involved when propagating resources to member clusters.
+- Support 1:n mapping of policy: workload. Users don't need to indicate scheduling constraints every time creating federated applications.
+
+- With default policies, users can directly interact with the Kubernetes API.
+
+### Override Policy
+
+Karmada provides a standalone Override Policy API for specializing the automation of cluster-related configuration. For example:
+
+- Override the image prefix based on the member cluster region.
+
+- Override StorageClass depending on your cloud provider.
+
+The following diagram shows how Karmada resources are propagated to member clusters.
 
 ![karmada-resource-relation](../resources/karmada-resource-relation.png)
 
