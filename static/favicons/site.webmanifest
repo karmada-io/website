@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration",
+    "short_name": "Karmada",
     "icons": [
         {
             "src": "/favicons/android-chrome-192x192.png",
