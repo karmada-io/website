@@ -1,11 +1,11 @@
 # Use Prometheus to monitor Karmada member clusters
 
-[Prometheus](https://github.com/prometheus/prometheus) , a [Cloud Native Computing Foundation ](https://cncf.io/) project, is a systems and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.
+[Prometheus](https://github.com/prometheus/prometheus), a [Cloud Native Computing Foundation ](https://cncf.io/) project, is a service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are met.
 
 This document gives an example to demonstrate how to use the `Prometheus` to monitor karmada member clusters. 
 
-##Start up Karmada clusters
-You just need to clone Karmada repo, and run the following script in Karmada directory. 
+## Start up Karmada clusters
+You just need to clone the Karmada repo, and run the following script in the Karmada directory. 
 
 ```
 hack/local-up-karmada.sh
@@ -13,9 +13,9 @@ hack/local-up-karmada.sh
 
 ## Start Prometheus
 
-1. Create resource objects of prometheus, the content is as follows. 
+1. Create resource objects of prometheus as follows.
 
-   ```
+   ```yaml
    apiVersion: v1
    kind: Namespace
    metadata:
@@ -287,9 +287,9 @@ hack/local-up-karmada.sh
              name: prometheus-config
    ```
 
-2. Run the below command to execute karmada PropagationPolicy and ClusterPropagationPolicy. 
+2. Run the following commands to execute karmada PropagationPolicy and ClusterPropagationPolicy. 
 
-   ```
+   ```yaml
    cat <<EOF | kubectl apply -f -
    apiVersion: policy.karmada.io/v1alpha1
    kind: PropagationPolicy
@@ -324,6 +324,7 @@ hack/local-up-karmada.sh
            - member2
            - member3
    EOF
+   ---
    cat <<EOF | kubectl apply -f -
    apiVersion: policy.karmada.io/v1alpha1
    kind: ClusterPropagationPolicy
@@ -346,7 +347,7 @@ hack/local-up-karmada.sh
    EOF
    ```
 
-3. Use any node IP of the member cluster and the port number (default 30003) to enter the Prometheus monitoring page of the member cluster
+3. Use any node IP of the member cluster and the port number (default 30003) to enter the Prometheus monitoring page of the member cluster.
 
 ## Reference
 
