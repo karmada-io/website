@@ -13,13 +13,13 @@ Velero lets you:
 This document gives an example to demonstrate how to use the `Velero` to back up and restore Kubernetes cluster resources
 and persistent volumes. Following example backups resources in cluster `member1`, and then restores those to cluster `member2`.
 
-## Start up Karamda clusters
-You just need to clone Karamda repo, and run the following script in Karamda directory.
+## Start up Karmada clusters
+You just need to clone Karmada repo, and run the following script in the Karmada directory.
 ```shell
 hack/local-up-karmada.sh
 ```
 
-And then run the below command to switch to the member cluster `member1`.
+And then run the following commands to switch to the member cluster `member1`.
 ```shell
 export KUBECONFIG=/root/.kube/members.config
 kubectl config use-context member1
@@ -35,7 +35,7 @@ wget https://dl.min.io/server/minio/release/linux-amd64/minio
 chmod +x minio
 ```
 
-Run the below command to set `MinIO` username and password:
+Run the following commands to set `MinIO` username and password:
 ```shell
 export MINIO_ROOT_USER=minio
 export MINIO_ROOT_PASSWORD=minio123
@@ -58,7 +58,7 @@ For more details about how to install `MinIO`, please run `minio server --help` 
 ## Install Velero
 Velero consists of two components:
 - ### A command-line client that runs locally.
-  1. Download the [release](https://github.com/vmware-tanzu/velero/releases) tarball for your client platform
+  1. Download the [release](https://github.com/vmware-tanzu/velero/releases) tarball for your client platform.
   ```shell
   wget https://github.com/vmware-tanzu/velero/releases/download/v1.7.0/velero-v1.7.0-linux-amd64.tar.gz
   ```
@@ -88,7 +88,7 @@ Velero consists of two components:
   
    2. Start the server.
    
-   We need to install `Velero` in both `member1` and `member2`, so we should run the below command in shell for both two clusters,
+   We need to install `Velero` in both `member1` and `member2`, so we should run the following commands in shell for both two clusters,
    this will start Velero server. Please run `kubectl config use-context member1` and `kubectl config use-context member2`
    to switch to the different member clusters: `member1` or `member2`.
    ```shell
@@ -104,7 +104,7 @@ Velero consists of two components:
 
    3. Deploy the nginx application to cluster `member1`: 
   
-   Run the below command in the Karmada directory.
+   Run the following command in the Karmada directory.
    ```shell
    kubectl apply -f samples/nginx/deployment.yaml
    ```
