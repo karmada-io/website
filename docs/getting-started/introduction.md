@@ -48,6 +48,6 @@ Karmada is a sandbox project of the [Cloud Native Computing Foundation](https://
 
 Here are some recommended next steps:
 
-- Start to [install Karmada](./install).
 - Learn Karmada's [core concepts](./getting-started/core-concept).
 - Learn Karmada's [architecture](./getting-started/architecture).
+- Start to [install Karmada](./installation/installation).
