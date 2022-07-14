@@ -1,7 +1,6 @@
 # Resource Propagating
 
-The [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) and [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) APIs are provided to propagate resources. For the differences between the two APIs, please see [here](../developers/
-/devel/faq.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy).
+The [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) and [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) APIs are provided to propagate resources. For the differences between the two APIs, please see [here](../developers/devel/faq.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy).
 
 Here, we use PropagationPolicy as an example to describe how to propagate resources.
 
@@ -44,6 +43,7 @@ kubectl create deployment nginx --image nginx
 > Note: The resource exists only as a template in karmada. After being propagated to a member cluster, the behavior of the resource is the same as that of a single kubernetes cluster.
 
 > Note: Resources and PropagationPolicy are created in no sequence.
+
 3. Display information of the deployment:
 ```shell
 karmadactl get deployment
