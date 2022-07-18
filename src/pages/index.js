@@ -6,12 +6,12 @@ import Feature from '../components/featuresList'
 import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import GitHubButton from 'react-github-btn';
 import styles from './styles.module.css';
 import { Grid } from '@mui/material';
 import SupportersList from '../components/supportersList';
 import Button from '../components/button'
 import WhatIs from '../components/whatIs'
+import GhButton from '../components/gitHubButton'
 
 export default function Home() {
   const context = useDocusaurusContext();
@@ -25,14 +25,9 @@ export default function Home() {
             <img className={styles.heroLogo} src={useBaseUrl('img/karmada-icon-color.png')} alt="Karmada Logo" />
           </div>
           <h1 className={clsx('hero__title', styles.heroTitle)}>{siteConfig.title}</h1>
-          <GitHubButton
-            href="https://github.com/karmada-io/karmada"
-            data-icon="octicon-star"
-            data-size="large"
-            data-show-count="true"
-            aria-label="Star Karmada on GitHub">
-            Star
-          </GitHubButton>
+
+            <GhButton />
+
           <p className="hero__subtitle">{siteConfig.tagline}</p>
           <div
             className={clsx(styles.heroButtons, 'name', 'margin-vert--md')}>
