@@ -89,6 +89,13 @@
 
 .cncf-logo {
   background: center no-repeat url('/img/cncf-color.svg');
+  height: 90px;
+}
+
+@media screen and (max-width: 768px) {
+  .cncf-logo {
+    height: 64px;
+  }
 }
 
 html[data-theme='dark'] .cncf-logo {
@@ -151,4 +158,150 @@ article header h1 {
 
 html[data-theme='dark'] .support-wrapper li {
   background-color: #ffffff;
+}
+
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.hero {
+  border-bottom: 1px solid var(--hero-border-color);
+}
+
+.heroLogoWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.heroHowItWorks {
+  position: relative;
+  left: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  border-radius: 48px;
+  transform: translateX(-50%);
+}
+
+.heroHowItWorksImg {
+  margin: 40px 0 35px;
+}
+
+@media screen and (max-width: 768px) {
+  .heroLogoWrapper {
+    width: 192px;
+    height: 192px;
+    margin: auto;
+  }
+}
+
+.heroLogo {
+  width: 100%;
+  max-width: 256px;
+}
+
+.installTextWrapper {
+  width: 100%;
+}
+
+.feature {
+  margin-bottom: 4.5rem;
+}
+
+.feature:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .feature {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.featureReverse {
+  flex-direction: row-reverse;
+}
+
+.featureImage {
+  height: 256px;
+}
+
+@media screen and (max-width: 768px) {
+  .featureImage {
+    height: 96px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.featureDesc {
+  display: flex !important;
+  align-items: center;
+}
+
+
+.whiteboard {
+  margin-top: 3rem;
+  background: #fff;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 768px) {
+  .whiteboard {
+    width: 80%;
+    margin: 3rem auto 0;
+  }
+}
+
+@media (min-width: 512px) and (max-width: 768px) {
+  .whiteboardCol {
+    --ifm-col-width: calc(6 / 12 * 100%) !important;
+
+    flex: 0 0 var(--ifm-col-width) !important;
+    max-width: var(--ifm-col-width) !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .whiteboardCol {
+    --ifm-col-width: calc(4 / 12 * 100%) !important;
+
+    flex: 0 0 var(--ifm-col-width) !important;
+    max-width: var(--ifm-col-width) !important;
+  }
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.logoWrapper img {
+  width: 80%;
+}
+
+@media screen and (max-width: 768px) {
+  .logoWrapper {
+    height: 100px;
+  }
+
+  .logoWrapper img {
+    width: 50%;
+  }
+}
+
+.heroButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
