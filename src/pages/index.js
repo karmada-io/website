@@ -7,11 +7,10 @@ import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
-import { Grid } from '@mui/material';
-import SupportersList from '../components/supportersList';
 import Button from '../components/button'
 import WhatIs from '../components/whatIs'
 import GhButton from '../components/gitHubButton'
+import SupportersList from "../components/supportersList";
 
 export default function Home() {
   const context = useDocusaurusContext();
@@ -46,13 +45,11 @@ export default function Home() {
 
             <section className={styles.features}>
             <div className="container features-container">
-              <Grid container>
+              <div className="row">
               {features.map((f, idx) => (
-                <Grid item key={idx} xs={12} md={6} lg={4}>
-                  <Feature title={f.title} description={f.description} />
-                </Grid>
+                <Feature key={idx} title={f.title} description={f.description} />
               ))}
-              </Grid>
+              </div>
               
             </div>
           </section>
