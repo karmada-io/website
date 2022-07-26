@@ -6,7 +6,7 @@ import Feature from '../components/featuresList'
 import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import { Grid } from '@mui/material';
 import SupportersList from '../components/supportersList';
 import Button from '../components/button'

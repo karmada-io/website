@@ -111,7 +111,10 @@ module.exports = {
       theme: require("prism-react-renderer/themes/dracula"),
     },
   },
-  plugins: ['./src/plugins/faviconCustomPlugin'],
+  plugins: [
+      './src/plugins/faviconCustomPlugin',
+      'docusaurus-plugin-sass',
+  ],
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -134,7 +137,7 @@ module.exports = {
           editUrl: "https://github.com/karmada-io/website/tree/main/",
         },
         theme: {
-          customCss: require.resolve("./src/css/custom.css"),
+          customCss: require.resolve("./src/css/custom.scss"),
         },
       },
     ],
