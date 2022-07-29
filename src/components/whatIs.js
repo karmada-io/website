@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import styles from '../pages/styles.module.css';
+import styles from '../pages/styles.module.scss';
 import React from 'react';
 import Translate, { translate } from '@docusaurus/Translate';
 
