@@ -1,26 +1,27 @@
 ---
-title: Architecture
+title: 系统架构
 ---
 
-The overall architecture of Karmada is shown as below:
+Karmada 的总体架构如下所示：
 
-![Architecture](../resources//architecture.png)
+![架构]（../resources//Architecture.png）
 
-The Karmada Control Plane consists of the following components:
+Karmada 控制平面包含以下组件：
 
 - Karmada API Server
 - Karmada Controller Manager
 - Karmada Scheduler
 
-ETCD stores the karmada API objects, the API Server is the REST endpoint all other components talk to, and the Karmada Controller Manager perform operations based on the API objects you create through the API server.
+ETCD 存储 Karmada API 对象，API Server 是与所有其他组件通信的 REST 端点，Karmada Controller Manager 根据 API 服务器创建的 API 对象执行操作。
 
-The Karmada Controller Manager runs the various controllers,  the controllers watch karmada objects and then talk to the underlying clusters' API servers to create regular Kubernetes resources.
+Karmada Controller Manager 运行各种控制器，这些控制器监测 Karmada 对象，然后与底层集群的 API 服务器对话，以创建常规的 Kubernetes 资源。
 
-1. Cluster Controller: attach kubernetes clusters to Karmada for managing the lifecycle of the clusters by creating cluster object.
+1. Cluster Controller：将 Kubernetes 集群挂接到 Karmada，通过创建集群对象来管理集群的生命周期。
 
-2. Policy Controller: the controller watches PropagationPolicy objects. When PropagationPolicy object is added, it selects a group of resources matching the resourceSelector and create ResourceBinding with each single resource object.
-3. Binding Controller: the controller watches ResourceBinding object and create Work object corresponding to each cluster with single resource manifest.
-4. Execution Controller: the controller watches Work objects.When Work objects are created, it will distribute the resources to member clusters.
+2. Policy Controller：该控制器监测 PropagationPolicy 对象。添加 PropagationPolicy 对象时，它会选择一组与 resourceSelector 匹配的资源，并用每个单独的资源对象创建 ResourceBinding。
 
+3. Binding Controller：该控制器监测 ResourceBinding 对象，并用单个资源清单创建每个集群对应的 Work 对象。
 
-## Next Step
+4. Execution Controller：该控制器监测 Work 对象。创建 Work 对象时，它会将这些资源分发给成员集群。
+
+## 下一步
