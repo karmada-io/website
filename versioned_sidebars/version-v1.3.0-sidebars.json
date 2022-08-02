@@ -1,5 +1,5 @@
 {
-  "version-v1.0.0/docs": [
+  "version-v1.3.0/docs": [
     {
       "collapsed": false,
       "type": "category",
@@ -7,15 +7,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-v1.0.0/getting-started/introduction"
+          "id": "version-v1.3.0/getting-started/introduction"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/getting-started/core-concept"
+          "id": "version-v1.3.0/getting-started/core-concept"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/getting-started/architecture"
+          "id": "version-v1.3.0/getting-started/architecture"
         }
       ]
     },
@@ -26,15 +26,15 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-v1.0.0/installation/installation"
+          "id": "version-v1.3.0/installation/installation"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/installation/install-kubectl-karmada"
+          "id": "version-v1.3.0/installation/install-kubectl-karmada"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/installation/fromsource"
+          "id": "version-v1.3.0/installation/fromsource"
         }
       ]
     },
@@ -45,35 +45,35 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/cluster-registration"
+          "id": "version-v1.3.0/userguide/cluster-registration"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/aggregated-api-endpoint"
+          "id": "version-v1.3.0/userguide/aggregated-api-endpoint"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/configure-controllers"
+          "id": "version-v1.3.0/userguide/configure-controllers"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/customizing-resource-interpreter"
+          "id": "version-v1.3.0/userguide/customizing-resource-interpreter"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/failover"
+          "id": "version-v1.3.0/userguide/failover"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/promote-legacy-workload"
+          "id": "version-v1.3.0/userguide/promote-legacy-workload"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/resource-propagating"
+          "id": "version-v1.3.0/userguide/resource-propagating"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/userguide/override-policy"
+          "id": "version-v1.3.0/userguide/override-policy"
         }
       ]
     },
@@ -84,11 +84,11 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-v1.0.0/developers/guide/github-workflow"
+          "id": "version-v1.3.0/developers/guide/github-workflow"
         },
         {
           "type": "doc",
-          "id": "version-v1.0.0/developers/guide/cherry-picks"
+          "id": "version-v1.3.0/developers/guide/cherry-picks"
         }
       ]
     },
@@ -99,13 +99,13 @@
       "items": [
         {
           "type": "doc",
-          "id": "version-v1.0.0/roadmap"
+          "id": "version-v1.3.0/roadmap"
         }
       ]
     },
     {
       "type": "doc",
-      "id": "version-v1.0.0/developers/devel/faq"
+      "id": "version-v1.3.0/developers/devel/faq"
     }
   ]
 }
