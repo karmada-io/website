@@ -1,4 +1,6 @@
-# kubectl-karmada Installation
+---
+title: Installation from Karmadactl
+---
 
 You can install `kubectl-karmada` plug-in in any of the following ways:
 
@@ -48,4 +50,4 @@ Clone karmada repo and run `make` cmd from the repository:
 make kubectl-karmada
 ```
 
-Next, move the `kubectl-karmada` executable file to the `PATH` path.
+Next, move the `kubectl-karmada` executable file under the `_output` folder in the project root directory to the `PATH` path.
