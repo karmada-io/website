@@ -1,18 +1,8 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+---
+title: Installation from Source
+---
 
-- [Installing Karmada on Cluster from Source](#installing-karmada-on-cluster-from-source)
-  - [Select a way to expose karmada-apiserver](#select-a-way-to-expose-karmada-apiserver)
-    - [1. expose by service with `LoadBalancer` type](#1-expose-by-service-with-loadbalancer-type)
-    - [2. expose by service with `ClusterIP` type](#2-expose-by-service-with-clusterip-type)
-  - [Install](#install)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Installing Karmada on Cluster from Source
-
-This document describes how you can use the `hack/remote-up-karmada.sh` script to install Karmada on 
+This document describes how you can use the `hack/remote-up-karmada.sh` script to install Karmada on
 your clusters based on the codebase.
 
 ## Select a way to expose karmada-apiserver
@@ -49,7 +39,17 @@ hack/remote-up-karmada.sh $HOME/.kube/config mycluster
 
 If everything goes well, at the end of the script output, you will see similar messages as follows:
 ```
-Karmada is installed.
+------------------------------------------------------------------------------------------------------
+█████   ████   █████████   ███████████   ██████   ██████   █████████   ██████████     █████████
+░░███   ███░   ███░░░░░███ ░░███░░░░░███ ░░██████ ██████   ███░░░░░███ ░░███░░░░███   ███░░░░░███
+░███  ███    ░███    ░███  ░███    ░███  ░███░█████░███  ░███    ░███  ░███   ░░███ ░███    ░███
+░███████     ░███████████  ░██████████   ░███░░███ ░███  ░███████████  ░███    ░███ ░███████████
+░███░░███    ░███░░░░░███  ░███░░░░░███  ░███ ░░░  ░███  ░███░░░░░███  ░███    ░███ ░███░░░░░███
+░███ ░░███   ░███    ░███  ░███    ░███  ░███      ░███  ░███    ░███  ░███    ███  ░███    ░███
+█████ ░░████ █████   █████ █████   █████ █████     █████ █████   █████ ██████████   █████   █████
+░░░░░   ░░░░ ░░░░░   ░░░░░ ░░░░░   ░░░░░ ░░░░░     ░░░░░ ░░░░░   ░░░░░ ░░░░░░░░░░   ░░░░░   ░░░░░
+------------------------------------------------------------------------------------------------------
+Karmada is installed successfully.
 
 Kubeconfig for karmada in file: /root/.kube/karmada.config, so you can run:
   export KUBECONFIG="/root/.kube/karmada.config"
