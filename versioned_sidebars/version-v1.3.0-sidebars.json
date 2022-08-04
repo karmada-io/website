@@ -12,7 +12,6 @@
     },
     {
       "type": "doc",
-      "label": "Key Features",
       "id": "version-v1.3.0/key-features/features"
     },
     {
@@ -186,7 +185,7 @@
       "type": "category",
       "label": "Case Study",
       "items": [
-        "version-v1.3.0/casestudies/vipkid-en"
+        "version-v1.3.0/casestudies/vipkid"
       ]
     },
     {
