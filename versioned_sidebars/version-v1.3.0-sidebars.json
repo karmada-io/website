@@ -1,111 +1,210 @@
 {
   "version-v1.3.0/docs": [
     {
+      "type": "category",
+      "label": "Core Concepts",
       "collapsed": false,
-      "type": "category",
-      "label": "Getting Started",
       "items": [
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/getting-started/introduction"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/getting-started/core-concept"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/getting-started/architecture"
-        }
-      ]
-    },
-    {
-      "collapsed": true,
-      "type": "category",
-      "label": "Installation",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/installation/installation"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/installation/install-kubectl-karmada"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/installation/fromsource"
-        }
-      ]
-    },
-    {
-      "collapsed": true,
-      "type": "category",
-      "label": "User Guide",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/cluster-registration"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/aggregated-api-endpoint"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/configure-controllers"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/customizing-resource-interpreter"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/failover"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/promote-legacy-workload"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/resource-propagating"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/userguide/override-policy"
-        }
-      ]
-    },
-    {
-      "collapsed": true,
-      "type": "category",
-      "label": "Developer Guide",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/developers/guide/github-workflow"
-        },
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/developers/guide/cherry-picks"
-        }
-      ]
-    },
-    {
-      "collapsed": true,
-      "type": "category",
-      "label": "Roadmap",
-      "items": [
-        {
-          "type": "doc",
-          "id": "version-v1.3.0/roadmap"
-        }
+        "version-v1.3.0/core-concepts/introduction",
+        "version-v1.3.0/core-concepts/concepts",
+        "version-v1.3.0/core-concepts/architecture"
       ]
     },
     {
       "type": "doc",
-      "id": "version-v1.3.0/developers/devel/faq"
+      "label": "Key Features",
+      "id": "version-v1.3.0/key-features/features"
+    },
+    {
+      "type": "category",
+      "label": "Get Started",
+      "items": [
+        "version-v1.3.0/get-started/nginx-example"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Tutorials",
+      "items": [
+        "version-v1.3.0/tutorials/karmada-search"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Installation",
+      "items": [
+        "version-v1.3.0/installation/installation",
+        "version-v1.3.0/installation/install-kubectl-karmada",
+        "version-v1.3.0/installation/fromsource"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "User Guide",
+      "items": [
+        {
+          "type": "category",
+          "label": "Cross-cloud multi-cluster management",
+          "items": [
+            "version-v1.3.0/userguide/clustermanager/cluster-registration",
+            "version-v1.3.0/userguide/clustermanager/working-with-anp"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster scheduling",
+          "items": [
+            "version-v1.3.0/userguide/scheduling/resource-propagating",
+            "version-v1.3.0/userguide/scheduling/override-policy",
+            "version-v1.3.0/userguide/scheduling/propagate-dependencies",
+            "version-v1.3.0/userguide/scheduling/descheduler",
+            "version-v1.3.0/userguide/scheduling/scheduler-estimator"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster Failover",
+          "items": [
+            "version-v1.3.0/userguide/failover/failover"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Global Uniform Resource View",
+          "items": [
+            "version-v1.3.0/userguide/globalview/aggregated-api-endpoint",
+            "version-v1.3.0/userguide/globalview/customizing-resource-interpreter"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster service governance",
+          "items": [
+            "version-v1.3.0/userguide/service/multi-cluster-service",
+            "version-v1.3.0/userguide/service/multi-cluster-ingress",
+            "version-v1.3.0/userguide/service/working-with-istio-on-flat-network",
+            "version-v1.3.0/userguide/service/working-with-istio-on-non-flat-network"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster network",
+          "items": [
+            "version-v1.3.0/userguide/network/working-with-submariner"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster CI/CD",
+          "items": [
+            "version-v1.3.0/userguide/cicd/working-with-argocd",
+            "version-v1.3.0/userguide/cicd/working-with-flux"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Multi-cluster security compliance governance",
+          "items": [
+            "version-v1.3.0/userguide/security-governance/working-with-gatekeeper",
+            "version-v1.3.0/userguide/security-governance/working-with-kyverno"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Administrator Guide",
+      "items": [
+        {
+          "type": "category",
+          "label": "Karmadactl Manual",
+          "items": [
+            "version-v1.3.0/administrator/karmadactl/init"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Configuration",
+          "items": [
+            "version-v1.3.0/administrator/configuration/configure-controllers"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Migration",
+          "items": [
+            "version-v1.3.0/administrator/migration/promote-legacy-workload"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Monitoring",
+          "items": [
+            "version-v1.3.0/administrator/monitoring/working-with-filebeat",
+            "version-v1.3.0/administrator/monitoring/working-with-prometheus"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Upgrading",
+          "items": [
+            "version-v1.3.0/administrator/upgrading/README",
+            "version-v1.3.0/administrator/upgrading/v0.8-v0.9",
+            "version-v1.3.0/administrator/upgrading/v0.9-v0.10",
+            "version-v1.3.0/administrator/upgrading/v0.10-v1.0",
+            "version-v1.3.0/administrator/upgrading/v1.0-v1.1",
+            "version-v1.3.0/administrator/upgrading/v1.1-v1.2"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Backup",
+          "items": [
+            "version-v1.3.0/administrator/backup/working-with-velero"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Developer Guide",
+      "items": [
+        "version-v1.3.0/developers/profiling-karmada",
+        "version-v1.3.0/developers/bash-auto-completion-on-linux"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Contributor Guide",
+      "items": [
+        "version-v1.3.0/contributor/cherry-picks",
+        "version-v1.3.0/contributor/github-workflow",
+        "version-v1.3.0/contributor/lifted"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Case Study",
+      "items": [
+        "version-v1.3.0/casestudies/vipkid-en"
+      ]
+    },
+    {
+      "type": "doc",
+      "id": "version-v1.3.0/troubleshooting/troubleshooting"
+    },
+    {
+      "type": "doc",
+      "id": "version-v1.3.0/faq/faq"
+    },
+    {
+      "type": "category",
+      "label": "Reference",
+      "items": [
+        "version-v1.3.0/reference/reserved-namespaces",
+        "version-v1.3.0/reference/object-association-mapping"
+      ]
     }
   ]
 }
+
