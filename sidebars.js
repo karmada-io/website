@@ -14,7 +14,6 @@ module.exports = {
     },
     {
       type: "doc",
-      label: "Key Features",
       id: "key-features/features",
     },
     {
@@ -188,7 +187,7 @@ module.exports = {
       type: "category",
       label: "Case Study",
       items: [
-          "casestudies/vipkid-en",
+          "casestudies/vipkid",
       ],
     },
     {
