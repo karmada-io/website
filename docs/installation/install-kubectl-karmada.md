@@ -26,6 +26,8 @@ wget https://github.com/karmada-io/karmada/releases/download/v0.9.0/kubectl-karm
 tar -zxf kubectl-karmada-linux-amd64.tar.gz
 ```
 
+> Latest kubectl-karmada release is saved using the suffix '.tgz'.
+
 Next, move `kubectl-karmada` executable file to `PATH` path, reference from [Installing kubectl plugins](https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/#installing-kubectl-plugins).
 
 ## Install using Krew
