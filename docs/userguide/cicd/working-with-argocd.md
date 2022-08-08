@@ -10,7 +10,7 @@ This topic walks you through how to use the [Argo CD](https://github.com/argopro
 You have installed Argo CD following the instructions in [Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/#getting-started).
 
 ### Karmada Installation
-In this example, we are using a Karmada environment with at lease `3` member clusters joined.
+In this example, we are using a Karmada environment with at least `3` member clusters joined.
 
 You can set up the environment by `hack/local-up-karmada.sh`, which is also used to run our E2E cases.
 
