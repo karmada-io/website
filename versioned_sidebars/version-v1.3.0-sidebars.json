@@ -34,7 +34,8 @@
       "items": [
         "version-v1.3.0/installation/installation",
         "version-v1.3.0/installation/install-kubectl-karmada",
-        "version-v1.3.0/installation/fromsource"
+        "version-v1.3.0/installation/fromsource",
+        "version-v1.3.0/installation/install-binary"
       ]
     },
     {
