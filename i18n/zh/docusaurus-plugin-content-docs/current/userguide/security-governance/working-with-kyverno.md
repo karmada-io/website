@@ -29,9 +29,9 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
 
    Deploy namespace: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L1-L12
    
-   Deploy configmap: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L12144-L12176
+   Deploy configmap: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L7751-L7783
    
-   Deploy Kyverno CRDs: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L12-L11656
+   Deploy Kyverno CRDs: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L12-L7291
 
 ### Install Kyverno components on host cluster
 
@@ -43,7 +43,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
 
    Deploy namespace: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L1-L12
 
-   Deploy RBAC resources: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L11657-L12143
+   Deploy RBAC resources: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L7292-L7750
 
    Deploy Kyverno controllers and service:
    ```yaml
@@ -56,7 +56,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
        app.kubernetes.io/instance: kyverno
        app.kubernetes.io/name: kyverno
        app.kubernetes.io/part-of: kyverno
-       app.kubernetes.io/version: latest
+       app.kubernetes.io/version: v1.6.3
      name: kyverno-svc
      namespace: kyverno
    spec:
@@ -79,7 +79,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
        app.kubernetes.io/instance: kyverno
        app.kubernetes.io/name: kyverno
        app.kubernetes.io/part-of: kyverno
-       app.kubernetes.io/version: latest
+       app.kubernetes.io/version: v1.6.3
      name: kyverno-svc-metrics
      namespace: kyverno
    spec:
@@ -100,7 +100,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
        app.kubernetes.io/instance: kyverno
        app.kubernetes.io/name: kyverno
        app.kubernetes.io/part-of: kyverno
-       app.kubernetes.io/version: latest
+       app.kubernetes.io/version: v1.6.3
      name: kyverno
      namespace: kyverno
    spec:
@@ -122,7 +122,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
            app.kubernetes.io/instance: kyverno
            app.kubernetes.io/name: kyverno
            app.kubernetes.io/part-of: kyverno
-           app.kubernetes.io/version: latest
+           app.kubernetes.io/version: v1.6.3
        spec:
          affinity:
            podAntiAffinity:
@@ -140,7 +140,6 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
          - args:
            - --filterK8sResources=[Event,*,*][*,kube-system,*][*,kube-public,*][*,kube-node-lease,*][Node,*,*][APIService,*,*][TokenReview,*,*][SubjectAccessReview,*,*][*,kyverno,kyverno*][Binding,*,*][ReplicaSet,*,*][ReportChangeRequest,*,*][ClusterReportChangeRequest,*,*][PolicyReport,*,*][ClusterPolicyReport,*,*]
            - -v=2
-           - --autogenInternals=false
            - --kubeconfig=/etc/kubeconfig
            - --serverIP={{nodeIP}}:{{nodePort}}
            env:
@@ -156,7 +155,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
              value: kyverno-svc
            - name: TUF_ROOT
              value: /.sigstore
-           image: ghcr.io/kyverno/kyverno:latest
+           image: ghcr.io/kyverno/kyverno:v1.6.3
            imagePullPolicy: Always
            livenessProbe:
              failureThreshold: 2
@@ -214,7 +213,7 @@ In this case, we will use Kyverno v1.6.3. Related deployment files are from [her
              valueFrom:
                fieldRef:
                  fieldPath: metadata.namespace
-           image: ghcr.io/kyverno/kyvernopre:latest
+           image: ghcr.io/kyverno/kyvernopre:v1.6.3
            imagePullPolicy: Always
            name: kyverno-pre
            resources:
