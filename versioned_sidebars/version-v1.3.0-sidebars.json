@@ -44,7 +44,7 @@
       "items": [
         {
           "type": "category",
-          "label": "Cross-cloud multi-cluster management",
+          "label": "Cross-cloud Multi-cluster Management",
           "items": [
             "version-v1.3.0/userguide/clustermanager/cluster-registration",
             "version-v1.3.0/userguide/clustermanager/working-with-anp"
@@ -52,7 +52,7 @@
         },
         {
           "type": "category",
-          "label": "Multi-cluster scheduling",
+          "label": "Multi-cluster Scheduling",
           "items": [
             "version-v1.3.0/userguide/scheduling/resource-propagating",
             "version-v1.3.0/userguide/scheduling/override-policy",
@@ -78,7 +78,7 @@
         },
         {
           "type": "category",
-          "label": "Multi-cluster service governance",
+          "label": "Multi-cluster Service Governance",
           "items": [
             "version-v1.3.0/userguide/service/multi-cluster-service",
             "version-v1.3.0/userguide/service/multi-cluster-ingress",
@@ -88,7 +88,7 @@
         },
         {
           "type": "category",
-          "label": "Multi-cluster network",
+          "label": "Multi-cluster Network",
           "items": [
             "version-v1.3.0/userguide/network/working-with-submariner"
           ]
@@ -103,10 +103,17 @@
         },
         {
           "type": "category",
-          "label": "Multi-cluster security compliance governance",
+          "label": "Multi-cluster Security Compliance Governance",
           "items": [
             "version-v1.3.0/userguide/security-governance/working-with-gatekeeper",
             "version-v1.3.0/userguide/security-governance/working-with-kyverno"
+          ]
+        },
+        {
+          "type": "category",
+          "label": "Role Separation",
+          "items": [
+            "version-v1.3.0/userguide/roleseparation/unifiedAuth"
           ]
         }
       ]

@@ -6,7 +6,7 @@ This document uses an example to demonstrate how to use [Istio](https://istio.io
 
 Follow this guide to install the Istio control plane on `karmada-host` (the primary cluster) and configure `member1` and `member2` (the remote cluster) to use the control plane in `karmada-host`. All clusters reside on the network1 network, meaning there is direct connectivity between the pods in both clusters.
 
-<image src="images/istio-on-karmada.png" caption="Istio on Karmada" />
+![Istio on Karmada](../../resources/istio-on-karmada.png)
 
 ## Install Karmada
 
