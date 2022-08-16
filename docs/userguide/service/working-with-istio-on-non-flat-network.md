@@ -293,4 +293,4 @@ delete `--controllers=-namespace,*` in start command
 
 2. Deploy bookinfo application
 
-See module `Deploy bookinfo application` in https://github.com/karmada-io/karmada/blob/master/docs/istio-on-karmada.md
+See module `Deploy bookinfo application` in [here](./working-with-istio-on-flat-network.md#deploy-bookinfo-application)
