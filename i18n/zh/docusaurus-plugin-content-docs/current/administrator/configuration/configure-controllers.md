@@ -117,5 +117,5 @@ More details please refer to:
 - [clean up finished jobs automatically](https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically)
 
 [1]: https://kubernetes.io/docs/concepts/architecture/controller/
-[2]: https://github.com/karmada-io/karmada/blob/master/docs/installation/installation.md
+[2]: ../../installation/installation.md
 [3]: https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/kube-controller-manager.yaml

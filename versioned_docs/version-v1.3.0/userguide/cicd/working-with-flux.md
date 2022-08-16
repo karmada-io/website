@@ -6,7 +6,7 @@ title: Use Flux to support Helm chart propagation
 
 ## Start up Karmada clusters
 
-To start up Karmada, you can refer to [here](https://github.com/karmada-io/karmada/blob/master/docs/installation/installation.md).
+To start up Karmada, you can refer to [here](../../installation/installation.md).
 If you just want to try Karmada, we recommend building a development environment by ```hack/local-up-karmada.sh```.
 
 ```sh

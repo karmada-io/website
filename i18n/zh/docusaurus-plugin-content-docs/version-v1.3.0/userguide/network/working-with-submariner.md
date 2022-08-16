@@ -84,4 +84,4 @@ subctl join --kubeconfig /root/.kube/cluster2.config broker-info.subm --natt=fal
 
 ## Connectivity test
 
-Please refer to the [Multi-cluster Service Discovery](https://github.com/karmada-io/karmada/blob/master/docs/multi-cluster-service.md).
+Please refer to the [Multi-cluster Service Discovery](../service/multi-cluster-service.md).
