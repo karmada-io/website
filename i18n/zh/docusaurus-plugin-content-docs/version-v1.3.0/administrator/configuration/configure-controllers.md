@@ -116,6 +116,47 @@ More details please refer to:
 - [ttl after finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/#ttl-after-finished-controller)
 - [clean up finished jobs automatically](https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically)
 
+#### bootstrapsigner
+
+The `bootstrapsigner` controller runs as part of `kube-controller-manager`.
+The tokens are also used to create a signature for a specific ConfigMap used in a "discovery" process through a `bootstrapsigner` controller.
+
+For the Karmada control plane, we also provide `cluster-info` ConfigMap in `kube-public` namespace. This is used early in a cluster bootstrap process before the client trusts the API server. The signed ConfigMap can be authenticated by the shared token.
+
+> Note: this controller currently is used to register member clusters with PULL mode by `karmadactl register`.
+
+More details please refer to:
+- [bootstrap tokens overview](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#bootstrap-tokens-overview)
+- [configmap signing](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#configmap-signing)
+
+#### tokencleaner
+
+The `tokencleaner` controller runs as part of `kube-controller-manager`.
+Expired tokens can be deleted automatically by enabling the tokencleaner controller on the controller manager.
+
+> Note: this controller currently is used to register member clusters with PULL mode by `karmadactl register`.
+
+More details please refer to:
+- [bootstrap tokens overview](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#bootstrap-tokens-overview)
+- [enabling bootstrap token authentication](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#enabling-bootstrap-token-authentication)
+
+#### csrapproving, csrcleaner, csrsigning
+
+The controllers runs as part of `kube-controller-manager`.
+
+The `csrapproving` controller uses the [SubjectAccessReview API](https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access) to determine if a given user is authorized to request a CSR, then approves based on the authorization outcome.
+
+The `csrcleaner` controller clears expired csr periodically.
+
+The `csrsigning` controller signs the certificate using Karmada root CA.
+
+> Note: these controllers currently are used to register member clusters with PULL mode by `karmadactl register`.
+
+More details please refer to:
+- [csr approval](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/#approval)
+- [certificate signing request spec](https://kubernetes.io/docs/reference/kubernetes-api/authentication-resources/certificate-signing-request-v1/#CertificateSigningRequestSpec)
+- [certificate signing requests](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/)
+
 [1]: https://kubernetes.io/docs/concepts/architecture/controller/
 [2]: ../../installation/installation.md
 [3]: https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/kube-controller-manager.yaml

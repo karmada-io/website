@@ -58,7 +58,8 @@
             "version-v1.3.0/userguide/scheduling/override-policy",
             "version-v1.3.0/userguide/scheduling/propagate-dependencies",
             "version-v1.3.0/userguide/scheduling/descheduler",
-            "version-v1.3.0/userguide/scheduling/scheduler-estimator"
+            "version-v1.3.0/userguide/scheduling/scheduler-estimator",
+            "version-v1.3.0/userguide/scheduling/cluster-resources"
           ]
         },
         {
@@ -73,7 +74,8 @@
           "label": "Global Uniform Resource View",
           "items": [
             "version-v1.3.0/userguide/globalview/aggregated-api-endpoint",
-            "version-v1.3.0/userguide/globalview/customizing-resource-interpreter"
+            "version-v1.3.0/userguide/globalview/customizing-resource-interpreter",
+            "version-v1.3.0/userguide/globalview/proxy-global-resource"
           ]
         },
         {
@@ -149,6 +151,7 @@
           "label": "Monitoring",
           "items": [
             "version-v1.3.0/administrator/monitoring/working-with-filebeat",
+            "administrator/monitoring/working-with-prometheus-in-control-plane",
             "version-v1.3.0/administrator/monitoring/working-with-prometheus"
           ]
         },
@@ -194,7 +197,8 @@
       "type": "category",
       "label": "Case Study",
       "items": [
-        "version-v1.3.0/casestudies/vipkid"
+        "version-v1.3.0/casestudies/vipkid",
+        "version-v1.3.0/casestudies/ci123"
       ]
     },
     {
