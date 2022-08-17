@@ -1,11 +1,15 @@
 ---
 title: Cluster Registration
 ---
+## Cluster IDs
+Each cluster object in your karmada control plane has a unique ID. 
+It is different from the object uid(.metadata.uid) and typically collected automatically from member cluster during the progress of registration.
 
 ## Overview of cluster mode
 
 Karmada supports both `Push` and `Pull` modes to manage the member clusters.
 The main difference between `Push` and `Pull` modes is the way access to member clusters when deploying manifests.
+
 
 ### Push mode
 Karmada control plane will access member cluster's `kube-apiserver` directly to get cluster status and deploy manifests.
