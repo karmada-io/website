@@ -193,7 +193,8 @@
       "type": "category",
       "label": "Case Study",
       "items": [
-        "version-v1.3.0/casestudies/vipkid"
+        "version-v1.3.0/casestudies/vipkid",
+        "version-v1.3.0/casestudies/ci123"
       ]
     },
     {
