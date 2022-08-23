@@ -140,7 +140,8 @@
           "type": "category",
           "label": "Migration",
           "items": [
-            "version-v1.3.0/administrator/migration/promote-legacy-workload"
+            "version-v1.3.0/administrator/migration/promote-legacy-workload",
+            "version-v1.3.0/administrator/migration/migration-from-kubefed"
           ]
         },
         {

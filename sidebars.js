@@ -142,7 +142,8 @@ module.exports = {
                     type: "category",
                     label: "Migration",
                     items: [
-                        "administrator/migration/promote-legacy-workload"
+                        "administrator/migration/promote-legacy-workload",
+                        "administrator/migration/migration-from-kubefed",
                     ],
                 },
                 {
