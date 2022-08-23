@@ -6,7 +6,7 @@ Deployment, Job, Pod, DaemonSet and StatefulSet dependencies (ConfigMaps and Sec
 clusters automatically. This document demonstrates how to use this feature. For more design details, please refer to
 [dependencies-automatically-propagation](https://github.com/karmada-io/karmada/blob/master/docs/proposals/dependencies-automatically-propagation/README.md)
 
-##Prerequisites
+## Prerequisites
 ### Karmada has been installed
 
 We can install Karmada by referring to [quick-start](https://github.com/karmada-io/karmada#quick-start), or directly run

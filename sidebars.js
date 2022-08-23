@@ -61,6 +61,7 @@ module.exports = {
                         "userguide/scheduling/propagate-dependencies",
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
+                        "userguide/scheduling/cluster-resources",
                     ],
                 },
                 {
