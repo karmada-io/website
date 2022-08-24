@@ -58,7 +58,7 @@ After applying it, you can access pods and nodes with kubectl. Enjoy it!
 ### Is creating supported?
 
 For resources not defined in ResourceRegistry, creating requests are redirected to karmada controller panel. So Resources are created in controller panel.
-For resources defined in ResourceRegistry, proxy doesn't know which cluster to create, and responses `NotFoundError`.
+For resources defined in ResourceRegistry, proxy doesn't know which cluster to create, and responses `MethodNotSupported` error.
 
 ### Can I read resources by selectors?
 
