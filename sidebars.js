@@ -153,6 +153,7 @@ module.exports = {
                     label: "Monitoring",
                     items: [
                         "administrator/monitoring/working-with-filebeat",
+                        "administrator/monitoring/working-with-prometheus-in-control-plane",
                         "administrator/monitoring/working-with-prometheus",
                     ],
                 },
