@@ -199,6 +199,7 @@ module.exports = {
             label: "Case Study",
             items: [
                 "casestudies/vipkid",
+                "casestudies/ci123",
             ],
         },
         {
