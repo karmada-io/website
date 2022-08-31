@@ -13,13 +13,13 @@ If the serviceaccount has been created in your environment, you can skip this st
 Create a serviceaccount that does not have any permission:
 
 ```shell
-kubectl --kubeconfig /root/.kube/members.config --context member1 create serviceaccount tom
+kubectl --kubeconfig $HOME/.kube/members.config --context member1 create serviceaccount tom
 ```
 
 ### Step2: Create ServiceAccount in Karmada control plane
 
 ```shell
-kubectl --kubeconfig /root/.kube/karmada.config --context karmada-apiserver create serviceaccount tom
+kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver create serviceaccount tom
 ```
 
 In order to grant serviceaccount the `clusters/proxy` permission, apply the following rbac yaml file:
@@ -67,7 +67,7 @@ subjects:
 </details>
 
 ```shell
-kubectl --kubeconfig /root/.kube/karmada.config --context karmada-apiserver apply -f cluster-proxy-rbac.yaml
+kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver apply -f cluster-proxy-rbac.yaml
 ```
 
 ### Step3: Access member1 cluster
@@ -154,7 +154,7 @@ subjects:
 </details>
 
 ```shell
-kubectl --kubeconfig /root/.kube/members.config --context member1 apply -f member1-rbac.yaml
+kubectl --kubeconfig $HOME/.kube/members.config --context member1 apply -f member1-rbac.yaml
 ```
 
 Run the command that failed in the previous step again:

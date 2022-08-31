@@ -14,10 +14,10 @@ To quickly experience this feature, we experimented with karmada-apiserver certi
 
 ### Step1: Obtain the karmada-apiserver Certificate
 
-For Karmada deployed using `hack/local-up-karmada.sh`, you can directly copy it from the `/root/.kube/` directory.
+For Karmada deployed using `hack/local-up-karmada.sh`, you can directly copy it from the `$HOME/.kube/` directory.
 
 ```shell
-cp /root/.kube/karmada.config karmada-apiserver.config
+cp $HOME/.kube/karmada.config karmada-apiserver.config
 ```
 
 ### Step2: Grant permission to user `system:admin`
@@ -65,7 +65,7 @@ subjects:
 </details>
 
 ```shell
-kubectl --kubeconfig /root/.kube/karmada.config --context karmada-apiserver apply -f cluster-proxy-rbac.yaml
+kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver apply -f cluster-proxy-rbac.yaml
 ```
 
 ### Step3: Access member clusters

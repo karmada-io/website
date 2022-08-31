@@ -69,7 +69,54 @@ Repeat this step to unjoin any additional clusters.
 
 ## Register cluster with 'Pull' mode
 
-### Register cluster
+### Register cluster by CLI
+
+`karmadactl register` is used to register member clusters to the Karmada control plane with PULL mode. 
+Be different from the `karmadactl join` which registers a cluster with `Push` mode, `karmadactl register` registers a cluster to Karmada control plane with `Pull` mode.
+
+> Note: currently it only supports the Karmada control plane that was installed by `karmadactl init`.
+
+#### Create bootstrap token in Karmada control plane
+
+In Karmada control plane, we can use `karmadactl token create` command to create bootstrap tokens whose default ttl is 24h.
+
+```
+$ karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
+```
+
+```
+# The example output is shown below
+karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
+```
+
+More details about `bootstrap token` please refer to:
+- [authenticating with bootstrap tokens](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/)
+
+#### Execute `karmadactl register` in the member clusters
+
+In the Kubernetes control plane of member clusters, we also need the `kubeconfig` file of the member cluster, then directly execute the above output `karmadactl register` command.
+
+```
+$ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
+```
+
+```
+# The example output is shown below
+[preflight] Running pre-flight checks
+[prefligt] All pre-flight checks were passed
+[karmada-agent-start] Waiting to perform the TLS Bootstrap
+[karmada-agent-start] Waiting to construct karmada-agent kubeconfig
+[karmada-agent-start] Waiting the necessary secret and RBAC
+[karmada-agent-start] Waiting karmada-agent Deployment
+W0825 11:03:12.167027   29336 check.go:52] pod: karmada-agent-5d659b4746-wn754 not ready. status: ContainerCreating
+......
+I0825 11:04:06.174110   29336 check.go:49] pod: karmada-agent-5d659b4746-wn754 is ready. status: Running
+
+cluster(member3) is joined successfully
+```
+
+> Note: if you don't set `--cluster-name` option, it will use the cluster of current-context of the `kubeconfig` file by default.
+
 
 After `karmada-agent` be deployed, it will register cluster automatically at the start-up phase.
 

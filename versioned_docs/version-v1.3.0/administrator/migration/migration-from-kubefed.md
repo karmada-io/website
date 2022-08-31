@@ -32,7 +32,7 @@ details.
 
 Assume you use the `kubefedctl` tool to join cluster as follows:
 
-```
+```bash
 kubefedctl join cluster1 --cluster-context cluster1 --host-cluster-context cluster1
 ```
 
@@ -223,7 +223,7 @@ In addition to Kubefed, Karmada offers various alternatives to declare the overr
 
 ## FAQ
 
-### Will Karmada provide tools for the migration?
+### Will Karmada provide tools to smooth the migration?
 
 We don't have the plan yet, as we reached some Kubefed users and found that they're usually not using vanilla 
 Kubefed but the forked version, they extended Kubefed a lot to meet their requirements. So, it might be pretty
