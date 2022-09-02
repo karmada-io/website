@@ -9,13 +9,12 @@ This article will focus on how Karmada performs scheduling based on the cluster 
 
 ## Cluster Resource Modeling
 
+In the scheduling progress, the `karmada-scheduler` now makes decisions as per a bunch of factors, one of the factors is the resource details of the cluster.
+Now Karmada has two different scheduling behaviors based on cluster resources. One of them is general cluster modeling, another one is customized cluster modeling.
+
 ### General Cluster Modeling
 
-### Customized Cluster Modeling
-
-#### Background
-
-In the scheduling progress, the `karmada-scheduler` now makes decisions as per a bunch of factors, one of the factors is the resource details of the cluster.
+#### Start to use General Cluster Resource Models
 
 For the purpose above, we introduced `ResourceSummary` to the [Cluster API](https://github.com/karmada-io/karmada/blob/master/pkg/apis/cluster/types.go).
 
@@ -36,14 +35,83 @@ resourceSummary:
       pods: "11"
 ```
 
+From the example above, we can know the allocatable and allocated resources of the cluster.
+
+#### Schedule based on General Cluster Resource Models
+
+Assume that there is a Pod which will be scheduled to one of the clusters managed by Karmada.
+
+Member1 is like:
+
+```
+resourceSummary:
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: 206291924Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 16265856Ki
+      pods: "110"
+    allocated:
+      cpu: 950m
+      memory: 290Mi
+      pods: "11"
+```
+
+Member2 is like:
+
+```
+resourceSummary:
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: 206291924Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 16265856Ki
+      pods: "110"
+    allocated:
+      cpu: "2"
+      memory: 290Mi
+      pods: "11"
+```
+
+Member3 is like:
+
+```
+resourceSummary:
+    allocatable:
+      cpu: "4"
+      ephemeral-storage: 206291924Ki
+      hugepages-1Gi: "0"
+      hugepages-2Mi: "0"
+      memory: 16265856Ki
+      pods: "110"
+    allocated:
+      cpu: "2"
+      memory: 290Mi
+      pods: "110"
+```
+
+Assume that the Pod's request is 500m CPU. Member1 and Member2 have sufficient resources to run this replica but Member3 has no quota for Pods.
+Considering the amount of available resources, the scheduler prefers to schedule the Pod to member1.
+
+| Cluster           | member1   | member2   | member3                    |
+| ------------------- | ----------- | ----------- | ---------------------------- |
+| AvailableReplicas | (4 - 0.95) / 0.5 = 6.1 | (4 - 2) / 0.5 = 4 | 0 |
+
+### Customized Cluster Modeling
+
+#### Background
+
+`ResourceSummary` describes the overall available resources of the cluster.
 However, the `ResourceSummary` is not precise enough, it mechanically counts the resources on all nodes, but ignores the fragment resources. For example, a cluster with 2000 nodes, 1 core CPU left on each node.
 From the `ResourceSummary`, we get that there are 2000 core CPU left for the cluster, but actually, this cluster cannot run any pod that requires CPU greater than 1 core.
 
-Therefore, we introduce a `resource models` for each cluster that records the resource portrait of each node. Karmada will collect node and pod information for each cluster. After calculation, this node will be divided into the appropriate resource model configured by the users.
+Therefore, we introduce a `CustomizedClusterResourceModeling` for each cluster that records the resource portrait of each node. Karmada will collect node and pod information for each cluster. After calculation, this node will be divided into the appropriate resource model configured by the users.
 
-#### Start to use cluster resource models
+#### Start to use Customized Cluster Resource Models
 
-Now `cluster resource model` is in alpha state. To start this feature, you need to turn on the `CustomizedClusterResourceModeling` feature gate in `karmada-scheduler`, `karmada-aggregated-server` and `karmada-controller-manager`.
+Now `CustomizedClusterResourceModeling` is in alpha state. To start this feature, you need to turn on the `CustomizedClusterResourceModeling` feature gate in `karmada-scheduler`, `karmada-aggregated-server` and `karmada-controller-manager`.
 
 For example, you can use the command below to turn on the feature gate in the `karmada-controller-manager`.
 
@@ -196,11 +264,11 @@ resourceModels:
 
 It means that there are three models in the cluster resource models. if there is a node with 0.5C and 2Gi, it will be divided into Grade 0. If there is a node with 1.5C and 10Gi, it will be divided into Grade 1.
 
-#### Schedule based on Cluster Resource Models
+#### Schedule based on Customized Cluster Resource Models
 
 `Cluster resource model` divides nodes into levels of different intervals. And when a Pod needs to be scheduled to a specific cluster, they will compare the number of nodes in the model that satisfies the resource request of the Pod in different clusters, and schedule the Pod to the cluster with more node numbers.
 
-Assume that there is a Pod which want to schedule it to one of the clusters managed by Karmada with the same cluster resource models.
+Assume that there is a Pod which will be scheduled to one of the clusters managed by Karmada with the same cluster resource models.
 
 Member1 is like:
 
@@ -297,3 +365,9 @@ Assume that the Pod's request is 3C 60Gi. Nodes from Grade2 does not satisfy all
 | AvailableReplicas | 6 * 1 = 6 | 4 * 1 = 4 | 1 * min(32/3, 256/60) = 4 |
 
 ## Disable Cluster Resource Modeling
+
+The resource modeling is always be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
+In the process of resource modeling, it will collect node and pod information from all clusters managed by Karmada.
+This imposes a considerable performance burden in large-scale scenarios.
+
+You can disable cluster resource modeling by setting `--enable-cluster-resource-modeling` to false in `karmada-controller-manager` and `karmada-agent`.
