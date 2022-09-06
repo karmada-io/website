@@ -11,6 +11,7 @@ import xiaohongshu from "../../static/img/supporters/xiaohongshu.png"
 import hualala from "../../static/img/supporters/hualala.png"
 import youzan from "../../static/img/supporters/youzan.png"
 import jointcloud from "../../static/img/supporters/jointcloud.png"
+import SELZJU from "../../static/img/supporters/SEL-ZJU.png"
 
 const supportersData = [
     {
@@ -64,6 +65,10 @@ const supportersData = [
     {
         logo: jointcloud,
         alt: 'jointcloud',
+    },
+    {
+        logo: SELZJU,
+        alt: 'SEL-ZJU'
     },
 ]
 
