@@ -38,7 +38,7 @@ argocd cluster add karmada-apiserver
 
 If everything goes well, you can see the registered Karmada control plane from the Argo CD UI, e.g.:
 
-![](../../resources/argocd-register-karmada.png)
+![](argocd-register-karmada.png)
 
 ## Creating Apps Via UI
 
@@ -55,25 +55,25 @@ Then, create a [PropagationPolicy manifest](https://github.com/RainbowMango/argo
 
 Click the `+ New App` button as shown below:
 
-![](../../resources/argocd-new-app.png)
+![](argocd-new-app.png)
 
 Give your app the name `guestbook-multi-cluster`, use the project `default`, and leave the sync policy as `Manual`:
 
-![](../../resources/argocd-new-app-name.png)
+![](argocd-new-app-name.png)
 
 Connect the `forked repo` to Argo CD by setting repository url to the github repo url, set revision as `karmada-demo`,
 and set the path to `guestbook`:
 
-![](../../resources/argocd-new-app-repo.png)
+![](argocd-new-app-repo.png)
 
 For Destination, set cluster to `karmada` and namespace to `default`:
 
-![](../../resources/argocd-new-app-cluster.png)
+![](argocd-new-app-cluster.png)
 
 ### Syncing Apps
 You can sync your applications via UI by simply clicking the SYNC button and following the pop-up instructions, e.g.:
 
-![](../../resources/argocd-sync-apps.png)
+![](argocd-sync-apps.png)
 
 More details please refer to [argocd guide: sync the application](https://argo-cd.readthedocs.io/en/stable/getting_started/#7-sync-deploy-the-application).
 
@@ -81,7 +81,7 @@ More details please refer to [argocd guide: sync the application](https://argo-c
 For deployment running in more than one clusters, you don't need to create applications for each
 cluster. You can get the overall and detailed status from one `Application`.
 
-![](../../resources/argocd-status-overview.png)
+![](argocd-status-overview.png)
 
 The `svc/guestbook-ui`, `deploy/guestbook-ui` and `propagationpolicy/guestbook` in the middle of the picture are the
 resources created by the manifest in the forked repo. And the `resourcebinding/guestbook-ui-service` and
@@ -90,9 +90,9 @@ resources created by the manifest in the forked repo. And the `resourcebinding/g
 ### Checking Detailed Status
 You can obtain the Deployment's detailed status by `resourcebinding/guestbook-ui-deployment`.
 
-![](../../resources/argocd-status-resourcebinding.png)
+![](argocd-status-resourcebinding.png)
 
 ### Checking Aggregated Status
 You can obtain the aggregated status of the Deployment from UI by `deploy/guestbook-ui`.
 
-![](../../resources/argocd-status-aggregated.png)
+![](argocd-status-aggregated.png)
