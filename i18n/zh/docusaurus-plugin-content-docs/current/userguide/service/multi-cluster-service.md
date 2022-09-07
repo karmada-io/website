@@ -1,28 +1,28 @@
 ---
-标题: 多集群服务发现
+title: Multi-cluster Service Discovery
 ---
 
 用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。 
 
 ## 前提条件
 
-### Karmada已被安装
+### 安装Karmada
 
-我们可以通过[参考快速](https://github.com/karmada-io/karmada#quick-start)来安装Karmada，或者直接运行 `hack/local-up-karmada.sh` 脚本执行的E2E案例。
+我们可以通过参考[快速开始](https://github.com/karmada-io/karmada#quick-start)来安装Karmada，或者直接运行 `hack/local-up-karmada.sh` 脚本，我们的E2E测试执行正是使用了该脚本。
 
 
 ### 成员集群网络
 
-确保至少有两个集群被添加到Karmada，并且成员集群之间的容器网络被连接。
+确保至少有两个集群被添加到 Karmada，并且成员集群之间的容器网络可相互连接。
 
 - 如果你使用 `hack/local-up-karmada.sh` 脚本来部署 Karmada，Karmada 将有三个成员集群，`member1` 和 `member2` 的容器网络将被连接。
 - 你可以使用 `Submariner` 或其他相关的开源项目来连接成员集群之间的网络。
 
-### ServiceExport 和ServiceImport 的 CRD 已被安装。
+### 安装 ServiceExport 和 ServiceImport CRD
 
 我们需要在成员集群中安装ServiceExport和ServiceImport。
 
-在ServiceExport和ServiceImport已经安装在**karmada控制平面上之后，我们可以创建 `ClusterPropagationPolicy` 来传播这两个 CRD 到成员集群。
+在在**karmada控制平面**上安装完 ServiceExport 和 ServiceImport 之后，我们可以创建 `ClusterPropagationPolicy` 来传播这两个 CRD 到成员集群。
 
 ```yaml
 # propagate ServiceExport CRD
@@ -61,7 +61,7 @@ spec:
 
 ### 第1步：在`member1`集群上部署服务 
 
-我们需要在 `member1` 集群上部署服务以进行发现。
+我们需要在 `member1` 集群上部署服务以便发现。
 
 ```yaml
 apiVersion: apps/v1
@@ -175,9 +175,9 @@ spec:
         - member2
 ```
 
-### 第3步：从 `menber2` 集群获取服务
+### 第3步：从 `member2` 集群获取服务
 
-经过上述步骤，我们可以在 `menber2` 集群上找到前缀为 `derived-` 的**衍生服务**。然后，我们可以访问**衍生服务**来访问`member1`集群上的服务。
+经过上述步骤，我们可以在 `member2` 集群上找到前缀为 `derived-` 的**衍生服务**。然后，我们可以访问**衍生服务**来访问`member1`集群上的服务。
 
 在 `member2` 集群上启动一个Pod `request`来访问**衍生服务**的ClusterIP。
 
