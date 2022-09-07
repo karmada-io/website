@@ -4,7 +4,7 @@ title: Multi-cluster Service Discovery
 
 用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。 
 
-## 前提条件
+## 准备开始
 
 ### 安装Karmada
 
