@@ -86,8 +86,8 @@ module.exports = {
                     items: [
                         "userguide/service/multi-cluster-service",
                         "userguide/service/multi-cluster-ingress",
-                        "userguide/service/istio/working-with-istio-on-flat-network",
-                        "userguide/service/istio/working-with-istio-on-non-flat-network",
+                        "userguide/service/working-with-istio-on-flat-network",
+                        "userguide/service/working-with-istio-on-non-flat-network",
                     ],
                 },
                 {
@@ -101,7 +101,7 @@ module.exports = {
                     type: "category",
                     label: "Multi-cluster CI/CD",
                     items: [
-                        "userguide/cicd/argo/working-with-argocd",
+                        "userguide/cicd/working-with-argocd",
                         "userguide/cicd/working-with-flux",
                     ],
                 },
@@ -153,8 +153,8 @@ module.exports = {
                     label: "Monitoring",
                     items: [
                         "administrator/monitoring/working-with-filebeat",
-                        "administrator/monitoring/prometheus/working-with-prometheus-in-control-plane",
-                        "administrator/monitoring/prometheus/working-with-prometheus",
+                        "administrator/monitoring/working-with-prometheus-in-control-plane",
+                        "administrator/monitoring/working-with-prometheus",
                     ],
                 },
                 {
@@ -192,7 +192,7 @@ module.exports = {
             label: "Contributor Guide",
             items: [
                 "contributor/cherry-picks",
-                "contributor/githubworkflow/github-workflow",
+                "contributor/github-workflow",
                 "contributor/lifted",
             ],
         },
@@ -200,8 +200,8 @@ module.exports = {
             type: "category",
             label: "Case Study",
             items: [
-                "casestudies/vipkid/vipkid",
-                "casestudies/ci123/ci123",
+                "casestudies/vipkid",
+                "casestudies/ci123",
             ],
         },
         {

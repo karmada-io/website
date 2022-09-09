@@ -293,8 +293,7 @@ EOF
 kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
 ```
 3. Use any node IP of the control plane and the port number (default 31802) to enter the grafana web UI of the control plane
-
-![imag](grafana.png)
+![imag](../../resources/grafana.png)
 
 **Attention**:
 
