@@ -88,7 +88,7 @@ When there are a large number of clusters that go online and offline frequently,
 
 The following figure shows the differences before and after we used Karmada.
 
-![Karmada在VIPKID](adoptions-vipkid-architecture.png)
+![Karmada在VIPKID](../resources/adoptions-vipkid-architecture-en.png)
 
 **After Karmada is introduced, the multi-cluster aggregation layer is truly unified.** We can manage resources by application on the Karmada control plane. We only need to interact with Karmada, not the clusters, which simplifies containerized application management and enables our PaaS platform to fully focus on service requirements.
 With Karmada integrated into GitOps, system components can be easily released and upgraded in each cluster, exponentially more efficient than before.

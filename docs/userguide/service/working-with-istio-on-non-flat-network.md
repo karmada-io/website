@@ -9,7 +9,7 @@ Follow this guide to install the Istio control plane on `member1` (the primary c
 remote cluster) to use the control plane in `member1`. All clusters reside on the different network, meaning there is
 not direct connectivity between the pods in all clusters.
 
-![Istio on Karmada-different-network](istio-on-karmada-different-network.png)
+![Istio on Karmada-different-network](../../resources/istio-on-karmada-different-network.png)
 
 ***
 The reason for deploying `istiod` on the `member1` is that `kiali` needs to be deployed on the same cluster as `istiod`
@@ -293,4 +293,4 @@ delete `--controllers=-namespace,*` in start command
 
 2. Deploy bookinfo application
 
-See module `Deploy bookinfo application` in [here](working-with-istio-on-flat-network#deploy-bookinfo-application)
+See module `Deploy bookinfo application` in [here](./working-with-istio-on-flat-network.md#deploy-bookinfo-application)
