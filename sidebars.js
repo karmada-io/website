@@ -200,6 +200,7 @@ module.exports = {
             type: "category",
             label: "Case Study",
             items: [
+                "casestudies/adopters",
                 "casestudies/vipkid",
                 "casestudies/ci123",
             ],
