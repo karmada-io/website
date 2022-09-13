@@ -300,7 +300,7 @@ In order to prevent service interruption during cluster failover, Karmada need t
 
 The [GracefulEvictionTasks](https://github.com/karmada-io/karmada/blob/12e8f01d01571932e6fe45cb7f0d1bffd2e40fd9/pkg/apis/work/v1alpha2/binding_types.go#L75-L89) field is added to `ResourceBinding/ClusterResourceBinding` to indicate the eviction task queue.
 
-When the faulty cluster os removed from the resource scheduling result by `taint-manager`, it will be added to the eviction task queue.
+When the faulty cluster is removed from the resource scheduling result by `taint-manager`, it will be added to the eviction task queue.
 
 The `gracefulEviction` controller is responsible for processing tasks in the eviction task queue. During the procession, the The `gracefulEviction` controller evaluates whether the current task can be removed form the eviction task queue one by one. The judgement conditions are as follows:
 - Check the health status of the current resource scheduling result. If the resource health status is healthy, the condition is met.
