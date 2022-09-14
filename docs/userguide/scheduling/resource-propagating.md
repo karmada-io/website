@@ -45,6 +45,7 @@ kubectl create deployment nginx --image nginx
 > Note: The resource exists only as a template in karmada. After being propagated to a member cluster, the behavior of the resource is the same as that of a single kubernetes cluster.
 
 > Note: Resources and PropagationPolicy are created in no sequence.
+  
 3. Display information of the deployment:
 ```shell
 karmadactl get deployment
@@ -56,6 +57,7 @@ The karmadactl get command now only supports the push mode. [ member3 ] is not r
 NAME    CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE   ADOPTION
 nginx   member1   1/1     1            1           52s   Y
 ```
+   
 4. List the pods created by the deployment:
 ```shell
 karmadactl get pod -l app=nginx
