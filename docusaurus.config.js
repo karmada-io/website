@@ -27,9 +27,11 @@ module.exports = {
         '⭐️ If you like Karmada, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/karmada-io/karmada">GitHub</a>! ⭐️',
     },
     algolia: {
-      appId: '<NEW_APP_ID>',
-      apiKey: '<NEW_SEARCH_API_KEY>',
-      indexName: 'xxx',
+      appId: '5IDBLUX6VJ',
+      apiKey: '0544ead27838375d12530a88e31fcce8',
+      indexName: 'karmada',
+      // contextualSearch ensures that search results are relevant to the current language and version.
+      contextualSearch: true,
     },
     navbar: {
       title: "Karmada",
