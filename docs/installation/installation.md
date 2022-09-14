@@ -117,6 +117,45 @@ Use `--karmada-apiserver-replicas` and `--etcd-replicas` flags to specify the nu
 kubectl karmada init --karmada-apiserver-replicas 3 --etcd-replicas 3
 ```
 
+### Manage Karmada Addons by Karmada command-line tool
+
+After using `kubectl karmada init` to deploy Karmada, you can use a subcommand `kubectl karmada addons` 
+to manage deployed Addons.
+
+#### Enable Karmada Addons
+
+You can use the available command `enable` to enable Karmada Addons from Kubernetes.
+
+E.g. Enable Karmada search to the kubernetes cluster and specify the Karmada control plane kubeconfig: 
+```bash
+kubectl karmada addons enable karmada-search --karmada-kubeconfig /etc/karmada/karmada-apiserver.config
+```
+
+#### Disable Karmada Addons
+
+You can use the available command `disable` to disable Karmada Addons from Kubernetes.
+
+E.g. Disable Karmada search and descheduler on your Kubernetes cluster:
+```bash
+kubectl karmada addons disable karmada-search karmada-descheduler
+```
+
+#### List Karmada Addons
+
+You can view the results of enable and disable through the log, or use the available command `list` to list Karmada Addons from Kubernetes.
+
+E.g. List Karmada all addons installed in Kubernetes cluster.
+```bash
+kubectl-karmada addons list
+|-----------------------------|----------|
+|         ADDON NAME          |  STATUS  |
+|-----------------------------|----------|
+| karmada-descheduler         | disabled |
+| karmada-scheduler-estimator | disabled |
+| karmada-search              | enabled  |
+|-----------------------------|----------|
+```
+
 ### Install Karmada in Kind cluster
 
 > kind is a tool for running local Kubernetes clusters using Docker container "nodes".
