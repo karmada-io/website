@@ -277,7 +277,7 @@ spec:
 
 ## Multi-Cluster Failover
 
-Please refer to [Failover feature of Karmada](../failover/failover.md#failover-feature-of-karmada).
+Please refer to [Failover feature of Karmada](../failover/failover-overview.md).
 
 ## Propagate specified resources to clusters
 
