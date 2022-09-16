@@ -4,9 +4,9 @@ title: Karmada Object association mapping
 
 ### Review
 
-![](../resources/object-association-map.png)
+![](../resources/general/object-association-map.png)
 
-This picture is made by draw.io. If you need to update the **Review**, you can use the file [object-association-map.drawio](../resources/object-association-map.drawio).
+This picture is made by draw.io. If you need to update the **Review**, you can use the file [object-association-map.drawio](../resources/general/object-association-map.drawio).
 
 ## Label/Annotation information table
 
