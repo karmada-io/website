@@ -128,13 +128,6 @@ module.exports = {
             items: [
                 {
                     type: "category",
-                    label: "Karmadactl Manual",
-                    items: [
-                        "administrator/karmadactl/init"
-                    ],
-                },
-                {
-                    type: "category",
                     label: "Configuration",
                     items: [
                         "administrator/configuration/configure-controllers"
@@ -184,7 +177,6 @@ module.exports = {
             label: "Developer Guide",
             items: [
                 "developers/profiling-karmada",
-                "developers/bash-auto-completion-on-linux",
             ],
         },
         {
@@ -217,6 +209,16 @@ module.exports = {
             type: "category",
             label: "Reference",
             items: [
+                {
+                    type: "category",
+                    label: "Command line tool(karmadactl)",
+                    items: [
+                        "reference/karmadactl/bash-auto-completion-on-linux",
+                        "reference/karmadactl/karmadactl-commands",
+                        "reference/karmadactl/karmadactl-synopsis",
+                        "reference/karmadactl/karmadactl-usage-conventions",
+                    ],
+                },
                 "reference/reserved-namespaces",
                 "reference/object-association-mapping",
             ],
