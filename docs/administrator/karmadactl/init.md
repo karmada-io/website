@@ -1,5 +1,0 @@
----
-title: Karmadactl Init
----
-
-TBD
