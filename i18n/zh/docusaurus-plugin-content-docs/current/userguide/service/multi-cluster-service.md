@@ -1,5 +1,5 @@
 ---
-title: Multi-cluster Service Discovery
+title: 多集群服务发现
 ---
 
 用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。 
@@ -22,7 +22,7 @@ title: Multi-cluster Service Discovery
 
 我们需要在成员集群中安装ServiceExport和ServiceImport。
 
-在在**karmada控制平面**上安装完 ServiceExport 和 ServiceImport 之后，我们可以创建 `ClusterPropagationPolicy` 来传播这两个 CRD 到成员集群。
+在**karmada控制平面**上安装完 ServiceExport 和 ServiceImport 之后，我们可以创建 `ClusterPropagationPolicy` 来分发这两个 CRD 到成员集群。
 
 ```yaml
 # propagate ServiceExport CRD
@@ -57,7 +57,7 @@ spec:
         - member1
         - member2
 ```
-## 例如
+## 示例
 
 ### 第1步：在`member1`集群上部署服务 
 
@@ -124,7 +124,7 @@ spec:
 
 ### 第2步：导出服务到 `member2` 集群
 
-- 在**karmada控制平面**上创建一个 `ServiceExport` 对象，然后创建一个 `PropagationPolicy` ，将 ` ServiceExport` 对象传播到 ` member1` 集群。
+- 在**karmada控制平面**上创建一个 `ServiceExport` 对象，然后创建一个 `PropagationPolicy` ，将 ` ServiceExport` 对象分发到 ` member1` 集群。
 
 ```yaml
 apiVersion: multicluster.x-k8s.io/v1alpha1
@@ -147,7 +147,7 @@ spec:
         - member1
 ```
 
-- 在**karmada控制平面**上创建一个 `ServiceImport` 对象，然后创建一个 `PropagationPlicy ` 来传播 `ServiceImport ` 对象到 `member2 `集群。
+- 在**karmada控制平面**上创建一个 `ServiceImport` 对象，然后创建一个 `PropagationPlicy ` 来分发 `ServiceImport ` 对象到 `member2 `集群。
 
 ```yaml
 apiVersion: multicluster.x-k8s.io/v1alpha1
@@ -177,9 +177,9 @@ spec:
 
 ### 第3步：从 `member2` 集群获取服务
 
-经过上述步骤，我们可以在 `member2` 集群上找到前缀为 `derived-` 的**衍生服务**。然后，我们可以访问**衍生服务**来访问`member1`集群上的服务。
+经过上述步骤，我们可以在 `member2` 集群上找到前缀为 `derived-` 的**派生服务**。然后，我们可以访问**派生服务**来访问`member1`集群上的服务。
 
-在 `member2` 集群上启动一个Pod `request`来访问**衍生服务**的ClusterIP。
+在 `member2` 集群上启动一个Pod `request`来访问**派生服务**的ClusterIP。
 
 ```
 kubectl run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
