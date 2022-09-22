@@ -26,4 +26,4 @@ Karmada provides a standalone Override Policy API for specializing the automatio
 
 The following diagram shows how Karmada resources are propagated to member clusters.
 
-![karmada-resource-relation](../resources/karmada-resource-relation.png)
+![karmada-resource-relation](../resources/general/karmada-resource-relation.png)
