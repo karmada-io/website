@@ -3,3 +3,4 @@ node_modules
 .docusaurus
 .hugo_build.lock
 .idea
+build

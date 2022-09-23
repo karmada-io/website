@@ -59,7 +59,7 @@ The `karmada-apiserver` is the **main kubeconfig** to be used when interacting w
 
 ### Demo
 
-![Demo](../resources/sample-nginx.svg)
+![Demo](../resources/general/sample-nginx.svg)
 
 ### Propagate application
 In the following steps, we are going to propagate a deployment by Karmada.

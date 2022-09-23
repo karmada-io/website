@@ -4,7 +4,7 @@ title: Architecture
 
 The overall architecture of Karmada is shown as below:
 
-![Architecture](../resources//architecture.png)
+![Architecture](../resources/general/architecture.png)
 
 The Karmada Control Plane consists of the following components:
 

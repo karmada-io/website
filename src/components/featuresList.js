@@ -7,10 +7,8 @@ function Feature({imgUrl, title, description}) {
             <div className="text--center">
                 {imgUrl && <img className={styles.featureImage} src={useBaseUrl(imgUrl)} alt={title}/>}
             </div>
-            <div className="container">
-                <h2>{title}</h2>
-                <p>{description}</p>
-            </div>
+            <h2>{title}</h2>
+            <p>{description}</p>
         </>
     )
 }
