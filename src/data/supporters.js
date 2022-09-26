@@ -12,6 +12,7 @@ import hualala from "../../static/img/supporters/hualala.png"
 import youzan from "../../static/img/supporters/youzan.png"
 import jointcloud from "../../static/img/supporters/jointcloud.png"
 import SELZJU from "../../static/img/supporters/SEL-ZJU.png"
+import zhejianglab from "../../static/img/supporters/zhejianglab.png"
 
 const supportersData = [
     {
@@ -69,6 +70,10 @@ const supportersData = [
     {
         logo: SELZJU,
         alt: 'SEL-ZJU'
+    },
+    {
+        logo: zhejianglab,
+        alt: 'zhejianglab',
     },
 ]
 
