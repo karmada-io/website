@@ -6,12 +6,13 @@
 # Updating curl version may fix this problem, but it needs to update CentOS version.
 
 readonly -A services_standard=(
-  [kube-apiserver]='https://127.0.0.1:6443/livez?verbose'
-  [kube-controller-manager]='https://127.0.0.1:10257/healthz?verbose'
   [karmada-aggregated-apiserver]='https://127.0.0.1:7443/livez?verbose'
   [karmada-controller-manager]='http://127.0.0.1:10357/healthz?verbose'
-  [karmada-scheduler]='http://127.0.0.1:10511/healthz?verbose'
   [karmada-scheduler-estimator]='http://127.0.0.1:10351/healthz?verbose'
+  [karmada-scheduler]='http://127.0.0.1:10511/healthz?verbose'
+  [karmada-search]='https://127.0.0.1:9443/livez?verbose'
+  [kube-apiserver]='https://127.0.0.1:6443/livez?verbose'
+  [kube-controller-manager]='https://127.0.0.1:10257/healthz?verbose'
 )
 
 readonly -A services_tls1_3=(
