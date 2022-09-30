@@ -1,53 +1,51 @@
 ---
-title: What is Karmada?
+title: 什么是 Karmada ？
 slug: /
 
 ---
 
-## Karmada: Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration
+## Karmada：一款开放、多云、多集群的管理系统
 
-Karmada (Kubernetes Armada) is a Kubernetes management system that enables you to run your cloud-native applications across multiple Kubernetes clusters and clouds, with no changes to your applications. By speaking Kubernetes-native APIs and providing advanced scheduling capabilities, Karmada enables truly open, multi-cloud Kubernetes.
+Karmada (Kubernetes Armada) 是一个 Kubernetes 管理系统，可以使您在无需更改应用程序的情况下，跨集群、跨云运行云原生 APP 。 通过使用 Kubernetes 原生 API 接口，并提供高级调度功能，Karmada 真正实现了开放的、多云的 Kubernetes。
 
-Karmada aims to provide turnkey automation for multi-cluster application management in multi-cloud and hybrid cloud scenarios,
-with key features such as centralized multi-cloud management, high availability, failure recovery, and traffic scheduling.
+Karmada 旨在为多云和混合云场景中的多集群应用程序管理提供一站式方案，
+重要特性有集中式多云管理、高可用性、错误恢复和流量调度等。
 
-Karmada is a sandbox project of the [Cloud Native Computing Foundation](https://cncf.io/) (CNCF).
+Karmada 属于 [云原生计算基金会](https://cncf.io/)（CNCF）的沙盒项目。
 
-## Why Karmada:
-- __K8s Native API Compatible__
-    - Zero change upgrade, from single-cluster to multi-cluster
-    - Seamless integration of existing K8s tool chain
+## 为什么选择 Karmada：
+- __兼容 K8s 原生 API__
+     - 无需升级更新，从单集群到多集群
+     - 无缝集成现有 K8s 工具链
 
-- __Out of the Box__
-    - Built-in policy sets for scenarios, including: Active-active, Remote DR, Geo Redundant, etc.
-    - Cross-cluster applications auto-scaling, failover and load-balancing on multi-cluster.
+- __开箱即用__
+     - 内置多种场景策略，包括：双活、远程容灾、异地冗余等
+     - 跨集群应用程序在多集群上实现自动扩展、错误恢复以及负载平衡
 
-- __Avoid Vendor Lock-in__
-    - Integration with mainstream cloud providers
-    - Automatic allocation, migration across clusters
-    - Not tied to proprietary vendor orchestration
+- __避免与供应商锁定__
+     - 与主流云提供商集成
+     - 自动跨集群分配迁移
+     - 不依赖于专有的供应商编排
 
-- __Centralized Management__
-    - Location agnostic cluster management
-    - Support clusters in Public cloud, on-prem or edge
+- __集中管理__
+     - 位置无关的集群管理
+     - 支持公共云、 on-prem 云以及边缘云上的集群
 
-- __Fruitful Multi-Cluster Scheduling Policies__
-    - Cluster Affinity, Multi Cluster Splitting/Rebalancing,
-    - Multi-Dimension HA: Region/AZ/Cluster/Provider
+- __富有成效的多集群调度策略__
+     - 集群亲和性、多集群拆分/重新部署，
+     - 多维度高可用性：区域/AZ/集群/提供商
 
-- __Open and Neutral__
-    - Jointly initiated by Internet, finance, manufacturing, teleco, cloud providers, etc.
-    - Target for open governance with CNCF
+- __开放与中立__
+     - 由互联网、金融、制造、电信、云提供商等共同发起
+     - 目标是与 CNCF 开放治理
 
-
-
-**Notice: this project is developed in continuation of Kubernetes [Federation v1](https://github.com/kubernetes-retired/federation) and [v2](https://github.com/kubernetes-sigs/kubefed). Some basic concepts are inherited from these two versions.**
+**注意：本项目为 Kubernetes [Federation v1](https://github.com/kubernetes-retired/federation) 和 [v2](https://github.com/kubernetes-sigs/kubefed) 的延续开发，继承了这两个版本的一些基本概念。**
 
 
-## What's Next
+## 下一篇
 
-Here are some recommended next steps:
+推荐您接下来阅读以下文档：
 
-- Learn Karmada's [core concepts](./concepts.md).
-- Learn Karmada's [architecture](./architecture.md).
-- Start to [install Karmada](../installation/installation.md).
+- 学习 Karmada 的 [基础概念](./getting-started/core-concept)。
+- 学习 Karmada 的 [架构](./getting-started/architecture)。
+- 开始 [安装 Karmada](./install)。
