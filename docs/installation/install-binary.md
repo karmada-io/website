@@ -35,7 +35,7 @@ vi /etc/hosts
 172.31.209.247	karmada-03
 ```
 
-Alternatively, you can use LVS for load balancing, and don't change /etc/hosts file.
+Alternatively, you can use "Linux Virtual Server" for load balancing, and don't change /etc/hosts file.
 
 ### Environment
 
@@ -161,7 +161,7 @@ Execute operations at `karmada-01`.
 
 ### Create kubeconfig Files
 
-**Step 1: Download bash script **
+**Step 1: Download bash script**
 
 Download [this file](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/create_kubeconfig_file.sh).
 
@@ -652,7 +652,7 @@ spec:
 
 ### Verify
 
-```
+```bash
 $ ./check_status.sh
 ###### Start check karmada-aggregated-apiserver
 [+]ping ok
@@ -824,6 +824,7 @@ ExecStart=/usr/local/sbin/karmada-scheduler \
   --feature-gates "Failover=false,PropagateDeps=false" \
   --kubeconfig /etc/karmada/karmada.kubeconfig \
   --logtostderr=true \
+  --scheduler-estimator-port 10352 \
   --secure-port 10511 \
   --v=4 \
 
@@ -987,4 +988,174 @@ kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-
 kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
 ```
 
+## Install karmada-scheduler-estimator
+
+`karmada-scheduler` uses gRPC to access karmada-scheduler-estimator. You can use "Linux Virtual Server" as the Load Balancer.
+
+You need to deploy above components and join member cluster into Karmada Control Plane first. See: [Install Karmada on your own cluster](./installation.md#install-karmada-on-your-own-cluster)
+
+### Create Systemd Service
+
+In the example below, "/etc/karmada/physical-machine-karmada-member-1.kubeconfig" is kubeconfig file of the joined member cluster.
+
+
+
+Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+
+/usr/lib/systemd/system/karmada-scheduler-estimator.service
+
+```bash
+[Unit]
+Description=Karmada Scheduler Estimator
+Documentation=https://github.com/karmada-io/karmada
+
+[Service]
+# You need to change `--cluster-name` `--kubeconfig`
+ExecStart=/usr/local/sbin/karmada-scheduler-estimator \
+  --cluster-name "physical-machine-karmada-member-1" \
+  --kubeconfig "/etc/karmada/physical-machine-karmada-member-1.kubeconfig" \
+  --logtostderr=true \
+  --server-port 10352 \
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Start karmada-scheduler-estimator
+
+```bash
+systemctl daemon-reload
+systemctl enable karmada-scheduler-estimator.service
+systemctl start karmada-scheduler-estimator.service
+systemctl status karmada-scheduler-estimator.service
+```
+
+### Create Service
+
+(1) Create `karmada-scheduler-estimator.yaml `
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: karmada-scheduler-estimator-{{MEMBER_CLUSTER_NAME}}
+  namespace: karmada-system
+  labels:
+    cluster: {{MEMBER_CLUSTER_NAME}}
+spec:
+  ports:
+    - protocol: TCP
+      port: {{PORT}}
+      targetPort: {{TARGET_PORT}}
+  type: ExternalName
+  externalName: {{EXTERNAL_NAME}}
+```
+
+`{{PORT}}`: "--scheduler-estimator-port" parameter of "karmada-scheduler".
+
+`{{TARGET_PORT}}`: LoadBalancer IP.
+
+`{{EXTERNAL_NAME}}`: LoadBalancer Host.
+
+`{{MEMBER_CLUSTER_NAME}}`: Member Cluster Name
+
+
+
+(2) Create Service
+
+```bash
+kubectl create --kubeconfig "/etc/karmada/admin.kubeconfig" -f karmada-scheduler-estimator.yaml 
+```
+
+### Verify
+
+```bash
+$ ./check_status.sh
+###### Start check karmada-scheduler-estimator
+ok
+###### karmada-scheduler-estimator check success
+```
+
+### Trouble Shooting
+
+1\. `karmada-scheduler` takes some time to find the new `karmada-scheduler-estimator`. If you can't wait, you can just restart karmada-scheduler.
+
+```bash
+systemctl restart karmada-scheduler.service
+```
+
+## Install karmada-search
+
+### Create Systemd Service
+
+Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+
+/usr/lib/systemd/system/karmada-search.service
+
+```bash
+[Unit]
+Description=Karmada Search
+Documentation=https://github.com/karmada-io/karmada
+
+[Service]
+ExecStart=/usr/local/sbin/karmada-search \
+  --audit-log-maxage 0  \
+  --audit-log-maxbackup 0 \
+  --audit-log-path -  \
+  --authentication-kubeconfig /etc/karmada/karmada.kubeconfig  \
+  --authorization-kubeconfig /etc/karmada/karmada.kubeconfig  \
+  --etcd-cafile /etc/karmada/pki/etcd/ca.crt \
+  --etcd-certfile /etc/karmada/pki/etcd/apiserver-etcd-client.crt \
+  --etcd-keyfile /etc/karmada/pki/etcd/apiserver-etcd-client.key \
+  --etcd-servers "https://172.31.209.245:2379,https://172.31.209.246:2379,https://172.31.209.247:2379" \
+  --feature-gates "APIPriorityAndFairness=false"  \
+  --kubeconfig /etc/karmada/karmada.kubeconfig \
+  --logtostderr=true \
+  --secure-port 9443 \
+  --tls-cert-file /etc/karmada/pki/karmada.crt \
+  --tls-private-key-file /etc/karmada/pki/karmada.key \
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Start karmada-search
+
+```bash
+systemctl daemon-reload
+systemctl enable karmada-search.service
+systemctl start karmada-search.service
+systemctl status karmada-search.service
+```
+
+### Verify
+
+```bash
+$ ./check_status.sh
+###### Start check karmada-search
+[+]ping ok
+[+]log ok
+[+]etcd ok
+[+]poststarthook/generic-apiserver-start-informers ok
+[+]poststarthook/max-in-flight-filter ok
+[+]poststarthook/start-karmada-search-informers ok
+[+]poststarthook/start-karmada-informers ok
+[+]poststarthook/start-karmada-search-controller ok
+[+]poststarthook/start-karmada-proxy-controller ok
+livez check passed
+
+###### karmada-search check success
+```
+
+### Configure
+
+[Proxy Global Resources](../userguide/globalview/proxy-global-resource.md)
 
