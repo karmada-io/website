@@ -186,6 +186,7 @@ module.exports = {
             type: "category",
             label: "Contributor Guide",
             items: [
+                "contributor/contribute-docs",
                 "contributor/cherry-picks",
                 "contributor/github-workflow",
                 "contributor/lifted",
