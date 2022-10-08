@@ -31,9 +31,10 @@ karmada-scheduler-estimator-member2-774fb84c5d-md4wt   1/1     Running   0      
 karmada-scheduler-estimator-member3-5c7d87f4b4-76gv9   1/1     Running   0          72s
 ```
 
-- If the cluster has not been joined, you could use `hack/deploy-agent-and-estimator.sh` to deploy both karmada-agent and karmada-scheduler-estimator.
-- If the cluster has been joined already, you could use `hack/deploy-scheduler-estimator.sh` to only deploy karmada-scheduler-estimator.
-
+- If you deploy Karmada in Physical Machine, see [Installation by Binary](../../installation/install-binary.md#install-karmada-scheduler-estimator).
+- If you deploy Karmada in Host Kubernetes Cluster.
+    - If the Member Cluster has not been joined, you could use `hack/deploy-agent-and-estimator.sh` to deploy both karmada-agent and karmada-scheduler-estimator.
+    - If the Member Cluster has been joined already, you could use `hack/deploy-scheduler-estimator.sh` to only deploy karmada-scheduler-estimator.
 ### Scheduler option '--enable-scheduler-estimator'
 
 After all member clusters have been joined and estimators are all ready, please specify the option `--enable-scheduler-estimator=true` to enable scheduler estimator.
