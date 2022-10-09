@@ -1,5 +1,5 @@
 ---
-title: Installation from Karmadactl
+title: Installation from Kubectl-karmada
 ---
 
 You can install `kubectl-karmada` plug-in in any of the following ways:

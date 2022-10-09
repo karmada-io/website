@@ -36,6 +36,7 @@ module.exports = {
             items: [
                 "installation/installation",
                 "installation/install-kubectl-karmada",
+                "installation/install-karmadactl",
                 "installation/fromsource",
                 "installation/install-binary",
             ],
