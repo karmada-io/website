@@ -1,23 +1,23 @@
 ---
-title: Use Filebeat to collect logs of Karmada member clusters
+title: 使用 Filebeat 来收集 Karmada 成员集群的日志
 ---
 
-[Filebeat](https://github.com/elastic/beats/tree/master/filebeat) is a lightweight shipper for forwarding and centralizing log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to [Elasticsearch](https://www.elastic.co/products/elasticsearch) or [kafka](https://github.com/apache/kafka) for indexing. 
+[Filebeat](https://github.com/elastic/beats/tree/master/filebeat) 是一个轻量级的运送器，用于转发和集中日志数据。作为代理安装在你的服务器上，Filebeat 监控你指定的日志文件或位置，收集日志事件，并将它们转发到 [Elasticsearch](https://www.elastic.co/products/elasticsearch) 或 [kafka](https://github.com/apache/kafka) 以进行索引。
 
-This document demonstrates how to use the `Filebeat` to collect logs of Karmada member clusters. 
+本文演示了如何使用 `Filebeat` 来收集 Karmada 成员集群的日志。
 
-## Start up Karmada clusters
+## 启动 Karmada 集群
 
-You just need to clone Karmada repo, and run the following script in Karmada directory. 
+你只需要克隆 Karmada repo，并在 Karmada 目录下运行以下脚本。
 
 ```bash
 hack/local-up-karmada.sh
 ```
 
-## Start Filebeat
+## 启动Filebeat
 
-1. Create resource objects of Filebeat, the content is as follows. You can specify a list of inputs in the `filebeat.inputs` section of the `filebeat.yml`. Inputs specify how Filebeat locates and processes input data, also you can configure Filebeat to write to a specific output by setting options in the `Outputs` section of the `filebeat.yml` config file. The example will collect the log information of each container and write the collected logs to a file. More detailed information about the input and output configuration, please refer to: https://github.com/elastic/beats/tree/master/filebeat/docs
-
+1. 创建 Filebeat 的资源对象，内容如下，你可以在 `filebeat.yml` 中的 `filebeat.inputs` 部分指定一个输入列表。输入指定了 Filebeat 如何定位和处理输入数据，同时你也可以通过在 `filebeat.yml` 配置文件的 `Outputs` 部分设置选项来配置 Filebeat 写到一个特定的输出。这个例子将收集每个容器的日志信息，并将收集到的日志写到一个文件中。关于输入和输出配置的更多详细信息，请参考：https://github.com/elastic/beats/tree/master/filebeat/docs
+   
    ```yaml
    apiVersion: v1
    kind: Namespace
@@ -79,7 +79,7 @@ hack/local-up-karmada.sh
                matchers:
                - logs_path:
                    logs_path: "/var/log/containers/"
-       # To enable hints based autodiscover, remove `filebeat.inputs` configuration and uncomment this:
+       # 要启用基于提示的自动发现功能，请删除 `filebeat.inputs` 配置，并取消注释。
        #filebeat.autodiscover:
        #  providers:
        #    - type: kubernetes
@@ -172,14 +172,13 @@ hack/local-up-karmada.sh
            configMap:
              defaultMode: 0600
              name: filebeat-config
-         # data folder stores a registry of read status for all files, so we don't send everything again on a Filebeat pod restart
+         # data 文件夹存储了所有文件的读取状态的注册表，所以我们不会在 Filebeat pod 重启时再次发送所有文件。
          - name: data
            hostPath:
              path: /var/lib/filebeat-data
              type: DirectoryOrCreate
    ```
-
-2. Run the below command to execute Karmada PropagationPolicy and ClusterPropagationPolicy. 
+2. 运行下面的命令来执行 Karmada PropagationPolicy 和 ClusterPropagationPolicy。
 
    ```
    cat <<EOF | kubectl apply -f -
@@ -234,9 +233,8 @@ hack/local-up-karmada.sh
    EOF
    ```
 
-3. Obtain the collected logs according to the `output` configuration of the `filebeat.yml`.
+3. 根据 filebeat.yml 的 output 配置，获取收集的日志。
 
-## Reference
-
+## 参考资料
 - https://github.com/elastic/beats/tree/master/filebeat
 - https://github.com/elastic/beats/tree/master/filebeat/docs
