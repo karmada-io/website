@@ -1,21 +1,20 @@
+--- 
+title: 使用 Prometheus 来监控 Karmada 成员集群
 ---
-title: Use Prometheus to monitor Karmada member clusters
----
 
-[Prometheus](https://github.com/prometheus/prometheus), a [Cloud Native Computing Foundation](https://cncf.io/) project, is a system and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.
+[Prometheus](https://github.com/prometheus/prometheus) 是一个 [云原生计算基金会](https://cncf.io/) 项目，是一个系统和服务监控系统。它以给定的时间间隔从配置的目标收集指标，评估规则表达式，显示结果，并在观察到指定条件时触发警报。
+本文举例说明如何使用 `Prometheus` 来监控 Karmada 成员集群。
 
-This document gives an example to demonstrate how to use the `Prometheus` to monitor Karmada member clusters.
-
-## Start up Karmada clusters
-You just need to clone Karmada repo, and run the following script in Karmada directory.
+## 启动 Karmada 集群
+你只需要克隆 Karmada repo，并在 Karmada 目录下运行以下脚本。
 
 ```shell
 hack/local-up-karmada.sh
 ```
 
-## Start Prometheus
+## 启动 Prometheus
 
-1. Create resource objects of Prometheus, the content is as follows.
+1. 创建 Prometheus 的资源对象，内容如下。
 
    ```
    apiVersion: v1
@@ -289,7 +288,7 @@ hack/local-up-karmada.sh
              name: prometheus-config
    ```
 
-2. Run the below command to execute Karmada PropagationPolicy and ClusterPropagationPolicy.
+2. 运行下面的命令来执行 Karmada PropagationPolicy 和 ClusterPropagationPolicy。
 
    ```
    cat <<EOF | kubectl apply -f -
@@ -348,9 +347,9 @@ hack/local-up-karmada.sh
    EOF
    ```
 
-3. Use any node IP of the member cluster and the port number (default 30003) to enter the Prometheus monitoring page of the member cluster
+3. 使用成员集群的任何节点IP和端口号（默认为30003）进入成员集群的 Prometheus 监控页面
 
-## Reference
+## 参考资料
 
 - https://github.com/prometheus/prometheus
 - https://prometheus.io
