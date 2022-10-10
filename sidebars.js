@@ -212,6 +212,10 @@ module.exports = {
         },
         {
             type: "doc",
+            id: "security",
+        },
+        {
+            type: "doc",
             id: "releases",
         },
         {
