@@ -211,6 +211,10 @@ module.exports = {
             id: "faq/faq",
         },
         {
+            type: "doc",
+            id: "releases",
+        },
+        {
             type: "category",
             label: "Reference",
             items: [
