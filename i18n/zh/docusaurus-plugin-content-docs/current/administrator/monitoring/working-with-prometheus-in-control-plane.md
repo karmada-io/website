@@ -1,16 +1,16 @@
 ---
-title: Use Prometheus to monitor Karmada control plane
+title:使用 Prometheus 来监控 Karmada 控制平面
 ---
 
-[Prometheus](https://github.com/prometheus/prometheus), a [Cloud Native Computing Foundation](https://cncf.io/) project, is a system and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.
+[Prometheus](https://github.com/prometheus/prometheus) 是一个[云原生计算基金会](https://cncf.io/) 项目，是一个系统和服务监控系统。它以给定的时间间隔从配置的目标收集指标，评估规则表达式，显示结果，并在观察到指定条件时触发警报。
 
-This document gives an example to demonstrate how to use the `Prometheus` to monitor Karmada control plane.
+本文举例说明如何使用 `Prometheus` 来监控 Karmada 控制平面。
 
 
 
-## Start up karmada clusters
+## 启动 karmada 集群
 
-You just need to clone Karmada repo, and run the following script in Karmada directory.
+你只需要克隆 Karmada repo，并在 Karmada 目录下运行以下脚本。
 
 ```shell
 hack/local-up-karmada.sh
@@ -18,9 +18,9 @@ hack/local-up-karmada.sh
 
 
 
-## Start Prometheus
+## 启动 Prometheus
 
-1. Create the resource of RBAC in both `karmada-host` context and `karmada-apiserver` context
+1. 在 `karmada-host` 文本和 `karmada-apiserver` 文本中创建 RBAC 的资源。
 
    ```yaml
    apiVersion: v1
@@ -77,8 +77,8 @@ hack/local-up-karmada.sh
      namespace: monitor
    ```
 
-2. Create Secret for ServiceAccount **[need in k8s v1.24+]** 
-   (Creating a ServiceAccount does not automatically generate Secret in v1.24+ )
+2. 为 ServiceAccount 创建 Secret **[在k8s v1.24+中需要]**
+   (在v1.24+版本中，创建 ServiceAccount 不会自动生成 Secret )
 
    ```yaml
    apiVersion: v1
@@ -91,14 +91,13 @@ hack/local-up-karmada.sh
        kubernetes.io/service-account.name: "prometheus"
    ```
 
-3. Get the token for accessing the karmada apiserver
+3. 获取访问 karmada apiserver 的令牌
 
    ```shell
    kubectl get secret prometheus -o=jsonpath={.data.token} -n monitor --context "karmada-apiserver" | base64 -d
    ```
 
-4. Create resource objects of Prometheus in context `karmada-host`, also you need replace `<karmada-token>` (2 places) with the token got from step 3
-
+4. 在 "karmada-host " 上下文中创建 Prometheus 的资源对象，同时你需要用步骤3得到的令牌替换 "<karmada-token>"（2处）。
    ```yaml
    apiVersion: v1
    kind: ConfigMap
@@ -265,13 +264,12 @@ hack/local-up-karmada.sh
    
    ```
 
-3. Use any node IP of the control plane and the port number (default 31801) to enter the Prometheus monitoring page of the control plane
+3. 使用控制平面的任何节点IP和端口号（默认为31801），进入控制平面的 Prometheus 监控页面。
 
+## 使用 Grafana 实现指标的可视化
+为了获得更好的可视化指标体验，我们还可以使用 Grafana 与 Prometheus，以及社区提供的 [Dashboards] (https://grafana.com/grafana/dashboards/)。
 
-## Visualizing metrics using Grafana
-For a better experience with visual metrics, we can also use Grafana with Prometheus, as well as [Dashboards](https://grafana.com/grafana/dashboards/) provided by the community
-
-1. install grafana with helm
+1. 用Helm安装Grafana
 ```shell
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
@@ -288,20 +286,20 @@ service:
   port: 80
 EOF
 ```
-2. get the login password for grafana web UI
+2. 获取 grafana 网页用户界面的登录密码
 ```shell
 kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
 ```
-3. Use any node IP of the control plane and the port number (default 31802) to enter the grafana web UI of the control plane
+3. 使用控制平面的任何节点IP和端口号（默认为31802）进入控制平面的 grafana web UI。
 ![imag](../../resources/administrator/prometheus/grafana.png)
 
-**Attention**:
+**注意**
 
-1. In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apisever, kamada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
+1. 在 k8s v1.24+ 中，来自 cadvisor 的指标可能会遗漏图像、名称和容器标签，这可能会导致 karmada 组件（如 karmada-apisever、kamada-controller-manager）的指标无法被观察到 [link](https://github.com/kubernetes/kubernetes/issues/111077)
 
 
 
-## Reference
+## 参考资料
 
 - https://github.com/prometheus/prometheus
 - https://prometheus.io/
