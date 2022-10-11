@@ -35,8 +35,7 @@ module.exports = {
             label: "Installation",
             items: [
                 "installation/installation",
-                "installation/install-kubectl-karmada",
-                "installation/install-karmadactl",
+                "installation/install-cli-tools",
                 "installation/fromsource",
                 "installation/install-binary",
             ],
