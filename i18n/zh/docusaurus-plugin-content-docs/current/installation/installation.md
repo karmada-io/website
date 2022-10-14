@@ -1,44 +1,41 @@
 ---
-title: Installation Overview
+title: 安装概述
 ---
 
-## Prerequisites
+## 前提条件
 
-### Karmada kubectl plugin
-`kubectl-karmada` is the Karmada command-line tool that lets you control the Karmada control plane, it presents as
-the [kubectl plugin][1].
-For installation instructions see [installing kubectl-karmada](./install-cli-tools.md#install-kubectl-karmada).
+### Karmada kubectl 插件
+`kubectl-karmada` 是允许你控制 Karmada 控制面的 Karmada 命令行工具，该工具表现为一个 [kubectl 插件][1]。
+有关安装说明，请参见[安装 kubectl-karmada](./install-cli-tools.md#install-kubectl-karmada)。
 
 ### Karmadactl
-`karmadactl` is also the command-line tool that lets you control the Karmada control plane. Compared with kubectl-karmada,
-it is a complete CLI tool exclusive to Karmada.
-For installation instructions see [installing karmadactl](./install-cli-tools.md#install-karmadactl).
+`karmadactl` 也是允许你控制 Karmada 控制面的 Karmada 命令行工具。
+与 kubectl-karmada 相比，`karmadactl` 是一个完全专用于 Karmada 的 CLI 工具。
+有关安装说明，请参见[安装 karmadactl](./install-cli-tools.md#install-karmadactl)。
 
 :::note
 
-Although the above two tools have different forms, the related commands and options are exactly the same.
-The following takes kubectl-karmada as an example.
-Replacing it with karmadactl also works fine.
+尽管以上两个工具的名字不同，但其关联的命令和选项完全相同。
+这里以 kubectl-karmada 为例。如果替换为 karmadactl，也能工作得很好。
 
-In actual use, you can choose a CLI tool according to your needs.
+在实际使用中，你可以根据自己的需求选择一个 CLI 工具。
 
 :::
 
-## Install Karmada by Karmada command-line tool
+## 通过 Karmada 命令行工具安装 Karmada
 
-### Install Karmada on your own cluster
+### 在你自己的集群上安装 Karmada
 
-Assume you have put your cluster's `kubeconfig` file to `$HOME/.kube/config` or specify the path
-with `KUBECONFIG` environment variable. Otherwise, you should specify the configuration file by
-setting `--kubeconfig` flag to the following commands.
+假设你已将集群的 `kubeconfig` 文件放到了 `$HOME/.kube/config` 或用 `KUBECONFIG` 环境变量指定了该路径。
+否则，你应将 `--kubeconfig` 标志设置为以下命令来指定该配置文件。
 
-> Note: The `init` command is available from v1.0.
+> 注：从 v1.0 开始可以使用 `init` 命令。
 
-Run the following command to install:
+运行以下命令进行安装：
 ```bash
 kubectl karmada init
 ```
-It might take about 5 minutes and if everything goes well, you will see outputs similar to:
+安装好可能需要大约 5 分钟。如果一切正常，你将看到输出类似于：
 ```
 I1216 07:37:45.862959    4256 cert.go:230] Generate ca certificate success.
 I1216 07:37:46.000798    4256 cert.go:230] Generate etcd-server certificate success.
@@ -89,7 +86,7 @@ Step 4: Show members of karmada
 
 ```
 
-The components of Karmada are installed in `karmada-system` namespace by default, you can get them by:
+Karmada 的组件默认安装在 `karmada-system` 命名空间中，你可以通过以下命令查看：
 ```bash
 kubectl get deployments -n karmada-system
 NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
@@ -100,54 +97,53 @@ karmada-scheduler              1/1     1            1           119s
 karmada-webhook                1/1     1            1           113s
 kube-controller-manager        1/1     1            1           2m3s
 ```
-And the `karmada-etcd` is installed as the `StatefulSet`, get it by:
+`karmada-etcd` 被安装为 `StatefulSet`，通过以下命令查看：
 ```bash
 kubectl get statefulsets -n karmada-system
 NAME   READY   AGE
 etcd   1/1     28m
 ```
 
-The configuration file of Karmada will be created to `/etc/karmada/karmada-apiserver.config` by default.
+Karmada 的配置文件默认创建到 `/etc/karmada/karmada-apiserver.config`。
 
-#### Offline installation
+#### 离线安装
 
-When installing Karmada, the `kubectl karmada init` will download the APIs(CRD) from the Karmada official release page
-(e.g. `https://github.com/karmada-io/karmada/releases/tag/v0.10.1`) and load images from the official registry by default.
+安装 Karmada 时，`kubectl karmada init` 默认将从 Karmada 官网 release 页面（例如 `https://github.com/karmada-io/karmada/releases/tag/v0.10.1`）下载 API(CRD)，并从官方镜像仓库加载镜像。
 
-If you want to install Karmada offline, maybe you have to specify the APIs tar file as well as the image.
+如果你要离线安装 Karmada，你可能必须指定 API tar 文件和镜像。
 
-Use `--crds` flag to specify the CRD file. e.g.
+使用 `--crds` 标志指定 CRD 文件，例如：
 ```bash
 kubectl karmada init --crds /$HOME/crds.tar.gz
 ```
 
-The images of Karmada components could be specified, take `karmada-controller-manager` as an example:
+你可以指定 Karmada 组件的镜像，以 `karmada-controller-manager` 为例：
 ```bash
 kubectl karmada init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0 
 ```
 
-#### Deploy HA
-Use `--karmada-apiserver-replicas` and `--etcd-replicas` flags to specify the number of the replicas (defaults to `1`).
+#### 高可用部署
+使用 `--karmada-apiserver-replicas` 和 `--etcd-replicas` 标志指定副本数（默认为 `1`）。
 ```bash
 kubectl karmada init --karmada-apiserver-replicas 3 --etcd-replicas 3
 ```
 
-### Install Karmada in Kind cluster
+### 在 Kind 集群中安装 Karmada
 
-> kind is a tool for running local Kubernetes clusters using Docker container "nodes".
-> It was primarily designed for testing Kubernetes itself, not for production.
+> kind 是一个使用 Docker 容器“节点”运行本地 Kubernetes 集群的工具。
+> 它主要设计用于测试 Kubernetes 本身，并非用于生产。
 
-Create a cluster named `host` by `hack/create-cluster.sh`:
+通过 `hack/create-cluster.sh` 创建名为 `host` 的一个集群：
 ```bash
 hack/create-cluster.sh host $HOME/.kube/host.config
 ```
 
-Install Karmada v1.2.0 by command `kubectl karmada init`:
+通过命令 `kubectl karmada init` 安装 Karmada v1.2.0：
 ```bash
 kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
 ```
 
-Check installed components:
+检查已安装的组件：
 ```bash
 kubectl get pods -n karmada-system --kubeconfig=$HOME/.kube/host.config
 NAME                                           READY   STATUS    RESTARTS   AGE
@@ -160,57 +156,56 @@ karmada-webhook-7cf7986866-m75jw               1/1     Running   0          2m
 kube-controller-manager-85c789dcfc-k89f8       1/1     Running   0          2m10s
 ```
 
-## Install Karmada by Helm Chart Deployment
+## 通过 Helm Chart Deployment 安装 Karmada
 
-Please refer to [installing by Helm](https://github.com/karmada-io/karmada/tree/master/charts/karmada).
+请参阅[通过 Helm 安装](https://github.com/karmada-io/karmada/tree/master/charts/karmada)。
 
-## Install Karmada by binary
+## 通过二进制安装 Karmada
 
-Please refer to [installing by binary](./install-binary.md).
+请参阅[通过二进制安装](./install-binary.md)。
 
-## Install Karmada from source
+## 从源代码安装 Karmada
 
-Please refer to [installing from source](./fromsource.md).
+请参阅[从源代码安装](./fromsource.md)。
 
-[1]: https://kubernetes.io/docs/tasks/extend-kubectl/kubectl-plugins/
+[1]: https://kubernetes.io/zh-cn/docs/tasks/extend-kubectl/kubectl-plugins/
 
-## Install Karmada for development environment
+## 为开发环境安装 Karmada
 
-If you want to try Karmada, we recommend that build a development environment by
-`hack/local-up-karmada.sh` which will do following tasks for you:
-- Start a Kubernetes cluster by [kind](https://kind.sigs.k8s.io/) to run the Karmada control plane, aka. the `host cluster`.
-- Build Karmada control plane components based on a current codebase.
-- Deploy Karmada control plane components on the `host cluster`.
-- Create member clusters and join Karmada.
+如果你要试用 Karmada，我们推荐用 `hack/local-up-karmada.sh` 构建一个开发环境，该脚本将为你执行以下任务：
+- 通过 [kind](https://kind.sigs.k8s.io/) 启动一个 Kubernetes 集群以运行 Karmada 控制面（也称为 `host cluster`）。
+- 基于当前代码库构建 Karmada 控制面组件。
+- 在 `host cluster` 上部署 Karmada 控制面组件。
+- 创建成员集群并接入 Karmada。
 
-**1. Clone Karmada repo to your machine:**
+**1. 克隆 Karmada 仓库到你的机器：**
 ```
 git clone https://github.com/karmada-io/karmada
 ```
-or use your fork repo by replacing your `GitHub ID`:
+或替换你的 `GitHub ID` 来使用你的 fork 仓库：
 ```
 git clone https://github.com/<GitHub ID>/karmada
 ```
 
-**2. Change to the karmada directory:**
+**2. 更改为 karmada 目录：**
 ```
 cd karmada
 ```
 
-**3. Deploy and run Karmada control plane:**
+**3. 部署并运行 Karmada 控制面：**
 
-run the following script:
+运行以下脚本：
 
 ```
 hack/local-up-karmada.sh
 ```
-This script will do following tasks for you:
-- Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
-- Build Karmada control plane components based on a current codebase.
-- Deploy Karmada control plane components on the `host cluster`.
-- Create member clusters and join Karmada.
+该脚本将为你执行以下任务：
+- 启动一个 Kubernetes 集群以运行 Karmada 控制面（也称为 `host cluster`）。
+- 基于当前代码库构建 Karmada 控制面组件。
+- 在 `host cluster` 上部署 Karmada 控制面组件。
+- 创建成员集群并接入 Karmada。
 
-If everything goes well, at the end of the script output, you will see similar messages as follows:
+如果一切良好，在脚本输出结束时，你将看到类似以下的消息：
 ```
 Local Karmada is running.
 
@@ -223,13 +218,13 @@ To manage your member clusters, run:
 Please use 'kubectl config use-context member1/member2/member3' to switch to the different member cluster.
 ```
 
-**4. Check registered cluster**
+**4. 检查注册的集群**
 
 ```
 kubectl get clusters --kubeconfig=/$HOME/.kube/karmada.config
 ```
 
-You will get similar output as follows:
+你将看到类似以下的输出：
 ```
 NAME      VERSION   MODE   READY   AGE
 member1   v1.23.4   Push   True    7m38s
@@ -237,4 +232,4 @@ member2   v1.23.4   Push   True    7m35s
 member3   v1.23.4   Pull   True    7m27s
 ```
 
-There are 3 clusters named `member1`, `member2` and `member3` have registered with `Push` or `Pull` mode.
+有 3 个名为 `member1`、`member2` 和 `member3` 的集群已使用 `Push` 或 `Pull` 模式进行了注册。
