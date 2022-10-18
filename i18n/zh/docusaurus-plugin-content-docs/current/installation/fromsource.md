@@ -1,43 +1,41 @@
 ---
-title: Installation from Source
+title: 从源代码安装
 ---
 
-This document describes how you can use the `hack/remote-up-karmada.sh` script to install Karmada on
-your clusters based on the codebase.
+本文说明如何使用 `hack/remote-up-karmada.sh` 脚本通过代码库将 Karmada 安装到你的集群。
 
-## Select a way to expose karmada-apiserver
+## 选择一种暴露 karmada-apiserver 的方式
 
-The `hack/remote-up-karmada.sh` will install `karmada-apiserver` and provide two ways to expose the server:
+`hack/remote-up-karmada.sh` 将安装 `karmada-apiserver` 并提供两种暴露 karmada-apiserver 服务器的方式：
 
-### 1. expose by `HostNetwork` type
+### 1. 通过 `HostNetwork` 类型
 
-By default, the `hack/remote-up-karmada.sh` will expose `karmada-apiserver` by `HostNetwork`.
+默认情况下，`hack/remote-up-karmada.sh` 将通过 `HostNetwork` 暴露 `karmada-apiserver`。
 
-No extra operations needed with this type.
+这种方式无需额外的操作。
 
-### 2. expose by service with `LoadBalancer` type
+### 2. 通过 `LoadBalancer` 类型的服务
 
-If you don't want to use the `HostNetwork`, you can ask `hack/remote-up-karmada.sh` to expose `karmada-apiserver`
-by a service with `LoadBalancer` type that *requires your cluster have deployed the `Load Balancer`*.
-All you need to do is set an environment:
+如果你不想使用 `HostNetwork`，可以让 `hack/remote-up-karmada.sh` 脚本通过 `LoadBalancer` 类型的服务暴露 `karmada-apiserver`，
+这种方式 **要求你的集群已部署 `Load Balancer`**。你需要做得是设置一个环境变量：
 ```bash
 export LOAD_BALANCER=true
 ```
 
-## Install
-From the `root` directory the `karmada` repo, install Karmada by command:
+## 安装
+从 `karmada` 仓库的 `root` 目录，执行以下命令安装 Karmada：
 ```bash
 hack/remote-up-karmada.sh <kubeconfig> <context_name>
 ```
-- `kubeconfig` is your cluster's kubeconfig that you want to install to
-- `context_name` is the name of context in 'kubeconfig'
+- `kubeconfig` 是你要安装的目标集群的 kubeconfig
+- `context_name` 是 'kubeconfig' 中上下文的名称
 
-For example:
+例如：
 ```bash
 hack/remote-up-karmada.sh $HOME/.kube/config mycluster
 ```
 
-If everything goes well, at the end of the script output, you will see similar messages as follows:
+如果一切正常，脚本输出结束后，你将看到类似以下的消息：
 ```
 ------------------------------------------------------------------------------------------------------
 █████   ████   █████████   ███████████   ██████   ██████   █████████   ██████████     █████████
