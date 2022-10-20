@@ -155,9 +155,11 @@ It means override rules above will only be applied to those resources propagated
 ## Overriders
 
 Karmada offers various alternatives to declare the override rules:
-- `ImageOverrider`: dedicated to override images for workloads.
-- `CommandOverrider`: dedicated to override commands for workloads.
-- `ArgsOverrider`: dedicated to override args for workloads.
+- `ImageOverrider`: overrides images for workloads.
+- `CommandOverrider`: overrides commands for workloads.
+- `ArgsOverrider`: overrides args for workloads.
+- `LabelsOverrider` overrides labels for workloads.
+- `AnnotationsOverrider` overrides annotations for workloads.
 - `PlaintextOverrider`: a general-purpose tool to override any kind of resources.
 
 ### ImageOverrider
@@ -349,7 +351,61 @@ The allowed operations are as follows:
 - `add`: appends one or more args to the command list.
 - `remove`: removes one or more args from the command list.
 
-Note: the usage of `ArgsOverrider` is similar to `CommandOverrider`, You can refer to the `CommandOverrider` examples.
+Note: `ArgsOverrider` functions the similar way as `CommandOverrider`. You can refer to the `CommandOverrider` examples.
+
+
+### LabelsOverrider
+
+The allowed operations are as follows:
+- `add`: The items in `value` will be appended to labels.
+- `remove`: If the item in `value` matches the item in labels, the former will be deleted. If they do not match, nothing will be done.
+- `replace`: If the key in `value` matches the key in the label, the former will be replaced. If they do not match, nothing will be done.
+
+#### Examples
+Suppose we create a deployment named `myapp`.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels: 
+    foo: foo
+    baz: baz
+  ...
+spec:
+  template:
+    spec:
+      containers:
+        - image: myapp:1.0.0
+          name: myapp
+```
+
+**Example 1: add/remove/replace labels **
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: example
+spec:
+  ...
+  overrideRules:
+    - overriders:
+        labelsOverrider:
+          - operator: add
+            value: 
+              bar: bar  # It will be added to labels
+          - operator: replace
+            value: 
+              foo: exist # "foo: foo" will be replaced by "foo: exist"
+          - operator: remove
+            value: 
+              baz: baz   # It will be removed from labels
+```
+
+### AnnotationsOverrider
+
+Note: `AnnotationsOverrider` functions the similar way as `LabelsOverrider`. You can refer to the `LabelsOverrider` examples.
+
 
 ### PlaintextOverrider
 The `PlaintextOverrider` is a simple overrider that overrides target fields according to path, operator and value, just like `kubectl patch`.
