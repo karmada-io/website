@@ -1,33 +1,34 @@
 ---
-title: Installation of CLI Tools
+title: 安装 CLI 工具
 ---
-## Install Karmadactl
+## 安装 Karmadactl
 
-You can install `karmadactl` in any of the following ways:
+你可以用以下任一种方式安装 `karmadactl`：
 
-- One-click installation.
-- Build from source code.
+- 一键安装。
+- 从源代码构建。
 
-### One-click installation
+### 一键安装
 
-Karmada provides `karmadactl` download service since v1.2.0. You can choose the proper version which fits your operator system form [karmada release](https://github.com/karmada-io/karmada/releases).
+Karmada 从 v1.2.0 起提供了 `karmadactl` 下载服务。
+你可以从 [karmada release](https://github.com/karmada-io/karmada/releases) 页面选择适合操作系统的正确版本。
 
-To install the latest release run:
+若要安装最新版本，请运行：
 
 ```shell
 curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo bash
 ```
 
-The install script does the following:
+该安装脚本将执行以下操作：
 
-- attempts to detect your OS
-- downloads and unpacks the release tar file in a temporary directory
-- copies the karmadactl binary to /usr/local/bin
-- removes the temporary directory
+- 尝试检测你的操作系统
+- 将 tar 版本文件下载并解压到一个临时目录
+- 将 karmadactl 可执行文件复制到 /usr/local/bin
+- 移除该临时目录
 
-Also, you can export `INSTALL_CLI_VERSION` env to select the version you want to install.
+你也可以导出 `INSTALL_CLI_VERSION` 环境变量选择要安装的版本。
 
-For example, use the following command to install the 1.3.0 karmadactl:
+例如，使用以下命令安装 1.3.0 karmadactl：
 
 ```shell
 export INSTALL_CLI_VERSION=1.3.0
@@ -36,67 +37,68 @@ curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install
 
 :::note
 
-install-cli.sh only supports CLI tools after 1.2.0.
+install-cli.sh 仅支持 1.2.0 之后的 CLI 工具。
 
 :::
 
-### Build from source code
+### 从源代码构建
 
-Clone karmada repo and run `make` cmd from the repository:
+从代码仓库克隆 Karmada 仓库并运行 `make` 命令：
 
 ```bash
 make karmadactl
 ```
 
-Next, move the `karmadactl` executable file under the `_output` folder in the project root directory to the `PATH` path.
+然后将项目根目录中 `_output` 文件夹下的 `karmadactl` 可执行文件移到 `PATH` 路径。
 
-## Install kubectl-karmada
+## 安装 kubectl-karmada
 
-You can install `kubectl-karmada` plug-in in any of the following ways:
+你可以用以下任一种方式安装 `kubectl-karmada` 插件：
 
-- One-click installation.
-- Install using Krew.
-- Build from source code.
+- 一键安装。
+- 使用 Krew 安装。
+- 从源代码构建。
 
-### Prerequisites
+### 前提条件
 
 #### kubectl
 
-`kubectl` is the Kubernetes command line tool lets you control Kubernetes clusters.
-For installation instructions see [installing kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl).
+`kubectl` 是允许你控制  Kubernetes 集群的 Kubernetes 命令行工具。
+有关安装说明，请参阅[安装 kubectl](https://kubernetes.io/zh-cn/docs/tasks/tools/#kubectl)。
 
-### One-click installation
+### 一键安装
 
-Karmada provides `kubectl-karmada` plug-in download service since v0.9.0. You can choose proper plug-in version which fits your operator system form [karmada release](https://github.com/karmada-io/karmada/releases).
+Karmada 从 v0.9.0 起提供了 `kubectl-karmada` 插件下载服务。
+你可以从 [karmada release](https://github.com/karmada-io/karmada/releases) 页面选择适合操作系统的正确插件版本。
 
-The installation process is the same as installing karmadactl, you only need to add a parameter of `kubectl-karmada`.
+安装过程与安装 karmadactl 相同，你只需要添加一个 `kubectl-karmada` 参数。
 
-To install the latest release run:
+要安装最新版本，请运行：
 
 ```shell
 curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo bash -s kubectl-karmada
 ```
 
-### Install using Krew
+### 使用 Krew 安装
 
-Krew is the plugin manager for `kubectl` command-line tool.
+Krew 是针对 `kubectl` 命令行工具的插件管理器。
 
-[Install and set up](https://krew.sigs.k8s.io/docs/user-guide/setup/install/) Krew on your machine.
+在你的机器上[安装并设置](https://krew.sigs.k8s.io/docs/user-guide/setup/install/) Krew。
 
-Then install `kubectl-karmada` plug-in:
+然后安装 `kubectl-karmada` 插件：
 
 ```bash
 kubectl krew install karmada
 ```
 
-You can refer to [Quickstart of Krew](https://krew.sigs.k8s.io/docs/user-guide/quickstart/) for more information.
+有关更多信息请参阅 [Krew 快速入门](https://krew.sigs.k8s.io/docs/user-guide/quickstart/)。
 
-### Build from source code
+### 从源代码构建
 
-Clone karmada repo and run `make` cmd from the repository:
+从代码仓库克隆 Karmada 仓库并运行 `make` 命令：
 
 ```bash
 make kubectl-karmada
 ```
 
-Next, move the `kubectl-karmada` executable file under the `_output` folder in the project root directory to the `PATH` path.
+然后将项目根目录中 `_output` 文件夹下的 `kubectl-karmada` 可执行文件移到 `PATH` 路径。
