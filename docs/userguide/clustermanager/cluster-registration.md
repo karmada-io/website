@@ -20,7 +20,7 @@ Each `karmada-agent` serves for a cluster and take responsibility for:
 
 ## Register cluster with 'Push' mode
 
-You can use the [kubectl-karmada](../../installation/install-kubectl-karmada.md) CLI to `join`(register) and `unjoin`(unregister) clusters.
+You can use the [kubectl-karmada](../../installation/install-cli-tools.md) CLI to `join`(register) and `unjoin`(unregister) clusters.
 
 ### Register cluster by CLI
 

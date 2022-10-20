@@ -7,18 +7,20 @@ title: Installation Overview
 ### Karmada kubectl plugin
 `kubectl-karmada` is the Karmada command-line tool that lets you control the Karmada control plane, it presents as
 the [kubectl plugin][1].
-For installation instructions see [installing kubectl-karmada](./install-kubectl-karmada.md).
+For installation instructions see [installing kubectl-karmada](./install-cli-tools.md#install-kubectl-karmada).
 
 ### Karmadactl
 `karmadactl` is also the command-line tool that lets you control the Karmada control plane. Compared with kubectl-karmada,
-it is a complete cli tool exclusive to Karmada. 
-For installation instructions see [installing karmadactl](./install-karmadactl.md).
+it is a complete CLI tool exclusive to Karmada. 
+For installation instructions see [installing karmadactl](./install-cli-tools.md#install-karmadactl).
 
 :::note
 
 Although the above two tools have different forms, the related commands and options are exactly the same. 
 The following takes kubectl-karmada as an example.
 Replacing it with karmadactl also works fine.
+
+In actual use, you can choose a CLI tool according to your needs.
 
 :::
 

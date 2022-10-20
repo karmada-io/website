@@ -8,7 +8,7 @@ Here, we use PropagationPolicy as an example to describe how to propagate resour
 
 ## Before you start
 
-[Install Karmada](../../installation/installation.md) and prepare the [karmadactl command-line](../../installation/install-kubectl-karmada.md) tool.
+[Install Karmada](../../installation/installation.md) and prepare the [karmadactl command-line](../../installation/install-cli-tools.md) tool.
 
 ## Deploy a simplest multi-cluster Deployment
 
