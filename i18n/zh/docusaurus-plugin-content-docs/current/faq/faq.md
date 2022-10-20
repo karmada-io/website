@@ -2,41 +2,38 @@
 title: 常见问题
 ---
 
-## What is the difference between PropagationPolicy and ClusterPropagationPolicy?
+## PropagationPolicy 与 ClusterPropagationPolicy 有什么区别？
 
-The `PropagationPolicy` is a namespace-scoped resource type which means the objects with this type must reside in a namespace.
-And the `ClusterPropagationPolicy` is the cluster-scoped resource type which means the objects with this type don't have a namespace.
+`PropagationPolicy` 是一种作用于命名空间的资源类型，意味着这种类型的对象必须处于一个命名空间中。
+而 `ClusterPropagationPolicy` 是作用于集群的资源类型，意味着这种类型的对象没有命名空间。
 
-Both of them are used to hold the propagation declaration, but they have different capacities:
-- PropagationPolicy: can only represent the propagation policy for the resources in the same namespace.
-- ClusterPropagationPolicy: can represent the propagation policy for all resources including namespace-scoped and cluster-scoped resources.
+二者都用于保留传播声明，但其权能有所不同：
+- PropagationPolicy：只能表示同一命名空间中资源的传播策略。
+- ClusterPropagationPolicy：可以表示所有资源的传播策略，包括作用于命名空间和作用于集群的资源。
 
-## What is the difference between 'Push' and 'Pull' mode of a cluster?
+## 集群的 'Push' 和 'Pull' 模式有何区别？
 
-Please refer to [Overview of Push and Pull](../userguide/clustermanager/cluster-registration.md#overview-of-cluster-mode).
+请参阅 [Push 和 Pull 概述](../userguide/clustermanager/cluster-registration.md#overview-of-cluster-mode)。
 
-## Why Karmada requires `kube-controller-manager`?
+## 为什么 Karmada 需要 `kube-controller-manager`？
 
-`kube-controller-manager` is composed of a bunch of controllers, Karmada inherits some controllers from it
-to keep a consistent user experience and behavior.
+`kube-controller-manager` 由许多控制器组成，Karmada 从其继承了一些控制器以保持一致的用户体验和行为。
 
-It's worth noting that not all controllers are needed by Karmada, for the recommended controllers please
-refer to [Recommended Controllers](../administrator/configuration/configure-controllers.md#recommended-controllers).
+值得注意的是，Karmada 并不需要所有控制器。
+有关推荐的控制器，请参阅[推荐的控制器](../administrator/configuration/configure-controllers.md#recommended-controllers)。
 
 
-## Can I install Karmada in a Kubernetes cluster and reuse the kube-apiserver as Karmada apiserver?
+## 我可以在 Kubernetes 集群中安装 Karmada 并将 kube-apiserver 重用为 Karmada apiserver 吗？
 
-The quick answer is `yes`. In that case, you can save the effort to deploy
-[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml) and just
-share the APIServer between Kubernetes and Karmada. In addition, the high availability capabilities in the origin clusters
-can be inherited seamlessly. We do have some users using Karmada in this way.
+答案是 `yes`。在这种情况下，你可以在部署
+[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml)
+时节省不少时间，只需在 Kubernetes 和 Karmada 之间共享 APIServer 即可。
+此外，这样可以无缝继承原集群的高可用能力。我们确实有一些用户以这种方式使用 Karmada。
 
-There are some things you should consider before doing so:
+不过在此之前你需要注意以下几点：
 
-- This approach hasn't been fully tested by the Karmada community and no plan for it yet.
-- This approach will increase computation costs for the Karmada system. E.g.
-  After you apply a `resource template`, take `Deployment` as an example, the `kube-controller` will create `Pods` for the
-  Deployment and update the status persistently, Karmada system will reconcile these changes too, so there might be
-  conflicts.
+- 这种方法尚未经过 Karmada 社区的全面测试，也没有相关测试计划。
+- 这种方法会增加 Karmada 系统的计算成本。
+  以 `Deployment` 为例采用 `resource template` 后，`kube-controller` 会为 Deployment 创建 `Pods` 并持续更新状态，Karmada 系统也会协调这些变化，所以可能会发生冲突。
 
-TODO: Link to adoption use case once it gets on board.
+待办事项：一旦有相关使用案例，我们将添加相应链接。
