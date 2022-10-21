@@ -222,7 +222,7 @@ module.exports = {
                     label: "Command line tool(karmadactl)",
                     items: [
                         "reference/karmadactl/bash-auto-completion-on-linux",
-                        "reference/karmadactl/karmadactl-commands/karmadactl_index",
+                        "reference/karmadactl/karmadactl-commands/karmadactl_commands",
                         "reference/karmadactl/karmadactl-commands/karmadactl",
                         "reference/karmadactl/karmadactl-usage-conventions",
                     ],
