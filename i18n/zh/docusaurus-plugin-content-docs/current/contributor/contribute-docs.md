@@ -1,31 +1,30 @@
 ---
-title: How to contribute docs
+title: 如何为社区贡献文档
 ---
 
-Starting from version 1.3, the community documentation will be available on the Karmada website.
-This document explains how to contribute docs to
-the `karmada-io/website` repository.
+从 1.3 版本开始，我们将社区文档放在了 Karmada 网站上。
+本文说明了如何对 `karmada-io/website` 代码仓库中的文档做贡献。
 
-## Prerequisites
+## 前提条件
 
-- Docs, like codes, are also categorized and stored by version.
-  1.3 is the first version we have archived.
-- Docs need to be translated into multiple languages for readers from different regions.
-  The community now supports both Chinese and English.
-  English is the official language of documentation.
-- For our docs we use markdown. If you are unfamiliar with Markdown, please see https://guides.github.com/features/mastering-markdown/ or https://www.markdownguide.org/ if you are looking for something more substantial.
-- We get some additions through [Docusaurus 2](https://docusaurus.io/), a model static website generator.
+- 文档类似于代码，也会按版本分类和存放。
+  1.3 是我们归档的第一个版本。
+- 文档需要为来自不同地区的读者翻译为多语言。
+  社区目前支持中文和英语。
+  英语是文档的官方语言。
+- 因为我们的文档采用 Markdown 语法，所以如果你对 Markdown 不熟悉，请参阅 https://guides.github.com/features/mastering-markdown/，如果你正在查找更实质性的内容，请参阅 https://www.markdownguide.org/。
+- 我们通过一个模块化静态网站生成器 [Docusaurus 2](https://docusaurus.io/) 来构建我们的网站。
 
-## Setup
+## 设置
 
-You can set up your local environment by cloning our website repository.
+你可以通过克隆我们的网站代码仓库搭建本地环境。
 
 ```shell
 git clone https://github.com/karmada-io/website.git
 cd website
 ```
 
-Our website is organized like below:
+Karmada 网站的结构组成如下所示：
 
 ```
 website
@@ -51,10 +50,10 @@ website
 └── package.json
 ```
 
-The `versions.json` file is a list of versions, from the latest to earliest.
-The table below explains how a versioned file maps to its version and the generated URL.
+`versions.json` 文件是一个从最老版本到最新版本的列表。
+下表说明了一个版本文件如何映射版本和生成的 URL。
 
-| Path                                    | Version        | URL               |
+| 路径                                    | 版本        | URL               |
 | --------------------------------------- | -------------- | ----------------- |
 | `versioned_docs/version-1.0.0/hello.md` | 1.0.0          | /docs/1.0.0/hello |
 | `versioned_docs/version-1.1.0/hello.md` | 1.1.0 (latest) | /docs/hello       |
@@ -62,56 +61,57 @@ The table below explains how a versioned file maps to its version and the genera
 
 :::tip
 
-The files in the `docs` directory belong to the `current` docs version.
+`docs` 目录中的文件属于 `current` 文档版本。
 
-The `current` docs version is labeled as `Next` and hosted under `/docs/next/*`.
+`current` 文档版本被标记为 `Next` 并托管在 `/docs/next/*` 下。
 
-Contributors mainly contribute documentation to the current version.
+贡献者们主要为当前版本的文档做贡献。
 :::
 
-## Writing docs
+## 编写文档
 
-### Starting a title at the top
+### 撰写标题
 
-It's important for your article to specify metadata concerning an article at the top of the Markdown file, in a section called **Front Matter**.
+有关文章重要的一点是：在 Markdown 文件顶部的一个名为 **Front Matter** 的部分指定有关文章的元数据。
 
-For now, let's take a look at a quick example which should explain the most relevant entries in **Front Matter**:
+现在，让我们看一个简单的例子来说明 **Front Matter** 中最相关的条目：
 
 ```
 ---
-title: A doc with tags
+title: 带标记的文档
 ---
 
-## secondary title
+## 次级标题
 ```
 
-The top section between two lines of --- is the Front Matter section. Here we define a couple of entries which tell Docusaurus how to handle the article:
-* Title is the equivalent of the `<h1>` in a HTML document or `# <title>` in a Markdown article.
-* Each document has a unique ID. By default, a document ID is the name of the document (without the extension) related to the root docs directory.
+两行 --- 之间的顶部区域属于 Front Matter。
+我们在此处定义了几个条目，告诉 Docusaurus 如何处理文章：
+* 标题（title）相当于 HTML 文档中的 `<h1>` 或 Markdown 文章中的 `# <title>`。
+* 每个文件都有一个唯一的 ID。默认情况下，文档 ID 是与根文档目录相关的文档名称（不带扩展名）。
 
-### Linking to other docs
+### 链接到其他文档
 
-You can easily route to other places by adding any of the following links:
-* Absolute URLs to external sites like `https://github.com` or `https://k8s.io` - you can use any of the Markdown notations for this, so
-  * `<https://github.com>` or
-  * `[kubernetes](https://k8s.io)` will work.
-* Link to markdown files or the resulting path.
-  You can use relative paths to index the corresponding files.
-* Link to pictures or other resources.
-  If your article contains images or other resources, you may create a corresponding directory in `/docs/resources`, and article related files are placed in that directory.
-  Now we store public pictures about Karmada in `/docs/resources/general`. You can use the following to link the pictures:
-  * `![Git workflow](../resources/contributor/git_workflow.png)`
+你可以通过添加以下任意链接轻松跳转到其他位置：
+* 你可以使用以下 Markdown 标记指向 `https://github.com` 或 `https://k8s.io` 等外部站点的绝对 URL：
+   * `<https://github.com>` 或
+   * `[kubernetes](https://k8s.io)`
+* 链接到 Markdown 文件或生成的路径。
+  你可以使用相对路径来索引相应的文件。
+* 链接到图片或其他资源。
+  如果你的文章包含图片或其他资源，你可以在 `/docs/resources` 中创建相应的目录，并将文章相关的文件放置在该目录中。
+  现在我们将有关 Karmada 的公开图片存放在 `/docs/resources/general` 中。你可以使用以下方式链接到图片：
+  * `![Git 工作流](../resources/contributor/git_workflow.png)`
 
-### Directory organization
+### 目录组成
 
-Docusaurus 2 uses a sidebar to manage documents.
+Docusaurus 2 使用一个侧边栏来管理文档。
 
-Creating a sidebar is useful to:
-* Group multiple related documents
-* Display a sidebar on each of those documents
-* Provide paginated navigation, with next/previous button
+创建侧边栏可用于：
+* 对多个相关的文档分组
+* 为每个文档显示侧边栏
+* 提供分页导航，有 Next/Previous 按钮
 
-For our docs, you can know how our documents are organized from <https://github.com/karmada-io/website/blob/main/sidebars.js>.
+对于 Karmada 文档，你可以查阅 <https://github.com/karmada-io/website/blob/main/sidebars.js> 了解文档的组成结构。
 
 ```
 module.exports = {
@@ -140,7 +140,7 @@ module.exports = {
 ....
 ```
 
-The order of documents in a directory is strictly in the order of items.
+目录中文档的顺序严格按照 items 的顺序排列。
 ```
 type: "category",
 label: "Core Concepts",
@@ -152,33 +152,37 @@ items: [
 ],
 ```
 
-If you add a document, you must add it to `sidebars.js` to make it display properly. If you're not sure where your docs are located, you can ask community members in the PR.
+如果新增一篇文档，必须将其添加到 `sidebars.js` 中才能正常显示。如果你不确定将文档放在哪儿，请在 PR 中询问社区成员。
 
-### About Chinese docs
+### 有关中文文档
 
-There are two situations about the Chinese version of the document:
-* You want to translate our existing English docs to Chinese. In this case, you need to modify the corresponding file content from <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current>.
-  The organization of this directory is exactly the same as the outer layer. `current.json` holds translations for the documentation directory. You can edit it if you want to translate the name of directory.
-* You want to contribute Chinese docs without English version. Any articles of any kind are welcomed. In this case, you can add articles and titles to the main directory first. Article content can be TBD first, like [this](../tutorials/karmada-search.md).
-  Then add the corresponding Chinese content to the Chinese directory.
+贡献中文文档有以下两种情况：
+* 你想将现有的英文文档翻译成中文。
+  在这种情况下，你需要修改 <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current> 中相应的文件内容。
+  该目录的组织结构与英文完全相同。`current.json` 保存文档目录的中文译稿。如果要翻译目录名称，可以对其进行编辑。
+* 你想贡献没有英文版本的中文文档。任何类型的文章都是受欢迎的。
+  在这种情况下，你可以先将文章和标题添加到英文目录。
+  文章内容可以先待定，参见[示例](../tutorials/karmada-search.md)。
+  然后将对应的中文内容添加到中文目录中。
 
-## Debugging docs
+## 调试文档
 
-Now you have already completed docs. After you start a PR to `karmada.io/website`, if you have passed CI, you can get a preview of your document on the website.
+假设现在你已经完成了文档编辑。对 `karmada.io/website` 发起 PR 后，如果通过了 CI，就可以在网站上预览你的文档。
 
-Click **Details** marked in red, and you will enter the preview view of the website.
+点击红色标记的 **Details**，可以看到网站的预览视图。
 
-![Docs CI](../resources/contributor/debug-docs.png)
+![文档 CI](../resources/contributor/debug-docs.png)
 
-Click **Next** and you can see the corresponding changes. If you have changes related to the Chinese version, click the language drop-down box next to it to switch to Chinese.
+点击 **Next** 切换至当前版本，然后你可以看到你修改的文档相应的变更。
+如果你有与中文版本相关的更改，请点击旁边的语言下拉框切换到中文。
 
-![Click next](../resources/contributor/click-next.png)
+![点击 Next](../resources/contributor/click-next.png)
 
-If the previewed page is not what you expected, please check your docs again.
+如果预览的页面与预期不符，请再次检查文档。
 
 ## FAQ
 
-### Versioning
+### 版本控制
 
-For the newly supplemented documents of each version, we will synchronize to the latest version on the release date of each version, and the documents of the old version will not be modified.
-For errata found in the documentation, we will fix it with every release.
+对于各版本新补充的文档，我们将在各版本发布之日同步到最新版本，旧版本文档不做修改。
+对于文档中发现的错误，我们将在每次发布时进行修复。
