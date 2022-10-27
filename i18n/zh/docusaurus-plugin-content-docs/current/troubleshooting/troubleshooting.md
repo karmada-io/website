@@ -34,3 +34,14 @@ title: 故障定位
 # ens192 是成员集群用来与 karmada 通信的网卡的名字 
 tcpkill -9 -i ens192 src host ${KARMADA_APISERVER_IP} and dst port ${MEMBER_CLUTER_APISERVER_IP}。
 ```
+
+## x509：使用`karmadactl init`时报`certificate signed by unknown authority`
+
+使用`karmadactl init`命令安装Karmada时，在init安装日志中发现以下报错信息：
+```log
+deploy.go:55] Post "https://192.168.24.211:32443/api/v1/namespaces": x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "karmada")
+```
+
+问题原因：之前在集群上安装过Karmada，karmada-etcd使用`hostpath`方式挂载本地存储，卸载时数据有残留，需要清理默认路径`/var/lib/karmada-etcd`下的文件。如果使用了karmadactl [--etcd-data](https://github.com/karmada-io/karmada/blob/master/pkg/karmadactl/cmdinit/cmdinit.go#L119)参数，请删除相应的目录。
+
+相关Issue：[#1467](https://github.com/karmada-io/karmada/issues/1467)，[#2504](https://github.com/karmada-io/karmada/issues/2504)。
