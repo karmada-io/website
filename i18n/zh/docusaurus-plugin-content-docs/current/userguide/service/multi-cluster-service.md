@@ -4,6 +4,8 @@ title: 多集群服务发现
 
 用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。 
 
+> 注意：使用该特性需要满足成员集群的kubernetes版本在v1.21以上（包含v1.21）。
+
 ## 准备开始
 
 ### 安装Karmada
@@ -17,6 +19,8 @@ title: 多集群服务发现
 
 - 如果你使用 `hack/local-up-karmada.sh` 脚本来部署 Karmada，Karmada 将有三个成员集群，`member1` 和 `member2` 的容器网络将被连接。
 - 你可以使用 `Submariner` 或其他相关的开源项目来连接成员集群之间的网络。
+
+> 注意：为了防止路由冲突，集群之间的Pod和Service CIDR需要满足不重叠。
 
 ### 安装 ServiceExport 和 ServiceImport CRD
 

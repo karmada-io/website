@@ -4,6 +4,8 @@ title: Multi-cluster Ingress
 
 Users can use [MultiClusterIngress API](https://github.com/karmada-io/karmada/blob/master/pkg/apis/networking/v1alpha1/ingress_types.go) provided in Karmada to import external traffic to services in the member clusters.
 
+> Note: To use this feature, the Kubernetes version of the member cluster must be v1.21 or later.
+
 ## Prerequisites
 
 ### Karmada has been installed
@@ -18,6 +20,8 @@ So we need to ensure that the container networks between the **host cluster** an
 
 - If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks between the **host cluster**, `member1` and `member2` are connected.
 - You can use `Submariner` or other related open source projects to connected networks between clusters.
+
+> Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
 
 ## Example
 

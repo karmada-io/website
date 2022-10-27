@@ -4,6 +4,8 @@ title: Multi-cluster Service Discovery
 
 Users are able to **export** and **import** services between clusters with [Multi-cluster Service APIs](https://github.com/kubernetes-sigs/mcs-api).
 
+> Note: To use this feature, the Kubernetes version of the member cluster must be v1.21 or later.
+
 ## Prerequisites
 
 ### Karmada has been installed
@@ -16,6 +18,8 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 
 - If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks of the `member1` and `member2` will be connected.
 - You can use `Submariner` or other related open source projects to connected networks between member clusters.
+
+> Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
 
 ### The ServiceExport and ServiceImport CRDs have been installed
 
