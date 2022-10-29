@@ -13,10 +13,10 @@ Karmada control plane will access member cluster's `kube-apiserver` directly to 
 ### Pull mode
 Karmada control plane will not access member cluster but delegate it to an extra component named `karmada-agent`.
 
-Each `karmada-agent` serves for a cluster and take responsibility for:
+Each `karmada-agent` serves a cluster and take responsibility for:
 - Register cluster to Karmada(creates the `Cluster` object)
 - Maintains cluster status and reports to Karmada(updates the status of `Cluster` object)
-- Watch manifests from Karmada execution space(namespace, `karmada-es-<cluster name>`) and deploy to the cluster which serves for.
+- Watch manifests from Karmada execution space(namespace, `karmada-es-<cluster name>`) and deploy the watched resources to the cluster the agent serves.
 
 ## Register cluster with 'Push' mode
 
@@ -134,3 +134,9 @@ Undeploy the `karmada-agent` and then remove the `cluster` manually from Karmada
 ```
 kubectl delete cluster member3
 ```
+
+## Cluster Identifier
+
+Each cluster registered in Karmada will be represented as a `Cluster` object whose name(`.metadata.name`) is the registered name. The name will be widely used in the propagating process, such as specifying the location to which a resource should be propagated in a `PropagationPolicy`.
+
+In addition, during the registration, each cluster will be assigned a `unique identifier` marked in the `.spec.id` of the `Cluster` object. For now, this `unique identifier` is used to distinguish each cluster technically to avoid registering the same cluster multiple times with different registered names. The `unique identifier` is collected from the registered cluster's `kube-system` ID(`.metadata.uid`).
