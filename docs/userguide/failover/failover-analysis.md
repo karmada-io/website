@@ -49,6 +49,7 @@ metadata:
   name: nginx-propagation
   namespace: default
 spec:
+  placement:
     clusterTolerations:
     - effect: NoExecute
       key: cluster.karmada.io/not-ready
