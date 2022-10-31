@@ -2,10 +2,10 @@
 title: Multi-cluster Management with an Ocean of Nodes
 description: In terms of multi-cluster management, Industrial and Commercial Bank of China (ICBC) found a new way to do it efficiently, that is, using Karmada. At KubeCon 2021, Kevin Wang from Huawei Cloud and Shen Yifan from ICBC shared how they managed it.
 authors:
-  - name: JKevin Wang
-    title: Huawei and Shen
-  - name: Shen Yifan
-    title: Commercial Bank of China
+  - name: Kevin Wang
+    title: Huawei Cloud
+  - name: Yifan Shen
+    title: Industrial and Commercial Bank of China
 ---
 
 In terms of multi-cluster management, Industrial and Commercial Bank of China (ICBC) found a new way to do it efficiently, that is, using Karmada. At KubeCon 2021, Kevin Wang from Huawei Cloud and Shen Yifan from ICBC shared how they managed it.
