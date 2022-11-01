@@ -1,16 +1,16 @@
 ---
-title: Use Prometheus to monitor Karmada control plane
+title: 使用 Prometheus 监控 Karmada 控制面
 ---
 
-[Prometheus](https://github.com/prometheus/prometheus), a [Cloud Native Computing Foundation](https://cncf.io/) project, is a system and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts when specified conditions are observed.
+[Prometheus](https://github.com/prometheus/prometheus) 是一个[云原生计算基金会（CNCF）](https://cncf.io/)项目，是一个系统和服务监控体系。它以给定的时间间隔从配置目标处采集指标，评估规则表达式，显示结果，还能在观测到指定的条件时触发警报。
 
-This document gives an example to demonstrate how to use the `Prometheus` to monitor Karmada control plane.
+本文举例演示如何使用 `Prometheus` 监控 Karmada 控制面。
 
 
 
-## Start up karmada clusters
+## 启动 Karmada 集群
 
-You just need to clone Karmada repo, and run the following script in Karmada directory.
+你只需克隆 Karmada 代码仓库，在 Karmada 目录中运行以下脚本。
 
 ```shell
 hack/local-up-karmada.sh
@@ -18,9 +18,9 @@ hack/local-up-karmada.sh
 
 
 
-## Start Prometheus
+## 启动 Prometheus
 
-1. Create the resource of RBAC in both `karmada-host` context and `karmada-apiserver` context
+1. 在 `karmada-host` 上下文和 `karmada-apiserver` 上下文中创建 RBAC 的资源
 
    ```yaml
    apiVersion: v1
@@ -77,8 +77,8 @@ hack/local-up-karmada.sh
      namespace: monitor
    ```
 
-2. Create Secret for ServiceAccount **[need in k8s v1.24+]** 
-   (Creating a ServiceAccount does not automatically generate Secret in v1.24+ )
+2. 为 ServiceAccount 创建 Secret **[K8s v1.24+ 需执行此操作]**
+   （在 v1.24+ 中创建 ServiceAccount 不会自动生成 Secret）
 
    ```yaml
    apiVersion: v1
@@ -91,13 +91,13 @@ hack/local-up-karmada.sh
        kubernetes.io/service-account.name: "prometheus"
    ```
 
-3. Get the token for accessing the karmada apiserver
+3. 获取访问 Karmada apiserver 的令牌
 
    ```shell
    kubectl get secret prometheus -o=jsonpath={.data.token} -n monitor --context "karmada-apiserver" | base64 -d
    ```
 
-4. Create resource objects of Prometheus in context `karmada-host`, also you need replace `<karmada-token>` (2 places) with the token got from step 3
+4. 在 `karmada-host` 上下文中创建 Prometheus 的资源对象，你还需要（在 2 处位置）将 `<karmada-token>` 替换为第 3 步获取到的令牌
 
    ```yaml
    apiVersion: v1
@@ -140,7 +140,7 @@ hack/local-up-karmada.sh
          scheme: https
          tls_config:
            insecure_skip_verify: true
-         bearer_token: <karmada-token>    # need the true karmada token
+         bearer_token: <karmada-token>    # 需要真实的 karmada 令牌
          relabel_configs:
          - source_labels: [__meta_kubernetes_pod_label_app]
            action: keep
@@ -153,7 +153,7 @@ hack/local-up-karmada.sh
          scheme: https
          tls_config:
            insecure_skip_verify: true
-         bearer_token: <karmada-token>    # need the true karmada token
+         bearer_token: <karmada-token>    # 需要真实的 karmada 令牌
          relabel_configs:
          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoints_name]
            action: keep
@@ -265,43 +265,43 @@ hack/local-up-karmada.sh
    
    ```
 
-3. Use any node IP of the control plane and the port number (default 31801) to enter the Prometheus monitoring page of the control plane
+5. 使用控制面的任意 NodeIP 和端口号（默认为 31801）进入控制面的 Prometheus 监控页面
 
 
-## Visualizing metrics using Grafana
-For a better experience with visual metrics, we can also use Grafana with Prometheus, as well as [Dashboards](https://grafana.com/grafana/dashboards/) provided by the community
+## 使用 Grafana 直观显示指标
+为了提高指标显示的效果和体验，我们还在 Prometheus 的基础上使用 Grafana，以及社区提供的[仪表盘](https://grafana.com/grafana/dashboards/)
 
-1. install grafana with helm
-```shell
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
+1. 通过 Helm 安装 Grafana
+    ```shell
+    helm repo add grafana https://grafana.github.io/helm-charts
+    helm repo update
 
-cat <<EOF | helm upgrade --install grafana grafana/grafana --kube-context "karmada-host" -n monitor -f -
-persistence:
-  enabled: true
-  storageClassName: local-storage
-service:
-  enabled: true
-  type: NodePort
-  nodePort: 31802
-  targetPort: 3000
-  port: 80
-EOF
-```
-2. get the login password for grafana web UI
-```shell
-kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
-```
-3. Use any node IP of the control plane and the port number (default 31802) to enter the grafana web UI of the control plane
-![imag](../../resources/administrator/prometheus/grafana.png)
+    cat <<EOF | helm upgrade --install grafana grafana/grafana --kube-context "karmada-host" -n monitor -f -
+    persistence:
+      enabled: true
+      storageClassName: local-storage
+    service:
+      enabled: true
+      type: NodePort
+      nodePort: 31802
+      targetPort: 3000
+      port: 80
+    EOF
+    ```
+2. 获取 Grafana 网页界面的登录密码
+    ```shell
+    kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
+    ```
+3. 使用控制面的任意 NodeIP 和端口号（默认为 31802）进入控制面的 Grafana 网页界面
+   ![imag](../../resources/administrator/prometheus/grafana.png)
 
-**Attention**:
+**注意**：
 
-1. In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apisever, kamada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
+在 k8s v1.24+ 中，来自 cadvisor 的指标可能遗漏图片、名称和容器标签，这会导致无法观测 Karmada 组件（例如 karmada-apisever、kamada-controller-manager）的指标。参见[相关链接](https://github.com/kubernetes/kubernetes/issues/111077)
 
 
 
-## Reference
+## 参考资料
 
 - https://github.com/prometheus/prometheus
 - https://prometheus.io/
