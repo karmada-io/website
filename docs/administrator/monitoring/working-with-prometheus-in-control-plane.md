@@ -265,39 +265,45 @@ hack/local-up-karmada.sh
    
    ```
 
-3. Use any node IP of the control plane and the port number (default 31801) to enter the Prometheus monitoring page of the control plane
+5. Use any node IP of the control plane and the port number (default 31801) to enter the Prometheus monitoring page of the control plane
 
 
 ## Visualizing metrics using Grafana
+
 For a better experience with visual metrics, we can also use Grafana with Prometheus, as well as [Dashboards](https://grafana.com/grafana/dashboards/) provided by the community
 
 1. install grafana with helm
-```shell
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
 
-cat <<EOF | helm upgrade --install grafana grafana/grafana --kube-context "karmada-host" -n monitor -f -
-persistence:
-  enabled: true
-  storageClassName: local-storage
-service:
-  enabled: true
-  type: NodePort
-  nodePort: 31802
-  targetPort: 3000
-  port: 80
-EOF
-```
+    ```shell
+    helm repo add grafana https://grafana.github.io/helm-charts
+    helm repo update
+
+    cat <<EOF | helm upgrade --install grafana grafana/grafana --kube-context "karmada-host" -n monitor -f -
+    persistence:
+      enabled: true
+      storageClassName: local-storage
+    service:
+      enabled: true
+      type: NodePort
+      nodePort: 31802
+      targetPort: 3000
+      port: 80
+    EOF
+    ```
+    
 2. get the login password for grafana web UI
-```shell
-kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
-```
+
+    ```shell
+    kubectl get secret --namespace monitor grafana -o jsonpath="{.data.admin-password}" --context "karmada-host" | base64 --decode ; echo
+    ```
+
 3. Use any node IP of the control plane and the port number (default 31802) to enter the grafana web UI of the control plane
-![imag](../../resources/administrator/prometheus/grafana.png)
+
+   ![imag](../../resources/administrator/prometheus/grafana.png)
 
 **Attention**:
 
-1. In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apisever, kamada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
+In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apisever, kamada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
 
 
 
