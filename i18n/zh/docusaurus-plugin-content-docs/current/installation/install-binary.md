@@ -1,14 +1,14 @@
 ---
-title: Installation by Binary
+title: 通过二进制方式安装
 ---
 
-Step-by-step installation of binary high-availability `karmada` cluster.
+分步安装二进制高可用 `karmada` 集群。
 
-## Prerequisites
+## 前提条件
 
-### Server
+### 服务器
 
-3 servers required. E.g.
+需要 3 个服务器，例如：
 
 ```shell
 +---------------+-----------------+-----------------+
@@ -22,11 +22,11 @@ Step-by-step installation of binary high-availability `karmada` cluster.
 +---------------+-----------------+-----------------+
 ```
 
-> Public IP is not required. It is used to download some `karmada` dependent components from the public network and connect to `karmada` ApiServer through the public network
+> 公共 IP 不是必需的。这个 IP 用于从公网下载某些 `karmada` 依赖组件，并通过公网连接到 `karmada` ApiServer。
 
-### DNS Resolution
+### DNS 解析
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。
 
 ```bash
 vi /etc/hosts
@@ -35,24 +35,24 @@ vi /etc/hosts
 172.31.209.247	karmada-03
 ```
 
-Alternatively, you can use "Linux Virtual Server" for load balancing, and don't change /etc/hosts file.
+你也可以使用 "Linux 虚拟服务器"进行负载均衡，不更改 /etc/hosts 文件。
 
-### Environment
+### 环境
 
-`karmada-01`  requires the following environment.
+`karmada-01` 需要以下环境。
 
-**Golang**:  Compile the karmada binary
-**GCC**: Compile nginx (ignore if using cloud load balancing)
+**Golang**：编译 karmada 二进制文件
+**GCC**：编译 nginx（使用云负载均衡时忽略此项）
 
-## Compile and Download Binaries
+## 编译并下载二进制文件
 
-Execute operations at `karmada-01`.
+对 `karmada-01` 执行操作。
 
-### Kubernetes Binaries
+### Kubernetes 二进制文件
 
-Download the `kubernetes` binary package.
+下载 `kubernetes` 二进制文件包。
 
-Refer to this page to download binaries of different versions and architectures: <https://kubernetes.io/releases/download/#binaries>
+参阅本页下载不同版本和不同架构的二进制文件：<https://kubernetes.io/releases/download/#binaries>
 
 ```bash
 wget https://dl.k8s.io/v1.23.3/kubernetes-server-linux-amd64.tar.gz
@@ -61,11 +61,11 @@ cd kubernetes/server/bin
 mv kube-apiserver kube-controller-manager kubectl /usr/local/sbin/
 ```
 
-### etcd Binaries
+### etcd 二进制文件
 
-Download the `etcd` binary package.
+下载 `etcd` 二进制文件包。
 
-You may want to use a newer version of etcd, please refer to this page: <https://etcd.io/docs/latest/install/>
+若要使用较新版本的 etcd，请参阅：<https://etcd.io/docs/latest/install/>
 
 ```bash
 wget https://github.com/etcd-io/etcd/releases/download/v3.5.1/etcd-v3.5.1-linux-amd64.tar.gz
@@ -74,9 +74,9 @@ cd etcd-v3.5.1-linux-amd64/
 mv etcdctl etcd /usr/local/sbin/
 ```
 
-### Karmada Binaries
+### Karmada 二进制文件
 
-Compile the `karmada` binaries from source.
+从源代码编译 `karmada` 二进制文件。
 
 ```bash
 git clone https://github.com/karmada-io/karmada
@@ -85,9 +85,9 @@ make karmada-aggregated-apiserver karmada-controller-manager karmada-scheduler k
 mv _output/bin/linux/amd64/* /usr/local/sbin/
 ```
 
-### Nginx Binaries
+### Nginx 二进制文件
 
-Compile the `nginx` binary from source.
+从源代码编译 `nginx` 二进制文件。
 
 ```bash
 wget http://nginx.org/download/nginx-1.21.6.tar.gz
@@ -98,32 +98,35 @@ make && make install
 mv /usr/local/karmada-nginx/sbin/nginx /usr/local/karmada-nginx/sbin/karmada-nginx
 ```
 
-### Distribute Binaries
+### 分发二进制文件
 
-Upload the binary file to the `karmada-02`  `karmada-03 ` server.
+上传二进制文件到 `karmada-02`、`karmada-03` 服务器。
 
-## Generate Certificates
+## 生成证书
 
-### Step 1: Create Bash Scripts and Configuration Files
+### 步骤 1：创建 Bash 脚本和配置文件
 
-The scripts will generate certificates using the `openssl` command. Download [this directory](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/generate_cert).
+此脚本将使用 `openssl` 命令生成证书。
+下载[此目录](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/generate_cert)。
 
-We separate CA & leaf certificates generation scripts, so when you need to change Subject Alternative Name of leaf certificates (aka Load Balancer IP), you can reuse CA certificates, and run generate_leaf.sh to generate only leaf certificates.
-
-
-
-There are 3 CAs: front-proxy-ca, server-ca, etcd/ca. Why we need 3 CAs please see: [PKI certificates and requirements](https://kubernetes.io/docs/setup/best-practices/certificates/), [CA Reusage and Conflicts](https://kubernetes.io/docs/tasks/extend-kubernetes/configure-aggregation-layer/#ca-reusage-and-conflicts).
-
-If you use etcd provided by others, you can ignore `generate_etcd.sh` and `csr_config/etcd`.
-
-### Step 2: Change `<SERVER_IP>`
-
-You need to change `<SERVER_IP>` in `csr_config/**/*.conf` file to your "Load Balancer IP" and "Server IP". If you only use Load Balancer to access your servers, you only need to fill in "Load Balancer IP".
-
-You normally don't need to change `*.sh` files.
+我们分开了 CA 和叶证书生成脚本，若你需要更改叶证书的主体备用名称（又名负载均衡器 IP），你可以重用 CA 证书，并运行 generate_leaf.sh 以仅生成叶证书。
 
 
-### Step 3: Run Shell Scripts
+
+有 3 个 CA：front-proxy-ca、server-ca、etcd/ca。
+为什么我们需要 3 个 CA，请参见 [PKI 证书和要求](https://kubernetes.io/zh-cn/docs/setup/best-practices/certificates/)、[CA 重用和冲突](https://kubernetes.io/zh-cn/docs/tasks/extend-kubernetes/configure-aggregation-layer/#ca-reusage-and-conflicts)。
+
+如果你使用他人提供的 etcd，可以忽略 `generate_etcd.sh` 和 `csr_config/etcd`。
+
+### 步骤 2：更改 `<SERVER_IP>`
+
+你需要将 `csr_config/**/*.conf` 文件中的 `<SERVER_IP>` 更改为"负载均衡器 IP" 和"服务器 IP"。
+如果你仅使用负载均衡器访问服务器，你只需要填写"负载均衡器 IP"。
+
+你正常不需要更改 `*.sh` 文件。
+
+
+### 步骤 3：运行 Shell 脚本
 
 ```bash
 $ ./generate_ca.sh
@@ -132,17 +135,18 @@ $ ./generate_etcd.sh
 ```
 
 
-### Step 4: Check the Certificates
 
-You can view the configuration of the certificate, take `karmada.crt ` as an example.
+### 步骤 4：检查证书
+
+你可以查看证书的配置，以 `karmada.crt` 为例。
 
 ```bash
 openssl x509 -noout -text -in karmada.crt
 ```
 
-### Step 5: Create the Karmada Configuration Directory
+### 步骤 5：创建 Karmada 配置目录
 
-Copy the certificates to the `/etc/karmada/pki` directory.
+复制证书到 `/etc/karmada/pki` 目录。
 
 ```bash
 mkdir -p /etc/karmada/pki
@@ -155,27 +159,29 @@ cp -r * /etc/karmada/pki
 ```
 
 
-## Create the Karmada kubeconfig Files and etcd Encryption Key
 
-Execute operations at `karmada-01`.
+## 创建 Karmada kubeconfig 文件和 etcd 加密密钥
 
-### Create kubeconfig Files
+对 `karmada-01` 执行操作。
 
-**Step 1: Download bash script**
+### 创建 kubeconfig 文件
 
-Download [this file](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/create_kubeconfig_file.sh).
+**步骤 1：下载 bash 脚本**
 
-**Step 2: execute bash script**
+下载[此文件](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/create_kubeconfig_file.sh)。
 
-`172.31.209.245:5443` is the address of the `nginx` proxy for `karmada-apiserver`, we'll set it up later. You should replace it with your Load Balancer provided "host:port".
+**步骤 2：执行 bash 脚本**
+
+`172.31.209.245:5443` 是针对 `karmada-apiserver` 的 `nginx` 代理的地址，我们将在后续设置。
+你应将其替换为负载均衡器提供的 "host:port"。
 
 ```bash
 ./create_kubeconfig_file.sh "https://172.31.209.245:5443"
 ```
 
-### Create etcd Encryption Key
+### 创建 etcd 加密密钥
 
-If you don't need to encrypt contents in etcd, ignore this section and corresponding kube-apiserver start parameter.
+如果你不需要加密 etcd 中的内容，请忽略本节和对应的 kube-apiserver 启动参数。
 
 ```bash
 export ENCRYPTION_KEY=$(head -c 32 /dev/urandom | base64)
@@ -194,9 +200,9 @@ resources:
 EOF
 ```
 
-### Distribute Files
+### 分发文件
 
-Package the `karmada` configuration files and copy them to other nodes.
+打包 `karmada` 配置文件并将其复制到其他节点。
 
 ```bash
 cd /etc
@@ -205,30 +211,31 @@ scp karmada.tar  karmada-02:/etc/
 scp karmada.tar  karmada-03:/etc/
 ```
 
-`karmada-02`  `karmada-03 `  need to decompress archives.
+`karmada-02` 和 `karmada-03` 需要解压缩归档文件。
 
 ```bash
 cd /etc
 tar -xvf karmada.tar
 ```
 
-## Health Check Script
+## 健康检查脚本
 
-(1) You can use following `check_status.sh` to check if all components are healthy.
+(1) 你可以使用以下 `check_status.sh` 检查所有组件是否健康。
 
-Download [this file](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/check_status.sh).
+下载[此文件](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/check_status.sh)。
 
-Note: If you are using CentOS 7, you need to run `yum update -y nss curl` to update curl version, then curl may support tls 1.3. If curl still does not support tls 1.3, you need to update OS version which includes newer curl, or simply use a go program to do health check.
+注：如果你使用的是 CentOS 7，则需要运行 `yum update -y nss curl` 来更新 curl 版本，这样 curl 才可能支持 tls 1.3。
+如果 curl 仍然不支持 tls 1.3，你需要更新为包含较新 curl 的操作系统版本，或者直接使用 go 程序进行健康检查。
 
 
 
-(2) Usage: `./check_status.sh` 
+(2) 使用：`./check_status.sh`
 
-## Install etcd cluster
+## 安装 etcd 集群
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
 /usr/lib/systemd/system/etcd.service
 
@@ -271,9 +278,9 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-Notice:
+注：
 
->The parameters that `karmada-02` `karmada-03` need to change are:
+>`karmada-02` 和 `karmada-03` 需要更改的参数为：
 >
 >--name
 >
@@ -287,20 +294,18 @@ Notice:
 >
 >
 >
->You can use `EnvironmentFile` to seperate mutable configs from immutable configs.
+>你可以使用 `EnvironmentFile` 将可变配置与不可变配置分开。
 
-### Start etcd cluster
+### 启动 etcd 集群
 
-3 servers have to execute.
-
-create etcd storage directory
+3 个服务器必须执行以下命令创建 etcd 存储目录。
 
 ```bash
 mkdir /var/lib/etcd/
 chmod 700 /var/lib/etcd
 ```
 
-start etcd
+启动 etcd：
 
 ```bash
 systemctl daemon-reload
@@ -309,7 +314,7 @@ systemctl start etcd.service
 systemctl status etcd.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
@@ -327,13 +332,13 @@ etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
 +---------------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
 ```
 
-## Install kube-apiserver
+## 安装 kube-apiserver
 
-### Configure Nginx
+### 配置 Nginx
 
-Execute operations at `karmada-01`.
+对 `karmada-01` 执行操作。
 
-configure load balancing for `karmada apiserver`
+为 `karmada apiserver` 配置负载均衡。
 
 
 
@@ -386,7 +391,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-start `karmada nginx`
+启动 `karmada nginx`。
 
 ```bash
 systemctl daemon-reload
@@ -395,9 +400,9 @@ systemctl start karmada-nginx.service
 systemctl status karmada-nginx.service
 ```
 
-### Create kube-apiserver Systemd Service
+### 创建 kube-apiserver Systemd 服务
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 
 
@@ -410,7 +415,7 @@ Documentation=https://kubernetes.io/docs/home/
 After=network.target
 
 [Service]
-# If you don't need to encrypt etcd, remove --encryption-provider-config
+# 如果你不需要加密 etcd，移除 --encryption-provider-config
 ExecStart=/usr/local/sbin/kube-apiserver \
   --allow-privileged=true \
   --anonymous-auth=false \
@@ -458,9 +463,9 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start kube-apiserver
+### 启动 kube-apiserver
 
-3 servers have to execute.
+3 个服务器必须执行以下命令：
 
 ``` bash
 systemctl daemon-reload
@@ -469,11 +474,11 @@ systemctl start kube-apiserver.service
 systemctl status kube-apiserver.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check kube-apiserver
+###### 开始检查 kube-apiserver
 [+]ping ok
 [+]log ok
 [+]etcd ok
@@ -498,14 +503,14 @@ $ ./check_status.sh
 [+]poststarthook/apiservice-openapi-controller ok
 livez check passed
 
-###### kube-apiserver check success
+###### kube-apiserver 检查成功
 ```
 
-## Install karmada-aggregated-apiserver
+## 安装 karmada-aggregated-apiserver
 
-Like `karmada-webhook`, use `nginx` for high availability.
+类似 `karmada-webhook`，为高可用使用 `nginx`。
 
-modify the `nginx` configuration and add the following configuration,Execute operations at `karmada-01`.
+修改 `nginx` 配置并添加以下配置。对 `karmada-01` 执行以下操作。
 
 ```bash
 cat /usr/local/karmada-nginx/conf/nginx.conf
@@ -557,15 +562,15 @@ stream {
 }
 ```
 
-Reload `nginx` configuration
+重新加载 `nginx` 配置。
 
 ```bash
 systemctl restart karmada-nginx
 ```
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-aggregated-apiserver.service
 
@@ -600,7 +605,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-aggregated-apiserver
+### 启动 karmada-aggregated-apiserver
 
 ```bash
 systemctl daemon-reload
@@ -609,13 +614,13 @@ systemctl start karmada-aggregated-apiserver.service
 systemctl status karmada-aggregated-apiserver.service
 ```
 
-### Create `APIService`
+### 创建 `APIService`
 
-`externalName` is the host name of the node where `nginx` is located (`karmada-01`).
+`externalName` 是 `nginx` 所在的主机名 (`karmada-01`)。
 
 
 
-(1) create file: `karmada-aggregated-apiserver-apiservice.yaml`
+(1) 创建文件：`karmada-aggregated-apiserver-apiservice.yaml`
 
 ```yaml
 apiVersion: apiregistration.k8s.io/v1
@@ -650,11 +655,11 @@ spec:
 
 (2) `kubectl create -f karmada-aggregated-apiserver-apiservice.yaml`
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-aggregated-apiserver
+###### 开始检查 karmada-aggregated-apiserver
 [+]ping ok
 [+]log ok
 [+]etcd ok
@@ -663,14 +668,14 @@ $ ./check_status.sh
 [+]poststarthook/start-aggregated-server-informers ok
 livez check passed
 
-###### karmada-aggregated-apiserver check success
+###### karmada-aggregated-apiserver 检查成功
 ```
 
-## Install kube-controller-manager
+## 安装 kube-controller-manager
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
 /usr/lib/systemd/system/kube-controller-manager.service
 
@@ -724,7 +729,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start kube-controller-manager
+### 启动 kube-controller-manager
 
 ```bash
 systemctl daemon-reload
@@ -733,20 +738,20 @@ systemctl start kube-controller-manager.service
 systemctl status kube-controller-manager.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check kube-controller-manager
+###### 开始检查 kube-controller-manager
 [+]leaderElection ok
 healthz check passed
 
-###### kube-controller-manager check success
+###### kube-controller-manager 检查成功
 ```
 
-## Install karmada-controller-manager
+## 安装 karmada-controller-manager
 
-Create  `namespace` and bind the `cluster admin role`. Execute operations at `karmada-01`.
+创建 `namespace` 并绑定 `cluster admin role`。对 `karmada-01` 执行操作。
 
 ```bash
 kubectl create ns karmada-system
@@ -754,9 +759,9 @@ kubectl create clusterrolebinding cluster-admin:karmada --clusterrole=cluster-ad
 ```
 
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-controller-manager.service
 
@@ -784,7 +789,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-controller-manager
+### 启动 karmada-controller-manager
 
 ```bash
 systemctl daemon-reload
@@ -793,22 +798,22 @@ systemctl start karmada-controller-manager.service
 systemctl status karmada-controller-manager.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-controller-manager
+###### 开始检查 karmada-controller-manager
 [+]ping ok
 healthz check passed
 
-###### karmada-controller-manager check success
+###### karmada-controller-manager 检查成功
 ```
 
-## Install karmada-scheduler
+## 安装 karmada-scheduler
 
-### Create Systemd Service
+### 创建 Systemd Service
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-scheduler.service
 
@@ -836,7 +841,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-scheduler
+### 启动 karmada-scheduler
 
 ```bash
 systemctl daemon-reload
@@ -845,20 +850,20 @@ systemctl start karmada-scheduler.service
 systemctl status karmada-scheduler.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-scheduler
+###### 开始检查 karmada-scheduler
 ok
-###### karmada-scheduler check success
+###### karmada-scheduler 检查成功
 ```
 
-## Install karmada-webhook
+## 安装 karmada-webhook
 
-`karmada-webhook` is different from `scheduler` and `controller-manager`, and its high availability needs to be implemented with `nginx.`
+`karmada-webhook` 不同于 `scheduler` 和 `controller-manager`，其高可用需要用 `nginx` 实现。
 
-modify the `nginx` configuration and add the following configuration,Execute operations at `karmada-01`.
+修改 `nginx` 配置并添加以下配置。对 `karmada-01` 执行以下操作。
 
 ```bash
 cat /usr/local/karmada-nginx/conf/nginx.conf
@@ -897,15 +902,15 @@ stream {
 }
 ```
 
-Reload `nginx` configuration
+重新加载 `nginx` 配置。
 
 ```bash
 systemctl restart karmada-nginx
 ```
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-webhook.service
 
@@ -935,7 +940,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-webook
+### 启动 karmada-webook
 
 ```bash
 systemctl daemon-reload
@@ -944,31 +949,31 @@ systemctl start karmada-webhook.service
 systemctl status karmada-webhook.service
 ```
 
-### Configurate karmada-webhook
+### 配置 karmada-webhook
 
-Download the `webhook-configuration.yaml` file: <https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml>
+下载 `webhook-configuration.yaml` 文件：<https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml>
 
 ```bash
 ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
 sed -i "s/{{caBundle}}/${ca_string}/g"  webhook-configuration.yaml
-# You need to change 172.31.209.245:4443 to your Load Balancer host:port.
+# 你需要将 172.31.209.245:4443 更改为你的负载均衡器 host:port。
 sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g'  webhook-configuration.yaml
 
 kubectl create -f  webhook-configuration.yaml
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-webhook
+###### 开始检查 karmada-webhook
 ok
-###### karmada-webhook check success
+###### karmada-webhook 检查成功
 ```
 
-## Initialize Karmada
+## 初始化 Karmada
 
-Execute operations at `karmada-01`.
+对 `karmada-01` 执行以下操作。
 
 ```bash
 git clone https://github.com/karmada-io/karmada
@@ -980,7 +985,7 @@ cd ../patches/
 ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
 sed -i "s/{{caBundle}}/${ca_string}/g" webhook_in_resourcebindings.yaml
 sed -i "s/{{caBundle}}/${ca_string}/g"  webhook_in_clusterresourcebindings.yaml
-# You need to change 172.31.209.245:4443 to your Load Balancer host:port.
+# 你需要将 172.31.209.245:4443 更改为你的负载均衡器 host:port。
 sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_resourcebindings.yaml
 sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_clusterresourcebindings.yaml
 
@@ -988,19 +993,19 @@ kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-
 kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
 ```
 
-## Install karmada-scheduler-estimator
+## 安装 karmada-scheduler-estimator
 
-`karmada-scheduler` uses gRPC to access karmada-scheduler-estimator. You can use "Linux Virtual Server" as the Load Balancer.
+`karmada-scheduler` 使用 gRPC 访问 karmada-scheduler-estimator。你可以将 "Linux 虚拟服务器"用作负载均衡器。
 
-You need to deploy above components and join member cluster into Karmada Control Plane first. See: [Install Karmada on your own cluster](./installation.md#install-karmada-on-your-own-cluster)
+你需要先部署上述组件并将成员集群接入到 Karmada 控制面。请参见[安装 Karmada 到你自己的集群](./installation.md#install-karmada-on-your-own-cluster)。
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
-In the example below, "/etc/karmada/physical-machine-karmada-member-1.kubeconfig" is kubeconfig file of the joined member cluster.
+在以下示例中，"/etc/karmada/physical-machine-karmada-member-1.kubeconfig" 是已接入成员集群的 kubeconfig 文件。
 
 
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-scheduler-estimator.service
 
@@ -1010,7 +1015,7 @@ Description=Karmada Scheduler Estimator
 Documentation=https://github.com/karmada-io/karmada
 
 [Service]
-# You need to change `--cluster-name` `--kubeconfig`
+# 你需要更改 `--cluster-name` `--kubeconfig`
 ExecStart=/usr/local/sbin/karmada-scheduler-estimator \
   --cluster-name "physical-machine-karmada-member-1" \
   --kubeconfig "/etc/karmada/physical-machine-karmada-member-1.kubeconfig" \
@@ -1025,7 +1030,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-scheduler-estimator
+### 启动 karmada-scheduler-estimator
 
 ```bash
 systemctl daemon-reload
@@ -1034,9 +1039,9 @@ systemctl start karmada-scheduler-estimator.service
 systemctl status karmada-scheduler-estimator.service
 ```
 
-### Create Service
+### 创建服务
 
-(1) Create `karmada-scheduler-estimator.yaml `
+(1) 创建 `karmada-scheduler-estimator.yaml`
 
 ```yaml
 apiVersion: v1
@@ -1065,34 +1070,34 @@ spec:
 
 
 
-(2) Create Service
+(2) 创建服务
 
 ```bash
 kubectl create --kubeconfig "/etc/karmada/admin.kubeconfig" -f karmada-scheduler-estimator.yaml 
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-scheduler-estimator
+###### 开始检查 karmada-scheduler-estimator
 ok
-###### karmada-scheduler-estimator check success
+###### karmada-scheduler-estimator 检查成功
 ```
 
-### Trouble Shooting
+### 故障排查
 
-1\. `karmada-scheduler` takes some time to find the new `karmada-scheduler-estimator`. If you can't wait, you can just restart karmada-scheduler.
+1. `karmada-scheduler` 需要一些时间才能找到新的 `karmada-scheduler-estimator`。如果你不想等，可以直接重启 karmada-scheduler。
 
 ```bash
 systemctl restart karmada-scheduler.service
 ```
 
-## Install karmada-search
+## 安装 karmada-search
 
-### Create Systemd Service
+### 创建 Systemd 服务
 
-Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
+对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
 
 /usr/lib/systemd/system/karmada-search.service
 
@@ -1127,7 +1132,7 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 
-### Start karmada-search
+### 启动 karmada-search
 
 ```bash
 systemctl daemon-reload
@@ -1136,11 +1141,11 @@ systemctl start karmada-search.service
 systemctl status karmada-search.service
 ```
 
-### Verify
+### 验证
 
 ```bash
 $ ./check_status.sh
-###### Start check karmada-search
+###### 开始检查 karmada-search
 [+]ping ok
 [+]log ok
 [+]etcd ok
@@ -1152,10 +1157,9 @@ $ ./check_status.sh
 [+]poststarthook/start-karmada-proxy-controller ok
 livez check passed
 
-###### karmada-search check success
+###### karmada-search 检查成功
 ```
 
-### Configure
+### 配置
 
-[Proxy Global Resources](../userguide/globalview/proxy-global-resource.md)
-
+[代理全局资源](../userguide/globalview/proxy-global-resource.md)
