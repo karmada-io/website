@@ -6,12 +6,12 @@ title: 安装概述
 
 ### Karmada kubectl 插件
 `kubectl-karmada` 是允许你控制 Karmada 控制面的 Karmada 命令行工具，该工具表现为一个 [kubectl 插件][1]。
-有关安装说明，请参见[安装 kubectl-karmada](./install-cli-tools.md#install-kubectl-karmada)。
+有关安装说明，请参见[安装 kubectl-karmada](./install-cli-tools.md#安装-kubectl-karmada)。
 
 ### Karmadactl
 `karmadactl` 也是允许你控制 Karmada 控制面的 Karmada 命令行工具。
 与 kubectl-karmada 相比，`karmadactl` 是一个完全专用于 Karmada 的 CLI 工具。
-有关安装说明，请参见[安装 karmadactl](./install-cli-tools.md#install-karmadactl)。
+有关安装说明，请参见[安装 karmadactl](./install-cli-tools.md#安装-karmadactl)。
 
 :::note
 
