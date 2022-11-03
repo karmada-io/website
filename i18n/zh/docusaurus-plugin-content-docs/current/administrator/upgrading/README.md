@@ -1,67 +1,66 @@
 ---
-title: Upgrading Instruction
+title: 升级指导
 ---
 
-## Overview
-Karmada uses the [semver versioning](https://semver.org/) and each version in the format of v`MAJOR`.`MINOR`.`PATCH`:
-- The `PATCH` release does not introduce breaking changes.
-- The `MINOR` release might introduce minor breaking changes with a workaround.
-- The `Major` release might introduce backward-incompatible behavior changes.
+## 概述
+Karmada 使用 [semver 发版机制](https://semver.org/)，每个版本的格式为 v`MAJOR`.`MINOR`.`PATCH`：
+- `PATCH` 版本不会引入破坏性的变更。
+- `MINOR` 版本可能引入少量破坏性的变更，但会提供一些应对办法。
+- `Major` 版本可能引入向后不兼容的重大变更。
 
-## Regular Upgrading Process
-### Upgrading APIs
-For releases that introduce API changes, the Karmada API(CRD) that Karmada components rely on must upgrade to keep consistent.
+## 常规升级流程
+### 升级 API
+对于引入 API 变更的版本，必须升级 Karmada 组件所依赖的 Karmada API (CRD) 来保持一致。
 
-Karmada CRD is composed of two parts:
-- bases: The CRD definition generated via API structs.
-- patches: conversion settings for the CRD.
+Karmada CRD 由两部分组成：
+- bases：通过 API 结构生成的 CRD 定义。
+- patches：针对 CRD 的转换设置。
 
-In order to support multiple versions of custom resources, the `patches` should be injected into `bases`.
-To achieve this we introduced a `kustomization.yaml` configuration then use `kubectl kustomize` to build the final CRD.
+为了支持多个版本的自定义资源，`patches` 应被注入到 `bases` 中。
+为此我们引入了 `kustomization.yaml` 配置文件，然后使用 `kubectl kustomize` 构建最终的 CRD。
 
-The `bases`,`patches`and `kustomization.yaml` now located at `charts/_crds` directory of the repo.
+`bases`、`patches` 和 `kustomization.yaml` 现在位于代码仓库的 `charts/_crds` 目录。
 
-#### Manual Upgrade API
+#### 手动升级 API
 
-**Step 1: Get the Webhook CA certificate**
+**步骤 1：获取 Webhook CA 证书**
 
-The CA certificate will be injected into `patches` before building the final CRD.
-We can retrieve it from the `MutatingWebhookConfiguration` or `ValidatingWebhookConfiguration` configurations, e.g:
+在构建最终 CRD 之前，CA 证书将被注入到 `patches` 中。
+我们可以从 `MutatingWebhookConfiguration` 或 `ValidatingWebhookConfiguration` 配置中检索此证书，例如：
 ```bash
 kubectl get mutatingwebhookconfigurations.admissionregistration.k8s.io mutating-config
 ```
-Copy the `ca_string` from the yaml path `webhooks.name[x].clientConfig.caBundle`, then replace the `{{caBundle}}` from
-the yaml files in `patches`. e.g:
+从 yaml 路径 `webhooks.name[x].clientConfig.caBundle` 复制 `ca_string`，然后替换 `patches` 中 yaml 文件内的 `{{caBundle}}`，例如：
 ```bash
 sed -i'' -e "s/{{caBundle}}/${ca_string}/g" ./"charts/karmada/_crds/patches/webhook_in_resourcebindings.yaml"
 sed -i'' -e "s/{{caBundle}}/${ca_string}/g" ./"charts/karmada/_crds/patches/webhook_in_clusterresourcebindings.yaml"
 ```
 
-**Step2: Build final CRD**
+**步骤 2：构建最终的 CRD**
 
-Generate the final CRD by `kubectl kustomize` command, e.g:
+通过 `kubectl kustomize` 命令生成最终的 CRD，例如：
 ```bash
 kubectl kustomize ./charts/karmada/_crds 
 ```
-Or, you can apply to `karmada-apiserver` by:
+或者你可以运行以下命令将其应用到 `karmada-apiserver`：
 ```bash
 kubectl kustomize ./charts/karmada/_crds | kubectl apply -f -
 ```
 
-### Upgrading Components
-Components upgrading is composed of image version update and possible command args changes.
+### 升级组件
+组件升级包括镜像版本更新和可能的命令参数变更。
 
-> For the argument changes please refer to `Details Upgrading Instruction` below.
+> 有关参数变更，请参阅以下`详细升级说明`。
 
-## Details Upgrading Instruction
+## 详细升级说明
 
-The following instructions are for minor version upgrades. Cross-version upgrades are not recommended.
-And it is recommended to use the latest patch version when upgrading, for example, if you are upgrading from 
-v1.1.x to v1.2.x and the available patch versions are v1.2.0, v1.2.1 and v1.2.2, then select v1.2.2.
+以下说明适用于 minor 版本升级。不推荐跨版本升级。
+另外升级时建议使用最新的 patch 版本，例如如果从 v1.1.x 升级到 v1.2.x 时可用的 patch 版本为
+v1.2.0、v1.2.1 和 v1.2.2， 则选择 v1.2.2。
 
-### [v0.8 to v0.9](./v0.8-v0.9.md)
-### [v0.9 to v0.10](./v0.9-v0.10.md)
-### [v0.10 to v1.0](./v0.10-v1.0.md)
-### [v1.0 to v1.1](./v1.0-v1.1.md)
-### [v1.1 to v1.2](./v1.1-v1.2.md)
-### [v1.2 to v1.3](./v1.2-v1.3.md)
+### [v0.8 升级到 v0.9](./v0.8-v0.9.md)
+### [v0.9 升级到 v0.10](./v0.9-v0.10.md)
+### [v0.10 升级到 v1.0](./v0.10-v1.0.md)
+### [v1.0 升级到 v1.1](./v1.0-v1.1.md)
+### [v1.1 升级到 v1.2](./v1.1-v1.2.md)
+### [v1.2 升级到 v1.3](./v1.2-v1.3.md)
