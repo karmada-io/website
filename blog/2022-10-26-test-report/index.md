@@ -1,10 +1,20 @@
 ---
-title: Test Report on Karmada's Support for 100 Clusters and 500,000 Nodes
+title: Test Report on Karmada's Support for 100 Large-Scale Clusters
 ---
 
 ## Abstract
 
-The popularity of Karmada is now drawing users' attention to Karmada's scalability and deployment at scale. Therefore, we launched a large-scale test on Karmada, and the test results show that Karmada can stably support 100 clusters with 500,000 nodes connected at the same time, running more than 2 million pods. This article will introduce the metrics used in the test, how to conduct large-scale testing, and how we realize massive connection of nodes and clusters.
+Cloud native implementations, growing in scale and complexity, are challenging organizations on how to efficiently, reliably manage large-scale resource pools to meet growing demands.
+Players in the cloud field attempted to scale out single clusters by customizing native Kubernetes components, which complicated single-cluster operations and maintenance, beclouded cluster upgrade paths, let alone many other problems.
+This is where multi-cluster technologies come into play. They can scale resource pools horizontally without invasively modifying each single cluster, while reducing O&M costs.
+
+The popularity of Karmada is now drawing users' attention to Karmada's scalability and deployment at scale. Therefore, we launched a large-scale test on Karmada to obtain baseline performance metrics for Karmada managing multiple Kubernetes clusters.
+**For multi-cluster systems represented by Karmada, the size of a single cluster is not a limiting factor restricting the scalability**.
+On that account, we referred to **the standard configurations of Kubernetes large-scale clusters and real-world implementations**, and tested Karmada on managing 100 Kubernetes clusters (each cluster containing 5k nodes and 20k pods) at the same time.
+Limited by the environment and tooling, this test is not designed for stress testing Karmada, but for using Karmada in typical multi-cluster scenarios in production.
+The test results show that Karmada can **stably support 100 large-scale clusters** with 500,000 nodes connected at the same time, running more than 2 million pods. 
+
+This article will introduce the metrics used in the test, how to conduct large-scale testing, and how we realize massive connection of nodes and clusters.
 
 ## Background
 
@@ -34,17 +44,18 @@ The Karmada Controller Manager runs the various controllers,  the controllers wa
 ## Multi-cluster Scalability Dimensions and Thresholds
 
 The scalability of a multi-cluster system does not only refer to the number of clusters, that is, Scalability!=`#Num of Clusters`. It includes many dimensions of measurement.
-It is pointless to consider cluster size without considering other dimensions.
+It is pointless to consider the number of clusters without considering other dimensions.
 
-We describe the scalability of a multi-cluster system in the following three dimensions by priority:
+We describe the scalability of a multi-cluster system in the following three dimensions **by priority**:
 
-1. Num of Clusters: The number of clusters is the most direct dimension to measure the resource pool size and scalability of a multi-cluster system.
+1. Num of Clusters: The number of clusters is the most direct and important dimension to measure the resource pool size and scalability of a multi-cluster system.
    With the remaining dimensions unchanged, the more clusters the system can access, the larger the resource pool of the system and the stronger the carrying capacity.
 2. Num of Resources (API Objects): For the control plane of a multi-cluster system, the storage is not unlimited, and the number and overall size of API objects created on the control plane are limited by the storage of the control plane, which is also an important dimension restricting the resource pool size of the multi-cluster system.
    The API objects here not only refer to the resource templates distributed to member clusters, but also include the cluster scheduling policies, multi-cluster services and other resources.
 3. Cluster Size: Cluster size is a dimension that cannot be ignored when measuring the resource pool size of a multi-cluster system. On the one hand, when the number of clusters is equal, the larger the scale of a single cluster, the larger the resource pool of the entire multi-cluster system.
    On the other hand, the upper-layer feature of a multi-cluster system depends on the system's resource portrait of the cluster. For example, in the scheduling process, the resource status of the destination cluster is an indispensable factor.
-   Under the same circumstances, the larger the cluster scale, the greater the pressure on the control plane. Among cluster resources, Node and Pod are undoubtedly the two most important resources.
+   **In summary, the scale of a single cluster is closely related to, but not a limiting factor for a multi-cluster system**. Users can upsize a single cluster by optimizing the native Kubernetes components to enlarge the resource pool of the entire multi-cluster system, but this is not the focus of measuring the performance of the multi-cluster system.
+   This test refers to Kubernetes's [standard configurations of large-scale clusters](https://kubernetes.io/docs/setup/best-practices/cluster-large/) and takes into account the performance of test tools to decide the tested cluster scale as in the actual production environment. Among cluster resources, Nodes and Pods are the two most important ones.
    Node is the smallest carrier of computing, storage and other resources, and the number of Pods represents the application carrying capacity of a cluster. 
    In fact, API objects in a single cluster also include common objects such as Services, ConfigMaps, Secrets and so on. The introduction of these variables will make the testing process more complicated, so this test does not focus too much on the above variables.
    * Num of Nodes
@@ -410,7 +421,7 @@ Karmada-agent in the member cluster with 5k Nodes and 2w Pods consumes 40m CPU(c
 ## Conclusion and Analysis
 
 From the preceding test results, the API Call Latency and Resource Distribution Latency meet the SLIs/SLOs above, and the resources consumed by the system during the whole process are in a controllable range.
-Therefore, **Karmada can stably support 100 clusters with 500,000 nodes and more than two million pods**. In production, Karmada effectively supports the management of hundreds of large-sized clusters.
+Therefore, Karmada can **stably support 100 large-scale clusters** running more than 500,000 nodes and 2 million Pods. In production, Karmada effectively supports the management of hundreds of large-sized clusters.
 Next, we will analyze the data of each indicator in detail.
 
 ### Resource Templates and Policies
@@ -460,9 +471,14 @@ Now Karmada provides the ability named [cluster resource modeling](https://karma
 In the process of resource modeling, it will collect node and pod information from all clusters managed by Karmada. This imposes a considerable performance burden in large-scale scenarios.
 If you do not use this ability, you can [disable cluster resource modeling](https://karmada.io/docs/next/userguide/scheduling/cluster-resources#disable-cluster-resource-modeling) to further reduce resource consumption.
 
-### Summary
+### Summary and Outlook
+
+According to the analysis of test results, Karmada can **stably support 100 large-scale clusters** running more than 500,000 nodes and 2 million Pods.
 
 In terms of use scenarios, Push mode is suitable for managing Kubernetes clusters on public clouds, while Pull mode covers private cloud and edge-related scenarios. In terms of performance and security, the Pull mode outperforms the Push mode.
 Each cluster is managed by the karmada-agent component in the cluster and is completely isolated.
 However, while the Pull mode improves performance, it also needs to correspondingly improve the performance of karmada-apiserver and karmada-etcd to face challenges in traffic-intensive and high-concurrency scenarios. For specific methods, please refer to the optimization of Kubernetes for large-scale clusters.
 In general, users can choose different deployment modes according to usage scenarios to improve the performance of the entire multi-cluster system through parameter tuning and other means.
+
+Limited by the environment and tooling, this test does not stress test Karmada. The industry just got started on performance tests of multi-cluster systems.
+Our next steps will be taken on better tools and methodologies for testing multi-cluster systems in more scenarios.
