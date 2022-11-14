@@ -150,11 +150,11 @@ Next, we need to specify TuningSets. TuningSet describes how actions are execute
 ```yaml
 tuningSets:
 - name: Uniformtinyqps
-    qpsLoad:
-      qps: 0.1
+  qpsLoad:
+    qps: 0.1
 - name: Uniform1qps
-    qpsLoad:
-      qps: 1
+  qpsLoad:
+    qps: 1
 ```
 
 Finally, we will create a phase that creates deployment and propagation policy. We need to specify in which namespaces we want the deployment and propagation policy to be created, how many of these deployments per namespace. Also, we will need to specify template for our deployment and propagation policy , which we will do later. For now, let's assume that this template allows us to specify numbers of replicas in deployment and propagation policy.
@@ -178,6 +178,7 @@ steps:
       max: 10
     replicasPerNamespace: 1
     tuningSet: Uniform1qps
+    objectBundle:
     - basename: test-policy
       objectTemplatePath: "policy.yaml"
       templateFillMap:
@@ -195,7 +196,7 @@ namespace:
 
 tuningSets:
 - name: Uniformtinyqps
-    qpsLoad:
+  qpsLoad:
     qps: 0.1
 - name: Uniform1qps
   qpsLoad:
@@ -254,9 +255,9 @@ spec:
                     values:
                       - fake-kubelet
       tolerations: # A taints was added to an automatically created Node. You can remove taints of Node or add this tolerations
-          - key: "fake-kubelet/provider"
-            operator: "Exists"
-            effect: "NoSchedule"
+        - key: "fake-kubelet/provider"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - image: fake-pod
           name: {{.Name}}
