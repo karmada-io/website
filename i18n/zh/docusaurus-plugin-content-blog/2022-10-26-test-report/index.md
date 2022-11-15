@@ -301,9 +301,9 @@ spec:
                     values:
                       - fake-kubelet
       tolerations: 
-          - key: "fake-kubelet/provider"
-            operator: "Exists"
-            effect: "NoSchedule"
+        - key: "fake-kubelet/provider"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
         - image: fake-pod
           name: {{.Name}}
