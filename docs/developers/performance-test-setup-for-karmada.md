@@ -138,11 +138,12 @@ We will create file `config.yaml` that describes this test. First we need to sta
 name: test
 ```
 
-ClusterLoader2 will create namespaces automatically, but we need to specify how many namespaces we want:
+ClusterLoader2 will create namespaces automatically, but we need to specify how many namespaces we want and whether delete the namespaces after distributing resources:
 
 ```yaml
 namespace:
   number: 10
+  deleteAutomanagedNamespaces: false
 ```
 
 Next, we need to specify TuningSets. TuningSet describes how actions are executed. The qps means 1/qps s per action interval. In order to distribute resources slowly to relieve the pressure on the apiserver, the qps of Uniformtinyqps is set to 0.1, which means that after distributing a deployment, we wait 10s before continuing to distribute the next deployment.
@@ -150,11 +151,11 @@ Next, we need to specify TuningSets. TuningSet describes how actions are execute
 ```yaml
 tuningSets:
 - name: Uniformtinyqps
-    qpsLoad:
-      qps: 0.1
+  qpsLoad:
+    qps: 0.1
 - name: Uniform1qps
-    qpsLoad:
-      qps: 1
+  qpsLoad:
+    qps: 1
 ```
 
 Finally, we will create a phase that creates deployment and propagation policy. We need to specify in which namespaces we want the deployment and propagation policy to be created, how many of these deployments per namespace. Also, we will need to specify template for our deployment and propagation policy , which we will do later. For now, let's assume that this template allows us to specify numbers of replicas in deployment and propagation policy.
@@ -185,17 +186,18 @@ steps:
         
 ```
 
-THe whole `config.yaml` will look like this:
+The whole `config.yaml` will look like this:
 
 ```yaml
 name: test
 
 namespace:
   number: 10
-
+  deleteAutomanagedNamespaces: false
+  
 tuningSets:
 - name: Uniformtinyqps
-    qpsLoad:
+  qpsLoad:
     qps: 0.1
 - name: Uniform1qps
   qpsLoad:
@@ -223,6 +225,7 @@ steps:
     - basename: test-policy
       objectTemplatePath: "policy.yaml"
 ```
+
 
 Now, we need to specify deployment and propagation template. ClusterLoader2 by default adds parameter `Name` that you can use in your template. In our config, we also passed `Replicas` parameter. So our template for deployment and propagation policy will look like following:
 
@@ -286,9 +289,9 @@ To distributing resources,  run:
 
 ```shell
 export KARMADA_APISERVERCONFIG=your_config
-export KARMADA-APISERVERIP=your_ip
+export KARMADA_APISERVERIP=your_ip
 cd clusterloader2/
-go run cmd/clusterloader.go --testconfig=config.yaml --provider=local --kubeconfig=$KARMADA_APISERVERCONFIG --v=2 --k8s-clients-number=1 --skip-cluster-verification=true --masterip=$KARMADA-APISERVERIP --enable-exec-service=false
+go run cmd/clusterloader.go --testconfig=config.yaml --provider=local --kubeconfig=$KARMADA_APISERVERCONFIG --v=2 --k8s-clients-number=1 --skip-cluster-verification=true --masterip=$KARMADA_APISERVERIP --enable-exec-service=false
 ```
 
 The meaning of args above shows as following:
@@ -299,7 +302,7 @@ The meaning of args above shows as following:
 
 Since the resources of member cluster cannot be accessed in karmada control plane, we have to turn off enable-exec-service and cluster-verification.
 
-
+> Note: If the `deleteAutomanagedNamespaces` parameter in config file is set to true, when the whole distribution of resources is complete, the resources will be immediately deleted.
 
 ## Monitor Karmada control plane using Prometheus and Grafana
 
