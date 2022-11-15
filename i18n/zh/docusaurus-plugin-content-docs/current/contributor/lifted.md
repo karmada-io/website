@@ -1,39 +1,43 @@
 ---
-title: How to manage lifted codes
+title: 如何管理 Lift 代码
 ---
 
-This document explains how lifted code is managed.
-A common user case for this task is developer lifting code from other repositories to `pkg/util/lifted` directory.
+本文讲解如何管理 Lift 代码。
+此任务的常见用户场景是开发者将代码从其他代码仓库 Lift 到 `pkg/util/lifted` 目录。
 
-- [Steps of lifting code](#steps-of-lifting-code)
-- [How to write lifted comments](#how-to-write-lifted-comments)
-- [Examples](#examples)
+- [Lift 代码的步骤](#lift-代码的步骤)
+- [如何编写 Lift 注释](#如何编写-lift-注释)
+- [示例](#示例)
 
-## Steps of lifting code
-- Copy code from another repository and save it to a go file under `pkg/util/lifted`.
-- Optionally change the lifted code.
-- Add lifted comments for the code [as guided](#how-to-write-lifted-comments).
-- Run `hack/update-lifted.sh` to update the lifted doc `pkg/util/lifted/doc.go`.
+## Lift 代码的步骤
+- 从另一个代码仓库拷贝代码并将其保存到 `pkg/util/lifted` 的一个 Go 文件中。
+- 可选择更改 Lift 代码。
+- [参照指南](#如何编写-lift-注释)为代码添加 Lift 注释。
+- 运行 `hack/update-lifted.sh` 以更新 Lift 文档 `pkg/util/lifted/doc.go`。
 
-## How to write lifted comments
-Lifted comments shall be placed just before the lifted code (could be a func, type, var or const). Only empty lines and comments are allowed between lifted comments and lifted code.
+## 如何编写 Lift 注释
+Lift 注释应放在 Lift 代码（可以是函数、类型、变量或常量）前面。
+在 Lift 注释和 Lift 代码之间只允许空行和注释。
 
-Lifted comments are composed by one or multi comment lines, each in the format of `+lifted:KEY[=VALUE]`. Value is optional for some keys.
+Lift 注释由一行或多行注释组成，每行的格式为 `+lifted:KEY[=VALUE]`。
+对某些键而言，值是可选的。
 
-Valid keys are as follow：
+有效的键如下：
 
 - source:
 
-  Key `source` is required. Its value indicates where the code is lifted from.
+  `source` 键是必需的。其值表明 Lift 代码的来源。
 
 - changed:
 
-  Key `changed` is optional. It indicates whether the code is changed. Value is optional (`true` or `false`, defaults to `true`). Not adding this key or setting it to `false` means no code change.
+  `changed` 键是可选的。它表明代码是否被更改。
+  值是可选的（`true` 或 `false`，默认为 `true`）。
+  不添加此键或将其设为 `false` 意味着不变更代码。
 
-## Examples
-### Lifting function
+## 示例
+### Lift 函数
 
-Lift function `IsQuotaHugePageResourceName` to `corehelpers.go`:
+将 `IsQuotaHugePageResourceName` 函数 Lift 到 `corehelpers.go`：
 
 ```go
 // +lifted:source=https://github.com/kubernetes/kubernetes/blob/release-1.23/pkg/apis/core/helper/helpers.go#L57-L61
@@ -45,17 +49,17 @@ func IsQuotaHugePageResourceName(name corev1.ResourceName) bool {
 }
 ```
 
-Added in `doc.go`:
+添加到 `doc.go` 中：
 
 ```markdown
-| lifted file              | source file                                                                                                                   | const/var/type/func                     | changed |
+| Lift 的文件              | 源文件                                                                                                                   | 常量/变量/类型/函数                     | 是否变更 |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|---------|
 | corehelpers.go           | https://github.com/kubernetes/kubernetes/blob/release-1.23/pkg/apis/core/helper/helpers.go#L57-L61                            | func IsQuotaHugePageResourceName        | N       |
 ```
 
-### Changed lifting function
+### 变更 Lift 函数
 
-Lift and change function `GetNewReplicaSet` to `deployment.go`
+将 `GetNewReplicaSet` 函数 Lift 并变更为 `deployment.go`：
 
 ```go
 // +lifted:source=https://github.com/kubernetes/kubernetes/blob/release-1.22/pkg/controller/deployment/util/deployment_util.go#L536-L544
@@ -72,46 +76,46 @@ func GetNewReplicaSet(deployment *appsv1.Deployment, f ReplicaSetListFunc) (*app
 }
 ```
 
-Added in `doc.go`:
+添加到 `doc.go` 中：
 
 ```markdown
-| lifted file              | source file                                                                                                                   | const/var/type/func                     | changed |
+| Lift 的文件              | 源文件                                                                                                                   | 常量/变量/类型/函数                     | 是否变更 |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|---------|
 | deployment.go            | https://github.com/kubernetes/kubernetes/blob/release-1.22/pkg/controller/deployment/util/deployment_util.go#L536-L544        | func GetNewReplicaSet                   | Y       |
 ```
 
-### Lifting const
+### Lift 常量
 
-Lift const `isNegativeErrorMsg` to `corevalidation.go  `:
+将 `isNegativeErrorMsg` 常量 Lift 到 `corevalidation.go`：
 
 ```go
 // +lifted:source=https://github.com/kubernetes/kubernetes/blob/release-1.22/pkg/apis/core/validation/validation.go#L59
 const isNegativeErrorMsg string = apimachineryvalidation.IsNegativeErrorMsg
 ```
 
-Added in `doc.go`:
+添加到 `doc.go` 中：
 
 ```markdown
-| lifted file              | source file                                                                                                                   | const/var/type/func                     | changed |
+| Lift 的文件             | 源文件                                                                                                                  | 常量/变量/类型/函数                    | 是否变更 |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|---------|
 | corevalidation.go        | https://github.com/kubernetes/kubernetes/blob/release-1.22/pkg/apis/core/validation/validation.go#L59                         | const isNegativeErrorMsg                | N       |
 ```
 
-### Lifting type
+### Lift 类型
 
-Lift type `Visitor` to `visitpod.go`:
+将 `Visitor` 类型 Lift 到 `visitpod.go`：
 
 ```go
 // +lifted:source=https://github.com/kubernetes/kubernetes/blob/release-1.23/pkg/api/v1/pod/util.go#L82-L83
 
-// Visitor is called with each object name, and returns true if visiting should continue
+// Visitor 随每个对象名称被调用，如果应继续 visiting，则返回 true
 type Visitor func(name string) (shouldContinue bool)
 ```
 
-Added in `doc.go`:
+添加到 `doc.go` 中：
 
 ```markdown
-| lifted file              | source file                                                                                                                   | const/var/type/func                     | changed |
+| Lift 的文件             | 源文件                                                                                                                  | 常量/变量/类型/函数                    | 是否变更 |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|---------|
 | visitpod.go              | https://github.com/kubernetes/kubernetes/blob/release-1.23/pkg/api/v1/pod/util.go#L82-L83                                     | type Visitor                            | N       |
 ```
