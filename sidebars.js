@@ -119,7 +119,8 @@ module.exports = {
                     type: "category",
                     label: "Role Separation",
                     items: [
-                        "userguide/roleseparation/unifiedAuth",
+                        "userguide/roleseparation/unified-auth",
+                        "userguide/roleseparation/federated-resource-quota",
                     ],
                 },
             ],
