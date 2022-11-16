@@ -1,34 +1,34 @@
 ---
-title: Use Submariner to connect the network between Karmada member clusters
+title: 使用 Submariner 实现 Karmada 成员集群彼此联网
 ---
 
-This document demonstrates how to use the `Submariner` to connect the network between member clusters.
+本文演示了如何使用 `Submariner` 将成员集群彼此联网。
 
-[Submariner](https://github.com/submariner-io/submariner) flattens the networks between the connected clusters, and enables IP reachability between Pods and Services.
+[Submariner](https://github.com/submariner-io/submariner) 将相连集群之间的网络扁平化，并实现 Pod 和服务之间的 IP 可达性。
 
-## Install Karmada
+## 安装 Karmada
 
-### Install Karmada control plane
+### 安装 Karmada 控制面
 
-Following the steps [Install Karmada control plane](https://github.com/karmada-io/karmada#install-karmada-control-plane) in Quick Start, you can get a Karmada. 
+遵循快速入门中的步骤[安装 Karmada 控制面](../../installation/installation.md)后，您就可以用 Karmada 管控集群。
 
-### Join member cluster
+### 接入成员集群
 
-In the following steps, we are going to create a member cluster and then join the cluster to Karmada control plane.
+在下面的步骤中，我们将创建一个成员集群，然后将该集群接入 Karmada 控制面。
 
-1. Create member cluster
+1. 创建成员集群
 
-We are going to create a cluster named `cluster1` and we want the KUBECONFIG file in $HOME/.kube/cluster.config. Run following command:
+我们将创建一个名为 `cluster1` 的集群，想要将 KUBECONFIG 文件放到 $HOME/.kube/cluster.config 中。运行以下命令：
 
 ```shell
 hack/create-cluster.sh cluster1 $HOME/.kube/cluster1.config
 ```
 
-This will create a cluster by kind.
+这将按 kind 的设置创建集群。
 
-2. Join member cluster to Karmada control plane
+2. 将成员集群接入 Karmada 控制面
 
-Export `KUBECONFIG` and switch to `karmada apiserver`:
+导出 `KUBECONFIG` 并切换到 `karmada apiserver`：
 
 ```shell
 export KUBECONFIG=$HOME/.kube/karmada.config
@@ -36,7 +36,7 @@ export KUBECONFIG=$HOME/.kube/karmada.config
 kubectl config use-context karmada-apiserver 
 ```
 
-Then, install `karmadactl` command and join the member cluster:
+然后安装 `karmadactl` 指令集并接入成员集群：
 
 ```shell
 go install github.com/karmada-io/karmada/cmd/karmadactl
@@ -44,9 +44,9 @@ go install github.com/karmada-io/karmada/cmd/karmadactl
 karmadactl join cluster1 --cluster-kubeconfig=$HOME/.kube/cluster1.config
 ```
 
-In addition to the original member clusters, ensure that at least two member clusters are joined to the Karmada.
+除原始成员集群外，确保至少有两个成员集群接入 Karmada。
 
-In this example, we have joined two member clusters to the Karmada:
+在本例中，我们将两个成员集群接入了 Karmada：
 
 ```console
 # kubectl get clusters
@@ -56,23 +56,24 @@ cluster2   v1.21.1   Push   True    5s
 ...
 ```
 
-## Deploy Submariner
+## 部署 Submariner
+我们将使用 `subctl` CLI 在 `host cluster` 和 `member clusters` 上部署 `Submariner` 组件。
+按照[Submariner 官方文档](https://github.com/submariner-io/submariner/tree/b4625514061c1d85c10432a78ca0ad46e679367a#installation)，这是推荐的部署方法。
 
-We are going to deploy `Submariner` components on the `host cluster` and `member clusters` by using the `subctl` CLI as it's the recommended deployment method according to [Submariner official documentation](https://github.com/submariner-io/submariner/tree/b4625514061c1d85c10432a78ca0ad46e679367a#installation).
+`Submariner` 使用一个中央 Broker 组件来简化所有相关集群中所部署的 Gateway Engines 之间的元数据信息交换。
+Broker 必须部署在单个 Kubernetes 集群上。该集群的 API server必须能够到达 Submariner 连接的所有 Kubernetes 集群，因此我们将其部署在 karmada-host 集群上。
 
-`Submariner` uses a central Broker component to facilitate the exchange of metadata information between Gateway Engines deployed in participating clusters. The Broker must be deployed on a single Kubernetes cluster. This cluster’s API server must be reachable by all Kubernetes clusters connected by Submariner, therefore, we deployed it on the karmada-host cluster.
+### 安装 subctl
 
-### Install subctl
+请参阅 [SUBCTL 安装](https://submariner.io/operations/deployment/subctl/)。
 
-Please refer to the [SUBCTL Installation](https://submariner.io/operations/deployment/subctl/).
-
-### Use karmada-host as Broker
+### 使用 karmada-host 用作 Broker
 
 ```shell
 subctl deploy-broker --kubeconfig /root/.kube/karmada.config --kubecontext karmada-host
 ```
 
-### Join cluster1 and cluster2 to the Broker
+### 集群 1 和集群 2 接入到 Broker
 
 ```shell
 subctl join --kubeconfig /root/.kube/cluster1.config broker-info.subm --natt=false
@@ -82,6 +83,6 @@ subctl join --kubeconfig /root/.kube/cluster1.config broker-info.subm --natt=fal
 subctl join --kubeconfig /root/.kube/cluster2.config broker-info.subm --natt=false
 ```
 
-## Connectivity test
+## 连通性测试
 
-Please refer to the [Multi-cluster Service Discovery](../service/multi-cluster-service.md).
+请参阅[多集群服务发现](../service/multi-cluster-service.md)。

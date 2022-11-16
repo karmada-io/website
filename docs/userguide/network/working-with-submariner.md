@@ -10,7 +10,7 @@ This document demonstrates how to use the `Submariner` to connect the network be
 
 ### Install Karmada control plane
 
-Following the steps [Install Karmada control plane](https://github.com/karmada-io/karmada#install-karmada-control-plane) in Quick Start, you can get a Karmada. 
+Following the steps [Install Karmada control plane](../../installation/installation.md) in Quick Start, you can get a Karmada.
 
 ### Join member cluster
 
