@@ -1,5 +1,5 @@
 ---
-title: Unified authentication
+title: Unified Authentication
 ---
 
 For one or a group of user subjects (users, groups, or service accounts) in a member cluster, we can import them into Karmada control plane and grant them the `clusters/proxy` permission, so that we can access the member cluster with permission of the user subject through Karmada.
