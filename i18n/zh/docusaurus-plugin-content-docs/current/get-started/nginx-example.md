@@ -1,43 +1,43 @@
 ---
-title: Propagate a deployment by Karmada
+title: 通过 Karmada 分发 Deployment
 ---
 
-This guide will cover:
-- Install `karmada` control plane components in a Kubernetes cluster which is known as `host cluster`.
-- Join a member cluster to `karmada` control plane.
-- Propagate an application by using `karmada`.
+本指南涵盖了：
+- 在名为 `host cluster` 的 Kubernetes 集群中安装 `karmada` 控制面组件。
+- 将一个成员集群接入到 `karmada` 控制面。
+- 通过使用 `karmada` 分发应用程序。
 
-### Prerequisites
-- [Go](https://golang.org/) version v1.18+
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) version v1.19+
-- [kind](https://kind.sigs.k8s.io/) version v0.14.0+
+### 前提条件
+- [Go](https://golang.org/) v1.18+
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) v1.19+
+- [kind](https://kind.sigs.k8s.io/) v0.14.0+
 
-### Install the Karmada control plane
+### 安装 Karmada 控制面
 
-#### 1. Clone this repo to your machine:
+#### 1. 克隆此代码仓库到你的机器
 ```
 git clone https://github.com/karmada-io/karmada
 ```
 
-#### 2. Change to the karmada directory:
+#### 2. 更改到 karmada 目录
 ```
 cd karmada
 ```
 
-#### 3. Deploy and run Karmada control plane:
+#### 3. 部署并运行 Karmada 控制面
 
-run the following script:
+运行以下脚本：
 
 ```
 # hack/local-up-karmada.sh
 ```
-This script will do following tasks for you:
-- Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
-- Build Karmada control plane components based on a current codebase.
-- Deploy Karmada control plane components on the `host cluster`.
-- Create member clusters and join Karmada.
+该脚本将为你执行以下任务：
+- 启动一个 Kubernetes 集群来运行 Karmada 控制面，即 `host cluster`。
+- 根据当前代码库构建 Karmada 控制面组件。
+- 在 `host cluster` 上部署 Karmada 控制面组件。
+- 创建成员集群并接入 Karmada。
 
-If everything goes well, at the end of the script output, you will see similar messages as follows:
+如果一切良好，在脚本输出结束时你将看到以下类似消息：
 ```
 Local Karmada is running.
 
@@ -50,34 +50,37 @@ To manage your member clusters, run:
 Please use 'kubectl config use-context member1/member2/member3' to switch to the different member cluster.
 ```
 
-There are two contexts in Karmada:
+Karmada 中有两个上下文环境：
 - karmada-apiserver `kubectl config use-context karmada-apiserver`
 - karmada-host `kubectl config use-context karmada-host`
 
-The `karmada-apiserver` is the **main kubeconfig** to be used when interacting with the Karmada control plane, while `karmada-host` is only used for debugging Karmada installation with the host cluster. You can check all clusters at any time by running: `kubectl config view`. To switch cluster contexts, run `kubectl config use-context [CONTEXT_NAME]`
+`karmada-apiserver` 是与 Karmada 控制面交互时要使用的 **主要 kubeconfig**，
+而 `karmada-host` 仅用于调试 Karmada 对 `host cluster` 的安装。
+你可以通过运行 `kubectl config view` 随时查看所有集群。
+要切换集群上下文，请运行 `kubectl config use-context [CONTEXT_NAME]`
 
 
 ### Demo
 
 ![Demo](../resources/general/sample-nginx.svg)
 
-### Propagate application
-In the following steps, we are going to propagate a deployment by Karmada.
+### 分发应用程序
+在以下步骤中，我们将通过 Karmada 分发一个 Deployment。
 
-#### 1. Create nginx deployment in Karmada.
-First, create a [deployment](https://github.com/karmada-io/karmada/blob/master/samples/nginx/deployment.yaml) named `nginx`:
+#### 1. 在 Karmada 中创建 nginx deployment
+首先创建名为 `nginx` 的 [deployment](https://github.com/karmada-io/karmada/blob/master/samples/nginx/deployment.yaml)：
 ```
 kubectl create -f samples/nginx/deployment.yaml
 ```
 
-#### 2. Create PropagationPolicy that will propagate nginx to member cluster
-Then, we need to create a policy to propagate the deployment to our member cluster.
+#### 2. 创建将 nginx 分发到成员集群的 PropagationPolicy
+随后我们需要创建一个策略将 Deployment 分发到成员集群。
 ```
 kubectl create -f samples/nginx/propagationpolicy.yaml
 ```
 
-#### 3. Check the deployment status from Karmada
-You can check deployment status from Karmada, don't need to access member cluster:
+#### 3. 从 Karmada 查看 Deployment 状态
+你可以从 Karmada 查看 Deployment 状态，无需访问成员集群：
 ```
 $ kubectl get deployment
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
