@@ -79,6 +79,7 @@ module.exports = {
                     items: [
                         "userguide/globalview/aggregated-api-endpoint",
                         "userguide/globalview/customizing-resource-interpreter",
+                        "userguide/globalview/global-search-for-resources",
                         "userguide/globalview/proxy-global-resource",
                     ],
                 },
