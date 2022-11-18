@@ -27,7 +27,8 @@ module.exports = {
             type: "category",
             label: "Tutorials",
             items: [
-                "tutorials/karmada-search",
+                "tutorials/crd-application",
+                "tutorials/karmada-search"
             ],
         },
         {
