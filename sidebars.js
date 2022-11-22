@@ -27,7 +27,7 @@ module.exports = {
             type: "category",
             label: "Tutorials",
             items: [
-                "tutorials/karmada-search"
+                "tutorials/karmada-search",
             ],
         },
         {
@@ -62,6 +62,7 @@ module.exports = {
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
                         "userguide/scheduling/cluster-resources",
+                        "userguide/scheduling/namespace-management"
                     ],
                 },
                 {
