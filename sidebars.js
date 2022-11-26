@@ -245,6 +245,14 @@ module.exports = {
                         "reference/components/karmada-webhook",
                     ],
                 },
+                {
+                    type: "category",
+                    label: "Instrumentation",
+                    items: [
+                        "reference/instrumentation/event",
+                        "reference/instrumentation/metrics",
+                    ],
+                },
                 "reference/reserved-namespaces",
                 "reference/object-association-mapping",
             ],
