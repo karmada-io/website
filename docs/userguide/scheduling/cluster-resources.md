@@ -126,7 +126,7 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/k
         - --bind-address=0.0.0.0
         - --cluster-status-update-frequency=10s
         - --secure-port=10357
-        - --feature-gates=PropagateDeps=true,Failover=true,GracefulEviction=true,CustomizedClusterResourceModeling=true
+        - --feature-gates=Failover=true,GracefulEviction=true,CustomizedClusterResourceModeling=true
         - --v=4
 
 ```
