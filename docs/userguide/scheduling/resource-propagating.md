@@ -272,6 +272,205 @@ spec:
     ...
 ```
 
+## Configure PropagationPolicy priority
+If multiple PropagationPolicies match the workload, Karmada will select the one with the highest priority. A PropagationPolicy supports implicit and explicit priorities.
+
+### Configure explicit priority
+The `spec.priority` in a PropagationPolicy represents the explicit priority. A greater value means a higher priority. 
+> Note: If not specified, defaults to 0.  
+
+Assume there are multiple policies:  
+```yaml
+# highexplicitpriority.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-high-explicit-priority
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      labelSelector:
+        matchLabels:
+          app: nginx
+  priority: 2
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+---
+# lowexplicitpriority.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-low-explicit-priority
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      labelSelector:
+        matchLabels:
+          app: nginx
+  priority: 1
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member2
+---
+# defaultexplicitpriority.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-low-explicit-priority
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      labelSelector:
+        matchLabels:
+          app: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member3
+```
+The `nginx` deployment in `default` namespace will be propagated to cluster `member1`.
+
+### Configure implicit priority
+The `spec.resourceSelectors` in a PropagationPolicy represents the implicit priority. The priority order (from low to high) is as follows:
+* The PropagationPolicy resourceSelector whose name and labelSelector are empty matches the workload.
+* The labelSelector of PropagationPolicy resourceSelector matches the workload.
+* The name of PropagationPolicy resourceSelector matches the workload. 
+
+Assume there are multiple policies:  
+```yaml
+# emptymatch.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-emptymatch
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+---
+# labelselectormatch.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-labelselectormatch
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      labelSelector:
+        matchLabels:
+          app: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member2
+---
+# namematch.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-namematch
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member3
+```
+The `nginx` deployment in `default` namespace will be propagated to cluster `member3`.
+
+### Choose from same-priority PropagationPolicies
+If multiple PropagationPolicies with the same explicit priority match the workload, the one with the highest implicit priority will be selected.  
+
+Assume there are multiple policies:  
+```yaml
+# explicit-labelselectormatch.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-explicit-labelselectormatch
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      labelSelector:
+        matchLabels:
+          app: nginx
+  priority: 3
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+---
+# explicit-namematch.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-explicit-namematch
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  priority: 3
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member3
+```
+The `nginx` deployment in `default` namespace will be propagated to cluster `member3`.
+
+If both explicit and implicit priorities are the same, Karmada applies the PropagationPolicy in an ascending alphabetical order, for example, choosing xxx-a-xxx instead of xxx-b-xxx.  
+
+Assume there are multiple policies:  
+```yaml
+# higher-alphabetical.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-b-higher-alphabetical
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  priority: 3
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+---
+# lower-alphabetical.yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: propagation-a-lower-alphabetical
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  priority: 3
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member2
+```
+The `nginx` deployment in `default` namespace will be propagated to cluster `member2`.
+
 ## Configuring Multi-Cluster HA for Deployment
 
 
