@@ -774,7 +774,6 @@ Documentation=https://github.com/karmada-io/karmada
 ExecStart=/usr/local/sbin/karmada-controller-manager \
   --bind-address 0.0.0.0 \
   --cluster-status-update-frequency 10s \
-  --feature-gates "Failover=false" \
   --kubeconfig /etc/karmada/karmada.kubeconfig \
   --logtostderr=true \
   --metrics-bind-address ":10358" \
@@ -826,7 +825,6 @@ Documentation=https://github.com/karmada-io/karmada
 ExecStart=/usr/local/sbin/karmada-scheduler \
   --bind-address 0.0.0.0 \
   --enable-scheduler-estimator=true \
-  --feature-gates "Failover=false" \
   --kubeconfig /etc/karmada/karmada.kubeconfig \
   --logtostderr=true \
   --scheduler-estimator-port 10352 \

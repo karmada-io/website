@@ -111,7 +111,8 @@ Therefore, we introduce a `CustomizedClusterResourceModeling` for each cluster t
 
 #### Start to use Customized Cluster Resource Models
 
-Now `CustomizedClusterResourceModeling` is in alpha state. To start this feature, you need to turn on the `CustomizedClusterResourceModeling` feature gate in `karmada-scheduler`, `karmada-aggregated-server` and `karmada-controller-manager`.
+`CustomizedClusterResourceModeling` feature gate has evolved to Beta sine Karmada v1.4 and is enabled by default. 
+If you use Karmada v1.3, you need to enable this feature gate in `karmada-scheduler`, `karmada-aggregated-server` and `karmada-controller-manager`.
 
 For example, you can use the command below to turn on the feature gate in the `karmada-controller-manager`.
 
@@ -126,7 +127,7 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/k
         - --bind-address=0.0.0.0
         - --cluster-status-update-frequency=10s
         - --secure-port=10357
-        - --feature-gates=Failover=true,GracefulEviction=true,CustomizedClusterResourceModeling=true
+        - --feature-gates=CustomizedClusterResourceModeling=true
         - --v=4
 
 ```
