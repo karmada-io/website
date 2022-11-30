@@ -110,7 +110,7 @@ resourceSummary:
 
 #### 启用自定义资源模型
 
-现在“自定义集群资源模型”处于alpha阶段。要启动此功能，你需要在 `karmada-scheduler`、`karmada-aggregated-server` 和 `karmada-controller-manager` 中开启 `CustomizedClusterResourceModeling` 特性开关。
+`自定义集群资源模型`特性开关从Karmada v1.4后处于Beta阶段，并且默认开启。如果你使用Karmada v1.3，你需要在 `karmada-scheduler`、`karmada-aggregated-server` 和 `karmada-controller-manager` 中开启 `CustomizedClusterResourceModeling` 特性开关。
 
 例如，你可以使用以下命令打开 `karmada-controller-manager` 中的特性开关。
 
@@ -125,7 +125,7 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/k
         - --bind-address=0.0.0.0
         - --cluster-status-update-frequency=10s
         - --secure-port=10357
-        - --feature-gates=Failover=true,GracefulEviction=true,CustomizedClusterResourceModeling=true
+        - --feature-gates=CustomizedClusterResourceModeling=true
         - --v=4
 
 ```
