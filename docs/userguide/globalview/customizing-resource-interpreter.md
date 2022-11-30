@@ -14,13 +14,13 @@ as normal resources. Therefore, the advanced scheduling algorithms cannot be use
 
 The [Resource Interpreter Framework][1] is designed for interpreting resource structure. It consists of `built-in` and 
 `customized` interpreters:
-- built-in interpreter: used for common Kubernetes native or well-known extended resources.
-- customized interpreter: interprets custom resources or overrides the built-in interpreters.
+- `built-in` interpreter: used for common Kubernetes native or well-known extended resources.
+- `customized` interpreter: interprets custom resources or overrides the built-in interpreters.
 
 > Note: The major difference between `built-in` and `customized` interpreters is that the `built-in` interpreter is 
 > implemented and maintained by Karmada community and will be built into Karmada components, such as 
 > `karmada-controller-manager`. On the contrary, the `customized` interpreter is implemented and maintained by users.
-> It should be registered to Karmada as an `Interpreter Webhook` (see below for more details).
+> It should be registered to Karmada as an `Interpreter Webhook` or `declarative configuration` (see [Customized Interpreter](#customized-interpreter) for more details).
 
 ### Interpreter Operations
 
@@ -102,32 +102,49 @@ Supported resources:
 
 ## Customized Interpreter
 
-The customized interpreter is implemented and maintained by users, it developed as extensions and 
-run as webhooks at runtime.
+The customized interpreter is implemented and maintained by users, it can be extended in two ways, either by defining declarative configuration files or by running as webhook at runtime.
 
-### What are interpreter webhooks?
+> Note: Decalrative configuration has a higher priority than webhook.
+
+### Declarative Configuration
+
+#### What are interpreter declarative configuration?
+
+Users can quickly customize resource interpreters for both Kubernetes resources and CR resources by the rules declaraed in the [ResourceInterpreterCustomization][4] API specification.
+
+#### Write with configuration
+
+You can configure resource interpretation rules by creating or updating [ResourceInterpreterCustomization][4] resource, the newest version supports the definition of lua scripts in the `ResourceInterpreterCustomization`. You can learn how to define the lua script in the API definition, take [retention][5] as an example.
+
+#### Verify the configuration
+
+Users can use the `karmadactl interpret` command to verify the `ResourceInterpreterCustomization` configuration before applying them to the system. Some examples are provided to help users better understand how this interpreter can be used, please refer to [examples][8].
+
+### Webhook
+
+#### What are interpreter webhooks?
 
 Interpreter webhooks are HTTP callbacks that receive interpret requests and do something with them.
 
-### Write an interpreter webhook server
+#### Write an interpreter webhook server
 
-Please refer to the implementation of the [Example of Customize Interpreter][4] that is validated 
+Please refer to the implementation of the [Example of Customize Interpreter][6] that is validated 
 in Karmada E2E test. The webhook handles the `ResourceInterpreterRequest` request sent by the 
 Karmada components (such as `karmada-controller-manager`), and sends back its decision as an 
 `ResourceInterpreterResponse`.
 
-### Deploy the admission webhook service
+#### Deploy the admission webhook service
 
-The [Example of Customize Interpreter][4] is deployed in the host cluster for E2E and exposed by 
+The [Example of Customize Interpreter][6] is deployed in the host cluster for E2E and exposed by 
 a service as the front-end of the webhook server.
 
 You may also deploy your webhooks outside the cluster. You will need to update your webhook 
 configurations accordingly.
 
-### Configure webhook on the fly
+#### Configure webhook on the fly
 
 You can configure what resources and supported operations are subject to what interpreter webhook 
-via [ResourceInterpreterWebhookConfiguration][5]. 
+via [ResourceInterpreterWebhookConfiguration][7]. 
 
 The following is an example `ResourceInterpreterWebhookConfiguration`:
 ```yaml
@@ -153,8 +170,10 @@ You can config more than one webhook in a `ResourceInterpreterWebhookConfigurati
 serves at least one operation.
 
 [1]: https://github.com/karmada-io/karmada/tree/master/docs/proposals/resource-interpreter-webhook
-[2]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L71-L108
+[2]: https://github.com/karmada-io/karmada/blob/84b971a501ba82c53a5ad455c2fe84d842cd7d4e/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L85-L119
 [3]: https://github.com/karmada-io/karmada/issues/new?assignees=&labels=kind%2Ffeature&template=enhancement.md
-[4]: https://github.com/karmada-io/karmada/tree/master/examples/customresourceinterpreter
-[5]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L16
-[6]: https://github.com/karmada-io/karmada/blob/master/examples/customresourceinterpreter/webhook-configuration.yaml
+[4]: https://github.com/karmada-io/karmada/blob/84b971a501ba82c53a5ad455c2fe84d842cd7d4e/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L17
+[5]: https://github.com/karmada-io/karmada/blob/84b971a501ba82c53a5ad455c2fe84d842cd7d4e/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L108-L134
+[6]: https://github.com/karmada-io/karmada/tree/master/examples/customresourceinterpreter
+[7]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L16
+[8]: ../../reference/karmadactl/karmadactl-usage-conventions.md#karmadactl-interpret
