@@ -76,8 +76,8 @@ Users also can check and search all member clusters resources via karmada-apiser
 
 ![overall-relationship.png](../resources/key-features/unified-search.png)
 
-## Separating the concerns of different roles
-karmada supports:
+## Best Production Practices
+Karmada supports:
 * [Unified authentication](https://karmada.io/docs/userguide/roleseparation/unifiedAuth):
   * Aggregate API unified access entry.
   * Access control is consistent with member clusters.

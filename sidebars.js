@@ -63,7 +63,6 @@ module.exports = {
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
                         "userguide/scheduling/cluster-resources",
-                        "userguide/scheduling/namespace-management"
                     ],
                 },
                 {
@@ -120,10 +119,11 @@ module.exports = {
                 },
                 {
                     type: "category",
-                    label: "Role Separation",
+                    label: "Best Production Practices",
                     items: [
-                        "userguide/roleseparation/unified-auth",
-                        "userguide/roleseparation/federated-resource-quota",
+                        "userguide/bestpractices/namespace-management",
+                        "userguide/bestpractices/unified-auth",
+                        "userguide/bestpractices/federated-resource-quota",
                     ],
                 },
             ],
@@ -207,7 +207,7 @@ module.exports = {
         },
         {
             type: "doc",
-            id: "troubleshooting/troubleshooting"
+            id: "troubleshooting/trouble-shooting"
         },
         {
             type: "doc",

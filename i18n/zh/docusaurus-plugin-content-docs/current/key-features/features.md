@@ -75,7 +75,7 @@ Karmada支持：
 ![overall-relationship.png](../resources/key-features/unified-resourcequota.png)
 
 
-## 角色关注分离
+## 最佳生产实践
 Karmada支持：
 * [统一认证鉴权](https://karmada.io/zh/docs/userguide/roleseparation/unifiedAuth) ：
   * 聚合API统一访问入口。

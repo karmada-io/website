@@ -45,3 +45,32 @@ deploy.go:55] Post "https://192.168.24.211:32443/api/v1/namespaces": x509: certi
 问题原因：之前在集群上安装过Karmada，karmada-etcd使用`hostpath`方式挂载本地存储，卸载时数据有残留，需要清理默认路径`/var/lib/karmada-etcd`下的文件。如果使用了karmadactl [--etcd-data](https://github.com/karmada-io/karmada/blob/master/pkg/karmadactl/cmdinit/cmdinit.go#L119)参数，请删除相应的目录。
 
 相关Issue：[#1467](https://github.com/karmada-io/karmada/issues/1467)，[#2504](https://github.com/karmada-io/karmada/issues/2504)。
+
+## karmada-webhook因为"too many open files"错误一直崩溃
+
+当使用`hack/local-up-karmada`安装Karmada时, karmada-webhook一直崩溃，查看组件的日志时发现以下错误日志：
+
+```log
+I1121 06:33:46.144605       1 webhook.go:83] karmada-webhook version: version.Info{GitVersion:"v1.3.0-425-gf7cac365", GitCommit:"f7cac365d743e5e40493f9ad90352f30123f7f1d", GitTreeState:"dirty", BuildDate:"2022-11-21T06:25:19Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"linux/amd64"}
+I1121 06:33:46.167045       1 webhook.go:113] registering webhooks to the webhook server
+I1121 06:33:46.169425       1 internal.go:362] "Starting server" path="/metrics" kind="metrics" addr="[::]:8080"
+I1121 06:33:46.169569       1 internal.go:362] "Starting server" kind="health probe" addr="[::]:8000"
+I1121 06:33:46.169670       1 shared_informer.go:285] caches populated
+I1121 06:33:46.169828       1 internal.go:567] "Stopping and waiting for non leader election runnables"
+I1121 06:33:46.169848       1 internal.go:571] "Stopping and waiting for leader election runnables"
+I1121 06:33:46.169856       1 internal.go:577] "Stopping and waiting for caches"
+I1121 06:33:46.169883       1 internal.go:581] "Stopping and waiting for webhooks"
+I1121 06:33:46.169899       1 internal.go:585] "Wait completed, proceeding to shutdown the manager"
+E1121 06:33:46.169909       1 webhook.go:132] webhook server exits unexpectedly: too many open files
+E1121 06:33:46.169926       1 run.go:74] "command failed" err="too many open files"
+```
+
+这是一个资源耗尽问题。 你可以通过以下命令修复：
+
+```
+sysctl fs.inotify.max_user_watches=16384
+sysctl -w fs.inotify.max_user_watches=100000
+sysctl -w fs.inotify.max_user_instances=100000
+```
+
+相关Issue：https://github.com/kubernetes-sigs/kind/issues/2928

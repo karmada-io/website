@@ -34,7 +34,7 @@ spec:
         matchLabels:
           app: nginx
   overrideRules:
-  ...
+  #...
 ```
 It means override rules above will only be applied to `Deployment` which is named nginx in test namespace and has labels with `app: nginx`.
 
@@ -57,14 +57,14 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         labelSelector:
           matchLabels:
             cluster: member1 
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has `cluster: member1` label.
 
@@ -77,7 +77,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         fieldSelector:
@@ -87,7 +87,7 @@ spec:
               values:
                 - cn-north-1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
 
@@ -100,7 +100,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         fieldSelector:
@@ -110,7 +110,7 @@ spec:
               values:
                 - cn-north-1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
 
@@ -123,13 +123,13 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         clusterNames:
           - member1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are member1.
 
@@ -142,13 +142,13 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         exclude:
           - member1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are not member1.
 
@@ -177,7 +177,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  ...
+  #...
 spec:
   template:
     spec:
@@ -193,7 +193,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -217,7 +217,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -241,7 +241,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -272,7 +272,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  ...
+  #...
 spec:
   template:
     spec:
@@ -292,7 +292,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         commandOverrider:
@@ -322,7 +322,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         commandOverrider:
@@ -371,7 +371,7 @@ metadata:
   labels: 
     foo: foo
     baz: baz
-  ...
+  #...
 spec:
   template:
     spec:
@@ -387,7 +387,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         labelsOverrider:
@@ -421,7 +421,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: myconfigmap
-  ...
+  #...
 data:
   example: 1
 ```
@@ -433,7 +433,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         plaintext:
@@ -449,7 +449,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: myconfigmap
-  ...
+  #...
 data:
   example: 2
 ```
