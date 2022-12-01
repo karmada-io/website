@@ -11,22 +11,23 @@ See [Kubernetes Controller Concepts][1] for more details.
 The controllers are embedded into components of `karmada-controller-manager` or `karmada-agent` and will be launched  
 along with components startup. Some controllers may be shared by `karmada-controller-manager` and `karmada-agent`.
 
-| Controller                   | In karmada-controller-manager | In karmada-agent |
-|------------------------------|-------------------------------|------------------|
-| cluster                      | Y                             | N                |
-| clusterStatus                | Y                             | Y                |
-| binding                      | Y                             | N                |
-| execution                    | Y                             | Y                |
-| workStatus                   | Y                             | Y                |
-| namespace                    | Y                             | N                |
-| serviceExport                | Y                             | Y                |
-| endpointSlice                | Y                             | N                |
-| serviceImport                | Y                             | N                |
-| unifiedAuth                  | Y                             | N                |
-| hpa                          | Y(disabled by default)        | N                |
-| federatedResourceQuotaSync   | Y                             | N                |
-| federatedResourceQuotaStatus | Y                             | N                |
-| gracefulEviction             | Y                             | N                |
+| Controller                   | In karmada-controller-manager | In karmada-agent      |
+|------------------------------|-------------------------------|-----------------------|
+| cluster                      | Y                             | N                     |
+| clusterStatus                | Y                             | Y                     |
+| binding                      | Y                             | N                     |
+| execution                    | Y                             | Y                     |
+| workStatus                   | Y                             | Y                     |
+| namespace                    | Y                             | N                     |
+| serviceExport                | Y                             | Y                     |
+| endpointSlice                | Y                             | N                     |
+| serviceImport                | Y                             | N                     |
+| unifiedAuth                  | Y                             | N                     |
+| hpa                          | Y(disabled by default)        | N                     |
+| federatedResourceQuotaSync   | Y                             | N                     |
+| federatedResourceQuotaStatus | Y                             | N                     |
+| gracefulEviction             | Y                             | N                     |
+| certRotation                 | N                             | Y(disabled by default)|               
 
 ### Configure Karmada Controllers
 
@@ -66,16 +67,16 @@ The following controllers are tested and recommended by Karmada.
 
 #### namespace
 
-The `namespace` controller runs as part of `kube-controller-manager`. It watches `Namespace` deletion and deletes 
+The `namespace` controller runs as part of `kube-controller-manager`. It watches `Namespace` deletion and deletes
 all resources in the given namespace.
 
 For the Karmada control plane, we inherit this behavior to keep a consistent user experience. More than that, we also
 rely on this feature in the implementation of Karmada controllers, for example, when un-registering a cluster,
-Karmada would delete the `execution namespace`(named `karmada-es-<cluster name>`) that stores all the resources 
-propagated to that cluster, to ensure all the resources could be cleaned up from both the Karmada control plane and the 
+Karmada would delete the `execution namespace`(named `karmada-es-<cluster name>`) that stores all the resources
+propagated to that cluster, to ensure all the resources could be cleaned up from both the Karmada control plane and the
 given cluster.
 
-More details about the `namespace` controller, please refer to 
+More details about the `namespace` controller, please refer to
 [namespace controller sync logic](https://github.com/kubernetes/kubernetes/blob/v1.23.4/pkg/controller/namespace/deletion/namespaced_resources_deleter.go#L82-L94).
 
 #### garbagecollector
@@ -109,10 +110,10 @@ More details please refer to:
 #### ttl-after-finished
 
 The `ttl-after-finished` controller runs as part of `kube-controller-manager`.
-It watches `Job` updates and limits the lifetime of finished `Jobs`. 
+It watches `Job` updates and limits the lifetime of finished `Jobs`.
 The TTL timer starts when the Job finishes, and the finished Job will be cleaned up after the TTL expires.
 
-For the Karmada control plane, we also provide the capability to clean up finished `Jobs` automatically by 
+For the Karmada control plane, we also provide the capability to clean up finished `Jobs` automatically by
 specifying the `.spec.ttlSecondsAfterFinished` field of a Job, which will be a relief for the control plane.
 
 More details please refer to:

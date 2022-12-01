@@ -2,10 +2,9 @@
 title: 多集群服务发现
 ---
 
-用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。 
+用户能够通过[多集群服务API](https://github.com/kubernetes-sigs/mcs-api)在集群之间导出和导入服务。
 
 > 注意：使用该特性需要满足成员集群的kubernetes版本在v1.21以上（包含v1.21）。
-
 ## 准备开始
 
 ### 安装Karmada
@@ -19,7 +18,6 @@ title: 多集群服务发现
 
 - 如果你使用 `hack/local-up-karmada.sh` 脚本来部署 Karmada，Karmada 将有三个成员集群，`member1` 和 `member2` 的容器网络将被连接。
 - 你可以使用 `Submariner` 或其他相关的开源项目来连接成员集群之间的网络。
-
 > 注意：为了防止路由冲突，集群之间的Pod和Service CIDR需要满足不重叠。
 
 ### 安装 ServiceExport 和 ServiceImport CRD
@@ -63,7 +61,7 @@ spec:
 ```
 ## 示例
 
-### 第1步：在`member1`集群上部署服务 
+### 第1步：在`member1`集群上部署服务
 
 我们需要在 `member1` 集群上部署服务以便发现。
 
@@ -86,7 +84,7 @@ spec:
       - name: serve
         image: jeremyot/serve:0a40de8
         args:
-        - "--message='hello from cluster 1 (Node: {{env \"NODE_NAME\"}} Pod: {{env \"POD_NAME\"}} Address: {{addr}})'"
+        - "--message='hello from cluster member1 (Node: {{env \"NODE_NAME\"}} Pod: {{env \"POD_NAME\"}} Address: {{addr}})'"
         env:
           - name: NODE_NAME
             valueFrom:
@@ -185,7 +183,25 @@ spec:
 
 在 `member2` 集群上启动一个Pod `request`来访问**派生服务**的ClusterIP。
 
-```
-kubectl run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
+```shell
+# 我们可以在member2集群中找到对应的派生服务。
+$ kubectl --kubeconfig ~/.kube/members.config --context member2 get svc
+NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+derived-serve   ClusterIP   10.13.205.2   <none>        80/TCP    81s
+kubernetes      ClusterIP   10.13.0.1     <none>        443/TCP   15m
 ```
 
+```shell
+$ kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
+```
+
+例如，如果我们使用ClusterIP地址`10.13.205.2`持续访问该服务3s，将会得到如下输出:
+
+```shell
+# 访问派生服务, 这时候member1的工作负载能正常返回一个响应。
+$ kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration=3s --address=10.13.205.2
+If you don't see a command prompt, try pressing enter.
+2022/07/24 15:13:08 'hello from cluster member1 (Node: member1-control-plane Pod: serve-9b5b94f65-cp87p Address: 10.10.0.5)'
+2022/07/24 15:13:09 'hello from cluster member1 (Node: member1-control-plane Pod: serve-9b5b94f65-cp87p Address: 10.10.0.5)'
+pod "request" deleted
+```

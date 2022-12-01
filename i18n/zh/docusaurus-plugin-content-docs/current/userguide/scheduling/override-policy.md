@@ -2,7 +2,7 @@
 title: Override Policy
 ---
 
-The [OverridePolicy][1] and [ClusterOverridePolicy][2] are used to declare override rules for resources when 
+The [OverridePolicy][1] and [ClusterOverridePolicy][2] are used to declare override rules for resources when
 they are propagating to different clusters.
 
 ## Difference between OverridePolicy and ClusterOverridePolicy
@@ -12,7 +12,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
 ResourceSelectors restricts resource types that this override policy applies to. If you ignore this field it means matching all resources.
 
-Resource Selector required `apiVersion` field which represents the API version of the target resources and `kind` which represents the Kind of the target resources. 
+Resource Selector required `apiVersion` field which represents the API version of the target resources and `kind` which represents the Kind of the target resources.
 The allowed selectors are as follows:
 - `namespace`: namespace of the target resource.
 - `name`: name of the target resource
@@ -34,7 +34,7 @@ spec:
         matchLabels:
           app: nginx
   overrideRules:
-  ...
+  #...
 ```
 It means override rules above will only be applied to `Deployment` which is named nginx in test namespace and has labels with `app: nginx`.
 
@@ -57,14 +57,14 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         labelSelector:
           matchLabels:
             cluster: member1 
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has `cluster: member1` label.
 
@@ -77,7 +77,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         fieldSelector:
@@ -87,7 +87,7 @@ spec:
               values:
                 - cn-north-1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
 
@@ -100,7 +100,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         fieldSelector:
@@ -110,7 +110,7 @@ spec:
               values:
                 - cn-north-1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
 
@@ -123,13 +123,13 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         clusterNames:
           - member1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are member1.
 
@@ -142,22 +142,24 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - targetCluster:
         exclude:
           - member1
       overriders:
-      ...
+      #...
 ```
 It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are not member1.
 
 ## Overriders
 
 Karmada offers various alternatives to declare the override rules:
-- `ImageOverrider`: dedicated to override images for workloads.
-- `CommandOverrider`: dedicated to override commands for workloads.
-- `ArgsOverrider`: dedicated to override args for workloads.
+- `ImageOverrider`: overrides images for workloads.
+- `CommandOverrider`: overrides commands for workloads.
+- `ArgsOverrider`: overrides args for workloads.
+- `LabelsOverrider` overrides labels for workloads.
+- `AnnotationsOverrider` overrides annotations for workloads.
 - `PlaintextOverrider`: a general-purpose tool to override any kind of resources.
 
 ### ImageOverrider
@@ -165,7 +167,7 @@ The `ImageOverrider` is a refined tool to override images with format `[registry
 
 The allowed operations are as follows:
 - `add`: appends the registry, repository or tag/digest to the image from containers.
-- `remove`: removes the registry, repository or tag/digest from the image from containers. 
+- `remove`: removes the registry, repository or tag/digest from the image from containers.
 - `replace`: replaces the registry, repository or tag/digest of the image from containers.
 
 #### Examples
@@ -175,7 +177,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  ...
+  #...
 spec:
   template:
     spec:
@@ -191,7 +193,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -215,7 +217,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -239,7 +241,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         imageOverrider:
@@ -256,7 +258,7 @@ After the policy is applied for `myapp`, the image will be:
 ```
 
 ### CommandOverrider
-The `CommandOverrider` is a refined tool to override commands(e.g.`/spec/template/spec/containers/0/command`) 
+The `CommandOverrider` is a refined tool to override commands(e.g.`/spec/template/spec/containers/0/command`)
 for workloads, such as `Deployment`.
 
 The allowed operations are as follows:
@@ -270,7 +272,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  ...
+  #...
 spec:
   template:
     spec:
@@ -290,7 +292,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         commandOverrider:
@@ -320,7 +322,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         commandOverrider:
@@ -349,7 +351,61 @@ The allowed operations are as follows:
 - `add`: appends one or more args to the command list.
 - `remove`: removes one or more args from the command list.
 
-Note: the usage of `ArgsOverrider` is similar to `CommandOverrider`, You can refer to the `CommandOverrider` examples.
+Note: `ArgsOverrider` functions the similar way as `CommandOverrider`. You can refer to the `CommandOverrider` examples.
+
+
+### LabelsOverrider
+
+The allowed operations are as follows:
+- `add`: The items in `value` will be appended to labels.
+- `remove`: If the item in `value` matches the item in labels, the former will be deleted. If they do not match, nothing will be done.
+- `replace`: If the key in `value` matches the key in the label, the former will be replaced. If they do not match, nothing will be done.
+
+#### Examples
+Suppose we create a deployment named `myapp`.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels: 
+    foo: foo
+    baz: baz
+  #...
+spec:
+  template:
+    spec:
+      containers:
+        - image: myapp:1.0.0
+          name: myapp
+```
+
+**Example 1: add/remove/replace labels **
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: example
+spec:
+  #...
+  overrideRules:
+    - overriders:
+        labelsOverrider:
+          - operator: add
+            value: 
+              bar: bar  # It will be added to labels
+          - operator: replace
+            value: 
+              foo: exist # "foo: foo" will be replaced by "foo: exist"
+          - operator: remove
+            value: 
+              baz: baz   # It will be removed from labels
+```
+
+### AnnotationsOverrider
+
+Note: `AnnotationsOverrider` functions the similar way as `LabelsOverrider`. You can refer to the `LabelsOverrider` examples.
+
 
 ### PlaintextOverrider
 The `PlaintextOverrider` is a simple overrider that overrides target fields according to path, operator and value, just like `kubectl patch`.
@@ -365,7 +421,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: myconfigmap
-  ...
+  #...
 data:
   example: 1
 ```
@@ -377,7 +433,7 @@ kind: OverridePolicy
 metadata:
   name: example
 spec:
-  ...
+  #...
   overrideRules:
     - overriders:
         plaintext:
@@ -393,7 +449,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: myconfigmap
-  ...
+  #...
 data:
   example: 2
 ```

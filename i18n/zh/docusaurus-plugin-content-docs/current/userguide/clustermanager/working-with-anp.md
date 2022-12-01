@@ -6,7 +6,7 @@ title: Deploy apiserver-network-proxy (ANP) For Pull mode
 
 For a member cluster that joins Karmada in the pull mode, you need to provide a method to connect the network between the Karmada control plane and the member cluster, so that karmada-aggregated-apiserver can access this member cluster.
 
-Deploying ANP to achieve appeal is one of the methods. This article describes how to deploy ANP in Karmada.
+Deploying ANP to achieve this is one of the methods. This document describes how to deploy ANP for Karmada.
 
 ## Environment
 
@@ -25,9 +25,9 @@ git clone -b v0.0.24/dev https://github.com/mrlihanbo/apiserver-network-proxy.gi
 cd apiserver-network-proxy/
 ```
 
-### Step 2: Compile images
+### Step 2: Build images
 
-Compile the proxy-server and proxy-agent images.
+Build the proxy-server and proxy-agent images.
 
 ```shell
 docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24
@@ -35,21 +35,21 @@ docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile
 docker build . --build-arg ARCH=amd64 -f artifacts/images/server-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24
 ```
 
-### Step 3: Generate a certificate
+### Step 3: Generate certificates
 
-Run the command to check the IP address of karmada-host-control-plane:
+Run the command to check the IP address of karmada-host:
 
 ```shell
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane
 ```
 
-Run the `make certs` command to generate a certificate and specify PROXY_SERVER_IP as the IP address obtained in the preceding command.
+Run the `make certs` command to generate certificates and specify `PROXY_SERVER_IP` as the IP address obtained in the preceding command.
 
 ```shell
 make certs PROXY_SERVER_IP=x.x.x.x
 ```
 
-The certificate is generated in the `certs` folder.
+The certificates are generated in the `certs` folder.
 
 ### Step 4: Deploy proxy-server
 
@@ -174,7 +174,7 @@ chmod +x replace-proxy-server.sh
 bash replace-proxy-server.sh
 ```
 
-Deploy the proxy-server on the Karmada control plane:
+Deploy the proxy-server on the karmada-host:
 
 ```shell
 kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24 --name karmada-host
@@ -264,9 +264,9 @@ Save the `replace-proxy-agent.sh` file in the root directory of the ANP code rep
 
 cert_yaml=proxy-agent.yaml
 
-karmada_controlplan_addr=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane)
+karmada_control_plane_addr=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane)
 member3_cluster_addr=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' member3-control-plane)
-sed -i'' -e "s/{{proxy_server_addr}}/${karmada_controlplan_addr}/g" ${cert_yaml}
+sed -i'' -e "s/{{proxy_server_addr}}/${karmada_control_plane_addr}/g" ${cert_yaml}
 sed -i'' -e "s/{{identifiers}}/${member3_cluster_addr}/g" ${cert_yaml}
 
 PROXY_AGENT_CA_CRT=$(cat certs/agent/issued/ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
@@ -295,7 +295,7 @@ kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:
 kubectl --kubeconfig=/root/.kube/members.config --context=member3 apply -f proxy-agent.yaml
 ```
 
-**The ANP deployment is complete now.**
+**The ANP deployment is completed now.**
 
 ### Step 6: Add command flags for the karmada-agent deployment
 
@@ -303,7 +303,7 @@ After deploying the ANP deployment, you need to add extra command flags `--clust
 
 Where `--cluster-api-endpoint` is the APIEndpoint of the cluster. You can obtain it from the KubeConfig file of the `member3` cluster.
 
-Where `--proxy-server-address` is the address of the proxy server that is used to proxy the cluster. In current case, you can set `--proxy-server-address` to `http://<karmada_controlplan_addr>:8088`. Get `karmada_controlplan_addr` value through the following command:
+Where `--proxy-server-address` is the address of the proxy server that is used to proxy the cluster. In current case, you can set `--proxy-server-address` to `http://<karmada_control_plane_addr>:8088`. Get `karmada_control_plane_addr` value through the following command:
 
 ```shell
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane
