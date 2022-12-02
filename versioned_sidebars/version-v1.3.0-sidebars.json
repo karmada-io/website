@@ -151,7 +151,7 @@
           "label": "Monitoring",
           "items": [
             "version-v1.3.0/administrator/monitoring/working-with-filebeat",
-            "administrator/monitoring/working-with-prometheus-in-control-plane",
+            "version-v1.3.0/administrator/monitoring/working-with-prometheus-in-control-plane",
             "version-v1.3.0/administrator/monitoring/working-with-prometheus"
           ]
         },
