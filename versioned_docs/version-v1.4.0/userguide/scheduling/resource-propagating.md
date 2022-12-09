@@ -109,7 +109,6 @@ The karmadactl get command now only supports the push mode. [ member3 ] is not r
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-6799fc88d8-8t8cc   member2   1/1     Running   0          17s
 ```
-> Note: Updating the `.spec.resourceSelectors` field to change hit resources is currently not supported.
 
 ### Update Deployment
 
@@ -470,9 +469,6 @@ spec:
         - member2
 ```
 The `nginx` deployment in `default` namespace will be propagated to cluster `member2`.
-
-## Configuring Multi-Cluster HA for Deployment
-
 
 ## Multi-Cluster Failover
 
