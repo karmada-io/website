@@ -207,6 +207,7 @@ module.exports = {
                 "casestudies/adopters",
                 "casestudies/vipkid",
                 "casestudies/ci123",
+                "casestudies/daocloud",
             ],
         },
         {
