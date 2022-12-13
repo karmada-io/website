@@ -29,9 +29,14 @@ spec:
       labels:
         app: nginx
     spec:
+      nodeSelector:
+        foo: bar
       containers:
       - image: nginx
         name: nginx
+        resources:
+          limits:
+            cpu: 100m
 status:
   availableReplicas: 2
   observedGeneration: 1
@@ -84,9 +89,10 @@ spec:
   customizations:
     replicaResource:
       luaScript: >
+        local kube = require("kube")
         function GetReplicas(obj)
           replica = obj.spec.replicas
-          requirement = {}
+          requirement = kube.accuratePodRequirements(obj.spec.template)
           return replica, requirement
         end
     replicaRevision:
