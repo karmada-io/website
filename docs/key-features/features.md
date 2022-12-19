@@ -78,7 +78,7 @@ Users also can check and search all member clusters resources via karmada-apiser
 
 ## Best Production Practices
 Karmada supports:
-* [Unified authentication](https://karmada.io/docs/userguide/roleseparation/unifiedAuth):
+* [Unified authentication](../userguide/bestpractices/unified-auth.md):
   * Aggregate API unified access entry.
   * Access control is consistent with member clusters.
 * Unified resource quota(`FederatedResourceQuota`):
