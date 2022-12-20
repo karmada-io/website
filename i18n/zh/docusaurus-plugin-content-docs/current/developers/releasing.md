@@ -15,7 +15,7 @@ Minor版本应该从对于的minor分支发布，发布步骤描述如下。
 
 ### 准备发布说明(手动)
 每个版本发布都需要格式正确的版本发布说明。版本发布说明应该遵循如下格式：
-```md
+```text
 # What's New
 此版本发布的重点更新，例如，一些关键特性的支持。此部分内容需要手动整理收集。
 
@@ -40,7 +40,7 @@ Minor版本应该从对于的minor分支发布，发布步骤描述如下。
 * 可观测性相关更新，例如，增加监控数据/事件记录。此部分内容需要手动整理收集。
 ```
 为了获取如上所有相关内容，需要对比新创建的minor release分支和上一版本的minor release tag，例如，比较`release-1.4`分支和`v1.3.0`tag。然后从这些对比修改中提取为如上不同类型的发布说明。例如，从[此修改](https://github.com/karmada-io/karmada/pull/2675)提取如下发布说明：
-```md
+```text
 ## Bug Fixes
 * `karmada-controller-manager`: Fixed the panic when cluster ImpersonatorSecretRef is nil.
 ```
@@ -50,7 +50,7 @@ Minor版本应该从对于的minor分支发布，发布步骤描述如下。
 
 ### 准备贡献者列表(手动)
 每个版本发布都需要指明贡献者。比较新创建的minor release分支和前一个minor release tag获取贡献者的Github ID列表，例如，比较`release-1.4`分支和`v1.3.0` tag。此列表需要按照字母序排列，如：
-```md
+```text
 ## Contributors
 Thank you to everyone who contributed to this release!
 

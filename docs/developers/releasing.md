@@ -16,7 +16,7 @@ Ensure the necessary PRs are merged, and then create the minor release branch fr
 
 ### Prepare release-note(manually)
 Every release requires a well-formed release note. The release note should follow the format:
-```md
+```text
 # What's New
 The highlighted updates, for example, new key features. This part is collected manually.
 
@@ -41,7 +41,7 @@ The highlighted updates, for example, new key features. This part is collected m
 * Observability-related changes. For example, metric adding/event recording.
 ```
 Compare the newly created minor release branch with the previous minor release tag, for example, compare `release-1.4` branch with `v1.3.0` tag, to get all relevant changes. Then extract the preceding types of release notes from these changes. For example, extract [this](https://github.com/karmada-io/karmada/pull/2675) as:
-```md
+```text
 ## Bug Fixes
 * `karmada-controller-manager`: Fixed the panic when cluster ImpersonatorSecretRef is nil.
 ```
@@ -51,7 +51,7 @@ After the release note is ready, commit it to `docs/CHANGELOG/CHANGELOG-{major}.
 
 ### Prepare contributor-list(manually)
 List the contributors in each release. Compare the newly created minor release branch with the previous minor release tag, for example, compare `release-1.4` branch with `v1.3.0` tag, to get contributors' Github IDs. The list should be in alphabetical order, like:
-```md
+```text
 ## Contributors
 Thank you to everyone who contributed to this release!
 
