@@ -185,6 +185,7 @@ module.exports = {
             items: [
                 "developers/profiling-karmada",
                 "developers/performance-test-setup-for-karmada",
+                "developers/releasing",
             ],
         },
         {
