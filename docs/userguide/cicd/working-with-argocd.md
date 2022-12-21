@@ -80,8 +80,13 @@ More details please refer to [argocd guide: sync the application](https://argo-c
 ## Checking Apps Status
 For deployment running in more than one clusters, you don't need to create applications for each
 cluster. You can get the overall and detailed status from one `Application`.
+> Argo CD < v2.6.0
 
 ![](../../resources/userguide/cicd/argocd/argocd-status-overview.png)
+
+> Argo CD >= v2.6.0
+
+![](../../resources/userguide/cicd/argocd/argocd-2.6.0-status-overview.png)
 
 The `svc/guestbook-ui`, `deploy/guestbook-ui` and `propagationpolicy/guestbook` in the middle of the picture are the
 resources created by the manifest in the forked repo. And the `resourcebinding/guestbook-ui-service` and
