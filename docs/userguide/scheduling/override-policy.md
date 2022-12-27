@@ -158,8 +158,8 @@ Karmada offers various alternatives to declare the override rules:
 - `ImageOverrider`: overrides images for workloads.
 - `CommandOverrider`: overrides commands for workloads.
 - `ArgsOverrider`: overrides args for workloads.
-- `LabelsOverrider` overrides labels for workloads.
-- `AnnotationsOverrider` overrides annotations for workloads.
+- `LabelsOverrider`: overrides labels for workloads.
+- `AnnotationsOverrider`: overrides annotations for workloads.
 - `PlaintextOverrider`: a general-purpose tool to override any kind of resources.
 
 ### ImageOverrider
