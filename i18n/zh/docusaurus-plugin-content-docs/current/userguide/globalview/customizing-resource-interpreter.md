@@ -66,6 +66,7 @@ Supported resources:
 - Service(v1)
 - ServiceAccount(v1)
 - PersistentVolumeClaim(v1)
+- PersistentVolume(V1)
 - Job(batch/v1)
 
 ### AggregateStatus
@@ -73,11 +74,12 @@ Supported resources:
 Supported resources:
 - Deployment(apps/v1)
 - Service(v1)
-- Ingress(extensions/v1beta1)
+- Ingress(networking.k8s.io/v1)
 - Job(batch/v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
 - Pod(v1)
+- PersistentVolume(V1)
 - PersistentVolumeClaim(v1)
 
 ### InterpretStatus
@@ -85,7 +87,7 @@ Supported resources:
 Supported resources:
 - Deployment(apps/v1)
 - Service(v1)
-- Ingress(extensions/v1beta1)
+- Ingress(networking.k8s.io/v1)
 - Job(batch/v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
@@ -99,6 +101,17 @@ Supported resources:
 - Pod(v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
+
+### InterpretHealth
+
+Supported resources:
+- Deployment(apps/v1)
+- StatefulSet(apps/v1)
+- ReplicaSet(apps/v1)
+- DaemonSet(apps/v1)
+- Service(v1)
+- Ingress(networking.k8s.io/v1)
+- PersistentVolumeClaim(v1)
 
 ## Customized Interpreter
 
