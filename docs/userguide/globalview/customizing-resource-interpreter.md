@@ -51,12 +51,14 @@ The built-in interpreter now supports following interpreter operations:
 
 Supported resources:
 - Deployment(apps/v1)
+- StatefulSet(apps/v1)
 - Job(batch/v1)
 
 ### ReviseReplica
 
 Supported resources:
 - Deployment(apps/v1)
+- StatefulSet(apps/v1)
 - Job(batch/v1)
 
 ### Retain
