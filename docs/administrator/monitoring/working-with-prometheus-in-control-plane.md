@@ -113,14 +113,34 @@ hack/local-up-karmada.sh
        scrape_configs:
        - job_name: 'karmada-scheduler'
          kubernetes_sd_configs:
-         - role: endpoints
+         - role: pod
          scheme: http
          tls_config:
            insecure_skip_verify: true
          relabel_configs:
-         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_pod_label_app]
+         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_label_app]
            action: keep
-           regex: karmada-system;karmada-scheduler;karmada-scheduler
+           regex: karmada-system;karmada-scheduler
+         - target_label: __address__
+           source_labels: [__address__]
+           regex: '(.*)'
+           replacement: '${1}:10351'
+           action: replace 
+       - job_name: 'karmada-controller-manager'
+         kubernetes_sd_configs:
+         - role: pod
+         scheme: http
+         tls_config:
+           insecure_skip_verify: true
+         relabel_configs:
+         - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_pod_label_app]
+           action: keep
+           regex: karmada-system;karmada-controller-manager
+         - target_label: __address__
+           source_labels: [__address__]
+           regex: '(.*)'
+           replacement: '${1}:8080'
+           action: replace                
        - job_name: 'kubernetes-apiserver'
          kubernetes_sd_configs:
          - role: endpoints
