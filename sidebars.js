@@ -186,6 +186,7 @@ module.exports = {
                 "developers/profiling-karmada",
                 "developers/performance-test-setup-for-karmada",
                 "developers/releasing",
+                "developers/customize-karmada-scheduler",
             ],
         },
         {
