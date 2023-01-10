@@ -83,6 +83,7 @@ Supported resources:
 - Pod(v1)
 - PersistentVolume(V1)
 - PersistentVolumeClaim(v1)
+- PodDisruptionBudget(policy/v1)
 
 ### InterpretStatus
 
@@ -93,6 +94,7 @@ Supported resources:
 - Job(batch/v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
+- PodDisruptionBudget(policy/v1)
 
 ### InterpretDependency
 
@@ -114,6 +116,7 @@ Supported resources:
 - Service(v1)
 - Ingress(networking.k8s.io/v1)
 - PersistentVolumeClaim(v1)
+- PodDisruptionBudget(policy/v1)
 
 ## Customized Interpreter
 
