@@ -25,3 +25,4 @@ title: Karmada 生产案例汇总
 | Vivo     | https://www.vivo.com/         | 使用 Karmada 构建更灵活、更有弹性的混合多云平台                                                                   | 待定                                                |
 | 有赞       | https://www.youzan.com/       | 管理多集群的无状态和有状态在线工作负载                                                                            | 待定                                                |
 | 之江实验室    | https://www.zhejianglab.com/  | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
+| 马蜂窝      | https://www.mafengwo.cn/  | 使用 karmada 管理多集群，解决 DevOPS 场景下部署资源的分发                                                        | 待定                                              |
