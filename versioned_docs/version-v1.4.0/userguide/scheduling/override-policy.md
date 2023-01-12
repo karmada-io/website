@@ -91,29 +91,6 @@ spec:
 ```
 It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
 
-### fieldSelector
-
-#### Examples
-```yaml
-apiVersion: policy.karmada.io/v1alpha1
-kind: OverridePolicy
-metadata:
-  name: example
-spec:
-  #...
-  overrideRules:
-    - targetCluster:
-        fieldSelector:
-          matchExpressions:
-            - key: region
-              operator: In
-              values:
-                - cn-north-1
-      overriders:
-      #...
-```
-It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
-
 ### clusterNames
 
 #### Examples
