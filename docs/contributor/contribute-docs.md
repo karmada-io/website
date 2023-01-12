@@ -2,6 +2,10 @@
 title: How to contribute docs
 ---
 
+## Before You Get Started
+
+Before you start contributing, it is recommended to familiarize yourself with the Karmada project and its architecture. You can check out the [official documentation](https://karmada.io/docs/) to learn more about Karmada.
+
 Starting from version 1.3, the community documentation will be available on the Karmada website.
 This document explains how to contribute docs to
 the `karmada-io/website` repository.
@@ -15,6 +19,27 @@ the `karmada-io/website` repository.
   English is the official language of documentation.
 - For our docs we use markdown. If you are unfamiliar with Markdown, please see https://guides.github.com/features/mastering-markdown/ or https://www.markdownguide.org/ if you are looking for something more substantial. 
 - We get some additions through [Docusaurus 2](https://docusaurus.io/), a model static website generator.
+
+
+## How to Contribute
+
+If you want to contribute to Karmada, you can follow these steps:
+
+1. Check the [issue tracker](https://github.com/karmada-io/karmada/issues) for any open issues related to the feature or bug you want to work on. If there isn't an issue for it, feel free to create one.
+
+2. Assign yourself to the issue you want to work on.
+
+3. Fork the repository.
+
+4. Create a new branch with a descriptive name for the issue you are working on.
+
+5. Write your code/chnages and commit your changes.
+
+6. Create a pull request (PR) from your branch to the master branch of the main repository.
+
+7. Wait for your PR to be reviewed and approved by the maintainers.
+
+8. Once your PR is merged, your changes will be included in the next release of Karmada!
 
 ## Setup
 
