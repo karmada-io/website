@@ -1,4 +1,4 @@
-# Karmada v1.3：更优雅 更精准 更高效
+# More elegant More precise and More efficient
 
 Karmada是开放的多云多集群容器编排引擎，旨在帮助用户在多云环境下部署和运维业务应用。凭借兼容Kubernetes原生API的能力，Karmada可以平滑迁移单集群工作负载，并且仍可保持与Kubernetes周边生态工具链协同。
 
