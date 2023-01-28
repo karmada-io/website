@@ -2,7 +2,7 @@
 title: Namespace管理
 ---
 
-在 Kubernetes 集群中，工作负载被部署在某个命名空间中。 多集群的工作负载意味着多个不同明明空间。如果想对这些命名空间进行统一管理。`karmada-controller-manager`将负责这部分功能，将用户在Karmada中创建的命名空间传播到成员集群。
+在 Kubernetes 集群中，工作负载被部署在某个命名空间中。 多集群的工作负载意味着多个不同命名空间。如果想对这些命名空间进行统一管理。`karmada-controller-manager`将负责这部分功能，将用户在Karmada中创建的命名空间传播到成员集群。
 
 ## 默认Namespace传播策略
 默认情况下，除了保留Namespace，其他Namespace都会被自动传播到所有成员集群。保留Namespace包括：`karmada-system`、`karmada-cluster`、 `karmada-es-*`、`kube-*`、 `default`.
