@@ -18,7 +18,7 @@
     "@docusaurus/plugin-content-blog": "^2.2.0",
     "@docusaurus/plugin-content-docs": "^2.2.0",
     "@docusaurus/plugin-content-pages": "^2.2.0",
-    "@docusaurus/plugin-sitemap": "^2.2.0",
+    "@docusaurus/plugin-sitemap": "^2.3.0",
     "@docusaurus/preset-classic": "2.2.0",
     "asciinema-player": "^3.0.1",
     "clsx": "^1.2.1",
