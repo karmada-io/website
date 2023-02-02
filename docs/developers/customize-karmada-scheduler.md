@@ -188,3 +188,169 @@ kubectl kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit 
         image: ## Your Image Address
 ...
 ```
+
+## Configure Multiple Schedulers
+
+### Run the second scheduler in the cluster
+
+You can run multiple schedulers simultaneously alongside the default scheduler and instruct Karmada what scheduler to use for each of your workloads.
+Here is an sample of the deployment config. You can save it as `my-scheduler.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-karmada-scheduler
+  namespace: karmada-system
+  labels:
+    app: my-karmada-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-karmada-scheduler
+  template:
+    metadata:
+      labels:
+        app: my-karmada-scheduler
+    spec:
+      automountServiceAccountToken: false
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+      containers:
+        - name: karmada-scheduler
+          image: docker.io/karmada/karmada-scheduler:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10351
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            timeoutSeconds: 5
+          command:
+            - /bin/karmada-scheduler
+            - --kubeconfig=/etc/kubeconfig
+            - --bind-address=0.0.0.0
+            - --secure-port=10351
+            - --enable-scheduler-estimator=true
+            - --leader-elect-resource-name=my-scheduler # Your custom scheduler name
+            - --scheduler-name=my-scheduler # Your custom scheduler name
+            - --v=4
+          volumeMounts:
+            - name: kubeconfig
+              subPath: kubeconfig
+              mountPath: /etc/kubeconfig
+      volumes:
+        - name: kubeconfig
+          secret:
+            secretName: kubeconfig
+```
+
+> Note: For the `--leader-elect-resource-name` option, it will be `karmada-scheduler` by default. If you deploy another scheduler along with the default scheduler,
+> this option should be specified and it's recommended to use the scheduler name as the value.
+
+In order to run your scheduler in Karmada, create the deployment specified in the config above:
+
+```shell
+kubectl --context karmada-host create -f my-scheduler.yaml
+```
+
+Verify that the scheduler pod is running:
+
+```
+kubectl --context karmada-host get pods --namespace=karmada-system
+```
+
+```
+NAME                                           READY     STATUS    RESTARTS   AGE
+....
+my-karmada-scheduler-lnf4s-4744f               1/1       Running   0          2m
+...
+```
+
+You should see a "Running" my-karmada-scheduler pod, in addition to the default karmada-scheduler pod in this list.
+
+### Specify schedulers for deployments
+
+Now that your second scheduler is running, create some deployments, and direct them to be scheduled by either the default scheduler or the one you deployed. 
+In order to schedule a given deployment using a specific scheduler, specify the name of the scheduler in that propagationPolicy spec. 
+Let's look at three examples.
+
+* PropagationPolicy spec without any scheduler name
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+When no scheduler name is supplied, the deployment is automatically scheduled using the default-scheduler.
+
+* PropagationPolicy spec with `default-scheduler`
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  schedulerName: default-scheduler
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+A scheduler is specified by supplying the scheduler name as a value to `spec.schedulerName`. 
+In this case, we supply the name of the default scheduler which is `default-scheduler`.
+
+* PropagationPolicy spec with `my-scheduler`
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  schedulerName: my-scheduler
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+In this case, we specify that this deployment should be scheduled using the scheduler that we deployed - `my-scheduler`. 
+Note that the value of `spec.schedulerName` should match the name supplied for the scheduler in the schedulerName field of options in the second schedulers.
+
+### Verifying that the deployments were scheduled using the desired schedulers
+
+In order to make it easier to work through these examples, you can look at the "Scheduled" entries in the event logs to verify that the deployments were scheduled by the desired schedulers.
+
+```shell
+kubectl --context karmada-apiserver describe deploy/nginx
+```

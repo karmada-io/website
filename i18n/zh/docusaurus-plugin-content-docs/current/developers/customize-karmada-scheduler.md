@@ -186,3 +186,168 @@ kubectl kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit 
         image: ## Your Image Address
 ...
 ```
+
+## 配置多个调度器
+
+### 运行第二个调度器
+
+你可以和默认调度器一起同时运行多个调度器，并告诉 Karmada 为每个工作负载使用哪个调度器。
+以下是一个示例的调度器配置文件。 你可以将它保存为 `my-scheduler.yaml`。
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-karmada-scheduler
+  namespace: karmada-system
+  labels:
+    app: my-karmada-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-karmada-scheduler
+  template:
+    metadata:
+      labels:
+        app: my-karmada-scheduler
+    spec:
+      automountServiceAccountToken: false
+      tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+      containers:
+        - name: karmada-scheduler
+          image: docker.io/karmada/karmada-scheduler:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10351
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            timeoutSeconds: 5
+          command:
+            - /bin/karmada-scheduler
+            - --kubeconfig=/etc/kubeconfig
+            - --bind-address=0.0.0.0
+            - --secure-port=10351
+            - --enable-scheduler-estimator=true
+            - --leader-elect-resource-name=my-scheduler # 你的自定义调度器名称
+            - --scheduler-name=my-scheduler # 你的自定义调度器名称
+            - --v=4
+          volumeMounts:
+            - name: kubeconfig
+              subPath: kubeconfig
+              mountPath: /etc/kubeconfig
+      volumes:
+        - name: kubeconfig
+          secret:
+            secretName: kubeconfig
+```
+
+> Note: 对于 `--leader-elect-resource-name` 选项，默认为 `karmada-scheduler`。如果你将另一个调度器与默认的调度器一起部署，
+> 需要指定此选项，并且建议使用你的自定义调度器名称作为值。
+
+为了在 Karmada 中运行我们的第二个调度器，在 host 集群中创建上面配置中指定的 Deployment：
+
+```shell
+kubectl --context karmada-host create -f my-scheduler.yaml
+```
+
+验证调度器 Pod 正在运行：
+
+```
+kubectl --context karmada-host get pods --namespace=karmada-system
+```
+
+输出类似于：
+
+```
+NAME                                           READY     STATUS    RESTARTS   AGE
+....
+my-karmada-scheduler-lnf4s-4744f               1/1       Running   0          2m
+...
+```
+
+此列表中，除了默认的 karmada-scheduler Pod 之外，你应该还能看到处于 “Running” 状态的 my-karmada-scheduler Pod。
+
+### 为 Deployment 指定调度器
+
+现在第二个调度器正在运行，创建一些 Deployment，并指定它们由默认调度器或部署的调度器进行调度。 为了使用特定的调度器调度给定的 Deployment，在命中那个 Deployment 的 Propagation spec 中指定调度器的名称。让我们看看三个例子。
+
+* PropagationPolicy spec 没有任何调度器名称
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+如果未提供调度器名称，则会使用 default-scheduler 自动调度 Deployment。
+
+* PropagationPolicy spec 设置为 `default-scheduler`
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  schedulerName: default-scheduler
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+通过将调度器名称作为 `spec.schedulerName` 参数的值来指定调度器。 我们提供默认调度器的名称，即 `default-scheduler`。
+
+* PropagationPolicy spec 设置为 `my-scheduler`
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: nginx-propagation
+spec:
+  schedulerName: my-scheduler
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+```
+
+在这种情况下，我们指定此 Deployment 使用我们部署的 `my-scheduler` 来进行调度。
+请注意， `spec.schedulerName` 参数的值应该与调度器提供的选项中的 `schedulerName` 相匹配。
+
+### 验证是否使用所需的调度器调度了 Deployment
+
+为了更容易地完成这些示例, 你可以查看与此 Deployment 相关的事件日志，以验证是否由所需的调度器调度了该 Deployment。
+
+```shell
+kubectl --context karmada-apiserver describe deploy/nginx
+```
