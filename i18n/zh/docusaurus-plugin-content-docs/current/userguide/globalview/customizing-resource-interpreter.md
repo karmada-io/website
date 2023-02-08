@@ -1,69 +1,53 @@
 ---
-title: Customizing Resource Interpreter
+title: 自定义资源解释器
 ---
 
-## Resource Interpreter Framework
+## 资源解释器框架
 
-In the progress of propagating a resource from `karmada-apiserver` to member clusters, Karmada needs to know the 
-resource definition. Take `Propagating Deployment` as an example, at the phase of building `ResourceBinding`, the 
-`karmada-controller-manager` will parse the `replicas` from the deployment object.
+在将资源从 `karmada-apiserver` 分发到成员集群的过程中，Karmada 可能需要了解资源的定义结构。以 `Propagating Deployment` 为例，在构建 `ResourceBinding` 的阶段，`karmada-controller-manager` 组件需要解析 deployment 资源的 `replicas` 字段。
 
-For Kubernetes native resources, Karmada knows how to parse them, but for custom resources defined by `CRD`(or extended
-by something like `aggregated-apiserver`), as lack of the knowledge of the resource structure, they can only be treated 
-as normal resources. Therefore, the advanced scheduling algorithms cannot be used for them.
+对于 Kubernetes 原生资源来说，Karmada 知道如何解析它们，但是对于由 CRD 定义的资源（或是由聚合层方式注册）来说，由于缺乏对该资源结构信息的了解，它们将仅被当作普通资源来对待，因此，高级调度算法将不能应用于这些资源。
 
-The [Resource Interpreter Framework][1] is designed for interpreting resource structure. It consists of `built-in` and 
-`customized` interpreters:
-- `built-in` interpreter: used for common Kubernetes native or well-known extended resources.
-- `customized` interpreter: interprets custom resources or overrides the built-in interpreters.
+[Resource Interpreter Framework][1] 专为解释资源结构而设计，它包括两类解释器：
+- `内置`解释器：用于解释常见的 Kubernetes 原生资源或一些知名的扩展资源；
+- `自定义`解释器: 用于解释自定义资源或覆盖`内置`解释器。
 
-> Note: The major difference between `built-in` and `customized` interpreters is that the `built-in` interpreter is 
-> implemented and maintained by Karmada community and will be built into Karmada components, such as 
-> `karmada-controller-manager`. On the contrary, the `customized` interpreter is implemented and maintained by users.
-> It should be registered to Karmada as an `Interpreter Webhook` or `declarative configuration` (see [Customized Interpreter](#customized-interpreter) for more details).
+> 注意：上述两类解释器之间的主要区别在于，`内置`解释器由 Karmada 社区实现并维护，并将其内置到 Karmada 组件中，例如 `karmada-controller-manager`。 相反，`自定义`解释器是由用户实现和维护的，它应该作为 `Interpreter Webhook` 或`声明式配置`注册到 Karmada（更多详细信息，请参考 [Customized Interpreter](#customized-interpreter)）。
 
-### Interpreter Operations
+### 解释器操作
 
-When interpreting resources, we often get multiple pieces of information extracted. The `Interpreter Operations`
-defines the interpreter request type, and the `Resource Interpreter Framework` provides services for each operation 
-type. 
+在解释资源时，我们经常会提取多条信息。Karmada 中定义了多种`解释器操作`，`资源解释器框架`为每个操作类型提供服务。
 
-For all operations designed by `Resource Interpreter Framework`, please refer to [Interpreter Operations][2].
+关于`资源解释器框架`定义的各种操作类型的具体含义，可以参考 [Interpreter Operations][2] 。
 
-> Note: Not all the designed operations are supported (see below for supported operations).
+> 注意： 并非所有设计的操作类型均受支持（有关支持的操作，请参见下文）：
 
-> Note: At most one interpreter will be consulted to when interpreting a resource with specific `interpreter operation`
-> and the `customized` interpreter has higher priority than `built-in` interpreter if they are both interpreting the same 
-> resource. 
-> For example, the `built-in` interpreter serves `InterpretReplica` for `Deployment` with version `apps/v1`. If there 
-> is a customized interpreter registered to Karmada for interpreting the same resource, the `customized` interpreter wins and the 
-> `built-in` interpreter will be ignored.
+> 注意：在使用特定的`解释器操作`解释资源时，最多只会咨询一个解释器；对于同一个资源，`自定义`解释器比`内置`解释器具有更高的优先级。
+> 例如，`内置`解释器为 `apps/v1` version 的 `Deployment` 提供 `InterpretReplica` 服务，如果有一个自定义解释器注册到 Karmada 来解释该资源，则`自定义`解释器获胜，`自定义`解释器将被忽略。
 
-## Built-in Interpreter
+## 内置解释器
 
-For the common Kubernetes native or well-known extended resources, the interpreter operations are built-in, which means
-the users usually don't need to implement customized interpreters. If you want more resources to be built-in,
-please feel free to [file an issue][3] to let us know your user case.
+对于常见的 Kubernetes 原生资源或一些知名的扩展资源来说，`解释器操作`是内置的，这意味着用户通常不需要实现自定义解释器。 如果你希望内置更多资源，请随时[提交问题][3] 让我们了解您的用户案例。
 
-The built-in interpreter now supports following interpreter operations:
+内置解释器现在支持以下`解释器操作`：
 
 ### InterpretReplica
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - StatefulSet(apps/v1)
 - Job(batch/v1)
 
 ### ReviseReplica
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - StatefulSet(apps/v1)
 - Job(batch/v1)
 
 ### Retain
 
-Supported resources:
+支持资源：
 - Pod(v1)
 - Service(v1)
 - ServiceAccount(v1)
@@ -73,7 +57,7 @@ Supported resources:
 
 ### AggregateStatus
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - Service(v1)
 - Ingress(networking.k8s.io/v1)
@@ -87,7 +71,7 @@ Supported resources:
 
 ### InterpretStatus
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - Service(v1)
 - Ingress(networking.k8s.io/v1)
@@ -98,7 +82,7 @@ Supported resources:
 
 ### InterpretDependency
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - Job(batch/v1)
 - CronJob(batch/v1)
@@ -108,7 +92,7 @@ Supported resources:
 
 ### InterpretHealth
 
-Supported resources:
+支持资源：
 - Deployment(apps/v1)
 - StatefulSet(apps/v1)
 - ReplicaSet(apps/v1)
@@ -118,53 +102,48 @@ Supported resources:
 - PersistentVolumeClaim(v1)
 - PodDisruptionBudget(policy/v1)
 
-## Customized Interpreter
+## 自定义解释器
 
-The customized interpreter is implemented and maintained by users, it can be extended in two ways, either by defining declarative configuration files or by running as webhook at runtime.
+自定义解释器由用户实现和维护，它可以通过两种方式扩展，通过定义声明式配置文件或在运行时作为 webhook 运行。
 
-> Note: Decalrative configuration has a higher priority than webhook.
+> 注意：声明式配置比 webhook 有更高的优先级，即用户如果同时注册了这两种解释方式，将优先应用相应资源的声明式配置
 
-### Declarative Configuration
+### 声明式配置
 
-#### What are interpreter declarative configuration?
+#### 什么是解释器声明式配置？
 
-Users can quickly customize resource interpreters for both Kubernetes resources and CR resources by the rules declaraed in the [ResourceInterpreterCustomization][4] API specification.
+用户可以通过 [ResourceInterpreterCustomization][4] API 规范中声明的规则，快速为 Kubernetes 原生资源和 CR 资源自定义资源解释器。
 
-#### Write with configuration
+#### 配置编写
 
-You can configure resource interpretation rules by creating or updating [ResourceInterpreterCustomization][4] resource, the newest version supports the definition of lua scripts in the `ResourceInterpreterCustomization`. You can learn how to define the lua script in the API definition, take [retention][5] as an example.
+你可以通过创建或更新 [ResourceInterpreterCustomization][4] 资源来配置资源解释规则，当前支持在 ResourceInterpreterCustomization 中定义 lua 脚本。 你可以在 API 定义中学习如何定义 lua 脚本，以 [retention][5] 为例。
 
-#### Verify the configuration
+#### 配置验证
 
-Users can use the `karmadactl interpret` command to verify the `ResourceInterpreterCustomization` configuration before applying them to the system. Some examples are provided to help users better understand how this interpreter can be used, please refer to [examples][8].
+你可以使用 `karmadactl interpret` 命令在将 `ResourceInterpreterCustomization` 配置应用到系统之前来验证该配置的正确性。我们提供了一些示例来帮助用户更好的理解如何使用该验证工具，请参考 [examples][8] 。
 
 ### Webhook
 
-#### What are interpreter webhooks?
+#### 什么是解释器 webhook？
 
-Interpreter webhooks are HTTP callbacks that receive interpret requests and do something with them.
+解释器 webhook 是一种 HTTP 回调，它接收解释请求并对其进行处理。
 
-#### Write an interpreter webhook server
+#### 编写一个解释器 webhook 服务器
 
-Please refer to the implementation of the [Example of Customize Interpreter][6] that is validated 
-in Karmada E2E test. The webhook handles the `ResourceInterpreterRequest` request sent by the 
-Karmada components (such as `karmada-controller-manager`), and sends back its decision as an 
-`ResourceInterpreterResponse`.
+请参考 [Example of Customize Interpreter][6] 的实现，我们在 Karmada E2E 测试中使用该方式进行了验证。webhook 将处理 Karmada 组件（例如 karmada-controller-manager）发送的 ResourceInterpreterRequest 请求，处理完成后将处理结果以 ResourceInterpreterResponse 为形式返回。
 
-#### Deploy the admission webhook service
+#### 部署 admission webhook 服务
 
-The [Example of Customize Interpreter][6] is deployed in the host cluster for E2E and exposed by 
-a service as the front-end of the webhook server.
+在 E2E 测试环境中， [Customize Interpreter示例][6] 部署在 host 集群上，由 service 暴露为 webhook 服务器前端。
 
-You may also deploy your webhooks outside the cluster. You will need to update your webhook 
-configurations accordingly.
+你也可以在集群外部署你的 webhooks，并记得更新你的 webhook 配置。
 
-#### Configure webhook on the fly
+#### 即时配置 webhook
 
-You can configure what resources and supported operations are subject to what interpreter webhook 
-via [ResourceInterpreterWebhookConfiguration][7]. 
+你可以通过 [ResourceInterpreterWebhookConfiguration][7] 来配置哪些资源和`解释器操作`受 webhook 的约束。
 
-The following is an example `ResourceInterpreterWebhookConfiguration`:
+下面提供了一个 `ResourceInterpreterWebhookConfiguration` 的配置示例：
+
 ```yaml
 apiVersion: config.karmada.io/v1alpha1
 kind: ResourceInterpreterWebhookConfiguration
@@ -184,8 +163,7 @@ webhooks:
     timeoutSeconds: 3
 ```
 
-You can config more than one webhook in a `ResourceInterpreterWebhookConfiguration`, each webhook
-serves at least one operation.
+你可以在 ResourceInterpreterWebhookConfiguration 中配置多个 webhook，每个 webhook 至少服务于一个`解释器操作`。
 
 [1]: https://github.com/karmada-io/karmada/tree/master/docs/proposals/resource-interpreter-webhook
 [2]: https://github.com/karmada-io/karmada/blob/84b971a501ba82c53a5ad455c2fe84d842cd7d4e/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L85-L119
