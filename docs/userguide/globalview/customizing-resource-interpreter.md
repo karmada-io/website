@@ -134,6 +134,92 @@ Users can quickly customize resource interpreters for both Kubernetes resources 
 
 You can configure resource interpretation rules by creating or updating [ResourceInterpreterCustomization][4] resource, the newest version supports the definition of lua scripts in the `ResourceInterpreterCustomization`. You can learn how to define the lua script in the API definition, take [retention][5] as an example.
 
+Below we provide a yaml writing example of the ResourceInterpreterCustomization resource:
+
+<details>
+<summary>resource-interpreter-customization.yaml</summary>
+
+```yaml
+apiVersion: config.karmada.io/v1alpha1
+kind: ResourceInterpreterCustomization
+metadata:
+  name: declarative-configuration-example
+spec:
+  target:
+    apiVersion: apps/v1
+    kind: Deployment
+  customizations:
+    replicaResource:
+      luaScript: >
+        local kube = require("kube")
+        function GetReplicas(obj)
+          replica = obj.spec.replicas
+          requirement = kube.accuratePodRequirements(obj.spec.template)
+          return replica, requirement
+        end
+    replicaRevision:
+      luaScript: >
+        function ReviseReplica(obj, desiredReplica)
+          obj.spec.replicas = desiredReplica
+          return obj
+        end
+    retention:
+      luaScript: >
+        function Retain(desiredObj, observedObj)
+          desiredObj.spec.paused = observedObj.spec.paused
+          return desiredObj
+        end
+    statusAggregation:
+      luaScript: >
+        function AggregateStatus(desiredObj, statusItems)
+          if statusItems == nil then
+            return desiredObj
+          end
+          if desiredObj.status == nil then
+            desiredObj.status = {}
+          end
+          replicas = 0
+          for i = 1, #statusItems do
+            if statusItems[i].status ~= nil and statusItems[i].status.replicas ~= nil then
+              replicas = replicas + statusItems[i].status.replicas
+            end
+          end
+          desiredObj.status.replicas = replicas
+          return desiredObj
+        end
+    statusReflection:
+      luaScript: >
+        function ReflectStatus (observedObj)
+          return observedObj.status
+        end
+    healthInterpretation:
+      luaScript: >
+        function InterpretHealth(observedObj)
+          return observedObj.status.readyReplicas == observedObj.spec.replicas
+        end
+    dependencyInterpretation:
+      luaScript: >
+        function GetDependencies(desiredObj)
+          dependentSas = {}
+          refs = {}
+          if desiredObj.spec.template.spec.serviceAccountName ~= '' and desiredObj.spec.template.spec.serviceAccountName ~= 'default' then
+            dependentSas[desiredObj.spec.template.spec.serviceAccountName] = true
+          end
+          local idx = 1
+          for key, value in pairs(dependentSas) do
+            dependObj = {}
+            dependObj.apiVersion = 'v1'
+            dependObj.kind = 'ServiceAccount'
+            dependObj.name = key
+            dependObj.namespace = desiredObj.metadata.namespace
+            refs[idx] = dependObj
+            idx = idx + 1
+          end
+          return refs
+        end
+```
+</details>
+
 #### Verify the configuration
 
 Users can use the `karmadactl interpret` command to verify the `ResourceInterpreterCustomization` configuration before applying them to the system. Some examples are provided to help users better understand how this interpreter can be used, please refer to [examples][8].
