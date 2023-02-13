@@ -12,7 +12,7 @@ title: 自定义资源解释器
 - `内置`解释器：用于解释常见的 Kubernetes 原生资源或一些知名的扩展资源；
 - `自定义`解释器: 用于解释自定义资源或覆盖`内置`解释器。
 
-> 注意：上述两类解释器之间的主要区别在于，`内置`解释器由 Karmada 社区实现并维护，并将其内置到 Karmada 组件中，例如 `karmada-controller-manager`。 相反，`自定义`解释器是由用户实现和维护的，它应该作为 `Interpreter Webhook` 或`声明式配置`注册到 Karmada（更多详细信息，请参考 [Customized Interpreter](#customized-interpreter)）。
+> 注意：上述两类解释器之间的主要区别在于，`内置`解释器由 Karmada 社区实现并维护，并将其内置到 Karmada 组件中，例如 `karmada-controller-manager`。 相反，`自定义`解释器是由用户实现和维护的，它应该作为 `Interpreter Webhook` 或`声明式配置`注册到 Karmada（更多详细信息，请参考 [Customized Interpreter](#自定义解释器)）。
 
 ### 解释器操作
 
@@ -117,6 +117,92 @@ title: 自定义资源解释器
 #### 配置编写
 
 你可以通过创建或更新 [ResourceInterpreterCustomization][4] 资源来配置资源解释规则，当前支持在 ResourceInterpreterCustomization 中定义 lua 脚本。 你可以在 API 定义中学习如何定义 lua 脚本，以 [retention][5] 为例。
+
+下面我们提供一个ResourceInterpreterCustomization资源的yaml编写示例：
+
+<details>
+<summary>resource-interpreter-customization.yaml</summary>
+
+```yaml
+apiVersion: config.karmada.io/v1alpha1
+kind: ResourceInterpreterCustomization
+metadata:
+  name: declarative-configuration-example
+spec:
+  target:
+    apiVersion: apps/v1
+    kind: Deployment
+  customizations:
+    replicaResource:
+      luaScript: >
+        local kube = require("kube")
+        function GetReplicas(obj)
+          replica = obj.spec.replicas
+          requirement = kube.accuratePodRequirements(obj.spec.template)
+          return replica, requirement
+        end
+    replicaRevision:
+      luaScript: >
+        function ReviseReplica(obj, desiredReplica)
+          obj.spec.replicas = desiredReplica
+          return obj
+        end
+    retention:
+      luaScript: >
+        function Retain(desiredObj, observedObj)
+          desiredObj.spec.paused = observedObj.spec.paused
+          return desiredObj
+        end
+    statusAggregation:
+      luaScript: >
+        function AggregateStatus(desiredObj, statusItems)
+          if statusItems == nil then
+            return desiredObj
+          end
+          if desiredObj.status == nil then
+            desiredObj.status = {}
+          end
+          replicas = 0
+          for i = 1, #statusItems do
+            if statusItems[i].status ~= nil and statusItems[i].status.replicas ~= nil then
+              replicas = replicas + statusItems[i].status.replicas
+            end
+          end
+          desiredObj.status.replicas = replicas
+          return desiredObj
+        end
+    statusReflection:
+      luaScript: >
+        function ReflectStatus (observedObj)
+          return observedObj.status
+        end
+    healthInterpretation:
+      luaScript: >
+        function InterpretHealth(observedObj)
+          return observedObj.status.readyReplicas == observedObj.spec.replicas
+        end
+    dependencyInterpretation:
+      luaScript: >
+        function GetDependencies(desiredObj)
+          dependentSas = {}
+          refs = {}
+          if desiredObj.spec.template.spec.serviceAccountName ~= '' and desiredObj.spec.template.spec.serviceAccountName ~= 'default' then
+            dependentSas[desiredObj.spec.template.spec.serviceAccountName] = true
+          end
+          local idx = 1
+          for key, value in pairs(dependentSas) do
+            dependObj = {}
+            dependObj.apiVersion = 'v1'
+            dependObj.kind = 'ServiceAccount'
+            dependObj.name = key
+            dependObj.namespace = desiredObj.metadata.namespace
+            refs[idx] = dependObj
+            idx = idx + 1
+          end
+          return refs
+        end
+```
+</details>
 
 #### 配置验证
 
