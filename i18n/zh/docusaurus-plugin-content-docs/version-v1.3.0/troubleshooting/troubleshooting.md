@@ -4,7 +4,7 @@ title: 故障定位
 
 ## I can't access some resources when installing Karmada
 
-- Pull images from Google Container Registry (registry.k8s.io).
+- Pull images from Kubernetes Image Registry (registry.k8s.io).
 
   You can run the following commands to change the image registry in Mainland China.
 
