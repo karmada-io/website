@@ -4,14 +4,14 @@ title: 故障定位
 
 ## 我在安装 Karmada 时无法访问一些资源
 
-- 从谷歌容器仓库（k8s.gcr.io）拉取镜像。
+- 从谷歌容器仓库（registry.k8s.io）拉取镜像。
 
   你可以运行以下命令来改变中国大陆的镜像仓库。
 
   ```shell
-  sed -i'' -e "s#k8s.gcr.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/karmada-etcd.yaml
-  sed -i'' -e "s#k8s.gcr.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/karmada-apiserver.yaml
-  sed -i'' -e "s#k8s.gcr.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/kube-controller-manager.yaml
+  sed -i'' -e "s#registry.k8s.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/karmada-etcd.yaml
+  sed -i'' -e "s#registry.k8s.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/karmada-apiserver.yaml
+  sed -i'' -e "s#registry.k8s.io#registry.aliyuncs.com/google_containers#g" artifacts/deploy/kube-controller-manager.yaml
   ```
 
 - 在中国大陆下载 Golang 软件包，并在安装前运行以下命令。
