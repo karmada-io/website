@@ -197,6 +197,7 @@ module.exports = {
                 "contributor/cherry-picks",
                 "contributor/github-workflow",
                 "contributor/lifted",
+                "contributor/count-contributions",
             ],
         },
         {
