@@ -14,6 +14,7 @@ import jointcloud from "../../static/img/supporters/jointcloud.png"
 import SELZJU from "../../static/img/supporters/SEL-ZJU.png"
 import zhejianglab from "../../static/img/supporters/zhejianglab.png"
 import daocloud from "../../static/img/supporters/DaoCloud.png"
+import CECloud from "../../static/img/supporters/CECloud.png"
 
 const supportersData = [
     {
@@ -79,6 +80,10 @@ const supportersData = [
     {
         logo: daocloud,
         alt: 'DaoCloud',
+    },
+    {
+        logo: CECloud,
+        alt: 'CECloud',
     },
 ]
 
