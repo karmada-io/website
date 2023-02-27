@@ -61,6 +61,7 @@ title: 自定义资源解释器
 - Deployment(apps/v1)
 - Service(v1)
 - Ingress(networking.k8s.io/v1)
+- CronJob(batch/v1)
 - Job(batch/v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
