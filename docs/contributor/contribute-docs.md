@@ -20,27 +20,6 @@ the `karmada-io/website` repository.
 - For our docs we use markdown. If you are unfamiliar with Markdown, please see https://guides.github.com/features/mastering-markdown/ or https://www.markdownguide.org/ if you are looking for something more substantial. 
 - We get some additions through [Docusaurus 2](https://docusaurus.io/), a model static website generator.
 
-
-## How to Contribute
-
-If you want to contribute to Karmada, you can follow these steps:
-
-1. Check the [issue tracker](https://github.com/karmada-io/karmada/issues) for any open issues related to the feature or bug you want to work on. If there isn't an issue for it, feel free to create one.
-
-2. Assign yourself to the issue you want to work on.
-
-3. Fork the repository.
-
-4. Create a new branch with a descriptive name for the issue you are working on.
-
-5. Write your code/chnages and commit your changes.
-
-6. Create a pull request (PR) from your branch to the master branch of the main repository.
-
-7. Wait for your PR to be reviewed and approved by the maintainers.
-
-8. Once your PR is merged, your changes will be included in the next release of Karmada!
-
 ## Setup
 
 You can set up your local environment by cloning our website repository.
@@ -126,6 +105,8 @@ You can easily route to other places by adding any of the following links:
   If your article contains images or other resources, you may create a corresponding directory in `/docs/resources`, and article related files are placed in that directory.
   Now we store public pictures about Karmada in `/docs/resources/general`. You can use the following to link the pictures:
   * `![Git workflow](../resources/contributor/git_workflow.png)`
+
+If you want to learn more about Markdown syntax, you can check out [this](https://www.markdownguide.org/cheat-sheet/) resource that explains how to format text using simple syntax like hashtags, asterisks, and dashes.
 
 ### Directory organization 
 
