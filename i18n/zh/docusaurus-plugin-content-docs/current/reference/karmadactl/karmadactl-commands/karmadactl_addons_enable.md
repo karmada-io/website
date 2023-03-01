@@ -55,6 +55,7 @@ karmadactl addons enable
       --karmada-scheduler-estimator-image string   karmada scheduler-estimator image (default "docker.io/karmada/karmada-scheduler-estimator:v0.0.0")
       --karmada-search-image string                karmada search image (default "docker.io/karmada/karmada-search:v0.0.0")
       --karmada-search-replicas int32              Karmada search replica set (default 1)
+      --kubeconfig string                          Path to the host cluster kubeconfig file.
       --member-context string                      Member cluster's context which to deploy scheduler estimator
       --member-kubeconfig string                   Member cluster's kubeconfig which to deploy scheduler estimator
   -n, --namespace string                           namespace where Karmada components are installed. (default "karmada-system")
@@ -66,7 +67,6 @@ karmadactl addons enable
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

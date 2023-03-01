@@ -66,7 +66,7 @@ karmada-agent [flags]
       --log_file string                                If non-empty, use this log file (no effect when -logtostderr=true)
       --log_file_max_size uint                         Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                                    log to standard error instead of files (default true)
-      --metrics-bind-address string                    The TCP address that the controller should bind to for serving prometheus metrics(e.g. 127.0.0.1:8088, :8088) (default ":8080")
+      --metrics-bind-address string                    The TCP address that the controller should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. (default ":8080")
       --one_output                                     If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --profiling-bind-address string                  The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
       --proxy-server-address string                    Address of the proxy server that is used to proxy to the cluster.

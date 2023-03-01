@@ -35,6 +35,7 @@ karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
       --force                       Delete cluster and secret resources even if resources in the cluster targeted for unjoin are not removed successfully.
   -h, --help                        help for unjoin
       --karmada-context string      The name of the kubeconfig context to use
+      --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
       --wait duration               wait for the unjoin command execution process(default 60s), if there is no success after this time, timeout will be returned. (default 1m0s)
 ```
 
@@ -43,7 +44,6 @@ karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

@@ -47,10 +47,11 @@ karmadactl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) (-
   -f, --filename strings         Filename, directory, or URL to files containing the resource to describe
   -h, --help                     help for describe
       --karmada-context string   The name of the kubeconfig context to use
+      --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string         Process the kustomization directory. This flag can't be used together with -f or -R.
   -n, --namespace string         If present, the namespace scope for this CLI request
   -R, --recursive                Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
-  -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+  -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       --show-events              If true, display events related to the described object. (default true)
 ```
 
@@ -59,7 +60,6 @@ karmadactl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) (-
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

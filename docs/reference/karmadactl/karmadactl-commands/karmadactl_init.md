@@ -60,6 +60,7 @@ karmadactl init
 ```
       --cert-external-dns string                         the external DNS of Karmada certificate (e.g localhost,localhost.com)
       --cert-external-ip string                          the external IP of Karmada certificate (e.g 192.168.1.2,172.16.1.2)
+      --cert-validity-period duration                    the validity period of Karmada certificate (e.g 8760h0m0s, that is 365 days) (default 8760h0m0s)
       --context string                                   The name of the kubeconfig context to use
       --crds string                                      Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0/crds.tar.gz")
       --etcd-data string                                 etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
@@ -87,6 +88,8 @@ karmadactl init
       --karmada-webhook-replicas int32                   Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                 Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                       Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
+      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.25.2")
+      --kubeconfig string                                absolute path to the kubeconfig file
   -n, --namespace string                                 Kubernetes namespace (default "karmada-system")
   -p, --port int32                                       Karmada apiserver service node port (default 32443)
       --private-image-registry string                    Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.  In addition, you still can use --kube-image-registry to specify the registry for Kubernetes's images.
@@ -98,7 +101,6 @@ karmadactl init
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

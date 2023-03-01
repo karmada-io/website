@@ -51,6 +51,7 @@ karmadactl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER)
       --ignore-errors                      If watching / following pod logs, allow for any errors that occur to be non-fatal
       --insecure-skip-tls-verify-backend   Skip verifying the identity of the kubelet that logs are requested from.  In theory, an attacker could provide invalid log content back. You might want to use this if your kubelet serving certificates have expired.
       --karmada-context string             The name of the kubeconfig context to use
+      --kubeconfig string                  Path to the kubeconfig file to use for CLI requests.
       --limit-bytes int                    Maximum bytes of logs to return. Defaults to no limit.
       --max-log-requests int               Specify maximum number of concurrent logs to follow when using by a selector. Defaults to 5. (default 5)
   -n, --namespace string                   If present, the namespace scope for this CLI request
@@ -69,7 +70,6 @@ karmadactl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER)
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

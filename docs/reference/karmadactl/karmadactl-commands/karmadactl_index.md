@@ -30,7 +30,7 @@ title: Karmadactl Commands
 
  In short, bootstrap tokens are used for establishing bidirectional trust between a client and a server. A bootstrap token can be used when a client (for example a member cluster that is about to join control plane) needs to trust the server it is talking to. Then a bootstrap token with the "signing" usage can be used. bootstrap tokens can also function as a way to allow short-lived authentication to the API Server (the token serves as a way for the API Server to trust the client), for example for doing the TLS Bootstrap.
 
- What is a bootstrap token more exactly? - It is a Secret in the kube-system namespace of type "bootstrap.kubernetes.io/token". - A bootstrap token must be of the form " [a-z0-9]{6}. [a-z0-9]{16}". The former part is the public token ID, while the latter is the Token Secret and it must be kept private at all circumstances! - The name of the Secret must be named "bootstrap-token-(token-id)".
+ What is a bootstrap token more exactly? - It is a Secret in the kube-system namespace of type "bootstrap.kubernetes.io/token". - A bootstrap token must be of the form "[a-z0-9]{6}.[a-z0-9]{16}". The former part is the public token ID, while the latter is the Token Secret and it must be kept private at all circumstances! - The name of the Secret must be named "bootstrap-token-(token-id)".
 
  This command is same as 'kubeadm token', but it will create tokens that are used by member clusters.
 * [karmadactl unjoin](karmadactl_unjoin.md)	 - Remove a cluster from Karmada control plane.
@@ -58,12 +58,14 @@ title: Karmadactl Commands
 
  will first check for an exact match on TYPE and NAME_PREFIX. If no such resource exists, it will output details for every resource that has a name prefixed with NAME_PREFIX.
 * [karmadactl exec](karmadactl_exec.md)	 - Execute a command in a container in a cluster.
-* [karmadactl interpret](karmadactl_interpret.md)	 - Validate and test interpreter customization before applying it to the control plane.
-
-  1. 
- Validate the ResourceInterpreterCustomization configuration as per API schema and try to load the scripts for syntax check.
-  2. 
- Run the rules locally and test if the result is expected. Similar to the dry run.
+* [karmadactl interpret](karmadactl_interpret.md)	 - Validate, test and edit interpreter customization before applying it to the control plane.
+  
+  1. Validate the ResourceInterpreterCustomization configuration as per API schema
+  and try to load the scripts for syntax check.
+  
+  2. Run the rules locally and test if the result is expected. Similar to the dry run.
+  
+  1.  Edit customization. Similar to the kubectl edit.
 * [karmadactl logs](karmadactl_logs.md)	 - Print the logs for a container in a pod in a member cluster or specified resource. If the pod has only one container, the container name is optional.
 
 ## Advanced Commands
@@ -74,7 +76,7 @@ title: Karmadactl Commands
 
  Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.
 
- Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use % [1]s apply --all-clusters'.
+ Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use %[1]s apply --all-clusters'.
 * [karmadactl promote](karmadactl_promote.md)	 - Promote resources from legacy clusters to Karmada control plane. Requires the cluster has been joined or registered.
 
  If the resource already exists in Karmada control plane, please edit PropagationPolicy and OverridePolicy to propagate it.

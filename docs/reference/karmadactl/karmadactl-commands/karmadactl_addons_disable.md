@@ -45,6 +45,7 @@ karmadactl addons disable
   -h, --help                        help for disable
       --karmada-context string      The name of the karmada control plane kubeconfig context to use.
       --karmada-kubeconfig string   Path to the karmada control plane kubeconfig file. (default "/etc/karmada/karmada-apiserver.config")
+      --kubeconfig string           Path to the host cluster kubeconfig file.
   -n, --namespace string            namespace where Karmada components are installed. (default "karmada-system")
 ```
 
@@ -53,7 +54,6 @@ karmadactl addons disable
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
