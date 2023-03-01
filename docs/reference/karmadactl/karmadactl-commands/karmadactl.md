@@ -42,7 +42,7 @@ karmadactl [flags]
 * [karmadactl exec](karmadactl_exec.md)	 - Execute a command in a container in a cluster
 * [karmadactl get](karmadactl_get.md)	 - Display one or many resources
 * [karmadactl init](karmadactl_init.md)	 - Install the Karmada control plane in a Kubernetes cluster
-* [karmadactl interpret](karmadactl_interpret.md)	 - Validate and test interpreter customization before applying it to the control plane
+* [karmadactl interpret](karmadactl_interpret.md)	 - Validate, test and edit interpreter customization before applying it to the control plane
 * [karmadactl join](karmadactl_join.md)	 - Register a cluster to Karmada control plane with Push mode
 * [karmadactl logs](karmadactl_logs.md)	 - Print the logs for a container in a pod in a cluster
 * [karmadactl options](karmadactl_options.md)	 - Print the list of flags inherited by all commands

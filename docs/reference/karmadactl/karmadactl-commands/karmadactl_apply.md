@@ -12,7 +12,7 @@ Apply a configuration to a resource by file name or stdin and propagate them int
 
  Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.
 
- Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use % [1]s apply --all-clusters'.
+ Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use %[1]s apply --all-clusters'.
 
 ```
 karmadactl apply (-f FILENAME | -k DIRECTORY)
@@ -51,13 +51,14 @@ karmadactl apply (-f FILENAME | -k DIRECTORY)
       --grace-period int                Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion). (default -1)
   -h, --help                            help for apply
       --karmada-context string          The name of the kubeconfig context to use
+      --kubeconfig string               Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string                Process a kustomization directory. This flag can't be used together with -f or -R.
   -n, --namespace string                If present, the namespace scope for this CLI request
       --openapi-patch                   If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types. (default true)
   -o, --output string                   Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --overwrite                       Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration (default true)
       --prune                           Automatically delete resource objects, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.
-      --prune-whitelist stringArray     Overwrite the default whitelist with <group/version/kind> for --prune
+      --prune-allowlist stringArray     Overwrite the default allowlist with <group/version/kind> for --prune
   -R, --recursive                       Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
   -l, --selector string                 Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       --server-side                     If true, apply runs in the server instead of the client.
@@ -76,7 +77,6 @@ karmadactl apply (-f FILENAME | -k DIRECTORY)
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

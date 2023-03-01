@@ -24,7 +24,7 @@ karmada-scheduler-estimator [flags]
   -h, --help                             help for karmada-scheduler-estimator
       --kube-api-burst int               Burst to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 30)
       --kube-api-qps float32             QPS to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 20)
-      --kubeconfig string                Path to karmada control plane kubeconfig file.
+      --kubeconfig string                Path to member cluster's kubeconfig file.
       --log_backtrace_at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log_file string                  If non-empty, use this log file (no effect when -logtostderr=true)

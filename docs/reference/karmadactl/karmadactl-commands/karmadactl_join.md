@@ -22,7 +22,7 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ### Options
 
 ```
-      --cluster-context string      Context name of cluster in kubeconfig. Only works when there are multiple contexts in the kubeconfig.
+      --cluster-context string      Name of cluster context in kubeconfig. The current context is used by default.
       --cluster-kubeconfig string   Path of the cluster's kubeconfig.
       --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
       --cluster-provider string     Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
@@ -31,6 +31,7 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
       --dry-run                     Run the command in dry-run mode, without making any server requests.
   -h, --help                        help for join
       --karmada-context string      The name of the kubeconfig context to use
+      --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
 ```
 
 ### Options inherited from parent commands
@@ -38,7 +39,6 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

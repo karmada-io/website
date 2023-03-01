@@ -53,6 +53,7 @@ karmadactl get [NAME | -l label | -n namespace]
   -h, --help                          help for get
       --ignore-not-found              If the requested object does not exist the command will return exit code 0.
       --karmada-context string        The name of the kubeconfig context to use
+      --kubeconfig string             Path to the kubeconfig file to use for CLI requests.
   -L, --label-columns strings         Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...
   -l, --labels string                 -l=label or -l label
   -n, --namespace string              If present, the namespace scope for this CLI request
@@ -73,7 +74,6 @@ karmadactl get [NAME | -l label | -n namespace]
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

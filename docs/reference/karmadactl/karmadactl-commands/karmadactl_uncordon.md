@@ -25,6 +25,7 @@ karmadactl uncordon CLUSTER
       --dry-run                  Run the command in dry-run mode, without making any server requests.
   -h, --help                     help for uncordon
       --karmada-context string   The name of the kubeconfig context to use
+      --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
 ```
 
 ### Options inherited from parent commands
@@ -32,7 +33,6 @@ karmadactl uncordon CLUSTER
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

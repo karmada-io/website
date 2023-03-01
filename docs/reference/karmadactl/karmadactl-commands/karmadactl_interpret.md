@@ -2,16 +2,18 @@
 title: karmadactl interpret
 ---
 
-Validate and test interpreter customization before applying it to the control plane
+Validate, test and edit interpreter customization before applying it to the control plane
 
 ### Synopsis
 
-Validate and test interpreter customization before applying it to the control plane.
-
-  1. 
- Validate the ResourceInterpreterCustomization configuration as per API schema and try to load the scripts for syntax check.
-  2. 
- Run the rules locally and test if the result is expected. Similar to the dry run.
+Validate, test and edit interpreter customization before applying it to the control plane.
+  
+  1. Validate the ResourceInterpreterCustomization configuration as per API schema
+  and try to load the scripts for syntax check.
+  
+  2. Run the rules locally and test if the result is expected. Similar to the dry run.
+  
+  1.  Edit customization. Similar to the kubectl edit.
 
 ```
 karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]... 
@@ -46,21 +48,31 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
   
   # Fetch observed object from url, and status items from stdin (specified with -)
   karmadactl interpret -f customization.yml --operation aggregateStatus --observed-file https://example.com/observed.yml --status-file -
+  
+  # Edit customization
+  karmadactl interpret -f customization.yml --edit
 ```
 
 ### Options
 
 ```
-      --check                    Validates the given ResourceInterpreterCustomization configuration(s)
-      --desired-file string      Filename, directory, or URL to files identifying the resource to use as desiredObj argument in rule script.
-      --desired-replica int32    The desiredReplica argument in rule script.
-  -f, --filename strings         Filename, directory, or URL to files containing the customizations
-  -h, --help                     help for interpret
-      --karmada-context string   The name of the kubeconfig context to use
-      --observed-file string     Filename, directory, or URL to files identifying the resource to use as observedObj argument in rule script.
-      --operation string         The interpret operation to use. One of: (Retain,InterpretReplica,ReviseReplica,InterpretStatus,AggregateStatus,InterpretHealth,InterpretDependency)
-  -R, --recursive                Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
-      --status-file string       Filename, directory, or URL to files identifying the resource to use as statusItems argument in rule script.
+      --allow-missing-template-keys   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats. (default true)
+      --check                         Validates the given ResourceInterpreterCustomization configuration(s)
+      --desired-file string           Filename, directory, or URL to files identifying the resource to use as desiredObj argument in rule script.
+      --desired-replica int32         The desiredReplica argument in rule script.
+      --edit                          Edit customizations
+  -f, --filename strings              Filename, directory, or URL to files containing the customizations
+  -h, --help                          help for interpret
+      --karmada-context string        The name of the kubeconfig context to use
+      --kubeconfig string             Path to the kubeconfig file to use for CLI requests.
+      --observed-file string          Filename, directory, or URL to files identifying the resource to use as observedObj argument in rule script.
+      --operation string              The interpret operation to use. One of: (Retain,InterpretReplica,ReviseReplica,InterpretStatus,AggregateStatus,InterpretHealth,InterpretDependency)
+  -o, --output string                 Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -R, --recursive                     Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+      --show-doc                      Show document of rules when editing
+      --show-managed-fields           If true, keep the managedFields when printing objects in JSON or YAML format.
+      --status-file string            Filename, directory, or URL to files identifying the resource to use as statusItems argument in rule script.
+      --template string               Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
 ```
 
 ### Options inherited from parent commands
@@ -68,7 +80,6 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

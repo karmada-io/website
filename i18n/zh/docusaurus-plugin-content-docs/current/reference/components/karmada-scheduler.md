@@ -37,6 +37,7 @@ karmada-scheduler [flags]
       --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
       --kubeconfig string                           Path to karmada control plane kubeconfig file.
       --leader-elect                                Enable leader election, which must be true when running multi instances. (default true)
+      --leader-elect-resource-name string           The name of resource object that is used for locking during leader election. (default "karmada-scheduler")
       --leader-elect-resource-namespace string      The namespace of resource object that is used for locking during leader election. (default "karmada-system")
       --log_backtrace_at traceLocation              when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                              If non-empty, write log files in this directory (no effect when -logtostderr=true)
@@ -51,6 +52,7 @@ karmada-scheduler [flags]
       --scheduler-estimator-port int                The secure port on which to connect the accurate scheduler estimator. (default 10352)
       --scheduler-estimator-service-prefix string   The prefix of scheduler estimator service name (default "karmada-scheduler-estimator")
       --scheduler-estimator-timeout duration        Specifies the timeout period of calling the scheduler estimator service. (default 3s)
+      --scheduler-name string                       SchedulerName represents the name of the scheduler. default is 'default-scheduler'. (default "default-scheduler")
       --secure-port int                             The secure port on which to serve HTTPS. (default 10351)
       --skip_headers                                If true, avoid header prefixes in the log messages
       --skip_log_headers                            If true, avoid headers when opening log files (no effect when -logtostderr=true)

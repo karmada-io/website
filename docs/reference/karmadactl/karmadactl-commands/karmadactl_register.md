@@ -42,6 +42,7 @@ karmadactl register [karmada-apiserver-endpoint]
   -h, --help                                          help for register
       --karmada-agent-image string                    Karmada agent image. (default "docker.io/karmada/karmada-agent:v0.0.0")
       --karmada-agent-replicas int32                  Karmada agent replicas. (default 1)
+      --kubeconfig string                             Path to the kubeconfig file of member cluster.
   -n, --namespace string                              Namespace the karmada-agent component deployed. (default "karmada-system")
       --token string                                  For token-based discovery, the token used to validate cluster information fetched from the API server.
 ```
@@ -51,7 +52,6 @@ karmadactl register [karmada-apiserver-endpoint]
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

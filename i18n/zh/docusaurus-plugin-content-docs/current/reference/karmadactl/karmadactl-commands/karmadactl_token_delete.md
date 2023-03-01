@@ -8,7 +8,7 @@ Delete bootstrap tokens on the server
 
 This command will delete a list of bootstrap tokens for you.
 
- The [token-value] is the full Token of the form " [a-z0-9]{6}. [a-z0-9]{16}" or the Token ID of the form " [a-z0-9]{6}" to delete.
+ The [token-value] is the full Token of the form "[a-z0-9]{6}.[a-z0-9]{16}" or the Token ID of the form "[a-z0-9]{6}" to delete.
 
 ```
 karmadactl token delete [token-value] ...
@@ -19,6 +19,7 @@ karmadactl token delete [token-value] ...
 ```
   -h, --help                     help for delete
       --karmada-context string   The name of the kubeconfig context to use
+      --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
 ```
 
 ### Options inherited from parent commands
@@ -26,7 +27,6 @@ karmadactl token delete [token-value] ...
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
