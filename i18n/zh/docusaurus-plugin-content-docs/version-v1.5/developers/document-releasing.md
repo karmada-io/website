@@ -21,7 +21,7 @@ Follow these steps to update reference docs.
 
 1. Clone `karmada-io/karmada` and `karmada-io/website` to the local environment. It's recommended to step up these two projects in the same folder.
 
-```text
+```shell
 $ git clone https://github.com/karmada-io/karmada.git
 $ git clone https://github.com/karmada-io/website.git
 
@@ -40,13 +40,13 @@ go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/docs/ref
 go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/karmadactl/karmadactl-commands/
 ```
 
-3. Generate reference docs of each component one by one. Here we take `karmada-apiserver` as an example.
+Generate reference docs of each component one by one. Here we take `karmada-apiserver` as an example.
 
 ```shell
 cd karmada/
 go build ./hack/tools/gencomponentdocs/.
-./gencomponentdocs ../website/docs/reference/components/ karmada-apiserver
-./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ karmada-apiserver
+./hack/tools/gencomponentdocs/gencomponentdocs karmada-apiserver ../website/docs/reference/components/
+./hack/tools/gencomponentdocs/gencomponentdocs karmada-apiserver ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/
 ```
 
 ## Setup release-1.x(manually)
@@ -68,7 +68,7 @@ vim versions.json
 
 ```shell
 mkdir versioned_docs/version-v1.5
-cp docs/* versioned_docs/version-v1.5 -r
+cp docs/* versioned_docs/version-v1.5/*
 ```
 
 3. Update versioned_sidebars
@@ -79,14 +79,14 @@ sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-side
 # update version-v1.5-sidebars.json based on sidebars.js
 ```
 
-4. Update versioned_docs for zh
+3. Update versioned_docs for zh
 
 ```shell
 mkdir i18n/zh/docusaurus-plugin-content-docs/version-v1.5
-cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5 -r
+cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5/*
 ```
 
-5. Update versioned_sidebars for zh
+4. Update versioned_sidebars for zh
 
 ```shell
 cp i18n/zh/docusaurus-plugin-content-docs/current.json i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
