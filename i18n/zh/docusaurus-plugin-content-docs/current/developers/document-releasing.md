@@ -58,39 +58,39 @@ cd website/
 vim versions.json
 
 [
-  v1.5.0  # add a new version tag
-  v1.4.0
-  v1.3.0
+  v1.5  # add a new version tag
+  v1.4
+  v1.3
 ]
 ```
 
 2. Update versioned_docs
 
 ```shell
-mkdir versioned_docs/version-v1.5.0
-cp docs/* versioned_docs/version-v1.5.0 -r
+mkdir versioned_docs/version-v1.5
+cp docs/* versioned_docs/version-v1.5 -r
 ```
 
 3. Update versioned_sidebars
 
 ```shell
-cp versioned_sidebars/version-v1.4.0-sidebars.json versioned_sidebars/version-v1.5.0-sidebars.json
-sed -i'' -e "s/version-v1.4.0/version-v1.5.0/g" versioned_sidebars/version-v1.5.0-sidebars.json
-# update version-v1.5.0-sidebars.json based on sidebars.js
+cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5-sidebars.json
+sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-sidebars.json
+# update version-v1.5-sidebars.json based on sidebars.js
 ```
 
 4. Update versioned_docs for zh
 
 ```shell
-mkdir i18n/zh/docusaurus-plugin-content-docs/version-v1.5.0
-cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5.0 -r
+mkdir i18n/zh/docusaurus-plugin-content-docs/version-v1.5
+cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5 -r
 ```
 
 5. Update versioned_sidebars for zh
 
 ```shell
-cp i18n/zh/docusaurus-plugin-content-docs/current.json i18n/zh/docusaurus-plugin-content-docs/version-v1.5.0.json
-sed -i'' -e "s/Next/v1.5.0/g" i18n/zh/docusaurus-plugin-content-docs/version-v1.5.0.json
+cp i18n/zh/docusaurus-plugin-content-docs/current.json i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
+sed -i'' -e "s/Next/v1.5/g" i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
 ```
 
 ## Check the difference of website and send a pull request(manually)
