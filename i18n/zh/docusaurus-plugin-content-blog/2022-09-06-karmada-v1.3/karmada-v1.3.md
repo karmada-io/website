@@ -25,8 +25,8 @@ Karmada是开放的多云多集群容器编排引擎，旨在帮助用户在多�
 
 此处，无论故障判定还是驱逐，用户都可以参过参数来控制：
 - `--failover-eviction-timeout`，指定从调度结果中删除故障集群的宽限期，默认5分钟
-- `--default-not-ready-toleration-seconds`，指定默认情况下添加到尚未具有`notReady:NoExecute`容忍的传播策略上的容忍时间，默认600秒
-- `--default-unreachable-toleration-seconds`，指定默认情况下添加到尚未具有`unreachable:NoExecute`容忍的传播策略上的容忍时间，默认600秒
+- `--default-not-ready-toleration-seconds`，指定默认情况下添加到尚未具有`notReady:NoExecute`容忍的传播策略上的容忍时间，默认300秒
+- `--default-unreachable-toleration-seconds`，指定默认情况下添加到尚未具有`unreachable:NoExecute`容忍的传播策略上的容忍时间，默认300秒
 - `--graceful-eviction-timeout`，指定自工作负载已移动到优雅驱逐任务以来，等待优雅驱逐控制器执行最终删除的超时时间，默认时长10分钟
 
 ### 跨多群集资源的全局代理

@@ -54,15 +54,15 @@ spec:
     - effect: NoExecute
       key: cluster.karmada.io/not-ready
       operator: Exists
-      tolerationSeconds: 600
+      tolerationSeconds: 300
     - effect: NoExecute
       key: cluster.karmada.io/unreachable
       operator: Exists
-      tolerationSeconds: 600
+      tolerationSeconds: 300
   ...
 ```
 
-其中，容忍的`tolerationSeconds`值可以通过`--default-not-ready-toleration-seconds`与`default-unreachable-toleration-seconds`标签进行配置，这两个标签的默认值均为600。
+其中，容忍的`tolerationSeconds`值可以通过`--default-not-ready-toleration-seconds`与`default-unreachable-toleration-seconds`标签进行配置，这两个标签的默认值均为300。
 
 ## 故障迁移
 

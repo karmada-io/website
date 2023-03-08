@@ -145,11 +145,11 @@ spec:
     - effect: NoExecute
       key: cluster.karmada.io/not-ready
       operator: Exists
-      tolerationSeconds: 600
+      tolerationSeconds: 300
     - effect: NoExecute
       key: cluster.karmada.io/unreachable
       operator: Exists
-      tolerationSeconds: 600
+      tolerationSeconds: 300
   resourceSelectors:
   - apiVersion: apps/v1
     kind: Deployment
@@ -157,7 +157,7 @@ spec:
     namespace: default
 ```
 
-The `tolerationSeconds` can be configured via `--default-not-ready-toleration-seconds` flag(default is 600) and `default-unreachable-toleration-seconds` flag(default is 600).
+The `tolerationSeconds` can be configured via `--default-not-ready-toleration-seconds` flag(default is 300) and `default-unreachable-toleration-seconds` flag(default is 300).
 
 ### Failover
 
