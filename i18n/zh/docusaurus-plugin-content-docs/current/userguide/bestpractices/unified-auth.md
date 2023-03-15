@@ -72,10 +72,24 @@ kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver appl
 
 ### Step3: Access member1 cluster
 
+Manually create a long-lived api token for the serviceaccount `tom`:
+
+```shell
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tom
+  annotations:
+    kubernetes.io/service-account.name: tom
+type: kubernetes.io/service-account-token
+EOF
+```
+
 Obtain token of serviceaccount `tom`:
 
 ```shell
-kubectl get secret `kubectl get sa tom -oyaml | grep token | awk '{print $3}'` -oyaml | grep token: | awk '{print $2}' | base64 -d
+kubectl get secret tom -oyaml | grep token: | awk '{print $2}' | base64 -d
 ```
 
 Then construct a kubeconfig file `tom.config` for `tom` serviceaccount:
