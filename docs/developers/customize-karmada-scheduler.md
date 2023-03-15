@@ -75,7 +75,7 @@ type TestFilter struct{}
 
 var _ framework.FilterPlugin = &TestFilter{}
 
-// New instantiates the APIEnablement plugin.
+// New instantiates the TestFilter plugin.
 func New() (framework.Plugin, error) {
 	return &TestFilter{}, nil
 }
@@ -85,9 +85,9 @@ func (p *TestFilter) Name() string {
 	return Name
 }
 
-// Filter checks if the API(CRD) of the resource is enabled or installed in the target cluster.
-func (p *TestFilter) Filter(ctx context.Context, placement *policyv1alpha1.Placement,
-	bindingSpec *workv1alpha2.ResourceBindingSpec, cluster *clusterv1alpha1.Cluster) *framework.Result {
+// Filter implements the filtering logic of the TestFilter plugin.
+func (p *TestFilter) Filter(ctx context.Context,
+	bindingSpec *workv1alpha2.ResourceBindingSpec, bindingStatus *workv1alpha2.ResourceBindingStatus, cluster *clusterv1alpha1.Cluster) *framework.Result {
 
 	// implementation
 
