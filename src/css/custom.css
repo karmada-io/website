@@ -123,11 +123,15 @@ article header h1 {
 .support-wrapper li {
   margin: 5px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 48px;
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
 }
 
 .support-wrapper img {
-  max-width: 140px;
   padding: 10px;
 }
 
