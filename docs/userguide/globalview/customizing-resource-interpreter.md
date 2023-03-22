@@ -118,6 +118,7 @@ Supported resources:
 - Ingress(networking.k8s.io/v1)
 - PersistentVolumeClaim(v1)
 - PodDisruptionBudget(policy/v1)
+- Pod(v1)
 
 ## Customized Interpreter
 

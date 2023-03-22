@@ -102,6 +102,7 @@ title: 自定义资源解释器
 - Ingress(networking.k8s.io/v1)
 - PersistentVolumeClaim(v1)
 - PodDisruptionBudget(policy/v1)
+- Pod(v1)
 
 ## 自定义解释器
 
