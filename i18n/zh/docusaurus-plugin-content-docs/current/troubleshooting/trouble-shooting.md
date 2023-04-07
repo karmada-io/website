@@ -19,6 +19,7 @@ title: 故障定位
   ```shell
   export GOPROXY=https://goproxy.cn
   ```
+
 ## 成员集群健康检查不工作
 如果你的环境与下面类似。
 >
@@ -74,3 +75,11 @@ sysctl -w fs.inotify.max_user_instances=100000
 ```
 
 相关Issue：https://github.com/kubernetes-sigs/kind/issues/2928
+
+## 部署在 Karmada 控制面上的 ServiceAccount 无法生成 token Secret
+
+Kubernetes 社区为了提高 token 使用的安全性和可扩展性，提出了[KEP-1205](https://github.com/kubernetes/enhancements/tree/master/keps/sig-auth/1205-bound-service-account-tokens)，该提案旨在引入一种新的机制来使用 ServiceAccount token，而不是直接将 ServiceAccount 生成的 Secret 挂载到 Pod 中，具体方式见[ServiceAccount automation](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#service-account-automation)。这个特性名为`BoundServiceAccountTokenVolume`，在 Kubernetes 1.22 版本中已经 GA。
+
+随着`BoundServiceAccountTokenVolume`特性的GA，Kubernetes 社区认为已经没必要为 ServiceAccount 自动生成 token 了，因为这样并不安全，于是又提出了[KEP-2799](https://github.com/kubernetes/enhancements/tree/master/keps/sig-auth/2799-reduction-of-secret-based-service-account-token)，这个 KEP 的一个目的是不再为 ServiceAccount 自动生成 token Secret，另外一个目的是要清除未被使用的 ServiceAccount 产生的 token Secret。
+
+对于第一个目的，社区提供了`LegacyServiceAccountTokenNoAutoGeneration`特性开关，该特性开关在 Kubernetes 1.24 版本中已进入 Beta 阶段，这也正是 Karmada 控制面无法生成 token Secret 的原因。当然了，如果用户仍想使用之前的方式，为 ServiceAccount 生成 Secret，可以参考[此处](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-an-api-token-for-a-serviceaccount)进行操作。
