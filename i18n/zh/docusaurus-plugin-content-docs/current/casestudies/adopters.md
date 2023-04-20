@@ -16,7 +16,7 @@ title: Karmada 生产案例汇总
 | ---------------- | ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | 道客网络科技     | https://www.daocloud.io/      | 使用 Karmada 构建更灵活、更有弹性的混合多云平台              | [DaoCloud结合Karmada打造新一代企业级多云平台](daocloud.md)   |
 | 华为             | https://www.huaweicloud.com/  | 构建华为云分布式云原生产品 [UCS](https://www.huaweicloud.com/product/ucs.html) 为企业提供云原生业务部署、管理、应用生态的全域一致性体验 | 待定                                                         |
-| 家家悦集团       | http://www.jiajiayue.com.cn   | 基于 Karmada 设计跨云、跨地域、跨可用区的备份容灾解决方案    | 待定                                                         |
+| 家家悦集团       | http://www.jiajiayue.com.cn      | 使用 Karmada 构建基于多云、多地域、多区域集群的统一应用管理平台，实现应用的高可用性和容灾。    | 待定                                                         |
 | 飓风引擎         | https://orang.cloud/          | [零壤](https://orang.cloud/) `低代码平台`支持用户零代码快速构建自已的应用，并通过Karmada来一键发布到任意云平台 | [艾莫尔研究院基于 Karmada 的落地实践](ci123.md)              |
 | 马蜂窝           | https://www.mafengwo.cn/      | 使用 karmada 管理多集群，解决 DevOPS 场景下部署资源的分发    | 待定                                                         |
 | Neen S.p.A       | https://www.neen.it/          | 使用 Karmada 管理多 region 集群中的故障切换                  | TBD                                                          |
