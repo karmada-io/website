@@ -51,3 +51,4 @@ Here are some recommended next steps:
 - Learn Karmada's [core concepts](./concepts.md).
 - Learn Karmada's [architecture](./architecture.md).
 - Start to [install Karmada](../installation/installation.md).
+- Get started with [interactive tutorials](https://killercoda.com/karmada/)
