@@ -137,22 +137,9 @@ spec:
         end
     dependencyInterpretation:
       luaScript: >
+        local kube = require("kube")
         function GetDependencies(desiredObj)
-          dependentSas = {}
-          refs = {}
-          if desiredObj.spec.template.spec.serviceAccountName ~= '' and desiredObj.spec.template.spec.serviceAccountName ~= 'default' then
-            dependentSas[desiredObj.spec.template.spec.serviceAccountName] = true
-          end
-          local idx = 1
-          for key, value in pairs(dependentSas) do
-            dependObj = {}
-            dependObj.apiVersion = 'v1'
-            dependObj.kind = 'ServiceAccount'
-            dependObj.name = key
-            dependObj.namespace = desiredObj.metadata.namespace
-            refs[idx] = dependObj
-            idx = idx + 1
-          end
+          refs = kube.getPodDependencies(desiredObj.spec.template, desiredObj.metadata.namespace)
           return refs
         end
 ```
@@ -200,6 +187,12 @@ karmadactl interpret -f resourceinterpretercustomization.yaml --observed-file ob
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --desired-file desired-deploy-nginx.yaml --observed-file observed-deploy-nginx.yaml --operation Retain
+```
+
+#### Execute the ReviseReplica rule
+
+```shell
+karmadactl interpret -f resourceinterpretercustomization.yaml --desired-replica 3 --observed-file observed-deploy-nginx.yaml --operation ReviseReplica
 ```
 
 #### Execute the InterpretStatus rule
