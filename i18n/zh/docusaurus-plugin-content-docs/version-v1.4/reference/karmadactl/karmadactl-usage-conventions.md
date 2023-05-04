@@ -1,12 +1,12 @@
 ---
-title: Karmadactl Usage Conventions
+title: Karmadactl用法约定
 ---
 
-Recommended usage conventions for `karmadactl`.
+`karmadactl`推荐用法约定。
 
 ## karmadactl interpret
 
-### Preparation for YAML file
+### YAML文件准备
 
 <details>
 <summary>observed-deploy-nginx.yaml</summary>
@@ -176,45 +176,51 @@ status:
 ```
 </details>
 
-## Validate the ResourceInterpreterCustomization configuration
+## 验证 ResourceInterpreterCustomization 资源配置
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --check
 ```
 
-## Execute the ResourceInterpreterCustomization with operation
+## 执行 ResourceInterpreterCustomization 特性操作
 
-### Execute the InterpretReplica rule
+### 执行 InterpretReplica 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --observed-file observed-deploy-nginx.yaml --operation=InterpretReplica
 ```
 
-### Execute the Retain rule
+### 执行 Retain 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --desired-file desired-deploy-nginx.yaml --observed-file observed-deploy-nginx.yaml --operation Retain
 ```
 
-### Execute the InterpretStatus rule
+### 执行 ReviseReplica 规则
+
+```shell
+karmadactl interpret -f resourceinterpretercustomization.yaml --desired-replica 3 --observed-file observed-deploy-nginx.yaml --operation ReviseReplica
+```
+
+### 执行 InterpretStatus 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --observed-file observed-deploy-nginx.yaml --operation InterpretStatus
 ```
 
-### Execute the InterpretHealth rule
+### 执行 InterpretHealth 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --observed-file observed-deploy-nginx.yaml --operation InterpretHealth
 ```
 
-### Execute the InterpretDependency rule
+### 执行 InterpretDependency 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --desired-file desired-deploy-nginx.yaml --operation InterpretDependency
 ```
 
-### Execute the AggregateStatus rule
+### 执行 AggregateStatus 规则
 
 ```shell
 karmadactl interpret -f resourceinterpretercustomization.yaml --desired-file desired-deploy-nginx.yaml --operation AggregateStatus --status-file status-file.yaml

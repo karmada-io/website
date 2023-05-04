@@ -105,7 +105,7 @@ More details please refer to:
 - [service account token controller](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#token-controller)
 - [service account tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens)
 
-### Optinal Controllers
+### Optional Controllers
 
 #### ttl-after-finished
 

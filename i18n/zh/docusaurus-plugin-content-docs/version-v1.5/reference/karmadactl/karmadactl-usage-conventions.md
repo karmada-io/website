@@ -202,6 +202,12 @@ karmadactl interpret -f resourceinterpretercustomization.yaml --observed-file ob
 karmadactl interpret -f resourceinterpretercustomization.yaml --desired-file desired-deploy-nginx.yaml --observed-file observed-deploy-nginx.yaml --operation Retain
 ```
 
+#### 执行 ReviseReplica 规则
+
+```shell
+karmadactl interpret -f resourceinterpretercustomization.yaml --desired-replica 3 --observed-file observed-deploy-nginx.yaml --operation ReviseReplica
+```
+
 #### 执行 InterpretStatus 规则
 
 ```shell
