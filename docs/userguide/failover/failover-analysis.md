@@ -77,8 +77,9 @@ There are several constraints:
 - The application distributed on the ready clusters after the initial scheduling will remain when failover schedule.
 
 ### Duplicated schedule type
+
 For `Duplicated` schedule policy, when the number of candidate clusters that meet the PropagationPolicy restriction is not less than the number of failed clusters,
-it will be rescheduled to candidate clusters according to the number of failed clusters. Otherwise, no rescheduling.
+it will be rescheduled to candidate clusters according to the number of failed clusters. Otherwise, no rescheduling. The candidate cluster refers to the newly calculated cluster scheduling result in this scheduling process, which is different from the scheduled cluster in the last scheduling result.
 
 Take `Deployment` as example:
 
