@@ -172,7 +172,7 @@ You can config the plugin enablement by setting the flag `--plugins`.
 For example, the following config will disable `TestFilter` plugin.
 
 ```shell
-kubectl kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
 ...
  spec:
       automountServiceAccountToken: false

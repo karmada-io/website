@@ -170,7 +170,7 @@ I0105 09:50:11.813596       1 registry.go:63] Enable Scheduler plugin "ClusterAf
 例如，以下的配置将会关闭`TestFilter`插件。
 
 ```shell
-kubectl kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
 ...
  spec:
       automountServiceAccountToken: false
