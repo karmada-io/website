@@ -15,14 +15,14 @@ ErieCanal 是一个 MCS（多集群服务 [Multi-Cluster Service](https://github
 
 ErieCanal 会运行在控制面集群和成员集群上，接受集群注册的成为 ErieCanal 的控制面集群。ErieCanal 是独立的组件，无需运行在 Karmada 控制面上。前者负责多集群服务的注册发现，后者负责多集群的资源调度。
 
-![](../../resource/userguide/service/eriecanal/karmada-working-with-eriecanal-overview.png)
+![](../../resources/userguide/service/eriecanal/karmada-working-with-eriecanal-overview.png)
 
 完成服务的跨集群注册发现之后，在处理应用的访问（curl -> httpbin）时要完成流量的自动调度，这里有两种方案：
 
 - 集成服务网格 [osm-edge](https://flomesh.io/osm-edge/) 根据策略实现流量的调度，除了从 Kubernetes Service 获取服务的访问信息外，还会同多集群资源的 ServiceImport 中获取服务信息。
 - 使用 ErieCanal 中的组件 ErieCanalNet（该特性即将发布），通过 eBPF+sidecar（Node level）来实现流量的跨集群管理。
 
-下面是演示的全部流程，大家也可以使用我们提供的 [脚本 flomesh.sh](../../resource/userguide/service/eriecanal/flomesh.sh) 完成自动化地演示。使用脚本的前提，**系统需要已经安装 Docker 和 kubectl，并至少 8G 内存**。脚本的使用方式：
+下面是演示的全部流程，大家也可以使用我们提供的 [脚本 flomesh.sh](../../resources/userguide/service/eriecanal/flomesh.sh) 完成自动化地演示。使用脚本的前提，**系统需要已经安装 Docker 和 kubectl，并至少 8G 内存**。脚本的使用方式：
 
 - `flomesh.sh` - 不提供任何参数，脚本会创建 4 个集群、完成环境搭建（安装 Karmada、ErieCanal、osm-edge），并运行示例。
 - `flomesh.sh -h` - 查看参数的说明
