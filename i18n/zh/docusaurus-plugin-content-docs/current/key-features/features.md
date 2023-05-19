@@ -101,6 +101,8 @@ Karmada支持：
   * 使用ServiceExport和ServiceImport，实现跨集群的服务发现。
 * [多集群网络支持](https://karmada.io/zh/docs/userguide/network/working-with-submariner) ：
   * 使用`Submariner`打通集群间容器网络。
+* [使用 ErieCanal 实现跨集群的服务发现和故障迁移](https://karmada.io/docs/userguide/service/working-with-eriecanal)
+  * 与 `ErieCanal` 集成支持跨集群的服务发现和故障迁移。
 
 用户可以使用Karmada，开启跨集群服务治理：
 
