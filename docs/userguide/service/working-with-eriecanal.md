@@ -257,19 +257,6 @@ spec:
       clusterNames:
         - cluster-1
         - cluster-3
-    replicaScheduling:
-      replicaDivisionPreference: Weighted
-      replicaSchedulingType: Divided
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - cluster-1
-            weight: 20
-          - targetCluster:
-              clusterNames:
-                - cluster-3
-            weight: 20
 EOF
 ```
 
@@ -392,15 +379,6 @@ spec:
     clusterAffinity:
       clusterNames:
         - cluster-2
-    replicaScheduling:
-      replicaDivisionPreference: Weighted
-      replicaSchedulingType: Divided
-      weightPreference:
-        staticWeightList:
-          - targetCluster:
-              clusterNames:
-                - cluster-2
-            weight: 10
 EOF
 ```
 
