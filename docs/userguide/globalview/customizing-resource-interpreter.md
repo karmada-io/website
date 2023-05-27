@@ -126,6 +126,110 @@ The customized interpreter is implemented and maintained by users, it can be ext
 
 > Note: Decalrative configuration has a higher priority than webhook.
 
+### Built-in Resource Declarative Configuration
+
+Karmada bundles some popular and open-sourced resources so that users can save the effort to customize them. The configurable interpreter now supports following interpreter operations:
+
+#### InterpretReplica
+
+Supported resources:
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- Workflow(argoproj.io/v1alpha1)
+
+#### ReviseReplica
+
+Supported resources:
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- Workflow(argoproj.io/v1alpha1)
+
+#### Retain
+
+Supported resources:
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- Workflow(argoproj.io/v1alpha1)
+- HelmRelease(helm.toolkit.fluxcd.io/v2beta1)
+- Kustomization(kustomize.toolkit.fluxcd.io/v1)
+- GitRepository(source.toolkit.fluxcd.io/v1)
+- Bucket(source.toolkit.fluxcd.io/v1beta2)
+- HelmChart(source.toolkit.fluxcd.io/v1beta2)
+- HelmRepository(source.toolkit.fluxcd.io/v1beta2)
+- OCIRepository(source.toolkit.fluxcd.io/v1beta2)
+
+#### AggregateStatus
+
+Supported resources:
+- AdvancedCronJob(apps.kruise.io/v1alpha1)
+- AdvancedDaemonSet(apps.kruise.io/v1alpha1)
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- HelmRelease(helm.toolkit.fluxcd.io/v2beta1)
+- Kustomization(kustomize.toolkit.fluxcd.io/v1)
+- ClusterPolicy(kyverno.io/v1)
+- Policy(kyverno.io/v1)
+- GitRepository(source.toolkit.fluxcd.io/v1)
+- Bucket(source.toolkit.fluxcd.io/v1beta2)
+- HelmChart(source.toolkit.fluxcd.io/v1beta2)
+- HelmRepository(source.toolkit.fluxcd.io/v1beta2)
+- OCIRepository(source.toolkit.fluxcd.io/v1beta2)
+
+#### InterpretStatus
+
+Supported resources:
+- AdvancedDaemonSet(apps.kruise.io/v1alpha1)
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- HelmRelease(helm.toolkit.fluxcd.io/v2beta1)
+- Kustomization(kustomize.toolkit.fluxcd.io/v1)
+- ClusterPolicy(kyverno.io/v1)
+- Policy(kyverno.io/v1)
+- GitRepository(source.toolkit.fluxcd.io/v1)
+- Bucket(source.toolkit.fluxcd.io/v1beta2)
+- HelmChart(source.toolkit.fluxcd.io/v1beta2)
+- HelmRepository(source.toolkit.fluxcd.io/v1beta2)
+- OCIRepository(source.toolkit.fluxcd.io/v1beta2)
+
+#### InterpretDependency
+
+Supported resources:
+- AdvancedCronJob(apps.kruise.io/v1alpha1)
+- AdvancedDaemonSet(apps.kruise.io/v1alpha1)
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- Workflow(argoproj.io/v1alpha1)
+- HelmRelease(helm.toolkit.fluxcd.io/v2beta1)
+- Kustomization(kustomize.toolkit.fluxcd.io/v1)
+- GitRepository(source.toolkit.fluxcd.io/v1)
+- Bucket(source.toolkit.fluxcd.io/v1beta2)
+- HelmChart(source.toolkit.fluxcd.io/v1beta2)
+- HelmRepository(source.toolkit.fluxcd.io/v1beta2)
+- OCIRepository(source.toolkit.fluxcd.io/v1beta2)
+
+#### InterpretHealth
+
+Supported resources:
+- AdvancedCronJob(apps.kruise.io/v1alpha1)
+- AdvancedDaemonSet(apps.kruise.io/v1alpha1)
+- BroadcastJob(apps.kruise.io/v1alpha1)
+- CloneSet(apps.kruise.io/v1alpha1)
+- AdvancedStatefulSet(apps.kruise.io/v1beta1)
+- Workflow(argoproj.io/v1alpha1)
+- HelmRelease(helm.toolkit.fluxcd.io/v2beta1)
+- Kustomization(kustomize.toolkit.fluxcd.io/v1)
+- ClusterPolicy(kyverno.io/v1)
+- Policy(kyverno.io/v1)
+- GitRepository(source.toolkit.fluxcd.io/v1)
+- Bucket(source.toolkit.fluxcd.io/v1beta2)
+- HelmChart(source.toolkit.fluxcd.io/v1beta2)
+- HelmRepository(source.toolkit.fluxcd.io/v1beta2)
+- OCIRepository(source.toolkit.fluxcd.io/v1beta2)
+
 ### Declarative Configuration
 
 #### What are interpreter declarative configuration?
@@ -275,6 +379,166 @@ webhooks:
 You can config more than one webhook in a `ResourceInterpreterWebhookConfiguration`, each webhook
 serves at least one operation.
 
+### Write the ResourceInterpreterCustomization
+
+You can learn how to write the `ResourceInterpreterCustomization` to customize your resource.
+
+First, we introduce the kube library functions. Then, we introduce how to write `ResourceInterpreterCustomization` using `kyverno.io/v1/ClusterPolicy` as an [example][9].
+
+#### build-in functions of luavm
+
+The rules declared in the [ResourceInterpreterCustomization][4] API specification define `interpreter operations`. These operations are written by lua and called via luavm. Users can use luavm's built-in functions when writing `interpreter operations`.
+
+In [kubeLibrary][10], there are two functions that are useful for writing interpreter operations. `accuratePodRequirements` is useful to write `ReplicaResource` operation and `getPodDependencies`is useful to write `DependencyInterpretation` operation.
+
+The `accuratePodRequirements` function accurates total resource requirements for pod. Its argument is `PodTemplateSpec` and its return value is `ReplicaRequirements`. `PodTemplateSpec` describes the data a pod should have when created from a template, and `ReplicaRequirements` represents the requirements required by each replica.
+
+The `getPodDependencies` function gets total dependencies from podTemplate and namespace. Its arguments are `PodTemplateSpec` and `namespace`. Its return value is `dependencies`. `PodTemplateSpec` describes the data a pod should have when created from a template. `namespace` is the namespace of customized resource. And `dependencies` are the resources on which the customized resources depend.
+
+#### ReplicaResource
+
+[ReplicaResource][11] describes the rules for Karmada to discover the resource's replica as well as resource requirements. It would be useful for those CRD resources that declare workload types like Deployment.
+
+A Kyverno `ClusterPolicy` is a collection of rules, which doesn't have fields like `.spec.replicas` or `.spec.template.spec.nodeSelector`. So there is no need to implement `ReplicaResource` for `ClusterPolicy`.
+
+#### ReplicaRevision
+
+[ReplicaRevision][12] describes the rules for Karmada to revise the resource's replica. It would be useful for those CRD resources that declare workload types like Deployment.
+
+A Kyverno `ClusterPolicy` is a collection of rules, which doesn't have field like `.spec.replicas`. So there is no need to implement `ReplicaRevision` for `ClusterPolicy`.
+
+#### Retention
+
+[Retention][13] describes the desired behavior that Karmada should react on the changes made by member cluster components. This avoids system running into a meaningless loop that Karmada resource controller and the member cluster component continually applying opposite values of a field.
+
+A Kyverno `ClusterPolicy` is a collection of rules, which is usually not changed by member cluster components. So there is no need to implement `Retention` for `ClusterPolicy`.
+
+#### StatusAggregation
+
+[StatusAggregation][14] describes the rules for Karmada to aggregate status collected from member clusters to resource template.
+
+A Kyverno `ClusterPolicy` is a collection of rules. Here we define the status aggregation rules for `ClusterPolicy`.
+
+<details>
+<summary>StatusAggregation-Defined-In-ResourceInterpreterCustomization</summary>
+
+```yaml
+statusAggregation:
+  luaScript: >
+    function AggregateStatus(desiredObj, statusItems)
+      if statusItems == nil then
+        return desiredObj
+      end
+      desiredObj.status = {}
+      desiredObj.status.conditions = {}
+      rulecount = {}
+      rulecount.validate = 0
+      rulecount.generate = 0
+      rulecount.mutate = 0
+      rulecount.verifyimages = 0
+      conditions = {}
+      local conditionsIndex = 1
+      for i = 1, #statusItems do
+        if statusItems[i].status ~= nil and statusItems[i].status.autogen ~= nil then
+          desiredObj.status.autogen = statusItems[i].status.autogen
+        end
+        if statusItems[i].status ~= nil and statusItems[i].status.ready ~= nil then
+          desiredObj.status.ready = statusItems[i].status.ready
+        end                        
+        if statusItems[i].status ~= nil and statusItems[i].status.rulecount ~= nil then
+          rulecount.validate = rulecount.validate + statusItems[i].status.rulecount.validate
+          rulecount.generate = rulecount.generate + statusItems[i].status.rulecount.generate
+          rulecount.mutate = rulecount.mutate + statusItems[i].status.rulecount.mutate
+          rulecount.verifyimages = rulecount.verifyimages + statusItems[i].status.rulecount.verifyimages
+        end
+        if statusItems[i].status ~= nil and statusItems[i].status.conditions ~= nil then
+          for conditionIndex = 1, #statusItems[i].status.conditions do
+            statusItems[i].status.conditions[conditionIndex].message = statusItems[i].clusterName..'='..statusItems[i].status.conditions[conditionIndex].message
+            hasCondition = false
+            for index = 1, #conditions do
+              if conditions[index].type == statusItems[i].status.conditions[conditionIndex].type and conditions[index].status == statusItems[i].status.conditions[conditionIndex].status and conditions[index].reason == statusItems[i].status.conditions[conditionIndex].reason then
+                conditions[index].message = conditions[index].message..', '..statusItems[i].status.conditions[conditionIndex].message
+                hasCondition = true
+                break
+              end
+            end
+            if not hasCondition then
+              conditions[conditionsIndex] = statusItems[i].status.conditions[conditionIndex]
+              conditionsIndex = conditionsIndex + 1                  
+            end
+          end
+        end
+      end
+      desiredObj.status.rulecount = rulecount
+      desiredObj.status.conditions = conditions
+      return desiredObj
+    end
+```
+
+</details>
+
+#### StatusReflection
+
+[StatusReflection][15] describes the rules for Karmada to pick the resource's status.
+
+A Kyverno `ClusterPolicy` is a collection of rules, whose `.status` contains policy runtime data. `StatusReflection` determines which fields Karmada collect from the member clusters. Here we pick some fields from resouce in member cluster.
+
+<details>
+<summary>StatusReflection-Defined-In-ResourceInterpreterCustomization</summary>
+
+```yaml
+statusReflection:
+  luaScript: >
+    function ReflectStatus (observedObj)
+      status = {}
+      if observedObj == nil or observedObj.status == nil then 
+        return status
+      end
+      status.ready = observedObj.status.ready
+      status.conditions = observedObj.status.conditions
+      status.autogen = observedObj.status.autogen
+      status.rulecount = observedObj.status.rulecount
+      return status
+    end
+```
+
+</details>
+
+#### HealthInterpretation
+
+[HealthInterpretation][16] describes the health assessment rules by which Karmada can assess the health state of the resource type.
+
+A Kyverno `ClusterPolicy` is a collection of rules. We determine whether the `ClusterPolicy` in member cluster is healthy by defining the health assessment rules.
+
+<details>
+<summary>HealthInterpretation-Defined-In-ResourceInterpreterCustomization</summary>
+
+```yaml
+healthInterpretation:
+  luaScript: >
+    function InterpretHealth(observedObj)
+      if observedObj.status ~= nil and observedObj.status.ready ~= nil then
+        return observedObj.status.ready
+      end
+      if observedObj.status ~= nil and observedObj.status.conditions ~= nil then
+        for conditionIndex = 1, #observedObj.status.conditions do
+          if observedObj.status.conditions[conditionIndex].type == 'Ready' and observedObj.status.conditions[conditionIndex].status == 'True' and observedObj.status.conditions[conditionIndex].reason == 'Succeeded' then
+            return true
+          end
+        end
+      end
+      return false
+    end
+```
+
+</details>
+
+#### DependencyInterpretation
+
+[DependencyInterpretation][17] describes the rules for Karmada to analyze the dependent resources.
+
+A Kyverno `ClusterPolicy` is a collection of rules, which doesn't depend on other resources. So there is no need to implement `DependencyInterpretation` for `ClusterPolicy`.
+
 [1]: https://github.com/karmada-io/karmada/tree/master/docs/proposals/resource-interpreter-webhook
 [2]: https://github.com/karmada-io/karmada/blob/84b971a501ba82c53a5ad455c2fe84d842cd7d4e/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L85-L119
 [3]: https://github.com/karmada-io/karmada/issues/new?assignees=&labels=kind%2Ffeature&template=enhancement.md
@@ -283,3 +547,12 @@ serves at least one operation.
 [6]: https://github.com/karmada-io/karmada/tree/master/examples/customresourceinterpreter
 [7]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpreterwebhook_types.go#L16
 [8]: ../../reference/karmadactl/karmadactl-usage-conventions.md#karmadactl-interpret
+[9]: https://github.com/karmada-io/karmada/blob/master/pkg/resourceinterpreter/default/thirdparty/resourcecustomizations/kyverno.io/v1/ClusterPolicy/customizations.yaml
+[10]: https://github.com/karmada-io/karmada/blob/master/pkg/resourceinterpreter/customized/declarative/luavm/kube.go#L16-L33
+[11]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L60-L68
+[12]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L70-L77
+[13]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L50-L58
+[14]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L86-L92
+[15]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L79-L84
+[16]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L94-L97
+[17]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L99-L105
