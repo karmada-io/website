@@ -72,6 +72,7 @@ module.exports = {
                         "userguide/failover/failover-overview",
                         "userguide/failover/determine-cluster-failures",
                         "userguide/failover/failover-analysis",
+                        "userguide/failover/application-failover",
                     ],
                 },
                 {
