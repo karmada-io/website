@@ -74,7 +74,7 @@ Repeat this step to unjoin any additional clusters.
 `karmadactl register` is used to register member clusters to the Karmada control plane with PULL mode. 
 Be different from the `karmadactl join` which registers a cluster with `Push` mode, `karmadactl register` registers a cluster to Karmada control plane with `Pull` mode.
 
-> Note: currently it only supports the Karmada control plane that was installed by `karmadactl init`.
+> Note: it needs to configure `kube-public/cluster-info` ConfigMap in Karmada control plane to specify a `server` that has been signed by root CA and can be accessed by member clusters.
 
 #### Create bootstrap token in Karmada control plane
 
