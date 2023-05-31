@@ -271,6 +271,67 @@ spec:
     #...
 ```
 
+## Multiple cluster affinity groups
+
+Users can set the ClusterAffinities field and declare multiple cluster groups in PropagationPolicy. The scheduler will evaluate these groups one by one in the order they appear in the spec, the group that does not satisfy scheduling restrictions will be ignored which means all clusters in this group will not be selected unless it also belongs to the next group(a cluster cloud belong to multiple groups).
+
+If none of the groups satisfy the scheduling restrictions, the scheduling fails, which means no cluster will be selected.
+
+Note:
+
+1. ClusterAffinities can not co-exist with ClusterAffinity.
+2. If both ClusterAffinity and ClusterAffinities are not set, any cluster can be scheduling candidates.
+
+Potential use case 1:
+The private clusters in the local data center could be the main group, and the managed clusters provided by cluster providers could be the secondary group. So that the Karmada scheduler would prefer to schedule workloads to the main group and the second group will only be considered in case of the main group does not satisfy restrictions(like, lack of resources).
+
+PropagationPolicy can be configured as follows:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: test-propagation
+spec:
+  #...
+  placement:
+    clusterAffinities:
+      - affinityName: local-clusters
+        clusterNames:
+          - local-member1
+          - local-member2
+      - affinityName: cloud-clusters
+        clusterNames:
+          - public-cloud-member1
+          - public-cloud-member2
+    #...
+```
+
+Potential use case 2: For the disaster recovery scenario, the clusters could be organized to primary and backup groups, the workloads would be scheduled to primary clusters firstly, and when primary cluster fails(like data center power off), Karmada scheduler could migrate workloads to the backup clusters.
+
+PropagationPolicy can be configured as follows:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: test-propagation
+spec:
+  #...
+  placement:
+    clusterAffinities:
+      - affinityName: primary-clusters
+        clusterNames:
+          - member1
+      - affinityName: backup-clusters
+        clusterNames:
+          - member1
+          - member2
+    #...
+```
+
+For more detailed design information, please refer to [Multiple scheduling group](https://github.com/karmada-io/karmada/tree/master/docs/proposals/scheduling/multi-scheduling-group).
+
 ## Schedule based on Taints and Tolerations
 
 `.spec.placement.clusterTolerations` field of PropagationPolicy represents the tolerations. Like kubernetes, tolerations need to be used in conjunction with taints on the clusters.
