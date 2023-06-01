@@ -9,7 +9,7 @@ karmada_config=${KARMADA_CONFIG:-"/etc/karmada/karmada-apiserver.config"}
 
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(if [ "$(uname)" == "Darwin" ]; then uname -m; else dpkg --print-architecture; fi)
-osm_binary="$(pwd)/${system}-${arch}/osm"
+fsm_binary="$(pwd)/${system}-${arch}/fsm"
 
 k0="kubectl --kubeconfig ${kubeconfig_cp}"
 k1="kubectl --kubeconfig ${kubeconfig_c1}"
@@ -158,33 +158,33 @@ EOF
   done
 }
 
-function install_osm_edge_binary() {
-  release=v1.3.5
-  desc "downloading osm-edge cli release - ${release}"
-  curl -sL https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-$arch.tar.gz | tar -vxzf -
-  osm_binary="$(pwd)/${system}-${arch}/osm"
-  $osm_binary version
+function install_fsm_binary() {
+  release=v1.0.0
+  desc "downloading fsm cli release - ${release}"
+  curl -sL https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+  fsm_binary="$(pwd)/${system}-${arch}/fsm"
+  $fsm_binary version
 }
 
-function install_edge() {
-  OSM_NAMESPACE=osm-system
-  OSM_MESH_NAME=osm
+function install_fsm() {
+  FSM_NAMESPACE=fsm-system
+  FSM_MESH_NAME=fsm
   for CONFIG in kubeconfig_c1 kubeconfig_c2 kubeconfig_c3; do
     DNS_SVC_IP="$(kubectl --kubeconfig ${!CONFIG} get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
     CLUSTER_NAME=$(if [ "${CONFIG}" == "kubeconfig_c1" ]; then echo "cluster-1"; elif [ "${CONFIG}" == "kubeconfig_c2" ]; then echo "cluster-2"; else echo "cluster-3"; fi)
-    desc "Installing osm-edge service mesh in cluster ${CLUSTER_NAME}"
-    KUBECONFIG=${!CONFIG} $osm_binary install \
-      --mesh-name "$OSM_MESH_NAME" \
-      --osm-namespace "$OSM_NAMESPACE" \
-      --set=osm.certificateProvider.kind=tresor \
-      --set=osm.image.pullPolicy=Always \
-      --set=osm.sidecarLogLevel=error \
-      --set=osm.controllerLogLevel=warn \
+    desc "Installing fsm service mesh in cluster ${CLUSTER_NAME}"
+    KUBECONFIG=${!CONFIG} $fsm_binary install \
+      --mesh-name "$FSM_MESH_NAME" \
+      --fsm-namespace "$FSM_NAMESPACE" \
+      --set=fsm.certificateProvider.kind=tresor \
+      --set=fsm.image.pullPolicy=Always \
+      --set=fsm.sidecarLogLevel=error \
+      --set=fsm.controllerLogLevel=warn \
       --timeout=900s \
-      --set=osm.localDNSProxy.enable=true \
-      --set=osm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}"
+      --set=fsm.localDNSProxy.enable=true \
+      --set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}"
 
-    kubectl --kubeconfig ${!CONFIG} wait --for=condition=ready pod --all -n $OSM_NAMESPACE --timeout=120s
+    kubectl --kubeconfig ${!CONFIG} wait --for=condition=ready pod --all -n $FSM_NAMESPACE --timeout=120s
   done
 }
 
@@ -219,14 +219,14 @@ kind: Namespace
 metadata:
   name: ${NAMESPACE}
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
 
   # desc "Add namespace ${NAMESPACE} to service mesh"
-  # KUBECONFIG=${kubeconfig_c1} $osm_binary namespace add ${NAMESPACE}
-  # KUBECONFIG=${kubeconfig_c3} $osm_binary namespace add ${NAMESPACE}
+  # KUBECONFIG=${kubeconfig_c1} $fsm_binary namespace add ${NAMESPACE}
+  # KUBECONFIG=${kubeconfig_c3} $fsm_binary namespace add ${NAMESPACE}
 
   desc "Deploy sample app httpbin under the ${NAMESPACE} on clusters cluster-1 and cluster-3 with Karmada"
   $kmd apply -n ${NAMESPACE} -f - <<EOF
@@ -319,14 +319,14 @@ kind: Namespace
 metadata:
   name: ${NAMESPACE}
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
   # $kmd create ns ${NAMESPACE}
 
   # desc "Add namespace ${NAMESPACE} to service mesh"
-  # KUBECONFIG=${kubeconfig_c2} $osm_binary namespace add ${NAMESPACE}
+  # KUBECONFIG=${kubeconfig_c2} $fsm_binary namespace add ${NAMESPACE}
 
   desc "Deploy sample app curl under the ${NAMESPACE} on clusters cluster-2 with Karmada"
   $kmd apply -n ${NAMESPACE} -f - <<EOF
@@ -586,11 +586,11 @@ if [ "$INSTALL" = true ]; then
   desc "Joining clusters into a ErieCanal ClusterSet"
   join_ec_clusters
 
-  desc "downloading osm-edge cli"
-  install_osm_edge_binary
+  desc "downloading fsm cli"
+  install_fsm_binary
 
-  desc "installing osm_edge on clusters"
-  install_edge
+  desc "installing fsm on clusters"
+  install_fsm
 
   desc "installing karmada cli"
   install_karmada_cli

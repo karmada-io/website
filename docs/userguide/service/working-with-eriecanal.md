@@ -1,8 +1,12 @@
 ---
-title: Working with ErieCanal to Empower Cross-Cluster Service Discovery and Failover
+title: Working with ErieCanal to Empower Cross-Cluster Service Governance
 ---
 
-This document demonstrates how to use [ErieCanal](https://github.com/flomesh-io/ErieCanal) to achieve interconnectivity among Karmada member clusters and enable application-level cross-cluster failover.
+Kubernetes has emerged as a foundational technology in modern application architecture, widely adopted by enterprises as a container orchestration system. As cloud computing gains traction and businesses expand, the adoption of multi-cloud and hybrid cloud architectures is on the rise. Consequently, the number of Kubernetes clusters is increasing accordingly.
+
+Enter Karmada, a powerful tool that simplifies cross-region and cross-cloud application deployment. By deploying multiple instances of the same service across multiple Kubernetes clusters, system availability and flexibility are significantly enhanced. However, the interdependencies between services necessitate their deployment within the same cluster to ensure seamless interaction and functional integrity. This interdependence creates a complex network of tightly coupled services, resembling an intricate vine, challenging the separation of various system components. Traditional service deployment often requires a full-scale approach, leading to suboptimal resource utilization and higher operational costs.
+
+In this article, we will explore how [ErieCanal](https://github.com/flomesh-io/ErieCanal) can empower organizations to achieve interconnection and service governance across multiple Karmada clusters. This comprehensive solution enables efficient cross-cluster service management and establishes a foundation for robust distributed systems.
 
 ErieCanal is an implementation of Multi-Cluster Service (MCS) that provides MCS, Ingress, Egress, and GatewayAPI for Kubernetes clusters.
 
@@ -13,18 +17,18 @@ In this example, we utilize Karmada for cross-cluster scheduling of resources an
 - Service Registration: By creating a [`ServiceExport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceexport/v1alpha1/serviceexport_types.go#L125) resource, services are declared as multi-cluster services and registered with the ErieCanal control plane. Additionally, ingress rules are created for the service.
 - Service Discovery: The ErieCanal control plane utilizes the service information and information about the cluster where it resides to create a [`ServiceImport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceimport/v1alpha1/serviceimport_types.go#L160) resource. This resource is then synchronized across all member clusters.
 
-ErieCanal runs on both the control plane cluster and the member clusters. The control plane cluster is registered as the ErieCanal control plane. ErieCanal is an independent component and does not need to run on the Karmada control plane. The former is responsible for multi-cluster service registration and discovery, while the latter handles multi-cluster resource scheduling.
+ErieCanal runs on both the control plane cluster and the member clusters. Member clusters need to be registered with the control plane cluster. ErieCanal is an independent component and does not need to run on the Karmada control plane. ErieCanal nsible for multi-cluster service registration and discovery, while Karmada handles multi-cluster resource scheduling.
 
 ![](../../resources/userguide/service/eriecanal/karmada-working-with-eriecanal-overview.png)
 
 Once the services are registered and discovered across clusters, automatic traffic shifting needs to be performed when accessing applications (curl -> httpbin). There are two possible approaches:
 
-- Integration with the service mesh [osm-edge](https://flomesh.io/osm-edge/) to achieve traffic shifting based on policies. In addition to obtaining service access information from Kubernetes Service, information from the ServiceImport of multi-cluster resources is also used.
+- Integration with the service mesh [FSM (Flomesh Service Mesh)](https://flomesh.io/fsm/) to achieve traffic shifting based on policies. In addition to obtaining service access information from Kubernetes Service, information from the ServiceImport of multi-cluster resources is also used.
 - Using the ErieCanal component ErieCanalNet (to be released soon) to manage cross-cluster traffic using eBPF+sidecar (Node level).
 
 The following steps outline the complete demonstration process. You can also use the provided [flomesh.sh script](../../resources/userguide/service/eriecanal/flomesh.sh) for an automated demonstration. Before using the script, **ensure that Docker and kubectl are already installed, and at least 8G RAM**. Here are the usage options for the script:
 
-- `flomesh.sh` - Executes the script without any parameters, which will create four clusters, set up the environment (install Karmada, ErieCanal, osm-edge), and run the example.
+- `flomesh.sh` - Executes the script without any parameters, which will create four clusters, set up the environment (install Karmada, ErieCanal, FSM), and run the example.
 - `flomesh.sh -h` - Displays the explanation of the parameters.
 - `flomesh.sh -i` - Creates clusters and sets up the environment.
 - `flomesh.sh -d` - Runs the example.
@@ -126,40 +130,39 @@ cluster-2   default   default   default   10.0.2.5       80             True    
 cluster-3   default   default   default   10.0.2.6       80             True      159m          159m
 ```
 
-### 3. Install osm-edge
+### 3. Install FSM
 
-Here, we will use an integrated service mesh, osm-edge, to achieve cross-cluster traffic scheduling. Next, we will install the osm-edge service mesh on **the three member clusters**. osm-edge provides two installation methods: CLI and Helm. In this case, we will use the CLI method.
+Here, we will use an integrated service mesh, FSM, to achieve cross-cluster traffic scheduling. Next, we will install the FSM service mesh on **the three member clusters**. FSM provides two installation methods: CLI and Helm. In this case, we will use the CLI method.
 
-First, download the osm-edge CLI:
+First, download the FSM CLI:
 
 ```shell
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(dpkg --print-architecture)
-release=v1.3.4
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-./${system}-${arch}/osm version
-sudo cp ./${system}-${arch}/osm /usr/local/bin/
+release=v1.0.0
+curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+./${system}-${arch}/fsm version
+sudo cp ./${system}-${arch}/fsm /usr/local/bin/
 ```
 
-Next, proceed with the osm-edge installation. When using multi-cluster mode, osm-edge requires enabling the local DNS proxy. During installation, you need to provide the address of the cluster DNS.
+Next, proceed with the FSM installation. When using multi-cluster mode, FSM requires enabling the local DNS proxy. During installation, you need to provide the address of the cluster DNS.
 
 ```shell
 DNS_SVC_IP="$(kubectl get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
 
-osm install \
---set=osm.localDNSProxy.enable=true \
---set=osm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}" \
---timeout 120s
+fsm install \
+--set=fsm.localDNSProxy.enable=true \
+--set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}" \
 ```
 
 To check the installed service mesh version and other information in the cluster, you can use the following command:
 
 ```shell
-osm version
-CLI Version: version.Info{Version:"v1.3.5", GitCommit:"0b6243a58f65eefd481c8989dd949c4f5461bab6", BuildDate:"2023-05-10-12:21"}
+fsm version
+CLI Version: version.Info{Version:"v1.0.0", GitCommit:"9966a2b031c862b54b4b007eae35ee16afa31a80", BuildDate:"2023-05-29-12:10"}
 
 MESH NAME   MESH NAMESPACE   VERSION   GIT COMMIT                                 BUILD DATE
-osm         osm-system       v1.3.5    0b6243a58f65eefd481c8989dd949c4f5461bab6   2023-05-10-12:20
+fsm         fsm-system       v1.0.0    9966a2b031c862b54b4b007eae35ee16afa31a80   2023-05-29-12:11
 ```
 
 ## Deploying Example Application
@@ -172,7 +175,7 @@ alias kmd="kubectl --kubeconfig /etc/karmada/karmada-apiserver.config"
 
 #### Server
 
-Create the `httpbin` namespace. To include it in the service mesh management, we add the label `openservicemesh.io/monitored-by: osm` and annotation `openservicemesh.io/monitored-by: osm` when creating the namespace.
+Create the `httpbin` namespace. To include it in the service mesh management, we add the label `flomesh.io/monitored-by: fsm` and annotation `flomesh.io/monitored-by: fsm` when creating the namespace.
 
 ```shell
 kmd apply -f - <<EOF
@@ -181,9 +184,9 @@ kind: Namespace
 metadata:
   name: httpbin
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
 ```
 
@@ -306,9 +309,9 @@ kind: Namespace
 metadata:
   name: curl
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
 ```
 

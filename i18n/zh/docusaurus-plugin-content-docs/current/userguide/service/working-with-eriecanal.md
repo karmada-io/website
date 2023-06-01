@@ -1,8 +1,16 @@
 ---
-title: 与 ErieCanal 集成支持跨集群的服务发现和故障转移
+title: 与 ErieCanal 集成支持跨集群的服务治理
 ---
 
-这篇文档将演示如何使用 [ErieCanal](https://github.com/flomesh-io/ErieCanal) 完成 Karmada 多集群的互联互通，实现应用粒度的跨集群 Failover。
+# ErieCanal 和 Karmada：支持跨集群的服务治理
+
+## 背景
+
+Kubernetes 作为一项核心技术已成为现代应用程序架构的基础，越来越多的企业使用 Kubernetes 作为容器编排系统。随着对云计算接受程度不断提高、企业规模的持续增长，越来越多的企业开始考虑采用或者已经采用多云和混合云的架构。多云混合云策略的引入，相应地，Kubernetes 集群的数量也变得越来越多。
+
+使用 Karmada 我们可以轻松完成应用的跨地域或者云提供商的部署，通过在多个 Kubernetes 集群中部署同一服务的多个实例，提升了系统的可用性和灵活性。但由于服务的彼此依赖，为了保证服务间的交互和功能完整性，要将这些相关的服务部署在同一个集群中。服务之间的强依赖和高耦合性就像一个错综复杂的藤蔓，使得系统的各个组件之间纠缠不清。在服务部署时往往需要进行全量部署，资源利用率低，运营成本增加。
+
+这篇文档将演示如何使用 [ErieCanal](https://github.com/flomesh-io/ErieCanal) 完成 Karmada 多集群的互联互通，实现跨集群的服务治理。
 
 ErieCanal 是一个 MCS（多集群服务 [Multi-Cluster Service](https://github.com/kubernetes-sigs/mcs-api)）实现，为 Kubernetes 集群提供 MCS、Ingress、Egress、GatewayAPI。
 
@@ -13,18 +21,18 @@ ErieCanal 是一个 MCS（多集群服务 [Multi-Cluster Service](https://github
 - 服务注册：通过创建 [`ServiceExport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceexport/v1alpha1/serviceexport_types.go#L125) 资源来将 Service 声明为多集群服务，注册到 ErieCanal 的控制面，同时为该服务创建入口（Ingress）规则。
 - 服务发现：ErieCanal 的控制面，使用服务的信息及所在集群的信息创建 [`ServiceImport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceimport/v1alpha1/serviceimport_types.go#L160) 资源，并将其同步到所有的成员集群。
 
-ErieCanal 会运行在控制面集群和成员集群上，接受集群注册的成为 ErieCanal 的控制面集群。ErieCanal 是独立的组件，无需运行在 Karmada 控制面上。前者负责多集群服务的注册发现，后者负责多集群的资源调度。
+ErieCanal 会运行在控制面集群和成员集群上，成员集群需要注册到控制面集群。ErieCanal 是独立的组件，无需运行在 Karmada 控制面上。ErieCanal 负责多集群服务的注册发现，Karmada 负责多集群的资源调度。
 
 ![](../../resources/userguide/service/eriecanal/karmada-working-with-eriecanal-overview.png)
 
 完成服务的跨集群注册发现之后，在处理应用的访问（curl -> httpbin）时要完成流量的自动调度，这里有两种方案：
 
-- 集成服务网格 [osm-edge](https://flomesh.io/osm-edge/) 根据策略实现流量的调度，除了从 Kubernetes Service 获取服务的访问信息外，还会同多集群资源的 ServiceImport 中获取服务信息。
+- 集成服务网格 [FSM（Flomesh Service Mesh）](https://flomesh.io/fsm/) 根据策略实现流量的调度，除了从 Kubernetes Service 获取服务的访问信息外，还会同多集群资源的 ServiceImport 中获取服务信息。
 - 使用 ErieCanal 中的组件 ErieCanalNet（该特性即将发布），通过 eBPF+sidecar（Node level）来实现流量的跨集群管理。
 
 下面是演示的全部流程，大家也可以使用我们提供的 [脚本 flomesh.sh](../../resources/userguide/service/eriecanal/flomesh.sh) 完成自动化地演示。使用脚本的前提，**系统需要已经安装 Docker 和 kubectl，并至少 8G 内存**。脚本的使用方式：
 
-- `flomesh.sh` - 不提供任何参数，脚本会创建 4 个集群、完成环境搭建（安装 Karmada、ErieCanal、osm-edge），并运行示例。
+- `flomesh.sh` - 不提供任何参数，脚本会创建 4 个集群、完成环境搭建（安装 Karmada、ErieCanal、FSM），并运行示例。
 - `flomesh.sh -h` - 查看参数的说明
 - `flomesh.sh -i` - 创建集群和完成搭建环境
 - `flomesh.sh -d` - 运行示例
@@ -116,40 +124,40 @@ cluster-2   default   default   default   10.0.2.5       80             True    
 cluster-3   default   default   default   10.0.2.6       80             True      159m          159m
 ```
 
-### 3. 安装 osm-edge
+### 3. 安装 FSM
 
-这里我们选择集成服务网格来完成流量的跨集群调度，接下来就是在 **三个成员集群** 上安装服务网格 osm-edge。osm-edge 提供了 [CLI 和 Helm 两种方式安装](https://osm-edge-docs.flomesh.io/docs/guides/operating/install/)，这里我们选择 CLI 的方式。
+这里我们选择集成服务网格来完成流量的跨集群调度，接下来就是在 **三个成员集群** 上安装服务网格 FSM。FSM 提供了 [CLI 和 Helm 两种方式安装](https://fsm-docs.flomesh.io/docs/guides/operating/install/)，这里我们选择 CLI 的方式。
 
-先下载 osm-edge 的 CLI。
+先下载 FSM 的 CLI。
 
 ```shell
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(dpkg --print-architecture)
-release=v1.3.4
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-./${system}-${arch}/osm version
-sudo cp ./${system}-${arch}/osm /usr/local/bin/
+release=v1.0.0
+curl -L https://github.com/flomesh-io/fsm/releases/download/${release}/fsm-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+./${system}-${arch}/fsm version
+sudo cp ./${system}-${arch}/fsm /usr/local/bin/
 ```
 
-然后就是安装 osm-edge。在支持多集群时，osm-edge 需要开启本地 DNS 代理，安装是需要提供集群 DNS 的地址。
+然后就是安装 FSM。在支持多集群时，FSM 需要开启本地 DNS 代理，安装是需要提供集群 DNS 的地址。
 
 ```shell
 DNS_SVC_IP="$(kubectl get svc -n kube-system -l k8s-app=kube-dns -o jsonpath='{.items[0].spec.clusterIP}')"
 
-osm install \
---set=osm.localDNSProxy.enable=true \
---set=osm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}" \
+fsm install \
+--set=fsm.localDNSProxy.enable=true \
+--set=fsm.localDNSProxy.primaryUpstreamDNSServerIPAddr="${DNS_SVC_IP}" \
 --timeout 120s
 ```
 
 执行命令可常看集群中安装的服务网格版本等信息。
 
 ```shell
-osm version
-CLI Version: version.Info{Version:"v1.3.5", GitCommit:"0b6243a58f65eefd481c8989dd949c4f5461bab6", BuildDate:"2023-05-10-12:21"}
+fsm version
+CLI Version: version.Info{Version:"v1.0.0", GitCommit:"9966a2b031c862b54b4b007eae35ee16afa31a80", BuildDate:"2023-05-29-12:10"}
 
 MESH NAME   MESH NAMESPACE   VERSION   GIT COMMIT                                 BUILD DATE
-osm         osm-system       v1.3.5    0b6243a58f65eefd481c8989dd949c4f5461bab6   2023-05-10-12:20
+fsm         fsm-system       v1.0.0    9966a2b031c862b54b4b007eae35ee16afa31a80   2023-05-29-12:11
 ```
 
 ## 部署示例应用
@@ -162,7 +170,7 @@ alias kmd="kubectl --kubeconfig /etc/karmada/karmada-apiserver.config"
 
 #### 服务端
 
-创建命名空间 `httpbin`。为了纳入服务网格的管理，创建时，我们增加了 label `openservicemesh.io/monitored-by: osm` 以及 annotation `openservicemesh.io/monitored-by: osm`。
+创建命名空间 `httpbin`。为了纳入服务网格的管理，创建时，我们增加了 label `flomesh.io/monitored-by: fsm` 以及 annotation `flomesh.io/monitored-by: fsm`。
 
 ```shell
 kmd apply -f - <<EOF
@@ -171,9 +179,9 @@ kind: Namespace
 metadata:
   name: httpbin
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
 ```
 
@@ -292,9 +300,9 @@ kind: Namespace
 metadata:
   name: curl
   labels:
-    openservicemesh.io/monitored-by: osm
+    flomesh.io/monitored-by: fsm
   annotations:
-    openservicemesh.io/sidecar-injection: enabled
+    flomesh.io/sidecar-injection: enabled
 EOF
 ```
 
