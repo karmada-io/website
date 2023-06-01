@@ -67,3 +67,4 @@ v1.1.x to v1.2.x and the available patch versions are v1.2.0, v1.2.1 and v1.2.2,
 ### [v1.2 to v1.3](./v1.2-v1.3.md)
 ### [v1.3 to v1.4](./v1.3-v1.4.md)
 ### [v1.4 to v1.5](./v1.4-v1.5.md)
+### [v1.5 to v1.6](./v1.5-v1.6.md)
