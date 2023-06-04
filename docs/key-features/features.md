@@ -102,6 +102,8 @@ karmada supports:
   * With ServiceExport and ServiceImport, achieving cross-cluster service discovery.
 * [Multi-cluster network support](https://karmada.io/docs/userguide/network/working-with-submariner):
   * Use `Submariner` to open up the container network between clusters.
+* [Cross-Cluster service governance via ErieCanal](https://karmada.io/docs/userguide/service/working-with-eriecanal)
+  * Integrate with `ErieCanal` to empower cross-cluster service governance.
 
 Users can enable service governance for cross-cluster with Karmada:  
 

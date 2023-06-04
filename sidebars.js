@@ -91,6 +91,7 @@ module.exports = {
                     items: [
                         "userguide/service/multi-cluster-service",
                         "userguide/service/multi-cluster-ingress",
+                        "userguide/service/working-with-eriecanal",
                         "userguide/service/working-with-istio-on-flat-network",
                         "userguide/service/working-with-istio-on-non-flat-network",
                     ],
