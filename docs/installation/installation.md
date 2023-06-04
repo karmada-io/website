@@ -32,7 +32,7 @@ Assume you have put your cluster's `kubeconfig` file to `$HOME/.kube/config` or 
 with `KUBECONFIG` environment variable. Otherwise, you should specify the configuration file by
 setting `--kubeconfig` flag to the following commands.
 
-> Note: The `init` command is available from v1.0.
+> Note: The `init` command is available from v1.0. Runing `init` command requires escalated privileges for it to store public configurations (certs, crds) for multiple users under default location `/etc/karmada`, you can override this location via flags `--karmada-data` and `--karmada-pki`. Refer to CLI for more details or usage information.
 
 Run the following command to install:
 ```bash
