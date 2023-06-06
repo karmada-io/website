@@ -143,6 +143,10 @@ kube-controller-manager-85c789dcfc-k89f8       1/1     Running   0          2m10
 
 请参阅[通过 Helm 安装](https://github.com/karmada-io/karmada/tree/master/charts/karmada)。
 
+## 通过 Karmada Operator 安装 Karmada
+
+请参阅[通过 Karmada Operator 安装](https://github.com/karmada-io/karmada/blob/master/operator/README.md)。
+
 ## 通过二进制安装 Karmada
 
 请参阅[通过二进制安装](./install-binary.md)。

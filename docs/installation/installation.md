@@ -155,6 +155,10 @@ kube-controller-manager-85c789dcfc-k89f8       1/1     Running   0          2m10
 
 Please refer to [installing by Helm](https://github.com/karmada-io/karmada/tree/master/charts/karmada).
 
+## Install Karmada by Karmada Operator
+
+Please refer to [installing by Karmada Operator](https://github.com/karmada-io/karmada/blob/master/operator/README.md)
+
 ## Install Karmada by binary
 
 Please refer to [installing by binary](./install-binary.md).
