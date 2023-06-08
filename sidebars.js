@@ -233,6 +233,10 @@ module.exports = {
             label: "Reference",
             items: [
                 {
+                    type: "doc",
+                    id: "reference/glossary"
+                },
+                {
                     type: "category",
                     label: "Command line tool(karmadactl)",
                     items: [
