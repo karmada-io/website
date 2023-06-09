@@ -29,7 +29,7 @@ title: 安装概述
 假设你已将集群的 `kubeconfig` 文件放到了 `$HOME/.kube/config` 或用 `KUBECONFIG` 环境变量指定了该路径。
 否则，你应将 `--kubeconfig` 标志设置为以下命令来指定该配置文件。
 
-> 注：从 v1.0 开始可以使用 `init` 命令。
+> 注：从 v1.0 开始可以使用 `init` 命令。运行 `init` 命令需要升级的权限才能将多个用户的公共配置（证书、crd）存储在默认位置 `/etc/karmada` 下，您可以通过标志 `--karmada data` 和 `--karmada-pki` 覆盖此位置。有关更多详细信息或用法信息，请参阅CLI。
 
 运行以下命令进行安装：
 ```bash
