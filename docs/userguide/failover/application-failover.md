@@ -30,7 +30,7 @@ In addition, if you use the purge mode with graceful eviction, `GracefulEviction
 
 `.spec.failover.application` field of PropagationPolicy represents the rules of application failover.
 
-It has four fields to set:
+It has three fields to set:
 * DecisionConditions
 * PurgeMode
 * GracePeriodSeconds
@@ -148,7 +148,7 @@ spec:
           name: nginx
 ```
 
-Now the application is scheduled into member2 and these two replicas run normally. Now you taint all nodes in member1 and evict the replica to construct the abnormal state of the application.
+Now the application is scheduled into member2 and these two replicas run normally. Now you taint all nodes in member2 and evict the replica to construct the abnormal state of the application.
 
 ```shell
 # mark node "member2-control-plane" as unschedulable in cluster member2
