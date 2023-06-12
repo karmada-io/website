@@ -28,7 +28,8 @@ module.exports = {
             label: "Tutorials",
             items: [
                 "tutorials/crd-application",
-                "tutorials/karmada-search"
+                "tutorials/karmada-search",
+                "tutorials/autoscaling-with-federatedhpa",
             ],
         },
         {
@@ -126,6 +127,13 @@ module.exports = {
                         "userguide/bestpractices/namespace-management",
                         "userguide/bestpractices/unified-auth",
                         "userguide/bestpractices/federated-resource-quota",
+                    ],
+                },
+                {
+                    type: "category",
+                    label: "Autoscaling across clusters",
+                    items: [
+                        "userguide/autoscaling/federatedhpa",
                     ],
                 },
             ],
