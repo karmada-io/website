@@ -47,7 +47,7 @@ karmada-scheduler [flags]
       --master string                               The address of the Kubernetes API server. Overrides any value in KubeConfig. Only required if out-of-cluster.
       --one_output                                  If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --plugins strings                             A list of plugins to enable. '*' enables all build-in and customized plugins, 'foo' enables the plugin named 'foo', '*,-foo' disables the plugin named 'foo'.
-                                                    All build-in plugins: APIEnablement,ClusterAffinity,ClusterLocality,SpreadConstraint,TaintToleration. (default [*])
+                                                    All build-in plugins: APIEnablement,ClusterAffinity,ClusterEviction,ClusterLocality,SpreadConstraint,TaintToleration. (default [*])
       --profiling-bind-address string               The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
       --scheduler-estimator-port int                The secure port on which to connect the accurate scheduler estimator. (default 10352)
       --scheduler-estimator-service-prefix string   The prefix of scheduler estimator service name (default "karmada-scheduler-estimator")

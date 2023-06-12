@@ -71,6 +71,8 @@ karmadactl init
       --etcd-replicas int32                              etcd replica set, cluster 3,5...singular (default 1)
       --etcd-storage-mode string                         etcd data storage mode(emptyDir,hostPath,PVC). value is PVC, specify --storage-classes-name (default "hostPath")
   -h, --help                                             help for init
+      --host-cluster-domain string                       The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
+      --image-pull-secrets strings                       Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
       --karmada-aggregated-apiserver-image string        Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0")
       --karmada-aggregated-apiserver-replicas int32      Karmada aggregated apiserver replica set (default 1)
       --karmada-apiserver-advertise-address string       The IP address the Karmada API Server will advertise it's listening on. If not set, the address on the master node will be used.
@@ -88,7 +90,7 @@ karmadactl init
       --karmada-webhook-replicas int32                   Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                 Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                       Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
-      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.25.2")
+      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.25.4")
       --kubeconfig string                                absolute path to the kubeconfig file
   -n, --namespace string                                 Kubernetes namespace (default "karmada-system")
   -p, --port int32                                       Karmada apiserver service node port (default 32443)

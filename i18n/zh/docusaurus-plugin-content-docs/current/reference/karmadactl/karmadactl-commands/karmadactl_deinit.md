@@ -28,6 +28,7 @@ karmadactl deinit
   -h, --help                help for deinit
       --kubeconfig string   Path to the host cluster kubeconfig file.
   -n, --namespace string    namespace where Karmada components are installed. (default "karmada-system")
+      --purge-namespace     Run the command with purge-namespace, the namespace which Karmada components were installed will be deleted.
 ```
 
 ### Options inherited from parent commands

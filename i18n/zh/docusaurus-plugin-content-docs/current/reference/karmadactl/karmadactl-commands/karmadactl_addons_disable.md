@@ -42,6 +42,7 @@ karmadactl addons disable
 ```
   -C, --cluster string              Name of the member cluster that enables or disables the scheduler estimator.
       --context string              The name of the kubeconfig context to use.
+  -f, --force                       Disable addons without prompting for confirmation.
   -h, --help                        help for disable
       --karmada-context string      The name of the karmada control plane kubeconfig context to use.
       --karmada-kubeconfig string   Path to the karmada control plane kubeconfig file. (default "/etc/karmada/karmada-apiserver.config")
