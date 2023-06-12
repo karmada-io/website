@@ -126,7 +126,7 @@ spec:
 ```
 </details>
 
-假设有5个成员集群，初始调度结果在member1和member2集群中。当member2集群发生故障，将触发调度器重调度。
+假设有4个成员集群，初始调度结果在member1和member2集群中。当member2集群发生故障，将触发调度器重调度。
 
 需要注意的是，重调度不会删除原本状态为Ready的集群member1上的工作负载。在其余3个集群中，只有member3和member5匹配`clusterAffinity`策略。
 

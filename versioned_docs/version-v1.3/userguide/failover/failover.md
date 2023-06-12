@@ -221,7 +221,7 @@ spec:
 ```
 </details>
 
-Suppose there are 5 member clusters, and the initial scheduling result is in member1 and member2. When member2 fails, it triggers rescheduling.
+Suppose there are 4 member clusters, and the initial scheduling result is in member1 and member2. When member2 fails, it triggers rescheduling.
 
 It should be noted that rescheduling will not delete the application on the ready cluster member1. In the remaining 3 clusters, only member3 and member5 match the `clusterAffinity` policy.
 
