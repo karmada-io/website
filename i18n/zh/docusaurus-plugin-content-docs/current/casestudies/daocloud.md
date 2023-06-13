@@ -43,7 +43,7 @@ KairShip向用户提供了Karmada原生支持的核心能力：
 
 ![multiple karmada](../resources/casestudies/daocloud/multi_karmada.PNG)
 
-DaoCloud自研了Karmada-Operator，Karmada-Operator基于Karmada社区的Helm charts，实现了Karmada实例的快速创建、更新、卸载以及D1 D2的维护，并且支持成员集群快速接入Karmada实例，通过控制器搜集成员集群的概览信息到Karmada控制面实例中。
+DaoCloud自研了Karmada-Operator，Karmada-Operator基于Karmada社区的Helm charts，实现了Karmada实例的快速创建、更新、卸载以及维护，并且支持成员集群快速接入Karmada实例，通过控制器搜集成员集群的概览信息到Karmada控制面实例中。
 
 ![karmada operator](../resources/casestudies/daocloud/karmada_operator.PNG)
 
