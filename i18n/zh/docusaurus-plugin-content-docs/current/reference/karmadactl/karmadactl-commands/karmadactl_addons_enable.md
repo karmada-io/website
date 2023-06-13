@@ -34,7 +34,7 @@ karmadactl addons enable
   karmadactl addons enable karmada-search --karmada-kubeconfig /etc/karmada/karmada-apiserver.config
   
   # Specify the karmada-search image
-  karmadactl addons enable karmada-search --karmada-search-image docker.io/karmada/karmada-scheduler-estimator:latest
+  karmadactl addons enable karmada-search --karmada-search-image docker.io/karmada/karmada-search:latest
   
   # Sepcify the namespace where Karmada components are installed
   karmadactl addons enable karmada-search --namespace karmada-system
@@ -47,6 +47,7 @@ karmadactl addons enable
   -C, --cluster string                             Name of the member cluster that enables or disables the scheduler estimator.
       --context string                             The name of the kubeconfig context to use.
   -h, --help                                       help for enable
+      --host-cluster-domain string                 The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --karmada-context string                     The name of the karmada control plane kubeconfig context to use.
       --karmada-descheduler-image string           karmada descheduler image (default "docker.io/karmada/karmada-descheduler:v0.0.0")
       --karmada-descheduler-replicas int32         Karmada descheduler replica set (default 1)
@@ -60,6 +61,7 @@ karmadactl addons enable
       --member-kubeconfig string                   Member cluster's kubeconfig which to deploy scheduler estimator
   -n, --namespace string                           namespace where Karmada components are installed. (default "karmada-system")
       --pod-timeout int                            Wait pod ready timeout. (default 30)
+      --private-image-registry string              Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.
 ```
 
 ### Options inherited from parent commands
