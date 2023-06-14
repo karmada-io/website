@@ -29,3 +29,4 @@ title: Karmada 生产案例汇总
 | 之江实验室      | https://www.zhejianglab.com/  | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
 | 中国电子云      | https://cecloud.com/          | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
 | 中国联通数字科技   | http://www.chinaunicom.com.cn | 使用 Karmada 构建多策略和多地域的智能分布式容器平台                                                                 | 待定                                                |
+| 中通快递         | https://www.zto.com            | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
