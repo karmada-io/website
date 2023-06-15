@@ -17,7 +17,7 @@ In this example, we utilize Karmada for cross-cluster scheduling of resources an
 - Service Registration: By creating a [`ServiceExport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceexport/v1alpha1/serviceexport_types.go#L125) resource, services are declared as multi-cluster services and registered with the ErieCanal control plane. Additionally, ingress rules are created for the service.
 - Service Discovery: The ErieCanal control plane utilizes the service information and information about the cluster where it resides to create a [`ServiceImport`](https://github.com/flomesh-io/ErieCanal/blob/7fc7e33315347ec69dc60ff19fdeb1cd1552ef34/apis/serviceimport/v1alpha1/serviceimport_types.go#L160) resource. This resource is then synchronized across all member clusters.
 
-ErieCanal runs on both the control plane cluster and the member clusters. Member clusters need to be registered with the control plane cluster. ErieCanal is an independent component and does not need to run on the Karmada control plane. ErieCanal nsible for multi-cluster service registration and discovery, while Karmada handles multi-cluster resource scheduling.
+ErieCanal runs on both the control plane cluster and the member clusters. Member clusters need to be registered with the control plane cluster. ErieCanal is an independent component and does not need to run on the Karmada control plane. ErieCanal is responsible for multi-cluster service registration and discovery, while Karmada handles multi-cluster resource scheduling.
 
 ![](../../resources/userguide/service/eriecanal/karmada-working-with-eriecanal-overview.png)
 
