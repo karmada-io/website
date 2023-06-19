@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swagger UI</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.1/swagger-ui.min.css" />
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.1/swagger-ui-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/3.52.1/swagger-ui-standalone-preset.min.js"></script>
+<script>
+    window.onload = function() {
+        // Replace the URL below with your Swagger API endpoint
+        const ui = SwaggerUIBundle({
+            url: "https://raw.githubusercontent.com/karmada-io/karmada/master/api/openapi-spec/swagger.json",
+            dom_id: '#swagger-ui',
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            layout: "BaseLayout",
+            deepLinking: true
+        });
+    }
+</script>
+</body>
+</html>

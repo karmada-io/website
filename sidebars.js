@@ -245,6 +245,10 @@ module.exports = {
                     id: "reference/glossary"
                 },
                 {
+                    type: "doc",
+                    id: "reference/swagger-api"
+                },
+                {
                     type: "category",
                     label: "Command line tool(karmadactl)",
                     items: [
