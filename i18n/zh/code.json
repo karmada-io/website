@@ -4,11 +4,11 @@
     "description": "The title of the 404 page"
   },
   "theme.NotFound.p1": {
-    "message": "We could not find what you were looking for.",
+    "message": "我们找不到您要查找的内容。",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
-    "message": "Please contact the owner of the site that linked you to the original URL and let them know their link is broken.",
+    "message": "请联系将您链接到原始网址的站点所有者，并让他们知道他们的链接已经失效。",
     "description": "The 2nd paragraph of the 404 page"
   },
   "theme.blog.paginator.navAriaLabel": {
@@ -28,7 +28,7 @@
     "description": "The ARIA label for close button of announcement bar"
   },
   "theme.blog.post.paginator.navAriaLabel": {
-    "message": "Blog post page navigation",
+    "message": "博客文章页面导航",
     "description": "The ARIA label for the blog posts pagination"
   },
   "theme.blog.post.paginator.newerPost": {
@@ -40,11 +40,11 @@
     "description": "The blog post button label to navigate to the older/next post"
   },
   "theme.blog.post.readingTime.plurals": {
-    "message": "阅读需要 1 分钟|阅读需要 {readingTime} 分钟",
+    "message": "阅读需要 1 分钟 | 阅读需要 {readingTime} 分钟",
     "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.tags.tagsListLabel": {
-    "message": "标签列表:",
+    "message": "标签列表：",
     "description": "The label alongside a tag list"
   },
   "theme.blog.post.readMore": {
@@ -56,7 +56,7 @@
     "description": "The title of the tag list page"
   },
   "theme.blog.post.plurals": {
-    "message": "One post|{count} posts",
+    "message": "一篇文章 | {count} 篇帖子",
     "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.blog.tagTitle": {
@@ -116,15 +116,15 @@
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "This is unreleased documentation for {siteTitle} {versionLabel} version.",
+    "message": "这是未发布的 {siteTitle} {versionLabel} 版本文档。",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "This is documentation for {siteTitle} {versionLabel}, which is no longer actively maintained.",
+    "message": "这是 {siteTitle} {versionLabel} 的文档，该版本已不再得到积极维护。",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
-    "message": "查看当前最新版本文档, 点击 {latestVersionLink} ({versionLabel}).",
+    "message": "查看当前最新版本文档，点击 {latestVersionLink} ({versionLabel}).",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionLinkLabel": {
@@ -159,7 +159,7 @@
     "message": "."
   },
   "theme.SearchPage.documentsFound.plurals": {
-    "message": "找到一篇文档|共找到 {count} 篇文档",
+    "message": "找到一篇文档 | 共找到 {count} 篇文档",
     "description": "Pluralized label for \"{count} documents found\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.SearchPage.existingResultsTitle": {
