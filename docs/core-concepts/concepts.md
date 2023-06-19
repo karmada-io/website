@@ -4,11 +4,11 @@ title: Concepts
 
 This page introduces some core concepts about Karmada.
 
-### Resource Template
+## Resource Template
 
 Karmada uses the Kubernetes Native API definition for the federated resource template, to make it easy to integrate with existing tools that have already been adopted by Kubernetes.
 
-### Propagation Policy
+## Propagation Policy
 
 Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster scheduling and spreading requirements.
 
@@ -16,7 +16,7 @@ Karmada offers a standalone Propagation(placement) Policy API to define multi-cl
 
 - With default policies, users can directly interact with the Kubernetes API.
 
-### Override Policy
+## Override Policy
 
 Karmada provides a standalone Override Policy API for specializing the automation of cluster-related configuration. For example:
 
