@@ -1,16 +1,17 @@
 ---
-title: Propagate a CRD application with Karmada
+title: 通过 Karmada 分发 CRD
 ---
-This section guides you to:
+在本节中，我们将引导您完成以下内容：
 
-- Install Karmada control plane.
-- Propagate a CRD application to multiple clusters.
-- Customize the application within a specific cluster.
+- 安装 Karmada 控制平面。
+- 将 CRD 分发到多个集群。
+- 在特定集群中自定义 CRD。
 
-## Start up Karmada clusters
+## 启动 Karmada 集群
 
-To start up Karmada, you can refer to [here](../installation/installation.md).
-If you just want to try Karmada, we recommend building a development environment by ```hack/local-up-karmada.sh```.
+想要启动 Karmada，您可以参考 [here](../installation/installation.md).
+
+如果您只想尝试 Karmada，请使用 ```hack/local-up-karmada.sh``` 构建开发环境.
 
 ```sh
 git clone https://github.com/karmada-io/karmada
@@ -18,31 +19,31 @@ cd karmada
 hack/local-up-karmada.sh
 ```
 
-## Propagate CRD application
+## 分发 CRD
 
-The following steps walk you through how to propagate a [Guestbook](https://book.kubebuilder.io/quick-start.html#create-a-project) defined by a CRD.
+下面的步骤指导您如何分发 CRD [Guestbook](https://book.kubebuilder.io/quick-start.html#create-a-project)。
 
-Assume you are under the guestbook directory of the Karmada repo.
+假设您在 Karmada 仓库的 guestbook 目录下。
 
 ```bash
 cd samples/guestbook
 ```
 
-Set the KUBECONFIG environment with Karmada configuration.
+使用 Karmada 配置设置 KUBECONFIG 环境变量。
 
 ```bash
 export KUBECONFIG=${HOME}/.kube/karmada.config
 ```
 
-1. Create Guestbook CRD in Karmada control plane
+1. 在 Karmada 的控制平面上创建 Guestbook CRD
 
 ```bash
 kubectl apply -f guestbooks-crd.yaml 
 ```
 
-The CRD should be applied to `karmada-apiserver`.
+此 CRD 应该被应用到 `karmada-apiserver`。
 
-2. Create ClusterPropagationPolicy that will propagate Guestbook CRD to member1
+2. 创建 ClusterPropagationPolicy，将 Guestbook CRD 分发到 member1
 
 ```bash
 kubectl apply -f guestbooks-clusterpropagationpolicy.yaml
@@ -65,19 +66,18 @@ spec:
         - member1
 ```
 
-The CRD will be propagated to member clusters according to the rules defined in ClusterPropagationPolicy.
+根据 ClusterPropagationPolicy 中定义的规则，此 CRD 将分发到成员集群。
 
-> Note: We can only use ClusterPropagationPolicy not PropagationPolicy here.
-> Please refer to FAQ Difference between [PropagationPolicy and ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/docs/frequently-asked-questions.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)
-> for more details.
+> 注意：在这里我们只能使用 ClusterPropagationPolicy 而不是 PropagationPolicy。
+> 更多详细信息，请参考 FAQ [PropagationPolicy and ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/docs/frequently-asked-questions.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)
 
-3. Create a Guestbook CR named `guestbook-sample` in Karmada control plane
+3. 在 Karmada 控制平面上创建名为 `guestbook-sample` 的 Guestbook CR
 
 ```bash
 kubectl apply -f guestbook.yaml
 ```
 
-4. Create PropagationPolicy that will propagate `guestbook-sample` to member1
+4. 创建 PropagationPolicy，将 `guestbook-sample` 分发到 member1
 
 ```bash
 kubectl apply -f guestbooks-propagationpolicy.yaml
@@ -99,13 +99,13 @@ spec:
         - member1
 ```
 
-5. Check the `guestbook-sample` status from Karmada
+5. 检查 Karmada 中 `guestbook-sample` 的状态
 
 ```bash
 kubectl get guestbook -oyaml
 ```
 
-The output is similar to:
+输出类似于以下内容：
 
 ```yaml
 apiVersion: webapp.my.domain/v1
@@ -129,9 +129,9 @@ spec:
   size: 2
 ```
 
-## Customize CRD application
+## 自定义 CRD
 
-1. Create OverridePolicy that will override the size field of guestbook-sample in member1
+1. 创建 OverridePolicy，将覆盖 member1 中 guestbook-sample 的 size 字段。
 
 ```bash
 kubectl apply -f guestbooks-overridepolicy.yaml
@@ -161,14 +161,14 @@ spec:
         value: {"OverridePolicy":"test"}
 ```
 
-2. Check the size field of `guestbook-sample` from member cluster
+2. 检查来自成员集群的 `guestbook-sample` 的 size 字段
 
 ```bash
 kubectl --kubeconfig=${HOME}/.kube/members.config config use-context member1
 kubectl --kubeconfig=${HOME}/.kube/members.config get guestbooks -o yaml
 ```
 
-If it works as expected, the `.spec.size` will be overwritten to `4`:
+如果按预期工作，则 `.spec.size` 将被覆盖为 `4`:
 
 ```yaml
 apiVersion: webapp.my.domain/v1

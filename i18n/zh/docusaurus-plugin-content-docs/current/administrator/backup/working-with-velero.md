@@ -54,7 +54,7 @@ export MINIO_ROOT_PASSWORD=minio123
 ./minio server /data --console-address="0.0.0.0:20001" --address="0.0.0.0:9000"
 ```
 
-用你希望 "MinIO " 存储数据的驱动器或目录的路径替换 `/data` 现在我们可以访问 `http://{SERVER_EXTERNAL_IP}/20001` 在浏览器中访问 `MinIO` 控制台用户界面。
+用你希望 "MinIO" 存储数据的驱动器或目录的路径替换 `/data` 现在我们可以访问 `http://{SERVER_EXTERNAL_IP}/20001` 在浏览器中访问 `MinIO` 控制台用户界面。
 而 `Velero` 可以使用 `http://{SERVER_EXTERNAL_IP}/9000` 来连接 `MinIO`。
 这两个配置将使我们的后续工作更容易和更方便。
 
