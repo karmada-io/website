@@ -27,7 +27,9 @@ along with components startup. Some controllers may be shared by `karmada-contro
 | federatedResourceQuotaSync   | Y                             | N                     |
 | federatedResourceQuotaStatus | Y                             | N                     |
 | gracefulEviction             | Y                             | N                     |
-| certRotation                 | N                             | Y(disabled by default)|               
+| certRotation                 | N                             | Y(disabled by default)|
+| applicationFailover          | Y                             | N                     |           
+| federatedHPA                 | Y                             | N                     |  
 
 ### Configure Karmada Controllers
 
