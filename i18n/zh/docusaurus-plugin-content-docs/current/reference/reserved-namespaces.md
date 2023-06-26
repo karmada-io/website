@@ -1,12 +1,11 @@
 ---
-title: Reserved Namespaces
+title: 保留命名空间
 ---
 
-> Note: Avoid creating namespaces with the prefix `kube-` and `karmada-`, since they are reserved for Kubernetes
-> and Karmada system namespaces.
-> For now, resources under the following namespaces will not be propagated:
+> 注意: 应避免创建以 kube- 和 karmada- 为前缀的命名空间，因为它们被 Kubernetes 和 Karmada 系统命名空间所保留。
+> 目前，以下命名空间中的资源不会被复制：
 
-- namespaces prefix `kube-`(including but not limited to `kube-system`, `kube-public`, `kube-node-lease`)
+- 命名空间前缀为 `kube-`(包括但不限于 `kube-system`, `kube-public`, `kube-node-lease`)
 - karmada-system
 - karmada-cluster
 - karmada-es-*
