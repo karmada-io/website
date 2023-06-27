@@ -117,7 +117,7 @@ fake-pod-78884479b7-h2fv6   1/1     Running   0          6s    10.0.0.31   fake-
 
 
 
-## Distribute resources using CLusterLoader2
+## Distribute resources using ClusterLoader2
 
 ### ClusterLoader2
 
