@@ -1,29 +1,29 @@
 ---
-title: Concepts
+title: 核心概念
 ---
 
-This page introduces some core concepts about Karmada.
+本页面介绍了有关 Karmada 的一些核心概念。
 
-## Resource Template
+## 资源模板
 
-Karmada uses the Kubernetes Native API definition for the federated resource template, to make it easy to integrate with existing tools that have already been adopted by Kubernetes.
+Karmada 使用 Kubernetes 原生 API 定义联邦资源模板，以便轻松与现有 Kubernetes 采用的工具进行集成。
 
-## Propagation Policy
+## 调度策略
 
-Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster scheduling and spreading requirements.
+Karmada 提供了一个独立的 Propagation(placement) Policy API 来定义多集群的调度要求。
 
-- Support 1:n mapping of policy: workload. Users don't need to indicate scheduling constraints every time creating federated applications.
+- 支持 1:N 的策略映射机制。用户无需每次创建联邦应用时都标明调度约束。
 
-- With default policies, users can directly interact with the Kubernetes API.
+- 在使用默认策略的情况下，用户可以直接与 Kubernetes API 交互。
 
-## Override Policy
+## 差异化策略
 
-Karmada provides a standalone Override Policy API for specializing the automation of cluster-related configuration. For example:
+Karmada 为不同的集群提供了一个可自动化生产独立配置的 Override Policy API。例如：
 
-- Override the image prefix based on the member cluster region.
+- 基于成员集群所在区域自动配置不同镜像仓库地址。
 
-- Override StorageClass depending on your cloud provider.
+- 根据集群不同的云厂商，可以使用不同的存储类。
 
-The following diagram shows how Karmada resources are propagated to member clusters.
+下图显示了 Karmada 资源如何调度到成员集群。
 
 ![karmada-resource-relation](../resources/general/karmada-resource-relation.png)
