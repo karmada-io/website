@@ -2,19 +2,16 @@
 title: karmada-agent
 ---
 
-
-
-### Synopsis
+## Synopsis
 
 The karmada-agent is the agent of member clusters. It can register a specific cluster to the Karmada control
-plane and sync manifests from the Karmada control plane to the member cluster. In addition, it also syncs the status of member 
-cluster and manifests to the Karmada control plane.
+plane and sync manifests from the Karmada control plane to the member cluster. In addition, it also syncs the status of member cluster and manifests to the Karmada control plane.
 
 ```
 karmada-agent [flags]
 ```
 
-### Options
+## Options
 
 ```
       --add_dir_header                                 If true, adds the file directory to the header of the log messages
