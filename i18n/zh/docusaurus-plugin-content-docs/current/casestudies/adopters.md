@@ -31,3 +31,4 @@ title: Karmada 生产案例汇总
 | 中国联通数字科技   | http://www.chinaunicom.com.cn | 使用 Karmada 构建多策略和多地域的智能分布式容器平台                                                                 | 待定                                                |
 | 中通快递       | https://www.zto.com           | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
 | 新浪         | http://www.sina.com.cn        | 使用Karmada构建用于运行数据库服务的多K8s集群平台                                                                  | TBD                                               |
+|Shopee       | https://shopee.com             | 使用 Karmada 实现多集群管理与应用分发                                                                        |  [Karmada 在 Shopee 的落地实践](https://www.youtube.com/watch?v=jZg6TmyciyI )|
