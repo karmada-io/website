@@ -3,7 +3,9 @@ title: Key Features
 ---
 
 ## Cross-cloud multi-cluster multi-mode management
+
 Karmada supports:
+
 * Safe isolation:
   * Create a namespace for each cluster, prefixed with `karmada-es-`.
 * [Multi-mode](https://karmada.io/docs/userguide/clustermanager/cluster-registration) connection:
@@ -18,9 +20,10 @@ The overall relationship between the member cluster and the control plane is sho
 
 ![overall-relationship.png](../resources/key-features/overall-relationship.png)
 
-
 ## Multi-policy multi-cluster scheduling
+
 Karmada supports:
+
 * Cluster distribution capability under [different scheduling strategies](https://karmada.io/docs/userguide/scheduling/resource-propagating):
   * ClusterAffinity: Oriented scheduling based on ClusterName, Label, Field.
   * Toleration: Scheduling based on Taint and Toleration.
@@ -43,9 +46,10 @@ If one cluster does not have enough resource to accommodate their pods, Karamda 
 
 ![overall-relationship.png](../resources/key-features/overall-rescheduling.png)
 
-
 ## Cross-cluster failover of applications
+
 Karmada supports:
+
 * [Cluster failover](https://karmada.io/docs/userguide/failover/):
   * Karmada supports users to set distribution policies, and automatically migrates the faulty cluster replicas in a centralized or decentralized manner after a cluster failure.
 * Cluster taint settings:
@@ -58,7 +62,9 @@ Karmada supports failover for clusters, one cluster failure will cause failover 
 ![overall-relationship.png](../resources/key-features/cluster-failover.png)
 
 ## Global Uniform Resource View
+
 Karmada supports:
+
 * [Resource status collection and aggregation](https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter): Collect and aggregate state into resource templates with the help of the Resource Interpreter.
   * User-defined resource, triggering webhook remote calls.
   * Fixed encoding in Karmada for some common resource types.
@@ -77,7 +83,9 @@ Users also can check and search all member clusters resources via karmada-apiser
 ![overall-relationship.png](../resources/key-features/unified-search.png)
 
 ## Best Production Practices
+
 Karmada supports:
+
 * [Unified authentication](../userguide/bestpractices/unified-auth.md):
   * Aggregate API unified access entry.
   * Access control is consistent with member clusters.
@@ -97,7 +105,9 @@ Users also can defined global resource quota via `FederatedResourceQuota`:
 ![overall-relationship.png](../resources/key-features/unified-resourcequota.png)
 
 ## Cross-cluster service governance
+
 karmada supports:
+
 * [Multi-cluster service discovery](https://karmada.io/docs/userguide/service/multi-cluster-service):
   * With ServiceExport and ServiceImport, achieving cross-cluster service discovery.
 * [Multi-cluster network support](https://karmada.io/docs/userguide/network/working-with-submariner):
@@ -108,4 +118,3 @@ karmada supports:
 Users can enable service governance for cross-cluster with Karmada:  
 
 ![overall-relationship.png](../resources/key-features/service-governance.png)
-
