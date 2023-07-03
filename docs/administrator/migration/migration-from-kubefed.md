@@ -2,16 +2,16 @@
 title: Migration From Kubefed
 ---
 
-Karmada is developed in continuation of Kubernetes [Federation v1](https://github.com/kubernetes-retired/federation) 
+Karmada is developed in continuation of Kubernetes [Federation v1](https://github.com/kubernetes-retired/federation)
 and [Federation v2(aka Kubefed)](https://github.com/kubernetes-sigs/kubefed). Karmada inherited a lot of concepts
 from these two versions. For example:
 
-- **Resource template**: Karmada uses Kubernetes Native API definition for federated resource template, 
+- **Resource template**: Karmada uses Kubernetes Native API definition for federated resource template,
   to make it easy to integrate with existing tools that already adopt Kubernetes.
-- **Propagation Policy**: Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster 
+- **Propagation Policy**: Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster
   scheduling and spreading requirements.
 - **Override Policy**: Karmada provides a standalone Override Policy API for specializing cluster relevant
-  configuration automation. 
+  configuration automation.
 
 Most of the features in Kubefed have been reformed in Karmada, so Karmada would be the natural successor.
 
@@ -68,7 +68,7 @@ member1   v1.20.7   Push   True    66s
 ```
 
 Kubefed manages clusters with `Push` mode, however Karmada supports both `Push` and `Pull` modes.
-Refer to [Overview of cluster mode](https://karmada.io/docs/userguide/clustermanager/cluster-registration) for 
+Refer to [Overview of cluster mode](https://karmada.io/docs/userguide/clustermanager/cluster-registration) for
 more details.
 
 ### Unjoining clusters
@@ -92,6 +92,7 @@ from the control plane by removing the cluster object.
 
 Assume you are going to propagate a workload (`Deployment`) to both clusters named `cluster1` and `cluster2`,
 you might have to deploy following yaml to Kubefed:
+
 ```yaml
 apiVersion: types.kubefed.io/v1beta1
 kind: FederatedDeployment
@@ -138,6 +139,7 @@ spec:
 Now with Karmada, the yaml could be split into 3 yamls, one for each of the `template`, `placement` and `overrides`.
 
 In Karmada, the template doesn't need to embed into `Federated CRD`, it just the same as Kubernetes native declaration:
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -161,6 +163,7 @@ spec:
 ```
 
 For the `placement` part, Karmada provides `PropagationPolicy` API to hold the placement rules:
+
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -182,7 +185,8 @@ The `PropagationPolicy` defines the rules of which resources(`resourceSelectors`
 where (`placement`). 
 See [Resource Propagating](https://karmada.io/docs/userguide/scheduling/resource-propagating) for more details.
 
-For the `override` part, Karmada provides `OverridePolicy` API to hold the rules for differentiation：
+For the `override` part, Karmada provides `OverridePolicy` API to hold the rules for differentiation:
+
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -229,5 +233,5 @@ We don't have the plan yet, as we reached some Kubefed users and found that they
 Kubefed but the forked version, they extended Kubefed a lot to meet their requirements. So, it might be pretty
 hard to maintain a common tool to satisfy most users.
 
-We are also looking forward more feedback now, please feel free to reach us, and we are glad to support you
+We are also looking forward to more feedback now, please feel free to reach us, and we are glad to support you
 finish the migration.
