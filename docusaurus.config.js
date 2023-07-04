@@ -122,6 +122,12 @@ module.exports = {
           position: "left",
         },
         {
+          to: "adopters/adopters",
+          activeBasePath: "adopters",
+          label: "Adopters",
+          position: "left",
+        },
+        {
           type: "localeDropdown",
           position: "right",
         },
@@ -203,6 +209,20 @@ module.exports = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+      },
+    ],
+  ],
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'adopters',
+        path: 'adopters',
+        routeBasePath: 'adopters',
+        include: ['**/*.md'],
+        sidebarPath: require.resolve('./sidebar-adopters.js'),
+        showLastUpdateAuthor: true,
+        showLastUpdateTime: true,
       },
     ],
   ],
