@@ -1,25 +1,23 @@
 ---
-title: Documentation Releasing
+title: 文档发布
 ---
 
-Every minor release will have a corresponding documentation release. This guide is an introduction of the whole release procedure.
+每个小版本都有相应的文档版本。本指南是对整个发布过程的介绍。
 
-## Keep Multilingual Documents in Sync(manually)
+## 保持多语言文档同步(手动)
 
-Sometimes contributors do not update the content of the documentation in all languages. Before releasing, ensure the multilingual documents are in sync.
-This will be tracked by an issue. The issue should follow the format:
+有时贡献者不会更新所有语言文档的内容。在发布之前，请确保多语种文档同步。这将通过一个 issue 来跟踪。issue 应遵循以下格式:
 
 ```
 This issue is to track documents which needs to sync zh for release 1.x:
 * #268
 ```
 
-## Update Reference Documents(manually)
+## 更新参考文档(手动)
 
-Before releasing, we need to update reference docs in the website, which includes CLI references and component references. The whole process is done by scripts automatically.
-Follow these steps to update reference docs.
+在发布之前，我们需要更新网站中的参考文档，包括 CLI 引用和组件引用。整个过程由脚本自动完成。按照以下步骤更新参考文档。
 
-1. Clone `karmada-io/karmada` and `karmada-io/website` to the local environment. It's recommended to step up these two projects in the same folder.
+1. 将 `karmada-io/karmada` 和 `karmada-io/website` 克隆到本地环境。建议将这两个项目放在同一个文件夹中。
 
 ```text
 $ git clone https://github.com/karmada-io/karmada.git
@@ -32,7 +30,7 @@ $ tree -L 1
 #├── website
 ```
 
-2. Run generate command in karmada root dir.
+2. 在 karmada 根目录下执行 generate 命令。
 
 ```shell
 cd karmada/
@@ -40,7 +38,7 @@ go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/docs/ref
 go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/karmadactl/karmadactl-commands/
 ```
 
-3. Generate reference docs of each component one by one. Here we take `karmada-apiserver` as an example.
+3. 逐一生成每个组件的参考文档。这里我们以 `karmada-apiserver` 为例
 
 ```shell
 cd karmada/
@@ -49,9 +47,9 @@ go build ./hack/tools/gencomponentdocs/.
 ./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ karmada-apiserver
 ```
 
-## Setup release-1.x(manually)
+## 建立 release-1.x(手动)
 
-1. Update versions.json
+1. 更新 versions.json
 
 ```shell
 cd website/
@@ -64,14 +62,14 @@ vim versions.json
 ]
 ```
 
-2. Update versioned_docs
+2. 更新 vesioned_docs
 
 ```shell
 mkdir versioned_docs/version-v1.5
 cp docs/* versioned_docs/version-v1.5 -r
 ```
 
-3. Update versioned_sidebars
+3. 更新 versioned_sidebars
 
 ```shell
 cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5-sidebars.json
@@ -79,18 +77,18 @@ sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-side
 # update version-v1.5-sidebars.json based on sidebars.js
 ```
 
-4. Update versioned_docs for zh
+4. 更新中文的 versioned_docs
 
 ```shell
 mkdir i18n/zh/docusaurus-plugin-content-docs/version-v1.5
 cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5 -r
 ```
 
-5. Update versioned_sidebars for zh
+5. 更新中文的 versioned_sidebars
 
 ```shell
 cp i18n/zh/docusaurus-plugin-content-docs/current.json i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
 sed -i'' -e "s/Next/v1.5/g" i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
 ```
 
-## Check the difference of website and send a pull request(manually)
+## 检查变更的文件和主仓库的差异部分，并创建 Pull Request(手动)
