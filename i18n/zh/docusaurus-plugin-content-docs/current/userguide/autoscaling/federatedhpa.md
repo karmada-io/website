@@ -2,36 +2,39 @@
 title: FederatedHPA
 ---
 
-In Karmada, a FederatedHPA scales up/down the workload's replicas across multiple clusters, with the aim of automatically scaling the workload to match the demand.
+在 Karmada 中，FederatedHPA 可以跨多个集群扩展/缩小工作负载的副本，旨在根据需求自动调整工作负载的规模。
 ![img](../../resources/userguide/autoscaling/federatedhpa-overview.png)
 
-When the load is increase, FederatedHPA scales up the replicas of the workload(the Deployment, StatefulSet, or other similar resource) if the number of Pods is under the configured maximum. When the load is decrease, FederatedHPA scales down the replicas of the workload if the number of Pods is above the configured minimum.
+当负载增加时，如果 Pod 的数量低于配置的最大值，则 FederatedHPA 扩展工作负载（例如 Deployment、StatefulSet 或其他类似资源）的副本数。
+当负载减少时，如果 Pod 的数量高于配置的最小值，则 FederatedHPA 缩小工作负载的副本数。
 
-FederatedHPA does not apply to objects that can't be scaled (for example: a DaemonSet.)
+FederatedHPA 不适用于不能进行扩缩的对象（例如 DaemonSet）。
 
-The FederatedHPA is implemented as a Karmada API resource and a controller, the resource determines the behavior of the controller. The FederatedHPA controller, running within the Karmada control plane, periodically adjusts the desired scale of its target (for example, a Deployment) to match observed metrics such as average CPU utilization, average memory utilization, or any other custom metric you specify.
+FederatedHPA 是作为 Karmada API 资源和控制器实现的，该资源确定了控制器的行为。
+FederatedHPA 控制器运行在 Karmada 控制平面中，定期调整其目标（例如 Deployment）的所需规模，
+以匹配观察到的指标，例如平均 CPU 利用率、平均内存利用率或任何其他自定义指标。
 
 
-## How does a FederatedHPA work?
+## FederatedHPA 如何工作？
 
 ![federatedhpa-architecture](../../resources/userguide/autoscaling/federatedhpa-architecture.png)  
-To implement autoscaling across clusters, Karmada introduces FederatedHPA controller and karmada-metrics-adapter, they works as follows:
-1. HPA controller queries metrics via metrics API `metrics.k8s.io` or `custom.metrics.k8s.io` with label selector periodically.
-1. `karmada-apiserver` gets the metrics API query, and it will route to karmada-metrics-adapter via API service registration.
-1. `karmada-metrics-adapter` will query the metrics from the target clusters(where the pod exists). After the metrics are collected, it will aggregate them and return it.
-1. HPA controller will calculate the desired replicas based on metrics and scale the workload directly. Then `karmada-scheduler` will schedule the replicas to the member clusters.
+为了实现跨集群的自动扩缩容，Karmada 引入了 FederatedHPA 控制器和 `karmada-metrics-adapter`，它们的工作方式如下：
+1. HPA 控制器定期通过指标 API `metrics.k8s.io` 或 `custom.metrics.k8s.io` 使用标签选择器查询指标。
+1. `karmada-apiserver` 获取指标 API 查询结果，然后通过 API 服务注册将其路由到 `karmada-metrics-adapter`。
+1. `karmada-metrics-adapter` 将从目标集群（Pod 所在的集群）查询指标。收集到指标后，它会对这些指标进行聚合并返回结果。
+1. HPA 控制器将根据指标计算所需的副本数，并直接扩展/缩小工作负载的规模。然后，`karmada-scheduler` 将这些副本调度到成员集群中。
 
-> Note: To use this feature, The Karmada version must be v1.6.0 or later.
+> 注意：要使用此功能，Karmada 版本必须为 v1.6.0 或更高版本。
 
-## API Object
+## API 对象
 
-The FederatedHPA is an API in the Karmada autoscaling API group. The current version is v1alpha1, which only supports CPU and Memory metrics.  
+FederatedHPA 是 Karmada 弹性伸缩 API 组中的一个 API。当前版本为 v1alpha1，仅支持 CPU 和内存指标。 
 
-You can check the FederatedHPA API specification [here](https://github.com/karmada-io/karmada/blob/76acb6d66f462e7e202c52cc4bb19a4798daf124/pkg/apis/autoscaling/v1alpha1/federatedhpa_types.go#L23).
+您可以在[这里](https://github.com/karmada-io/karmada/blob/release-1.6/pkg/apis/autoscaling/v1alpha1/federatedhpa_types.go#L23)查看 FederatedHPA API 规范。
 
-## What's next
+## 后续规划
 
-If you configure FederatedHPA, you may also want to consider running a cluster-level autoscaler such as [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler).  
+如果您配置了 FederatedHPA，则可能还需要考虑运行类似于 [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) 的集群级别自动扩缩容工具。 
 
-For more information on FederatedHPA:
-* Read a [FederatedHPA tutorials](../../tutorials/autoscaling-with-federatedhpa.md) for FederatedHPA.
+有关 FederatedHPA 的更多信息：
+* 阅读 [FederatedHPA 教程](../../tutorials/autoscaling-with-federatedhpa.md)以了解 FederatedHPA。

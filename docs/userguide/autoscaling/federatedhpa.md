@@ -15,9 +15,9 @@ The FederatedHPA is implemented as a Karmada API resource and a controller, the 
 ## How does a FederatedHPA work?
 
 ![federatedhpa-architecture](../../resources/userguide/autoscaling/federatedhpa-architecture.png)  
-To implement autoscaling across clusters, Karmada introduces FederatedHPA controller and karmada-metrics-adapter, they works as follows:
+To implement autoscaling across clusters, Karmada introduces FederatedHPA controller and `karmada-metrics-adapter`, they works as follows:
 1. HPA controller queries metrics via metrics API `metrics.k8s.io` or `custom.metrics.k8s.io` with label selector periodically.
-1. `karmada-apiserver` gets the metrics API query, and it will route to karmada-metrics-adapter via API service registration.
+1. `karmada-apiserver` gets the metrics API query, and it will route to `karmada-metrics-adapter` via API service registration.
 1. `karmada-metrics-adapter` will query the metrics from the target clusters(where the pod exists). After the metrics are collected, it will aggregate them and return it.
 1. HPA controller will calculate the desired replicas based on metrics and scale the workload directly. Then `karmada-scheduler` will schedule the replicas to the member clusters.
 
