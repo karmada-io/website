@@ -214,15 +214,15 @@ tar -xvf karmada.tar
 
 ## Health Check Script
 
-(1) You can use following `check_status.sh` to check if all components are healthy.
+(1) You can use the following `check_status.sh` to check if all components are healthy.
 
 Download [this file](https://github.com/karmada-io/website/tree/main/docs/resources/installation/install-binary/other_scripts/check_status.sh).
 
-Note: If you are using CentOS 7, you need to run `yum update -y nss curl` to update curl version, then curl may support tls 1.3. If curl still does not support tls 1.3, you need to update OS version which includes newer curl, or simply use a go program to do health check.
+Note: If you are using CentOS 7, you need to run `yum update -y nss curl` to update curl version, then curl may support tls 1.3. If curl still does not support tls 1.3, you need to update OS version which includes newer curl, or simply use a go program to do a health check.
 
 
 
-(2) Usage: `./check_status.sh` 
+(2) Usage: `./check_status.sh`
 
 ## Install etcd cluster
 
@@ -1098,7 +1098,7 @@ spec:
 (2) Create Service
 
 ```bash
-kubectl create --kubeconfig "/etc/karmada/admin.kubeconfig" -f karmada-scheduler-estimator.yaml 
+kubectl create --kubeconfig "/etc/karmada/admin.kubeconfig" -f karmada-scheduler-estimator.yaml
 ```
 
 ### Verify

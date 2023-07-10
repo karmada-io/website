@@ -10,7 +10,7 @@ You can install `karmadactl` in any of the following ways:
 
 ### One-click installation
 
-Karmada provides `karmadactl` download service since v1.2.0. You can choose the proper version which fits your operator system form [karmada release](https://github.com/karmada-io/karmada/releases).
+Karmada provides `karmadactl` download service since v1.2.0. You can choose the proper version which fits your operating system from [karmada release](https://github.com/karmada-io/karmada/releases).
 
 To install the latest release run:
 
@@ -67,7 +67,7 @@ For installation instructions see [installing kubectl](https://kubernetes.io/doc
 
 ### One-click installation
 
-Karmada provides `kubectl-karmada` plug-in download service since v0.9.0. You can choose proper plug-in version which fits your operator system form [karmada release](https://github.com/karmada-io/karmada/releases).
+Karmada provides `kubectl-karmada` plug-in download service since v0.9.0. You can choose the proper plug-in version which fits your operating system from [karmada release](https://github.com/karmada-io/karmada/releases).
 
 The installation process is the same as installing karmadactl, you only need to add a parameter of `kubectl-karmada`.
 

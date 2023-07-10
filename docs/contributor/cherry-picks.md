@@ -80,7 +80,7 @@ patch release branches.
   ```
 
   - Be aware the cherry pick script assumes you have a git remote called
-    `upstream` that points at the Karmada github org.
+    `upstream` that points to the Karmada github org.
 
   - You will need to run the cherry pick script separately for each patch
     release you want to cherry pick to. Cherry picks should be applied to all
