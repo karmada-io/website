@@ -11,12 +11,12 @@ For installation instructions see [installing kubectl-karmada](./install-cli-too
 
 ### Karmadactl
 `karmadactl` is also the command-line tool that lets you control the Karmada control plane. Compared with kubectl-karmada,
-it is a complete CLI tool exclusive to Karmada. 
+it is a complete CLI tool exclusive to Karmada.
 For installation instructions see [installing karmadactl](./install-cli-tools.md#install-karmadactl).
 
 :::note
 
-Although the above two tools have different forms, the related commands and options are exactly the same. 
+Although the above two tools have different forms, the related commands and options are exactly the same.
 The following takes kubectl-karmada as an example.
 Replacing it with karmadactl also works fine.
 
@@ -114,7 +114,7 @@ kubectl karmada init --crds /$HOME/crds.tar.gz
 
 The images of Karmada components could be specified, take `karmada-controller-manager` as an example:
 ```bash
-kubectl karmada init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0 
+kubectl karmada init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0
 ```
 
 #### Deploy HA
@@ -172,7 +172,7 @@ Please refer to [installing from source](./fromsource.md).
 ## Install Karmada for development environment
 
 If you want to try Karmada, we recommend that build a development environment by
-`hack/local-up-karmada.sh` which will do following tasks for you:
+`hack/local-up-karmada.sh` which will do the following tasks for you:
 - Start a Kubernetes cluster by [kind](https://kind.sigs.k8s.io/) to run the Karmada control plane, aka. the `host cluster`.
 - Build Karmada control plane components based on a current codebase.
 - Deploy Karmada control plane components on the `host cluster`.
@@ -199,7 +199,7 @@ run the following script:
 ```
 hack/local-up-karmada.sh
 ```
-This script will do following tasks for you:
+This script will do the following tasks for you:
 - Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
 - Build Karmada control plane components based on a current codebase.
 - Deploy Karmada control plane components on the `host cluster`.

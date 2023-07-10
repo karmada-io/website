@@ -3,7 +3,7 @@ title: How to manage lifted codes
 ---
 
 This document explains how lifted code is managed.
-A common user case for this task is developer lifting code from other repositories to `pkg/util/lifted` directory.
+A common use case for this task is developer lifting code from other repositories to `pkg/util/lifted` directory.
 
 - [Steps of lifting code](#steps-of-lifting-code)
 - [How to write lifted comments](#how-to-write-lifted-comments)
@@ -16,11 +16,11 @@ A common user case for this task is developer lifting code from other repositori
 - Run `hack/update-lifted.sh` to update the lifted doc `pkg/util/lifted/doc.go`.
 
 ## How to write lifted comments
-Lifted comments shall be placed just before the lifted code (could be a func, type, var or const). Only empty lines and comments are allowed between lifted comments and lifted code.
+Lifted comments shall be placed just before the lifted code (could be a func, type, var, or const). Only empty lines and comments are allowed between lifted comments and lifted code.
 
-Lifted comments are composed by one or multi comment lines, each in the format of `+lifted:KEY[=VALUE]`. Value is optional for some keys.
+Lifted comments are composed of one or multi comment lines, each in the format of `+lifted:KEY[=VALUE]`. Value is optional for some keys.
 
-Valid keys are as follow：
+Valid keys are as follows：
 
 - source:
 

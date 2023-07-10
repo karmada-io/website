@@ -13,7 +13,7 @@ the `karmada-io/website` repository.
 - Docs need to be translated into multiple languages for readers from different regions.
   The community now supports both Chinese and English.
   English is the official language of documentation.
-- For our docs we use markdown. If you are unfamiliar with Markdown, please see https://guides.github.com/features/mastering-markdown/ or https://www.markdownguide.org/ if you are looking for something more substantial. 
+- For our docs we use markdown. If you are unfamiliar with Markdown, please see https://guides.github.com/features/mastering-markdown/ or https://www.markdownguide.org/ if you are looking for something more substantial.
 - We get some additions through [Docusaurus 2](https://docusaurus.io/), a model static website generator.
 
 ## Setup
@@ -86,7 +86,7 @@ title: A doc with tags
 ```
 
 The top section between two lines of --- is the Front Matter section. Here we define a couple of entries which tell Docusaurus how to handle the article:
-* Title is the equivalent of the `<h1>` in a HTML document or `# <title>` in a Markdown article.
+* Title is the equivalent of the `<h1>` in an HTML document or `# <title>` in a Markdown article.
 * Each document has a unique ID. By default, a document ID is the name of the document (without the extension) related to the root docs directory.
 
 ### Linking to other docs
@@ -102,9 +102,9 @@ You can easily route to other places by adding any of the following links:
   Now we store public pictures about Karmada in `/docs/resources/general`. You can use the following to link the pictures:
   * `![Git workflow](../resources/contributor/git_workflow.png)`
 
-### Directory organization 
+### Directory organization
 
-Docusaurus 2 uses a sidebar to manage documents. 
+Docusaurus 2 uses a sidebar to manage documents.
 
 Creating a sidebar is useful to:
 * Group multiple related documents
@@ -157,14 +157,14 @@ If you add a document, you must add it to `sidebars.js` to make it display prope
 ### About Chinese docs
 
 If you want to contribute to our Chinese documentation, you can:
-* Translate our existing English docs to Chinese. In this case, you need to modify the corresponding file content from <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current>. 
+* Translate our existing English docs to Chinese. In this case, you need to modify the corresponding file content from <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current>.
   The organization of this directory is exactly the same as the outer layer. `current.json` holds translations for the documentation directory. You can edit it if you want to translate the name of directory.
 * Submit Chinese docs without the English version. No limits on the topic or category. In this case, you can add an empty article and its title to the main directory first, and complete the rest later.
   Then add the corresponding Chinese content to the Chinese directory.
 
 ## Debugging docs
 
-Now you have already completed docs. After you start a PR to `karmada.io/website`, if you have passed CI, you can get a preview of your document on the website.
+Now you have already completed the docs. After you start a PR to `karmada.io/website`, if you have passed CI, you can get a preview of your document on the website.
 
 Click **Details** marked in red, and you will enter the preview view of the website.
 

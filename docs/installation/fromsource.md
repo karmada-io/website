@@ -13,19 +13,19 @@ The `hack/remote-up-karmada.sh` will install `karmada-apiserver` and provide two
 
 By default, the `hack/remote-up-karmada.sh` will expose `karmada-apiserver` by `HostNetwork`.
 
-No extra operations needed with this type.
+No extra operations are needed with this type.
 
 ### 2. expose by service with `LoadBalancer` type
 
 If you don't want to use the `HostNetwork`, you can ask `hack/remote-up-karmada.sh` to expose `karmada-apiserver`
-by a service with `LoadBalancer` type that *requires your cluster have deployed the `Load Balancer`*.
+by a service with `LoadBalancer` type that *requires your cluster to have deployed the `Load Balancer`*.
 All you need to do is set an environment:
 ```bash
 export LOAD_BALANCER=true
 ```
 
 ## Install
-From the `root` directory the `karmada` repo, install Karmada by command:
+From the `root` directory of the `karmada` repo, install Karmada by command:
 ```bash
 hack/remote-up-karmada.sh <kubeconfig> <context_name>
 ```

@@ -31,7 +31,7 @@ run the following script:
 ```
 # hack/local-up-karmada.sh
 ```
-This script will do following tasks for you:
+This script will do the following tasks for you:
 - Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
 - Build Karmada control plane components based on a current codebase.
 - Deploy Karmada control plane components on the `host cluster`.
