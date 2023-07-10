@@ -122,6 +122,11 @@ module.exports = {
           position: "left",
         },
         {
+          to: "adopters",
+          label: "Adopters",
+          position: "left",
+        },
+        {
           type: "localeDropdown",
           position: "right",
         },
@@ -163,6 +168,10 @@ module.exports = {
               label: "Blog",
               to: "blog",
             },
+            {
+              label: "Adopters",
+              to: "adopters",
+            }
           ],
         },
       ],
@@ -199,6 +208,18 @@ module.exports = {
         blog: {
           showReadingTime: true,
           editUrl: "https://github.com/karmada-io/website/tree/main/",
+        },
+        pages: {
+          path: "src/pages",
+          routeBasePath: "/",
+          include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
+          exclude: [
+            "**/_*.{js,jsx,ts,tsx,md,mdx}",
+            "**/_*/**",
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/__tests__/**",
+          ],
+          mdxPageComponent: "@theme/MDXPage",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
