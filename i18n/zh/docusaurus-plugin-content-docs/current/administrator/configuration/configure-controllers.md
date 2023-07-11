@@ -119,7 +119,7 @@ For the Karmada control plane, we also provide the capability to clean up finish
 specifying the `.spec.ttlSecondsAfterFinished` field of a Job, which will be a relief for the control plane.
 
 More details please refer to:
-- [ttl after finished controller](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/#ttl-after-finished-controller)
+- [update ttl for finished jobs](https://kubernetes.io/docs/concepts/workloads/controllers/ttlafterfinished/#updating-ttl-for-finished-jobs)
 - [clean up finished jobs automatically](https://kubernetes.io/docs/concepts/workloads/controllers/job/#clean-up-finished-jobs-automatically)
 
 #### bootstrapsigner
