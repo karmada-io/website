@@ -92,6 +92,7 @@ from the control plane by removing the cluster object.
 
 Assume you are going to propagate a workload (`Deployment`) to both clusters named `cluster1` and `cluster2`,
 you might have to deploy following yaml to Kubefed:
+
 ```yaml
 apiVersion: types.kubefed.io/v1beta1
 kind: FederatedDeployment
@@ -138,6 +139,7 @@ spec:
 Now with Karmada, the yaml could be split into 3 yamls, one for each of the `template`, `placement` and `overrides`.
 
 In Karmada, the template doesn't need to embed into `Federated CRD`, it just the same as Kubernetes native declaration:
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -161,6 +163,7 @@ spec:
 ```
 
 For the `placement` part, Karmada provides `PropagationPolicy` API to hold the placement rules:
+
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -182,7 +185,8 @@ The `PropagationPolicy` defines the rules of which resources(`resourceSelectors`
 where (`placement`).
 See [Resource Propagating](https://karmada.io/docs/userguide/scheduling/resource-propagating) for more details.
 
-For the `override` part, Karmada provides `OverridePolicy` API to hold the rules for differentiation：
+For the `override` part, Karmada provides `OverridePolicy` API to hold the rules for differentiation:
+
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
