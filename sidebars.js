@@ -8,6 +8,7 @@ module.exports = {
             collapsed: false,
             items: [
                 "core-concepts/introduction",
+                "core-concepts/components",
                 "core-concepts/concepts",
                 "core-concepts/architecture",
             ],
