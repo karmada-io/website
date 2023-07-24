@@ -480,8 +480,12 @@ If `ReplicaDivisionPreference` is set to `Weighted` and `WeightPreference` is no
 
 :::
 
-## Configure PropagationPolicy priority
+## Configure PropagationPolicy/ClusterPropagationPolicy priority
+If a PropagationPolicy and a ClusterPropagationPolicy match the workload, Karmada will select the PropagationPolicy.
 If multiple PropagationPolicies match the workload, Karmada will select the one with the highest priority. A PropagationPolicy supports implicit and explicit priorities.
+The same goes for ClusterPropagationPolicy.
+
+The following takes PropagationPolicy as an example.
 
 ### Configure explicit priority
 The `spec.priority` in a PropagationPolicy represents the explicit priority. A greater value means a higher priority. 
