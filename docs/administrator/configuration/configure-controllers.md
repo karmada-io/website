@@ -11,25 +11,25 @@ See [Kubernetes Controller Concepts][1] for more details.
 The controllers are embedded into components of `karmada-controller-manager` or `karmada-agent` and will be launched  
 along with components startup. Some controllers may be shared by `karmada-controller-manager` and `karmada-agent`.
 
-| Controller                   | In karmada-controller-manager | In karmada-agent      |
-|------------------------------|-------------------------------|-----------------------|
-| cluster                      | Y                             | N                     |
-| clusterStatus                | Y                             | Y                     |
-| binding                      | Y                             | N                     |
-| execution                    | Y                             | Y                     |
-| workStatus                   | Y                             | Y                     |
-| namespace                    | Y                             | N                     |
-| serviceExport                | Y                             | Y                     |
-| endpointSlice                | Y                             | N                     |
-| serviceImport                | Y                             | N                     |
-| unifiedAuth                  | Y                             | N                     |
-| hpa                          | Y(disabled by default)        | N                     |
-| federatedResourceQuotaSync   | Y                             | N                     |
-| federatedResourceQuotaStatus | Y                             | N                     |
-| gracefulEviction             | Y                             | N                     |
-| certRotation                 | N                             | Y(disabled by default)|
-| applicationFailover          | Y                             | N                     |           
-| federatedHPA                 | Y                             | N                     |  
+| Controller                             | In karmada-controller-manager | In karmada-agent      |
+|----------------------------------------|-------------------------------|-----------------------|
+| cluster                                | Y                             | N                     |
+| clusterStatus                          | Y                             | Y                     |
+| binding                                | Y                             | N                     |
+| execution                              | Y                             | Y                     |
+| workStatus                             | Y                             | Y                     |
+| namespace                              | Y                             | N                     |
+| serviceExport                          | Y                             | Y                     |
+| endpointSlice                          | Y                             | N                     |
+| serviceImport                          | Y                             | N                     |
+| unifiedAuth                            | Y                             | N                     |
+| federatedResourceQuotaSync             | Y                             | N                     |
+| federatedResourceQuotaStatus           | Y                             | N                     |
+| gracefulEviction                       | Y                             | N                     |
+| certRotation                           | N                             | Y(disabled by default)|  
+| applicationFailover                    | Y                             | N                     |
+| federatedHorizontalPodAutoscaler       | Y                             | N                     |
+| cronFederatedHorizontalPodAutoscaler   | Y                             | N                     |
 
 ### Configure Karmada Controllers
 
