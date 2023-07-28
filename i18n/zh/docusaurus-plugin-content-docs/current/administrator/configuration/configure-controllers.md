@@ -10,25 +10,25 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 这些控制器嵌入在 `karmada-controller-manager` 或 `karmada-agent` 的组件中，并且将随这些组件一起启动。
 一些控制器可能由 `karmada-controller-manager` 和 `karmada-agent` 共享。
 
-| 控制器                   | 在 karmada-controller-manager 中	 | 在 karmada-agent 中      |
-|------------------------------|-------------------------------|-----------------------|
-| cluster                      | 是                             | 否                     |
-| clusterStatus                | 是                             | 是                     |
-| binding                      | 是                             | 否                     |
-| execution                    | 是                             | 是                     |
-| workStatus                   | 是                             | 是                     |
-| namespace                    | 是                             | 否                     |
-| serviceExport                | 是                             | 是                     |
-| endpointSlice                | 是                             | 否                     |
-| serviceImport                | 是                             | 否                     |
-| unifiedAuth                  | 是                             | 否                     |
-| hpa                          | 是（默认禁用）        | 否                     |
-| federatedResourceQuotaSync   | 是                             | 否                     |
-| federatedResourceQuotaStatus | 是                             | 否                     |
-| gracefulEviction             | 是                             | 否                     |
-| certRotation                 | 否                             | 是（默认禁用）|
-| applicationFailover          | 是                             | 否                     |           
-| federatedHPA                 | 是                             | 否                     |     
+| 控制器                                 | 在 karmada-controller-manager 中	 | 在 karmada-agent 中      |
+|----------------------------------------|----------------------------------|--------------------------|
+| cluster                                | 是                               | 否                       |
+| clusterStatus                          | 是                               | 是                       |
+| binding                                | 是                               | 否                       |
+| execution                              | 是                               | 是                       |
+| workStatus                             | 是                               | 是                       |
+| namespace                              | 是                               | 否                       |
+| serviceExport                          | 是                               | 是                       |
+| endpointSlice                          | 是                               | 否                       |
+| serviceImport                          | 是                               | 否                       |
+| unifiedAuth                            | 是                               | 否                       |
+| federatedResourceQuotaSync             | 是                               | 否                       |
+| federatedResourceQuotaStatus           | 是                               | 否                       |
+| gracefulEviction                       | 是                               | 否                       |
+| certRotation                           | 否                               | 是（默认禁用）            |
+| applicationFailover                    | 是                               | 否                       |
+| federatedHorizontalPodAutoscaler       | 是                               | 否                       |
+| cronFederatedHorizontalPodAutoscaler   | 是                               | 否                       |
 
 ### 配置 Karmada 控制器
 
