@@ -32,6 +32,8 @@ module.exports = {
                 "tutorials/karmada-search",
                 "tutorials/autoscaling-with-federatedhpa",
                 "tutorials/autoscaling-with-custom-metrics",
+                "tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
+                "tutorials/autoscaling-workload-with-cronfederatedhpa",
             ],
         },
         {
@@ -136,6 +138,7 @@ module.exports = {
                     label: "Autoscaling across clusters",
                     items: [
                         "userguide/autoscaling/federatedhpa",
+                        "userguide/autoscaling/cronfederatedhpa",
                     ],
                 },
             ],
