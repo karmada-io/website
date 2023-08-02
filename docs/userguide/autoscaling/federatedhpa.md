@@ -25,7 +25,7 @@ To implement autoscaling across clusters, Karmada introduces FederatedHPA contro
 
 ## API Object
 
-The FederatedHPA is an API in the Karmada autoscaling API group. The current version is v1alpha1, which only supports CPU and Memory metrics.  
+The FederatedHPA is an API in the Karmada autoscaling API group. The current version is v1alpha1, which not only supports CPU and Memory metrics but also supports custom metrics.  
 
 You can check the FederatedHPA API specification [here](https://github.com/karmada-io/karmada/blob/76acb6d66f462e7e202c52cc4bb19a4798daf124/pkg/apis/autoscaling/v1alpha1/federatedhpa_types.go#L23).
 
@@ -35,3 +35,4 @@ If you configure FederatedHPA, you may also want to consider running a cluster-l
 
 For more information on FederatedHPA:
 * Read a [FederatedHPA tutorials](../../tutorials/autoscaling-with-federatedhpa.md) for FederatedHPA.
+* Read a [FederatedHPA tutorials with CPU/Memory utilization metrics](../../tutorials/autoscaling-with-custom-metrics.md) for FederatedHPA.
