@@ -75,7 +75,7 @@ kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver appl
 Manually create a long-lived api token for the serviceaccount `tom`:
 
 ```shell
-kubectl apply -f - <<EOF
+kubectl apply --kubeconfig ~/.kube/karmada.config -f - <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
