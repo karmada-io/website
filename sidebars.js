@@ -31,7 +31,6 @@ module.exports = {
                 "tutorials/crd-application",
                 "tutorials/karmada-search",
                 "tutorials/autoscaling-with-federatedhpa",
-                "tutorials/autoscaling-with-custom-metrics",
             ],
         },
         {
