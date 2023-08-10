@@ -11,25 +11,25 @@ See [Kubernetes Controller Concepts][1] for more details.
 The controllers are embedded into components of `karmada-controller-manager` or `karmada-agent` and will be launched  
 along with components startup. Some controllers may be shared by `karmada-controller-manager` and `karmada-agent`.
 
-| Controller                             | In karmada-controller-manager | In karmada-agent      |
-|----------------------------------------|-------------------------------|-----------------------|
-| cluster                                | Y                             | N                     |
-| clusterStatus                          | Y                             | Y                     |
-| binding                                | Y                             | N                     |
-| execution                              | Y                             | Y                     |
-| workStatus                             | Y                             | Y                     |
-| namespace                              | Y                             | N                     |
-| serviceExport                          | Y                             | Y                     |
-| endpointSlice                          | Y                             | N                     |
-| serviceImport                          | Y                             | N                     |
-| unifiedAuth                            | Y                             | N                     |
-| federatedResourceQuotaSync             | Y                             | N                     |
-| federatedResourceQuotaStatus           | Y                             | N                     |
-| gracefulEviction                       | Y                             | N                     |
-| certRotation                           | N                             | Y(disabled by default)|  
-| applicationFailover                    | Y                             | N                     |
-| federatedHorizontalPodAutoscaler       | Y                             | N                     |
-| cronFederatedHorizontalPodAutoscaler   | Y                             | N                     |
+| Controller                           | In karmada-controller-manager | In karmada-agent       |
+|--------------------------------------|-------------------------------|------------------------|
+| cluster                              | Y                             | N                      |
+| clusterStatus                        | Y                             | Y                      |
+| binding                              | Y                             | N                      |
+| execution                            | Y                             | Y                      |
+| workStatus                           | Y                             | Y                      |
+| namespace                            | Y                             | N                      |
+| serviceExport                        | Y                             | Y                      |
+| endpointSlice                        | Y                             | N                      |
+| serviceImport                        | Y                             | N                      |
+| unifiedAuth                          | Y                             | N                      |
+| federatedResourceQuotaSync           | Y                             | N                      |
+| federatedResourceQuotaStatus         | Y                             | N                      |
+| gracefulEviction                     | Y                             | N                      |
+| certRotation                         | N                             | Y(disabled by default) |
+| applicationFailover                  | Y                             | N                      |
+| federatedHorizontalPodAutoscaler     | Y                             | N                      |
+| cronFederatedHorizontalPodAutoscaler | Y                             | N                      |
 
 ### Configure Karmada Controllers
 
@@ -107,15 +107,27 @@ More details please refer to:
 - [service account token controller](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#token-controller)
 - [service account tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens)
 
+#### clusterrole-aggregation
+
+The `clusterrole-aggregation` controller runs as part of `kube-controller-manager`. It watches for ClusterRole objects
+with an aggregationRule set, and aggregate several ClusterRoles into one combined ClusterRole.
+
+For the Karmada control plane, it aggregates the read and write permissions under the `admin` ClusterRole in the namespace,
+and also aggregated the read and writ permissions for accessing Karmada namespace scope resources under `admin`.
+
+More details please refer to:
+- [Aggregated ClusterRoles](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles)
+- [grant admin clusterrole with karamda resource permission](https://github.com/karmada-io/karmada/issues/3916)
+
 ### Optional Controllers
 
 #### ttl-after-finished
 
 The `ttl-after-finished` controller runs as part of `kube-controller-manager`.
-It watches `Job` updates and limits the lifetime of finished `Jobs`. 
+It watches `Job` updates and limits the lifetime of finished `Jobs`.
 The TTL timer starts when the Job finishes, and the finished Job will be cleaned up after the TTL expires.
 
-For the Karmada control plane, we also provide the capability to clean up finished `Jobs` automatically by 
+For the Karmada control plane, we also provide the capability to clean up finished `Jobs` automatically by
 specifying the `.spec.ttlSecondsAfterFinished` field of a Job, which will be a relief for the control plane.
 
 More details please refer to:
