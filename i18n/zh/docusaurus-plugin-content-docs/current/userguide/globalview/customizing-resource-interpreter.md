@@ -90,6 +90,7 @@ title: 自定义资源解释器
 - Pod(v1)
 - DaemonSet(apps/v1)
 - StatefulSet(apps/v1)
+- Ingress(networking.k8s.io/v1)
 
 ### InterpretHealth
 
