@@ -44,6 +44,7 @@ module.exports = {
                 "installation/install-cli-tools",
                 "installation/fromsource",
                 "installation/install-binary",
+                "installation/ha-installation",
             ],
         },
         {
