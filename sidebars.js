@@ -195,6 +195,10 @@ module.exports = {
                         "administrator/backup/working-with-velero"
                     ],
                 },
+                {
+                    type: "doc",
+                    id: "administrator/verify-artifacts"
+                },
             ],
         },
         {
