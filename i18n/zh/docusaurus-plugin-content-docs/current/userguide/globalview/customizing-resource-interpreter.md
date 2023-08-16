@@ -37,6 +37,7 @@ title: 自定义资源解释器
 - Deployment(apps/v1)
 - StatefulSet(apps/v1)
 - Job(batch/v1)
+- Pod(v1)
 
 ### ReviseReplica
 
