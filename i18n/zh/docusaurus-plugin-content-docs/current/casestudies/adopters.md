@@ -32,3 +32,4 @@ title: Karmada 生产案例汇总
 | 中通快递       | https://www.zto.com           | 使用 Karmada 构建多集群平台                                                                             | 待定                                                |
 | 新浪         | http://www.sina.com.cn        | 使用Karmada构建用于运行数据库服务的多K8s集群平台                                                                  | TBD                                               |
 |Shopee       | https://shopee.com             | 使用 Karmada 实现多集群管理与应用分发                                                                        |  [Karmada 在 Shopee 的落地实践](https://www.youtube.com/watch?v=jZg6TmyciyI )|
+| 奇虎 360 | https://www.360.cn | 使用 Karmada 跨集群调度离线训练任务，实现算力分享 | 待定 |
