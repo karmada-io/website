@@ -10,25 +10,25 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 这些控制器嵌入在 `karmada-controller-manager` 或 `karmada-agent` 的组件中，并且将随这些组件一起启动。
 一些控制器可能由 `karmada-controller-manager` 和 `karmada-agent` 共享。
 
-| 控制器                                 | 在 karmada-controller-manager 中	 | 在 karmada-agent 中      |
-|----------------------------------------|----------------------------------|--------------------------|
-| cluster                                | 是                               | 否                       |
-| clusterStatus                          | 是                               | 是                       |
-| binding                                | 是                               | 否                       |
-| execution                              | 是                               | 是                       |
-| workStatus                             | 是                               | 是                       |
-| namespace                              | 是                               | 否                       |
-| serviceExport                          | 是                               | 是                       |
-| endpointSlice                          | 是                               | 否                       |
-| serviceImport                          | 是                               | 否                       |
-| unifiedAuth                            | 是                               | 否                       |
-| federatedResourceQuotaSync             | 是                               | 否                       |
-| federatedResourceQuotaStatus           | 是                               | 否                       |
-| gracefulEviction                       | 是                               | 否                       |
-| certRotation                           | 否                               | 是（默认禁用）            |
-| applicationFailover                    | 是                               | 否                       |
-| federatedHorizontalPodAutoscaler       | 是                               | 否                       |
-| cronFederatedHorizontalPodAutoscaler   | 是                               | 否                       |
+| 控制器                                  | 在 karmada-controller-manager 中	 | 在 karmada-agent 中 |
+|--------------------------------------|---------------------------------|-------------------|
+| cluster                              | 是                               | 否                 |
+| clusterStatus                        | 是                               | 是                 |
+| binding                              | 是                               | 否                 |
+| execution                            | 是                               | 是                 |
+| workStatus                           | 是                               | 是                 |
+| namespace                            | 是                               | 否                 |
+| serviceExport                        | 是                               | 是                 |
+| endpointSlice                        | 是                               | 否                 |
+| serviceImport                        | 是                               | 否                 |
+| unifiedAuth                          | 是                               | 否                 |
+| federatedResourceQuotaSync           | 是                               | 否                 |
+| federatedResourceQuotaStatus         | 是                               | 否                 |
+| gracefulEviction                     | 是                               | 否                 |
+| certRotation                         | 否                               | 是（默认禁用）           |
+| applicationFailover                  | 是                               | 否                 |
+| federatedHorizontalPodAutoscaler     | 是                               | 否                 |
+| cronFederatedHorizontalPodAutoscaler | 是                               | 否                 |
 
 ### 配置 Karmada 控制器
 
@@ -99,6 +99,18 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 有关详细信息，请参考：
 - [service account token controller](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/#token-controller)
 - [service account tokens](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#service-account-tokens)
+
+#### clusterrole-aggregation
+
+`clusterrole-aggregation` 控制器作为 `kube-controller-manager` 的一部分运行。它会 watch 具有聚合规则设置的 ClusterRole 对象，
+并将多个 ClusterRoles 聚合成一个组合的 ClusterRole。
+
+对于 Karmada 控制平面，它将命名空间下的读写权限聚合到了 `admin` ClusterRole下，此外，它还将 Karmada namespace scope 级别的资源的读
+写权限聚合到了 `admin` 下。
+
+有关详细信息，请参考：
+- [Aggregated ClusterRoles](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles)
+- [grant admin clusterrole with karamda resource permission](https://github.com/karmada-io/karmada/issues/3916)
 
 ### 可选控制器
 
