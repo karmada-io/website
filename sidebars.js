@@ -34,6 +34,7 @@ module.exports = {
                 "tutorials/autoscaling-with-custom-metrics",
                 "tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
                 "tutorials/autoscaling-workload-with-cronfederatedhpa",
+                "tutorials/resource-migration",
             ],
         },
         {
@@ -161,6 +162,7 @@ module.exports = {
                     items: [
                         "administrator/migration/promote-legacy-workload",
                         "administrator/migration/migration-from-kubefed",
+                        "administrator/migration/migrate-in-batch",
                     ],
                 },
                 {
