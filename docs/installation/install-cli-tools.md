@@ -30,8 +30,7 @@ Also, you can export `INSTALL_CLI_VERSION` env to select the version you want to
 For example, use the following command to install the 1.3.0 karmadactl:
 
 ```shell
-export INSTALL_CLI_VERSION=1.3.0
-curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo bash
+curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo INSTALL_CLI_VERSION=1.3.0 bash
 ```
 
 :::note
