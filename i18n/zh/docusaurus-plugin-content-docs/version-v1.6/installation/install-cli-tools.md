@@ -31,8 +31,7 @@ curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install
 例如，使用以下命令安装 1.3.0 karmadactl：
 
 ```shell
-export INSTALL_CLI_VERSION=1.3.0
-curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo bash
+curl -s https://raw.githubusercontent.com/karmada-io/karmada/master/hack/install-cli.sh | sudo INSTALL_CLI_VERSION=1.3.0 bash
 ```
 
 :::note
