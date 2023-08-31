@@ -11,8 +11,9 @@ Enable or disable a Karmada addon.
  These addons are currently supported:
 
   1.  karmada-descheduler
-  2.  karmada-scheduler-estimator
-  3.  karmada-search
+  2.  karmada-metrics-adapter
+  3.  karmada-scheduler-estimator
+  4.  karmada-search
 
 ### Examples
 

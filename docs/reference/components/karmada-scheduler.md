@@ -32,6 +32,7 @@ karmada-scheduler [flags]
                                                     Failover=true|false (BETA - default=true)
                                                     GracefulEviction=true|false (BETA - default=true)
                                                     PropagateDeps=true|false (BETA - default=true)
+                                                    PropagationPolicyPreemption=true|false (ALPHA - default=false)
   -h, --help                                        help for karmada-scheduler
       --kube-api-burst int                          Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
       --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)

@@ -25,7 +25,7 @@ karmada-agent [flags]
       --cluster-api-burst int                          Burst to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
       --cluster-api-endpoint string                    APIEndpoint of the cluster.
       --cluster-api-qps float32                        QPS to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
-      --cluster-cache-sync-timeout duration            Timeout period waiting for cluster cache to sync. (default 30s)
+      --cluster-cache-sync-timeout duration            Timeout period waiting for cluster cache to sync. (default 2m0s)
       --cluster-failure-threshold duration             The duration of failure for the cluster to be considered unhealthy. (default 30s)
       --cluster-lease-duration duration                Specifies the expiration period of a cluster lease. (default 40s)
       --cluster-lease-renew-interval-fraction float    Specifies the cluster lease renew interval fraction. (default 0.25)
@@ -49,6 +49,7 @@ karmada-agent [flags]
                                                        Failover=true|false (BETA - default=true)
                                                        GracefulEviction=true|false (BETA - default=true)
                                                        PropagateDeps=true|false (BETA - default=true)
+                                                       PropagationPolicyPreemption=true|false (ALPHA - default=false)
   -h, --help                                           help for karmada-agent
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.
       --karmada-kubeconfig string                      Path to karmada control plane kubeconfig file.

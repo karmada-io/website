@@ -49,18 +49,20 @@ karmadactl addons enable
   -h, --help                                       help for enable
       --host-cluster-domain string                 The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --karmada-context string                     The name of the karmada control plane kubeconfig context to use.
-      --karmada-descheduler-image string           karmada descheduler image (default "docker.io/karmada/karmada-descheduler:v0.0.0")
-      --karmada-descheduler-replicas int32         Karmada descheduler replica set (default 1)
-      --karmada-estimator-replicas int32           Karmada scheduler estimator replica set (default 1)
+      --karmada-descheduler-image string           karmada-descheduler image (default "docker.io/karmada/karmada-descheduler:v0.0.0-master")
+      --karmada-descheduler-replicas int32         karmada descheduler replica set (default 1)
+      --karmada-estimator-replicas int32           karmada-scheduler-estimator replica set (default 1)
       --karmada-kubeconfig string                  Path to the karmada control plane kubeconfig file. (default "/etc/karmada/karmada-apiserver.config")
-      --karmada-scheduler-estimator-image string   karmada scheduler-estimator image (default "docker.io/karmada/karmada-scheduler-estimator:v0.0.0")
-      --karmada-search-image string                karmada search image (default "docker.io/karmada/karmada-search:v0.0.0")
-      --karmada-search-replicas int32              Karmada search replica set (default 1)
+      --karmada-metrics-adapter-image string       karmada-metrics-adapter image (default "docker.io/karmada/karmada-metrics-adapter:v0.0.0-master")
+      --karmada-metrics-adapter-replicas int32     karmada-metrics-adapter replica set (default 1)
+      --karmada-scheduler-estimator-image string   karmada-scheduler-estimator image (default "docker.io/karmada/karmada-scheduler-estimator:v0.0.0-master")
+      --karmada-search-image string                karmada-search image (default "docker.io/karmada/karmada-search:v0.0.0-master")
+      --karmada-search-replicas int32              Karmada-search replica set (default 1)
       --kubeconfig string                          Path to the host cluster kubeconfig file.
       --member-context string                      Member cluster's context which to deploy scheduler estimator
       --member-kubeconfig string                   Member cluster's kubeconfig which to deploy scheduler estimator
   -n, --namespace string                           namespace where Karmada components are installed. (default "karmada-system")
-      --pod-timeout int                            Wait pod ready timeout. (default 30)
+      --pod-timeout int                            Wait pod ready timeout. (default 120)
       --private-image-registry string              Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.
 ```
 

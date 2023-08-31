@@ -62,7 +62,8 @@ karmada-aggregated-apiserver [flags]
       --bind-address ip                                         The IP address on which to listen for the --secure-port port. The associated interface(s) must be reachable by the rest of the cluster, and by CLI/web clients. If blank or an unspecified address (0.0.0.0 or ::), all interfaces will be used. (default 0.0.0.0)
       --cert-dir string                                         The directory where the TLS certs are located. If --tls-cert-file and --tls-private-key-file are provided, this flag will be ignored. (default "apiserver.local.config/certificates")
       --client-ca-file string                                   If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate.
-      --contention-profiling                                    Enable lock contention profiling, if profiling is enabled
+      --contention-profiling                                    Enable block profiling, if profiling is enabled
+      --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
       --delete-collection-workers int                           Number of workers spawned for DeleteCollection call. These are used to speed up namespace cleanup. (default 1)
       --disable-admission-plugins strings                       admission plugins that should be disabled although they are in the default enabled plugins list (NamespaceLifecycle, MutatingAdmissionWebhook, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook). Comma-delimited list of admission plugins: MutatingAdmissionWebhook, NamespaceLifecycle, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
       --egress-selector-config-file string                      File with apiserver egress selector configuration.
@@ -87,24 +88,26 @@ karmada-aggregated-apiserver [flags]
                                                                 APIPriorityAndFairness=true|false (BETA - default=true)
                                                                 APIResponseCompression=true|false (BETA - default=true)
                                                                 APIServerIdentity=true|false (BETA - default=true)
-                                                                APIServerTracing=true|false (ALPHA - default=false)
-                                                                AggregatedDiscoveryEndpoint=true|false (ALPHA - default=false)
+                                                                APIServerTracing=true|false (BETA - default=true)
+                                                                AdmissionWebhookMatchConditions=true|false (ALPHA - default=false)
+                                                                AggregatedDiscoveryEndpoint=true|false (BETA - default=true)
                                                                 AllAlpha=true|false (ALPHA - default=false)
                                                                 AllBeta=true|false (BETA - default=false)
-                                                                ComponentSLIs=true|false (ALPHA - default=false)
+                                                                ComponentSLIs=true|false (BETA - default=true)
                                                                 CustomResourceValidationExpressions=true|false (BETA - default=true)
                                                                 CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                 Failover=true|false (BETA - default=true)
                                                                 GracefulEviction=true|false (BETA - default=true)
-                                                                KMSv2=true|false (ALPHA - default=false)
+                                                                InPlacePodVerticalScaling=true|false (ALPHA - default=false)
+                                                                KMSv2=true|false (BETA - default=true)
                                                                 OpenAPIEnums=true|false (BETA - default=true)
-                                                                OpenAPIV3=true|false (BETA - default=true)
                                                                 PropagateDeps=true|false (BETA - default=true)
+                                                                PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 RemainingItemCount=true|false (BETA - default=true)
-                                                                ServerSideFieldValidation=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
                                                                 ValidatingAdmissionPolicy=true|false (ALPHA - default=false)
+                                                                WatchList=true|false (ALPHA - default=false)
   -h, --help                                                    help for karmada-aggregated-apiserver
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default. (default 1000)
       --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
