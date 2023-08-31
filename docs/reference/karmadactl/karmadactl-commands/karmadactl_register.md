@@ -40,7 +40,7 @@ karmadactl register [karmada-apiserver-endpoint]
       --dry-run                                       Run the command in dry-run mode, without making any server requests.
       --enable-cert-rotation                          Enable means controller would rotate certificate for karmada-agent when the certificate is about to expire.
   -h, --help                                          help for register
-      --karmada-agent-image string                    Karmada agent image. (default "docker.io/karmada/karmada-agent:v0.0.0")
+      --karmada-agent-image string                    Karmada agent image. (default "docker.io/karmada/karmada-agent:v0.0.0-master")
       --karmada-agent-replicas int32                  Karmada agent replicas. (default 1)
       --kubeconfig string                             Path to the kubeconfig file of member cluster.
   -n, --namespace string                              Namespace the karmada-agent component deployed. (default "karmada-system")

@@ -24,7 +24,7 @@ karmada-controller-manager [flags]
       --cluster-api-context string                                     Name of the cluster context in cluster-api management cluster kubeconfig file.
       --cluster-api-kubeconfig string                                  Path to the cluster-api management cluster kubeconfig file.
       --cluster-api-qps float32                                        QPS to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
-      --cluster-cache-sync-timeout duration                            Timeout period waiting for cluster cache to sync. (default 30s)
+      --cluster-cache-sync-timeout duration                            Timeout period waiting for cluster cache to sync. (default 2m0s)
       --cluster-failure-threshold duration                             The duration of failure for the cluster to be considered unhealthy. (default 30s)
       --cluster-lease-duration duration                                Specifies the expiration period of a cluster lease. (default 40s)
       --cluster-lease-renew-interval-fraction float                    Specifies the cluster lease renew interval fraction. (default 0.25)
@@ -42,8 +42,8 @@ karmada-controller-manager [flags]
       --concurrent-resourcebinding-syncs int                           The number of ResourceBindings that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. 
-                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, endpointSlice, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpa, namespace, serviceExport, serviceImport, unifiedAuth, workStatus.
-                                                                       Disabled-by-default controllers: hpa (default [*])
+                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, endpointSlice, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, namespace, serviceExport, serviceImport, unifiedAuth, workStatus.
+                                                                       Disabled-by-default controllers:  (default [*])
       --enable-cluster-resource-modeling                               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
                                                                        Disable if it does not fit your cases for better performance. (default true)
@@ -57,6 +57,7 @@ karmada-controller-manager [flags]
                                                                        Failover=true|false (BETA - default=true)
                                                                        GracefulEviction=true|false (BETA - default=true)
                                                                        PropagateDeps=true|false (BETA - default=true)
+                                                                       PropagationPolicyPreemption=true|false (ALPHA - default=false)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
   -h, --help                                                           help for karmada-controller-manager
       --horizontal-pod-autoscaler-cpu-initialization-period duration   The period after pod start when CPU samples might be skipped. (default 5m0s)

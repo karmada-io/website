@@ -28,7 +28,7 @@ karmadactl init
   karmadactl init --kube-image-registry=registry.cn-hangzhou.aliyuncs.com/google_containers
   
   # Specify the URL to download CRD tarball
-  karmadactl init --crds https://github.com/karmada-io/karmada/releases/download/v0.0.0/crds.tar.gz
+  karmadactl init --crds https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz
   
   # Specify the local CRD tarball
   karmadactl init --crds /root/crds.tar.gz
@@ -43,7 +43,7 @@ karmadactl init
   karmadactl init --etcd-storage-mode hostPath --etcd-node-selector-labels karmada.io/etcd=true
   
   # Private registry can be specified for all images
-  karmadactl init --etcd-image local.registry.com/library/etcd:3.5.3-0
+  karmadactl init --etcd-image local.registry.com/library/etcd:3.5.9-0
   
   # Specify Karmada API Server IP address. If not set, the address on the master node will be used.
   karmadactl init --karmada-apiserver-advertise-address 192.168.1.2
@@ -62,7 +62,7 @@ karmadactl init
       --cert-external-ip string                          the external IP of Karmada certificate (e.g 192.168.1.2,172.16.1.2)
       --cert-validity-period duration                    the validity period of Karmada certificate (e.g 8760h0m0s, that is 365 days) (default 8760h0m0s)
       --context string                                   The name of the kubeconfig context to use
-      --crds string                                      Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0/crds.tar.gz")
+      --crds string                                      Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz")
       --etcd-data string                                 etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
       --etcd-image string                                etcd image
       --etcd-init-image string                           etcd init container image (default "docker.io/alpine:3.15.1")
@@ -73,20 +73,20 @@ karmadactl init
   -h, --help                                             help for init
       --host-cluster-domain string                       The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --image-pull-secrets strings                       Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
-      --karmada-aggregated-apiserver-image string        Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0")
+      --karmada-aggregated-apiserver-image string        Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0-master")
       --karmada-aggregated-apiserver-replicas int32      Karmada aggregated apiserver replica set (default 1)
       --karmada-apiserver-advertise-address string       The IP address the Karmada API Server will advertise it's listening on. If not set, the address on the master node will be used.
       --karmada-apiserver-image string                   Kubernetes apiserver image
       --karmada-apiserver-replicas int32                 Karmada apiserver replica set (default 1)
-      --karmada-controller-manager-image string          Karmada controller manager image (default "docker.io/karmada/karmada-controller-manager:v0.0.0")
+      --karmada-controller-manager-image string          Karmada controller manager image (default "docker.io/karmada/karmada-controller-manager:v0.0.0-master")
       --karmada-controller-manager-replicas int32        Karmada controller manager replica set (default 1)
   -d, --karmada-data string                              Karmada data path. kubeconfig cert and crds files (default "/etc/karmada")
       --karmada-kube-controller-manager-image string     Kubernetes controller manager image
       --karmada-kube-controller-manager-replicas int32   Karmada kube controller manager replica set (default 1)
       --karmada-pki string                               Karmada pki path. Karmada cert files (default "/etc/karmada/pki")
-      --karmada-scheduler-image string                   Karmada scheduler image (default "docker.io/karmada/karmada-scheduler:v0.0.0")
+      --karmada-scheduler-image string                   Karmada scheduler image (default "docker.io/karmada/karmada-scheduler:v0.0.0-master")
       --karmada-scheduler-replicas int32                 Karmada scheduler replica set (default 1)
-      --karmada-webhook-image string                     Karmada webhook image (default "docker.io/karmada/karmada-webhook:v0.0.0")
+      --karmada-webhook-image string                     Karmada webhook image (default "docker.io/karmada/karmada-webhook:v0.0.0-master")
       --karmada-webhook-replicas int32                   Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                 Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                       Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
@@ -96,6 +96,7 @@ karmadactl init
   -p, --port int32                                       Karmada apiserver service node port (default 32443)
       --private-image-registry string                    Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.  In addition, you still can use --kube-image-registry to specify the registry for Kubernetes's images.
       --storage-classes-name string                      Kubernetes StorageClasses Name
+      --wait-component-ready-timeout int                 Wait for karmada component ready timeout. 0 means wait forever (default 120)
 ```
 
 ### Options inherited from parent commands

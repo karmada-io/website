@@ -1,37 +1,25 @@
 ---
-title: karmadactl join
+title: karmadactl top
 ---
 
-Register a cluster to Karmada control plane with Push mode
+Display resource (CPU/memory) usage of member clusters
 
 ### Synopsis
 
-Register a cluster to Karmada control plane with Push mode.
+Display Resource (CPU/Memory) usage of member clusters.
+
+ The top command allows you to see the resource consumption for pods of member clusters.
+
+ This command requires karmada-metrics-adapter to be correctly configured and working on the Karmada control plane and Metrics Server to be correctly configured and working on the member clusters.
 
 ```
-karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
-```
-
-### Examples
-
-```
-  # Join cluster into karmada control plane, if '--cluster-context' not specified, take the cluster name as the context
-  karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
+karmadactl top [flags]
 ```
 
 ### Options
 
 ```
-      --cluster-context string      Name of cluster context in kubeconfig. The current context is used by default.
-      --cluster-kubeconfig string   Path of the cluster's kubeconfig.
-      --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
-      --cluster-provider string     Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
-      --cluster-region string       The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
-      --cluster-zones strings       The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
-      --dry-run                     Run the command in dry-run mode, without making any server requests.
-  -h, --help                        help for join
-      --karmada-context string      The name of the kubeconfig context to use
-      --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
+  -h, --help   help for top
 ```
 
 ### Options inherited from parent commands
@@ -39,6 +27,7 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
+      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
@@ -55,6 +44,7 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ### SEE ALSO
 
 * [karmadactl](karmadactl.md)	 - karmadactl controls a Kubernetes Cluster Federation.
+* [karmadactl top pod](karmadactl_top_pod.md)	 - Display resource (CPU/memory) usage of pods of member clusters
 
 #### Go Back to [Karmadactl Commands](karmadactl_index.md) Homepage.
 

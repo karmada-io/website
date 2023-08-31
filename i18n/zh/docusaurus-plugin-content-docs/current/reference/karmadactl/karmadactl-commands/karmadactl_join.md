@@ -27,7 +27,7 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
       --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
       --cluster-provider string     Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
       --cluster-region string       The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
-      --cluster-zone string         The zone of the joining cluster
+      --cluster-zones strings       The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
       --dry-run                     Run the command in dry-run mode, without making any server requests.
   -h, --help                        help for join
       --karmada-context string      The name of the kubeconfig context to use
