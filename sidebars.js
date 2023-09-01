@@ -188,6 +188,7 @@ module.exports = {
                         "administrator/upgrading/v1.3-v1.4",
                         "administrator/upgrading/v1.4-v1.5",
                         "administrator/upgrading/v1.5-v1.6",
+                        "administrator/upgrading/v1.6-v1.7",
                     ],
                 },
                 {
