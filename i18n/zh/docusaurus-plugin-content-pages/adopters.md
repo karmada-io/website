@@ -36,3 +36,4 @@ hide_table_of_contents: true
 | 有赞         | https://www.youzan.com/       | 管理多集群的无状态和有状态在线工作负载                                                                            | 待定                                                                                    |
 | 之江实验室      | https://www.zhejianglab.com/  | 使用 Karmada 构建多集群平台                                                                             | 待定                                                                                    |
 | 中通快递       | https://www.zto.com           | 使用 Karmada 构建多集群平台                                                                             | 待定                                                                                    |
+| 网易         | https://www.netease.com/         | 使用 Karmada 构建分布式高可用中间件平台                                                                       | 待定                                                                                    |
