@@ -1,5 +1,5 @@
 ---
-title: Autoscaling across clusters with FederatedHPA
+title: Autoscaling across clusters with resoruce metrics
 ---
 In Karmada, a FederatedHPA scales up/down the workload's replicas across multiple clusters, with the aim of automatically scaling the workload to match the demand.
 

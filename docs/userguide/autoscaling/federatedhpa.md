@@ -34,5 +34,5 @@ You can check the FederatedHPA API specification [here](https://github.com/karma
 If you configure FederatedHPA, you may also want to consider running a cluster-level autoscaler such as [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler).  
 
 For more information on FederatedHPA:
-* Read a [FederatedHPA tutorials](../../tutorials/autoscaling-with-federatedhpa.md) for FederatedHPA.
-* Read a [FederatedHPA tutorials with CPU/Memory utilization metrics](../../tutorials/autoscaling-with-custom-metrics.md) for FederatedHPA.
+* Read a [FederatedHPA scaling based on resource metrics(CPU/Memory)](../../tutorials/autoscaling-with-resource-metrics.md) for FederatedHPA.
+* Read a [FederatedHPA scaling based on custom metrics](../../tutorials/autoscaling-with-custom-metrics.md) for FederatedHPA.
