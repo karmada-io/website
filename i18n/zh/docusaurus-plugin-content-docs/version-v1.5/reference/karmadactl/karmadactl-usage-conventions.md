@@ -140,7 +140,7 @@ spec:
         function GetDependencies(desiredObj)
           dependentSas = {}
           refs = {}
-          if desiredObj.spec.template.spec.serviceAccountName ~= '' and desiredObj.spec.template.spec.serviceAccountName ~= 'default' then
+          if desiredObj.spec.template.spec.serviceAccountName ~= nil and desiredObj.spec.template.spec.serviceAccountName ~= 'default' then
             dependentSas[desiredObj.spec.template.spec.serviceAccountName] = true
           end
           local idx = 1
