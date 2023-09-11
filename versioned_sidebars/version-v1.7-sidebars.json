@@ -6,6 +6,7 @@
       "collapsed": false,
       "items": [
         "version-v1.7/core-concepts/introduction",
+        "version-v1.7/core-concepts/components",
         "version-v1.7/core-concepts/concepts",
         "version-v1.7/core-concepts/architecture"
       ]
@@ -27,7 +28,11 @@
       "items": [
         "version-v1.7/tutorials/crd-application",
         "version-v1.7/tutorials/karmada-search",
-        "version-v1.7/tutorials/autoscaling-with-federatedhpa"
+        "version-v1.7/tutorials/autoscaling-with-federatedhpa",
+        "version-v1.7/tutorials/autoscaling-with-custom-metrics",
+        "version-v1.7/tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
+        "version-v1.7/tutorials/autoscaling-workload-with-cronfederatedhpa",
+        "version-v1.7/tutorials/resource-migration"
       ]
     },
     {
@@ -152,7 +157,8 @@
           "label": "Migration",
           "items": [
             "version-v1.7/administrator/migration/promote-legacy-workload",
-            "version-v1.7/administrator/migration/migration-from-kubefed"
+            "version-v1.7/administrator/migration/migration-from-kubefed",
+            "version-v1.7/administrator/migration/migrate-in-batch"
           ]
         },
         {
