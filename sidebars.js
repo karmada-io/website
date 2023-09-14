@@ -258,6 +258,10 @@ module.exports = {
                     id: "reference/glossary"
                 },
                 {
+                    type: "doc",
+                    id: "reference/api-doc"
+                },
+                {
                     type: "category",
                     label: "Command line tool(karmadactl)",
                     items: [
