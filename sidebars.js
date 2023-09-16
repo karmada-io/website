@@ -285,6 +285,7 @@ module.exports = {
                 },
                 "reference/reserved-namespaces",
                 "reference/object-association-mapping",
+                "generated/api-docs",
             ],
         },
     ],
