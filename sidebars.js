@@ -290,6 +290,41 @@ module.exports = {
                         "reference/instrumentation/metrics",
                     ],
                 },
+                {
+                    type: "category",
+                    label: "API Document",
+                    items: [
+                        {
+                            type: "category",
+                            label: "Cluster Resources",
+                            items: [
+                                "reference/api-documents/cluster-resources/cluster-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Common Definitions",
+                            items: [
+                                "reference/api-documents/common-definitions/delete-options",
+                                "reference/api-documents/common-definitions/label-selector",
+                                "reference/api-documents/common-definitions/list-meta",
+                                "reference/api-documents/common-definitions/node-selector-requirement",
+                                "reference/api-documents/common-definitions/object-meta",
+                                "reference/api-documents/common-definitions/patch",
+                                "reference/api-documents/common-definitions/quantity",
+                                "reference/api-documents/common-definitions/status",
+                                "reference/api-documents/common-definitions/typed-local-object-reference",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Common Parameters",
+                            items: [
+                                "reference/api-documents/common-parameters/common-parameters",
+                            ],
+                        },
+                    ],
+                },
                 "reference/reserved-namespaces",
                 "reference/object-association-mapping",
             ],
