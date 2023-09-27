@@ -127,6 +127,11 @@ module.exports = {
           position: "left",
         },
         {
+          to: "api",
+          label: "API reference",
+          position: "left",
+        },
+        {
           type: "localeDropdown",
           position: "right",
         },
@@ -223,6 +228,23 @@ module.exports = {
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
+        },
+      },
+    ],
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: 'https://raw.githubusercontent.com/karmada-io/karmada/master/api/openapi-spec/swagger.json',
+            route: '/api',
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
         },
       },
     ],
