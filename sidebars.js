@@ -293,10 +293,25 @@ module.exports = {
                 {
                     type: "category",
                     label: "Karmada API",
+                    link: {
+                        type: 'generated-index',
+                        title: 'Karmada API',
+                        description:
+                            "Karmada' API is the application that serves Karmada functionality through a RESTful interface " +
+                            "and stores the state of Karmada. " +
+                            "Karmada resources and \"records of intent\" are all stored as API objects, and modified " +
+                            "via RESTful calls to the API. The API allows configuration to be managed in a declarative way. " +
+                            "Users can interact with the Karmada API directly, or via tools like karmadactl. " +
+                            "The core Karmada API is flexible and can also be extended to support custom resources.",
+                        keywords: ['Karmada API'],
+                    },
                     items: [
                         {
                             type: "category",
                             label: "Auto Scaling Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/auto-scaling-resources/cron-federated-hpa-v1alpha1",
                                 "reference/karmada-api/auto-scaling-resources/federated-hpa-v1alpha1",
@@ -305,6 +320,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Cluster Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/cluster-resources/cluster-v1alpha1",
                             ],
@@ -312,6 +330,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Common Definitions",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/common-definitions/delete-options",
                                 "reference/karmada-api/common-definitions/label-selector",
@@ -327,6 +348,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Common Parameters",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/common-parameter/common-parameters",
                             ],
@@ -334,6 +358,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Config Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/config-resources/resource-interpreter-customization-v1alpha1",
                                 "reference/karmada-api/config-resources/resource-interpreter-webhook-configuration-v1alpha1",
@@ -342,6 +369,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Networking Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/networking-resources/multi-cluster-ingress-v1alpha1",
                                 "reference/karmada-api/networking-resources/multi-cluster-service-v1alpha1",
@@ -350,6 +380,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Policy Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/policy-resources/cluster-override-policy-v1alpha1",
                                 "reference/karmada-api/policy-resources/cluster-propagation-policy-v1alpha1",
@@ -361,6 +394,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Search Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/search-resources/resource-registry-v1alpha1",
                             ],
@@ -368,6 +404,9 @@ module.exports = {
                         {
                             type: "category",
                             label: "Work Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
                             items: [
                                 "reference/karmada-api/work-resources/cluster-resource-binding-v1alpha2",
                                 "reference/karmada-api/work-resources/resource-binding-v1alpha2",
