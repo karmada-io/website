@@ -290,6 +290,92 @@ module.exports = {
                         "reference/instrumentation/metrics",
                     ],
                 },
+                {
+                    type: "category",
+                    label: "Karmada API",
+                    items: [
+                        {
+                            type: "category",
+                            label: "Auto Scaling Resources",
+                            items: [
+                                "reference/karmada-api/auto-scaling-resources/cron-federated-hpa-v1alpha1",
+                                "reference/karmada-api/auto-scaling-resources/federated-hpa-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Cluster Resources",
+                            items: [
+                                "reference/karmada-api/cluster-resources/cluster-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Common Definitions",
+                            items: [
+                                "reference/karmada-api/common-definitions/delete-options",
+                                "reference/karmada-api/common-definitions/label-selector",
+                                "reference/karmada-api/common-definitions/list-meta",
+                                "reference/karmada-api/common-definitions/node-selector-requirement",
+                                "reference/karmada-api/common-definitions/object-meta",
+                                "reference/karmada-api/common-definitions/patch",
+                                "reference/karmada-api/common-definitions/quantity",
+                                "reference/karmada-api/common-definitions/status",
+                                "reference/karmada-api/common-definitions/typed-local-object-reference",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Common Parameters",
+                            items: [
+                                "reference/karmada-api/common-parameter/common-parameters",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Config Resources",
+                            items: [
+                                "reference/karmada-api/config-resources/resource-interpreter-customization-v1alpha1",
+                                "reference/karmada-api/config-resources/resource-interpreter-webhook-configuration-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Networking Resources",
+                            items: [
+                                "reference/karmada-api/networking-resources/multi-cluster-ingress-v1alpha1",
+                                "reference/karmada-api/networking-resources/multi-cluster-service-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Policy Resources",
+                            items: [
+                                "reference/karmada-api/policy-resources/cluster-override-policy-v1alpha1",
+                                "reference/karmada-api/policy-resources/cluster-propagation-policy-v1alpha1",
+                                "reference/karmada-api/policy-resources/federated-resource-quota-v1alpha1",
+                                "reference/karmada-api/policy-resources/override-policy-v1alpha1",
+                                "reference/karmada-api/policy-resources/propagation-policy-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Search Resources",
+                            items: [
+                                "reference/karmada-api/search-resources/resource-registry-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
+                            label: "Work Resources",
+                            items: [
+                                "reference/karmada-api/work-resources/cluster-resource-binding-v1alpha2",
+                                "reference/karmada-api/work-resources/resource-binding-v1alpha2",
+                                "reference/karmada-api/work-resources/work-v1alpha1",
+                            ],
+                        },
+                    ],
+                },
                 "reference/reserved-namespaces",
                 "reference/object-association-mapping",
             ],
