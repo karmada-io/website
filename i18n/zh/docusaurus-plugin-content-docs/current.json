@@ -46,5 +46,36 @@
   "sidebar.docs.category.Roadmap": {
     "message": "Roadmap",
     "description": "The label for category Roadmap in sidebar docs"
+  },
+  "sidebar.docs.category.Karmada API": {
+    "message": "Karmada API",
+    "description": "Karmada API 文档"
+  },
+  "sidebar.docs.category.Auto Scaling Resources": {
+    "message": "Auto Scaling 资源"
+  },
+  "sidebar.docs.category.Cluster Resources": {
+    "message": "Cluster 资源"
+  },
+  "sidebar.docs.category.Common Definitions": {
+    "message": "公共定义"
+  },
+  "sidebar.docs.category.Common Parameters": {
+    "message": "常用参数"
+  },
+  "sidebar.docs.category.Config Resources": {
+    "message": "Config 资源"
+  },
+  "sidebar.docs.category.Networking Resources": {
+    "message": "Networking 资源"
+  },
+  "sidebar.docs.category.Policy Resources": {
+    "message": "Policy 资源"
+  },
+  "sidebar.docs.category.Search Resources": {
+    "message": "Search 资源"
+  },
+  "sidebar.docs.category.Work Resources": {
+    "message": "Work 资源"
   }
 }
