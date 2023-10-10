@@ -301,7 +301,7 @@ module.exports = {
                             "and stores the state of Karmada. " +
                             "Karmada resources and \"records of intent\" are all stored as API objects, and modified " +
                             "via RESTful calls to the API. The API allows configuration to be managed in a declarative way. " +
-                            "Users can interact with the Karmada API directly, or via tools like karmadactl. " +
+                            "Users can interact with the Karmada API directly, or via tools like kubectl. " +
                             "The core Karmada API is flexible and can also be extended to support custom resources.",
                         keywords: ['Karmada API'],
                     },
