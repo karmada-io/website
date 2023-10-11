@@ -37,3 +37,15 @@ title: 常见问题
   以 `Deployment` 为例采用 `resource template` 后，`kube-controller` 会为 Deployment 创建 `Pods` 并持续更新状态，Karmada 系统也会协调这些变化，所以可能会发生冲突。
 
 待办事项：一旦有相关使用案例，我们将添加相应链接。
+
+## 为什么 Cluster API 没有 CRD YAML 文件?
+
+Kubernetes 提供了两种方式来扩展 API：**定制资源**、**Kubernetes API 聚合层**。更多详细信息，您可以参考[扩展 Kubernetes API](https://kubernetes.io/docs/concepts/extend-kubernetes/)。
+
+Karmada 使用了这两种扩展方式，例如，`PropagationPolicy` 和 `ResourceBinding` 使用**定制资源**，`Cluster`资源使用**Kubernetes API 聚合层**。
+
+因此，`Cluster`资源没有 CRD YAML 文件，当执行`kubectl get crd`命令时也无法获取`Cluster`资源。
+
+那么，为什么我们要使用**Kubernetes API 聚合层**来扩展`Cluster`资源，而不是使用**定制资源**呢？
+
+这是因为我们需要为`Cluster`资源设置`proxy`子资源，通过使用`proxy`，您可以访问成员集群中的资源，具体内容可以参考[聚合层 APIServer](https://karmada.io/zh/docs/next/userguide/globalview/aggregated-api-endpoint)。目前，**定制资源**还不支持设置`proxy`子资源，这也是我们没有选择它的原因。

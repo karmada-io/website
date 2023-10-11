@@ -40,3 +40,15 @@ There are some things you should consider before doing so:
   conflicts.
 
 TODO: Link to adoption use case once it gets on board.
+
+## Why Cluster API doesn't have the CRD YAML file?
+
+Kubernetes provides two methods to extend APIs: Custom Resource and Kubernetes API Aggregation Layer. For more detail, you can refer to [Extending the Kubernetes API](https://kubernetes.io/docs/concepts/extend-kubernetes/).
+
+Karmada uses the both extension methods. For example, `PropagationPolicy` and `ResourceBinding` use Custom Resource, and `Cluster` resource uses Kubernetes API Aggregation Layer.
+
+Therefore, `Cluster` resources do not have a CRD YAML file, and they are not visible when you execute the `kubectl get crd` command.
+
+So, why would we choose to use the Kubernetes API Aggregation Layer to extend `Cluster` resources instead of using Custom Resource?
+
+This is because the `Cluster` resource requires the setup of the `proxy` sub-resource. By using `proxy`, you can access resources in member clusters. For details, please refer to [Aggregation Layer APIServer](https://karmada.io/docs/next/userguide/globalview/aggregated-api-endpoint/). At present, Custom Resource do not support configuring `proxy` sub-resources, which is why it was not chosen for this purpose.
