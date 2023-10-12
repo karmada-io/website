@@ -200,7 +200,7 @@ spec:
 ```
 
 ```shell
-kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver create -f deployment-search.yaml
+kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver apply -f deployment-search.yaml
 ```
 
 ### 3. Expose the service of dashboard
