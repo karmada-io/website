@@ -30,7 +30,7 @@ module.exports = {
             items: [
                 "tutorials/crd-application",
                 "tutorials/karmada-search",
-                "tutorials/autoscaling-with-federatedhpa",
+                "tutorials/autoscaling-with-resource-metrics",
                 "tutorials/autoscaling-with-custom-metrics",
                 "tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
                 "tutorials/autoscaling-workload-with-cronfederatedhpa",

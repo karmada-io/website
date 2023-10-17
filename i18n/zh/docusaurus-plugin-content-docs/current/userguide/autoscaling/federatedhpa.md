@@ -37,5 +37,5 @@ FederatedHPA 是 Karmada 弹性伸缩 API 组中的一个 API。当前版本为 
 如果您配置了 FederatedHPA，则可能还需要考虑运行类似于 [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) 的集群级别自动扩缩容工具。 
 
 有关 FederatedHPA 的更多信息：
-* 阅读 [FederatedHPA 教程](../../tutorials/autoscaling-with-federatedhpa.md)以了解 FederatedHPA。
-* 阅读 [FederatedHPA 自定义指标教程](../../tutorials/autoscaling-with-custom-metrics.md)以了解 FederatedHPA。
+* 阅读 [FederatedHPA 基于 resource metrics(CPU/Memory) 弹性伸缩](../../tutorials/autoscaling-with-resource-metrics.md) 以了解 FederatedHPA。
+* 阅读 [FederatedHPA 基于 custom metrics(自定义指标)弹性伸缩](../../tutorials/autoscaling-with-custom-metrics.md) 以了解 FederatedHPA。
