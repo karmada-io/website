@@ -18,9 +18,9 @@ auto_generated: true
 
 `import "github.com/karmada-io/karmada/pkg/apis/work/v1alpha1"`
 
-## Work 
+## Work
 
-Work defines a list of resources to be deployed on the member cluster.
+Work 罗列待部署到成员集群的资源。
 
 <hr/>
 
@@ -30,160 +30,160 @@ Work defines a list of resources to be deployed on the member cluster.
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([WorkSpec](../work-resources/work-v1alpha1#workspec)), required
+- **spec** ([WorkSpec](../work-resources/work-v1alpha1#workspec))，必选
 
-  Spec represents the desired behavior of Work.
+  Spec 表示 Work 的规范。
 
 - **status** ([WorkStatus](../work-resources/work-v1alpha1#workstatus))
 
-  Status represents the status of PropagationStatus.
+  Status 表示 PropagationStatus 的状态。
 
-## WorkSpec 
+## WorkSpec
 
-WorkSpec defines the desired state of Work.
+WorkSpec 定义 Work 的预期状态。
 
 <hr/>
 
 - **workload** (WorkloadTemplate)
 
-  Workload represents the manifest workload to be deployed on managed cluster.
+  Workload 表示待部署在被管理集群上的 manifest 工作负载。
 
   <a name="WorkloadTemplate"></a>
 
-  *WorkloadTemplate represents the manifest workload to be deployed on managed cluster.*
+  *WorkloadTemplate 表示待部署在被管理集群上的 manifest 工作负载。*
 
   - **workload.manifests** ([]Manifest)
 
-    Manifests represents a list of Kubernetes resources to be deployed on the managed cluster.
+    Manifests 表示待部署在被管理集群上的 Kubernetes 资源列表。
 
     <a name="Manifest"></a>
 
-    *Manifest represents a resource to be deployed on managed cluster.*
+    *Manifest 表示待部署在被管理集群上的某种资源。*
 
-## WorkStatus 
+## WorkStatus
 
-WorkStatus defines the observed state of Work.
+WorkStatus 定义 Work 的状态。
 
 <hr/>
 
 - **conditions** ([]Condition)
 
-  Conditions contain the different condition statuses for this work. Valid condition types are: 1. Applied represents workload in Work is applied successfully on a managed cluster. 2. Progressing represents workload in Work is being applied on a managed cluster. 3. Available represents workload in Work exists on the managed cluster. 4. Degraded represents the current state of workload does not match the desired state for a certain period.
+  Conditions 是同一个 Work 的不同状况。取值可能为：1. Applied：工作负载在被管理集群上成功应用。2. Progressing：Work 中的工作负载正在被应用到被管理集群上。3. Available：别管理集群中存在 Work 中的工作负载。4. Degraded：工作负载的当前状态在一定时期内与所需状态不匹配。
 
   <a name="Condition"></a>
 
-  *Condition contains details for one aspect of the current state of this API Resource.*
+  *Condition 包含此 API 资源当前状态某个方面的详细信息。*
 
-  - **conditions.lastTransitionTime** (Time), required
+  - **conditions.lastTransitionTime** (Time)，必选
 
-    lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+    lastTransitionTime 是状况最近一次从一种状态转换到另一种状态的时间。这种变化通常出现在下层状况发生变化的时候。如果无法了解下层状况变化，使用 API 字段更改的时间也是可以接受的。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-  - **conditions.message** (string), required
+  - **conditions.message**（string），必选
 
-    message is a human readable message indicating details about the transition. This may be an empty string.
+    message 是有关转换的详细信息（人类可读消息）。可以是空字符串。
 
-  - **conditions.reason** (string), required
+  - **conditions.reason**（string），必选
 
-    reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+    reason 是一个程序标识符，表明状况最后一次转换的原因。特定状况类型的生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保证的 API。取值应该是一个 CamelCase 字符串。此字段不能为空。
 
-  - **conditions.status** (string), required
+  - **conditions.status**（string），必选
 
-    status of the condition, one of True, False, Unknown.
+    Status 表示状况的状态。取值为 True、False 或 Unknown。
 
-  - **conditions.type** (string), required
+  - **conditions.type**（string），必选
 
-    type of condition in CamelCase or in foo.example.com/CamelCase.
+    **type**表示 CamelCase 或 foo.example.com/CamelCase 形式的状况类型。
 
-  - **conditions.observedGeneration** (int64)
+  - **conditions.observedGeneration**（int64）
 
-    observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+    **observedGeneration**表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
 
 - **manifestStatuses** ([]ManifestStatus)
 
-  ManifestStatuses contains running status of manifests in spec.
+  ManifestStatuses 是 spec 中 manifest 的运行状态。
 
   <a name="ManifestStatus"></a>
 
-  *ManifestStatus contains running status of a specific manifest in spec.*
+  *ManifestStatus 包含 spec 中特定 manifest 的运行状态。*
 
-  - **manifestStatuses.identifier** (ResourceIdentifier), required
+  - **manifestStatuses.identifier** (ResourceIdentifier)，必选
 
-    Identifier represents the identity of a resource linking to manifests in spec.
+    **identifier**表示 spec 中链接到清单的资源的标识。
 
     <a name="ResourceIdentifier"></a>
 
-    *ResourceIdentifier provides the identifiers needed to interact with any arbitrary object.*
+    *ResourceIdentifier 提供与任意资源交互所需的标识符。*
 
-    - **manifestStatuses.identifier.kind** (string), required
+    - **manifestStatuses.identifier.kind**（string），必选
 
-      Kind is the kind of the resource.
+      Kind 表示资源的类别。
 
-    - **manifestStatuses.identifier.name** (string), required
+    - **manifestStatuses.identifier.name**（string），必选
 
-      Name is the name of the resource
+      Name 表示资源名称。
 
-    - **manifestStatuses.identifier.ordinal** (int32), required
+    - **manifestStatuses.identifier.ordinal**（int32），必选
 
-      Ordinal represents an index in manifests list, so the condition can still be linked to a manifest even though manifest cannot be parsed successfully.
+      Ordinal 是 manifests 中的索引。即使某个 manifest 无法解析，状况仍然可以链接到该 manifest。
 
-    - **manifestStatuses.identifier.resource** (string), required
+    - **manifestStatuses.identifier.resource**（string），必选
 
-      Resource is the resource type of the resource
+      Resource 表示资源类型。
 
-    - **manifestStatuses.identifier.version** (string), required
+    - **manifestStatuses.identifier.version**（string），必选
 
-      Version is the version of the resource.
+      Version 表示资源版本。
 
-    - **manifestStatuses.identifier.group** (string)
+    - **manifestStatuses.identifier.group**（string），必选
 
-      Group is the group of the resource.
+      Group 表示资源所在的组。
 
-    - **manifestStatuses.identifier.namespace** (string)
+    - **manifestStatuses.identifier.namespace**（string）
 
-      Namespace is the namespace of the resource, the resource is cluster scoped if the value is empty
+      Namespace 是资源的命名空间。如果值为空，则表示资源在集群范围内。
 
-  - **manifestStatuses.health** (string)
+  - **manifestStatuses.health**（string）
 
-    Health represents the healthy state of the current resource. There maybe different rules for different resources to achieve health status.
+    Health 表示资源的健康状态。可以设置不同规则来保障不同资源的健康状态。
 
   - **manifestStatuses.status** (RawExtension)
 
-    Status reflects running status of current manifest.
+    Status 反映当前 manifest 的运行状态。
 
     <a name="RawExtension"></a>
 
-    *RawExtension is used to hold extensions in external versions.
-    
-    To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.
-    
-    // Internal package:
-    
+    *RawExtension 用于在外部版本中保存扩展数据。
+
+    要使用此字段，请生成一个字段，在外部、版本化结构中以 RawExtension 作为其类型，在内部结构中以 Object 作为其类型。此外，还需要注册各个插件类型。
+
+    //内部包：
+
     	type MyAPIObject struct [
     		runtime.TypeMeta `json:",inline"`
     		MyPlugin runtime.Object `json:"myPlugin"`
     	]
-    
+
     	type PluginA struct [
     		AOption string `json:"aOption"`
     	]
-    
-    // External package:
-    
+
+    //外部包：
+
     	type MyAPIObject struct [
     		runtime.TypeMeta `json:",inline"`
     		MyPlugin runtime.RawExtension `json:"myPlugin"`
     	]
-    
+
     	type PluginA struct [
     		AOption string `json:"aOption"`
     	]
-    
-    // On the wire, the JSON will look something like this:
-    
+
+    //在网络上，JSON 看起来像这样：
+
     	[
     		"kind":"MyAPIObject",
     		"apiVersion":"v1",
@@ -192,12 +192,12 @@ WorkStatus defines the observed state of Work.
     			"aOption":"foo",
     		],
     	]
-    
-    So what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)*
 
-## WorkList 
+    那么会发生什么？解码首先需要使用 JSON 或 YAML 将序列化数据解组到外部 MyAPIObject 中。这会导致原始 JSON 被存储下来，但不会被解包。下一步是复制（使用 pkg/conversion）到内部结构中。runtime 包的 DefaultScheme 安装了转换函数，它将解析存储在 RawExtension 中的 JSON，将其转换为正确的对象类型，并将其存储在对象中。（TODO：如果对象是未知类型，将创建并存储一个 runtime.Unknown 对象。）*
 
-WorkList is a collection of Work.
+## WorkList
+
+WorkList 是 Work 的集合。
 
 <hr/>
 
@@ -207,211 +207,210 @@ WorkList is a collection of Work.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][Work](../work-resources/work-v1alpha1#work)), required
+- **items** ([][Work](../work-resources/work-v1alpha1#work))，必选
 
-  Items holds a list of Work.
+  Items 中包含 Work 列表。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified Work
+### `get`：查询指定的 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
-### `get` read status of the specified Work
+### `get`：查询指定 Work 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
-### `list` list or watch objects of kind Work
+### `list`：查询指定命名空间内的所有 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([WorkList](../work-resources/work-v1alpha1#worklist)): OK
 
-### `list` list or watch objects of kind Work
+### `list`：查询所有 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha1/works
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([WorkList](../work-resources/work-v1alpha1#worklist)): OK
 
-### `create` create a Work
+### `create`：创建一个 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Work](../work-resources/work-v1alpha1#work), required
+- **body**: [Work](../work-resources/work-v1alpha1#work)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
@@ -419,289 +418,282 @@ POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
 202 ([Work](../work-resources/work-v1alpha1#work)): Accepted
 
-### `update` replace the specified Work
+### `update`：更新指定的 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Work](../work-resources/work-v1alpha1#work), required
+- **body**: [Work](../work-resources/work-v1alpha1#work)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
 201 ([Work](../work-resources/work-v1alpha1#work)): Created
 
-### `update` replace status of the specified Work
+### `update`：更新指定 Work 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Work](../work-resources/work-v1alpha1#work), required
+- **body**: [Work](../work-resources/work-v1alpha1#work)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
 201 ([Work](../work-resources/work-v1alpha1#work)): Created
 
-### `patch` partially update the specified Work
+### `patch`：更新指定 Work 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
 201 ([Work](../work-resources/work-v1alpha1#work)): Created
 
-### `patch` partially update status of the specified Work
+### `patch`：更新指定 Work 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Work](../work-resources/work-v1alpha1#work)): OK
 
 201 ([Work](../work-resources/work-v1alpha1#work)): Created
 
-### `delete` delete a Work
+### `delete`：删除一个 Work
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Work
+  Work 名称。
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of Work
+### `deletecollection`：删除 Work 的集合
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-

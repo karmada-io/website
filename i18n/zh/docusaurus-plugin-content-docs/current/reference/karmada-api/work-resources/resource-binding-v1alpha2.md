@@ -18,9 +18,9 @@ auto_generated: true
 
 `import "github.com/karmada-io/karmada/pkg/apis/work/v1alpha2"`
 
-## ResourceBinding 
+## ResourceBinding
 
-ResourceBinding represents a binding of a kubernetes resource with a propagation policy.
+ResourceBinding 表示某种 kubernetes 资源与分发策略之间的绑定关系。
 
 <hr/>
 
@@ -30,582 +30,577 @@ ResourceBinding represents a binding of a kubernetes resource with a propagation
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([ResourceBindingSpec](../work-resources/resource-binding-v1alpha2#resourcebindingspec)), required
+- **spec** ([ResourceBindingSpec](../work-resources/resource-binding-v1alpha2#resourcebindingspec))，必选
 
-  Spec represents the desired behavior.
+  Spec 表示规范。
 
 - **status** ([ResourceBindingStatus](../work-resources/resource-binding-v1alpha2#resourcebindingstatus))
 
-  Status represents the most recently observed status of the ResourceBinding.
+  Status 表示 ResourceBinding 的最新状态。
 
-## ResourceBindingSpec 
+## ResourceBindingSpec
 
-ResourceBindingSpec represents the expectation of ResourceBinding.
+ResourceBindingSpec 表示预期的 ResourceBinding。
 
 <hr/>
 
-- **resource** (ObjectReference), required
+- **resource** (ObjectReference)，必选
 
-  Resource represents the Kubernetes resource to be propagated.
+  Resource 表示要分发的 Kubernetes 资源。
 
   <a name="ObjectReference"></a>
 
-  *ObjectReference contains enough information to locate the referenced object inside current cluster.*
+  *ObjectReference 包含足够的信息以便定位当前集群所引用的资源。*
 
-  - **resource.apiVersion** (string), required
+  - **resource.apiVersion**（string），必选
 
-    APIVersion represents the API version of the referent.
+    **apiVersion**表示所引用资源的 API 版本。
 
-  - **resource.kind** (string), required
+  - **resource.kind**（string），必选
 
-    Kind represents the Kind of the referent.
+    Kind 表示所引用资源的类别。
 
-  - **resource.name** (string), required
+  - **resource.name**（string），必选
 
-    Name represents the name of the referent.
+    Name 表示所引用资源的名称。
 
-  - **resource.namespace** (string)
+  - **resource.namespace**（string）
 
-    Namespace represents the namespace for the referent. For non-namespace scoped resources(e.g. 'ClusterRole')，do not need specify Namespace, and for namespace scoped resources, Namespace is required. If Namespace is not specified, means the resource is non-namespace scoped.
+    Namespace 表示所引用资源所在的命名空间。对于非命名空间范围的资源（例如 ClusterRole），不需要指定命名空间。对于命名空间范围的资源，需要指定命名空间。如果未指定命名空间，则资源不在命名空间范围内。
 
-  - **resource.resourceVersion** (string)
+  - **resource.resourceVersion**（string）
 
-    ResourceVersion represents the internal version of the referenced object, that can be used by clients to determine when object has changed.
+    ResourceVersion 表示所引用资源的内部版本，客户端可用其确定资源的变更时间。
 
-  - **resource.uid** (string)
+  - **resource.uid**（string）
 
-    UID of the referent.
+    UID 表示所引用资源的唯一标识。
 
 - **clusters** ([]TargetCluster)
 
-  Clusters represents target member clusters where the resource to be deployed.
+  Clusters 表示待部署资源的目标成员集群。
 
   <a name="TargetCluster"></a>
 
-  *TargetCluster represents the identifier of a member cluster.*
+  *TargetCluster 表示成员集群的标识符。*
 
-  - **clusters.name** (string), required
+  - **clusters.name**（string），必选
 
-    Name of target cluster.
+    Name 表示目标集群的名称。
 
-  - **clusters.replicas** (int32)
+  - **clusters.replicas**（int32）
 
-    Replicas in target cluster
+    Replicas 表示目标集群中的副本。
 
-- **conflictResolution** (string)
+- **conflictResolution**（string）
 
-  ConflictResolution declares how potential conflict should be handled when a resource that is being propagated already exists in the target cluster.
-  
-  It defaults to "Abort" which means stop propagating to avoid unexpected overwrites. The "Overwrite" might be useful when migrating legacy cluster resources to Karmada, in which case conflict is predictable and can be instructed to Karmada take over the resource by overwriting.
+  ConflictResolution 表示当目标集群中已存在正在分发的资源时，处理潜在冲突的方式。
+
+  默认为 Abort，表示停止分发资源以避免意外覆盖。将原集群资源迁移到 Karmada 时，可设置为 Overwrite。此时，冲突是可预测的，且 Karmada 可通过覆盖来接管资源。
 
 - **failover** (FailoverBehavior)
 
-  Failover indicates how Karmada migrates applications in case of failures. It inherits directly from the associated PropagationPolicy(or ClusterPropagationPolicy).
+  Failover 表示 Karmada 在故障场景中迁移应用的方式。可直接从所关联的 PropagationPolicy（或 ClusterPropagationPolicy）继承。
 
   <a name="FailoverBehavior"></a>
 
-  *FailoverBehavior indicates failover behaviors in case of an application or cluster failure.*
+  *FailoverBehavior 表示应用或集群的故障转移。*
 
   - **failover.application** (ApplicationFailoverBehavior)
 
-    Application indicates failover behaviors in case of application failure. If this value is nil, failover is disabled. If set, the PropagateDeps should be true so that the dependencies could be migrated along with the application.
+    Application 表示应用的故障转移。如果值为 nil，则禁用故障转移。如果值不为 nil，则 PropagateDeps 应设置为 true，以便依赖项随应用一起迁移。
 
     <a name="ApplicationFailoverBehavior"></a>
 
-    *ApplicationFailoverBehavior indicates application failover behaviors.*
+    *ApplicationFailoverBehavior 表示应用的故障转移。*
 
-    - **failover.application.decisionConditions** (DecisionConditions), required
+    - **failover.application.decisionConditions** (DecisionConditions)，必选
 
-      DecisionConditions indicates the decision conditions of performing the failover process. Only when all conditions are met can the failover process be performed. Currently, DecisionConditions includes several conditions: - TolerationSeconds (optional)
+      DecisionConditions 表示执行故障转移的先决条件。只有满足所有条件，才能执行故障转移。当前条件为 TolerationSeconds（可选）。
 
       <a name="DecisionConditions"></a>
 
-      *DecisionConditions represents the decision conditions of performing the failover process.*
+      *DecisionConditions 表示执行故障转移的先决条件。*
 
-      - **failover.application.decisionConditions.tolerationSeconds** (int32)
+      - **failover.application.decisionConditions.tolerationSeconds**（int32）
 
-        TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process. If not specified, Karmada will immediately perform failover process. Defaults to 300s.
+        TolerationSeconds 表示应用达到预期状态后，Karmada 在执行故障转移之前应等待的时间。如果未指定等待时间，Karmada 将立即执行故障转移。默认为 300 秒。
 
-    - **failover.application.gracePeriodSeconds** (int32)
+    - **failover.application.gracePeriodSeconds**（int32）
 
-      GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Graciously" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
+      GracePeriodSeconds 表示从新集群中删除应用之前的最长等待时间（以秒为单位）。仅当 PurgeMode 设置为 Graciously 且默认时长为 600 秒时，才需要设置该字段。如果新群集中的应用无法达到健康状态，Karmada 将在达到最长等待时间后删除应用。取值必须为正整数。
 
-    - **failover.application.purgeMode** (string)
+    - **failover.application.purgeMode**（string）
 
-      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never". Defaults to "Graciously".
+      PurgeMode 表示原集群中应用的处理方式。取值包括 Immediately、Graciously 和 Never。默认为 Graciously。
 
 - **gracefulEvictionTasks** ([]GracefulEvictionTask)
 
-  GracefulEvictionTasks holds the eviction tasks that are expected to perform the eviction in a graceful way. The intended workflow is: 1. Once the controller(such as 'taint-manager') decided to evict the resource that
-     is referenced by current ResourceBinding or ClusterResourceBinding from a target
-     cluster, it removes(or scale down the replicas) the target from Clusters(.spec.Clusters)
-     and builds a graceful eviction task.
-  2. The scheduler may perform a re-scheduler and probably select a substitute cluster
-     to take over the evicting workload(resource).
-  3. The graceful eviction controller takes care of the graceful eviction tasks and
-     performs the final removal after the workload(resource) is available on the substitute
-     cluster or exceed the grace termination period(defaults to 10 minutes).
+  GracefulEvictionTasks 表示驱逐任务，预期以优雅方式执行驱逐。工作流程如下：1. 一旦控制器（例如 taint-manager）决定从目标集群中驱逐当前 ResourceBinding 或 ClusterResourceBinding 所引用的资源，就会从 Clusters（.spec.Clusters）中删除副本，并构建一个优雅的驱逐任务。
 
-  <a name="GracefulEvictionTask"></a>
 
-  *GracefulEvictionTask represents a graceful eviction task.*
+2. 调度器可以执行重新调度，并可能选择一个替代集群来接管正在驱逐的工作负载（资源）。
 
-  - **gracefulEvictionTasks.fromCluster** (string), required
+3. 优雅驱逐控制器负责优雅驱逐任务，并在替代集群上的工作负载（资源）可用或超过宽限终止期（默认为 10 分钟）后执行最终删除。
 
-    FromCluster which cluster the eviction perform from.
+<a name="GracefulEvictionTask"></a>
 
-  - **gracefulEvictionTasks.producer** (string), required
+*GracefulEvictionTask 表示优雅驱逐任务。*
 
-    Producer indicates the controller who triggered the eviction.
+- **gracefulEvictionTasks.fromCluster**（string），必选
 
-  - **gracefulEvictionTasks.reason** (string), required
+  FromCluster 表示需要执行驱逐的集群。
 
-    Reason contains a programmatic identifier indicating the reason for the eviction. Producers may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+- **gracefulEvictionTasks.producer**（string），必选
 
-  - **gracefulEvictionTasks.creationTimestamp** (Time)
+  Producer 表示触发驱逐的控制器。
 
-    CreationTimestamp is a timestamp representing the server time when this object was created. Clients should not set this value to avoid the time inconsistency issue. It is represented in RFC3339 form(like '2021-04-25T10:02:10Z') and is in UTC.
-    
-    Populated by the system. Read-only.
+- **gracefulEvictionTasks.reason**（string），必选
 
-    <a name="Time"></a>
+  Reason 是一个程序标识符，说明驱逐的原因。生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保障的 API。取值应该是一个 CamelCase 字符串。此字段不能为空。
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+- **gracefulEvictionTasks.creationTimestamp** (Time)
 
-  - **gracefulEvictionTasks.gracePeriodSeconds** (int32)
+  CreationTimestamp 是一个时间戳，表示创建对象时服务器上的时间。为避免时间不一致，客户端不得设置此值。它以 RFC3339 形式表示（如 2021-04-25T10:02:10Z），并采用 UTC 时间。
 
-    GracePeriodSeconds is the maximum waiting duration in seconds before the item should be deleted. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the item after GracePeriodSeconds is reached. Value must be positive integer. It can not co-exist with SuppressDeletion.
+  由系统填充。只读。
 
-  - **gracefulEvictionTasks.message** (string)
+  <a name="Time"></a>
 
-    Message is a human-readable message indicating details about the eviction. This may be an empty string.
+  *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-  - **gracefulEvictionTasks.replicas** (int32)
+- **gracefulEvictionTasks.gracePeriodSeconds**（int32）
 
-    Replicas indicates the number of replicas should be evicted. Should be ignored for resource type that doesn't have replica.
+  GracePeriodSeconds 表示对象被删除前的最长等待时间（以秒为单位）。如果新群集中的应用无法达到健康状态，Karmada 将在达到最长等待时间后删除该对象。取值只能为正整数。它不能与 SuppressDeletion 共存。
 
-  - **gracefulEvictionTasks.suppressDeletion** (boolean)
+- **gracefulEvictionTasks.message**（string）
 
-    SuppressDeletion represents the grace period will be persistent until the tools or human intervention stops it. It can not co-exist with GracePeriodSeconds.
+  Message 是有关驱逐的详细信息（人类可读消息）。可以是空字符串。
+
+- **gracefulEvictionTasks.replicas**（int32）
+
+  Replicas 表示应驱逐的副本数量。对于没有副本的资源类型，忽略该字段。
+
+- **gracefulEvictionTasks.suppressDeletion**（boolean）
+
+  SuppressDeletion 表示宽限期将持续存在，直至工具或人工干预为止。它不能与 GracePeriodSeconds 共存。
 
 - **placement** (Placement)
 
-  Placement represents the rule for select clusters to propagate resources.
+  Placement 表示选定群集以及分发资源的规则。
 
   <a name="Placement"></a>
 
-  *Placement represents the rule for select clusters.*
+  *Placement 表示选定集群的规则。*
 
   - **placement.clusterAffinities** ([]ClusterAffinityTerm)
 
-    ClusterAffinities represents scheduling restrictions to multiple cluster groups that indicated by ClusterAffinityTerm.
-    
-    The scheduler will evaluate these groups one by one in the order they appear in the spec, the group that does not satisfy scheduling restrictions will be ignored which means all clusters in this group will not be selected unless it also belongs to the next group(a cluster could belong to multiple groups).
-    
-    If none of the groups satisfy the scheduling restrictions, then scheduling fails, which means no cluster will be selected.
-    
-    Note:
-      1. ClusterAffinities can not co-exist with ClusterAffinity.
-      2. If both ClusterAffinity and ClusterAffinities are not set, any cluster
-         can be scheduling candidates.
-    
-    Potential use case 1: The private clusters in the local data center could be the main group, and the managed clusters provided by cluster providers could be the secondary group. So that the Karmada scheduler would prefer to schedule workloads to the main group and the second group will only be considered in case of the main group does not satisfy restrictions(like, lack of resources).
-    
-    Potential use case 2: For the disaster recovery scenario, the clusters could be organized to primary and backup groups, the workloads would be scheduled to primary clusters firstly, and when primary cluster fails(like data center power off), Karmada scheduler could migrate workloads to the backup clusters.
+    ClusterAffinities表示多个集群组的调度限制（ClusterAffinityTerm 指定每种限制）。
+
+    调度器将按照这些组在规范中出现的顺序逐个评估，不满足调度限制的组将被忽略。除非该组中的所有集群也属于下一个组（同一集群可以属于多个组），否则将不会选择此组中的所有集群。
+
+    如果任何组都不满足调度限制，则调度失败，这意味着不会选择任何集群。
+
+    注意：
+    1. ClusterAffinities 不能与 ClusterAffinity 共存。
+    2. 如果未同时设置 ClusterAffinities 和 ClusterAffinity，则任何集群都可以作为调度候选集群。
+
+    潜在用例1：本地数据中心的私有集群为主集群组，集群提供商的托管集群是辅助集群组。Karmada 调度器更愿意将工作负载调度到主集群组，只有在主集群组不满足限制（如缺乏资源）的情况下，才会考虑辅助集群组。
+
+    潜在用例2：对于容灾场景，系统管理员可定义主集群组和备份集群组，工作负载将首先调度到主集群组，当主集群组中的集群发生故障（如数据中心断电）时，Karmada 调度器可以将工作负载迁移到备份集群组。
 
     <a name="ClusterAffinityTerm"></a>
 
-    *ClusterAffinityTerm selects a set of cluster.*
+    *ClusterAffinityTerm 选择集群。*
 
-    - **placement.clusterAffinities.affinityName** (string), required
+    - **placement.clusterAffinities.affinityName**（string），必选
 
-      AffinityName is the name of the cluster group.
+      AffinityName 是集群组的名称。
 
     - **placement.clusterAffinities.clusterNames** ([]string)
 
-      ClusterNames is the list of clusters to be selected.
+      ClusterNames 罗列待选择的集群。
 
     - **placement.clusterAffinities.exclude** ([]string)
 
-      ExcludedClusters is the list of clusters to be ignored.
+      ExcludedClusters 罗列待忽略的集群。
 
     - **placement.clusterAffinities.fieldSelector** (FieldSelector)
 
-      FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+      FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
       <a name="FieldSelector"></a>
 
-      *FieldSelector is a field filter.*
+      *FieldSelector 是一个字段过滤器。*
 
       - **placement.clusterAffinities.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-        A list of field selector requirements.
+        字段选择器要求列表。
 
     - **placement.clusterAffinities.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-      LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+      LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
-  - **placement.clusterAffinity** (ClusterAffinity)
+- **placement.clusterAffinity** (ClusterAffinity)
 
-    ClusterAffinity represents scheduling restrictions to a certain set of clusters. Note:
-      1. ClusterAffinity can not co-exist with ClusterAffinities.
-      2. If both ClusterAffinity and ClusterAffinities are not set, any cluster
-         can be scheduling candidates.
+  ClusterAffinity 表示对某组集群的调度限制。注意：
+  1. ClusterAffinity 不能与 ClusterAffinities 共存。
+  2. 如果未同时设置 ClusterAffinities 和 ClusterAffinity，则任何集群都可以作为调度候选集群。
 
-    <a name="ClusterAffinity"></a>
+  <a name="ClusterAffinity"></a>
 
-    *ClusterAffinity represents the filter to select clusters.*
+  *ClusterAffinity 表示用于选择集群的过滤器。*
 
-    - **placement.clusterAffinity.clusterNames** ([]string)
+  - **placement.clusterAffinity.clusterNames** ([]string)
 
-      ClusterNames is the list of clusters to be selected.
+    ClusterNames 罗列待选择的集群。
 
-    - **placement.clusterAffinity.exclude** ([]string)
+  - **placement.clusterAffinity.exclude** ([]string)
 
-      ExcludedClusters is the list of clusters to be ignored.
+    ExcludedClusters 罗列待忽略的集群。
 
     - **placement.clusterAffinity.fieldSelector** (FieldSelector)
 
-      FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+      FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
       <a name="FieldSelector"></a>
 
-      *FieldSelector is a field filter.*
+      *FieldSelector 是一个字段过滤器。*
 
       - **placement.clusterAffinity.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-        A list of field selector requirements.
+        字段选择器要求列表。
 
     - **placement.clusterAffinity.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-      LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+      LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
   - **placement.clusterTolerations** ([]Toleration)
 
-    ClusterTolerations represents the tolerations.
+    ClusterTolerations 表示容忍度。
 
     <a name="Toleration"></a>
 
-    *The pod this Toleration is attached to tolerates any taint that matches the triple &lt;key,value,effect&gt; using the matching operator &lt;operator&gt;.*
+    *附加此容忍度的 Pod 能够容忍任何使用匹配运算符 &lt;operator&gt; 匹配三元组 &lt;key,value,effect&gt; 所得到的污点。*
 
-    - **placement.clusterTolerations.effect** (string)
+    - **placement.clusterTolerations.effect**（string）
 
-      Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
-      
-      Possible enum values:
-       - `"NoExecute"` Evict any already-running pods that do not tolerate the taint. Currently enforced by NodeController.
-       - `"NoSchedule"` Do not allow new pods to schedule onto the node unless they tolerate the taint, but allow all pods submitted to Kubelet without going through the scheduler to start, and allow all already-running pods to continue running. Enforced by the scheduler.
-       - `"PreferNoSchedule"` Like TaintEffectNoSchedule, but the scheduler tries not to schedule new pods onto the node, rather than prohibiting new pods from scheduling onto the node entirely. Enforced by the scheduler.
+      Effect 表示要匹配的污点效果。留空表示匹配所有污点效果。如果要设置此字段，允许的值为 NoSchedule、PreferNoSchedule 或 NoExecute。
 
-    - **placement.clusterTolerations.key** (string)
+      枚举值包括：
+      - `"NoExecute"`：任何不能容忍该污点的 Pod 都会被驱逐。当前由 NodeController 强制执行。
+      - `"NoSchedule"`：如果新 pod 无法容忍该污点，不允许新 pod 调度到节点上，但允许由 Kubelet 调度但不需要调度器启动的所有 pod，并允许节点上已存在的 Pod 继续运行。由调度器强制执行。
+      - `"PreferNoSchedule"`：和 TaintEffectNoSchedule 相似，不同的是调度器尽量避免将新 Pod 调度到具有该污点的节点上，除非没有其他节点可调度。由调度器强制执行。
 
-      Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+    - **placement.clusterTolerations.key**（string）
 
-    - **placement.clusterTolerations.operator** (string)
+      Key 是容忍度的污点键。留空表示匹配所有污点键。如果键为空，则运算符必须为 Exist，所有值和所有键都会被匹配。
 
-      Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
-      
-      Possible enum values:
-       - `"Equal"`
-       - `"Exists"`
+    - **placement.clusterTolerations.operator**（string）
 
-    - **placement.clusterTolerations.tolerationSeconds** (int64)
+      Operator 表示一个键与值的关系。有效的运算符包括 Exists 和 Equal。默认为 Equal。Exists 相当于将值设置为通配符，因此一个 Pod 可以容忍特定类别的所有污点。
 
-      TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+      枚举值包括：
+      - `"Equal"`
+      - `"Exists"`
 
-    - **placement.clusterTolerations.value** (string)
+    - **placement.clusterTolerations.tolerationSeconds**（int64）
 
-      Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+      TolerationSeconds 表示容忍度容忍污点的时间段（Effect 的取值为 NoExecute，否则忽略此字段）。默认情况下，不设置此字段，表示永远容忍污点（不驱逐）。零和负值将被系统视为 0（立即驱逐）。
+
+    - **placement.clusterTolerations.value**（string）
+
+      Value 是容忍度匹配到的污点值。如果运算符为 Exists，则值应为空，否则就是一个普通字符串。
 
   - **placement.replicaScheduling** (ReplicaSchedulingStrategy)
 
-    ReplicaScheduling represents the scheduling policy on dealing with the number of replicas when propagating resources that have replicas in spec (e.g. deployments, statefulsets) to member clusters.
+    ReplicaScheduling 表示将 spec 中规约的副本资源（例如 Deployments、Statefulsets）分发到成员集群时处理副本数量的调度策略。
 
     <a name="ReplicaSchedulingStrategy"></a>
 
-    *ReplicaSchedulingStrategy represents the assignment strategy of replicas.*
+    *ReplicaSchedulingStrategy 表示副本的分配策略。*
 
-    - **placement.replicaScheduling.replicaDivisionPreference** (string)
+    - **placement.replicaScheduling.replicaDivisionPreference**（string）
 
-      ReplicaDivisionPreference determines how the replicas is divided when ReplicaSchedulingType is "Divided". Valid options are Aggregated and Weighted. "Aggregated" divides replicas into clusters as few as possible, while respecting clusters' resource availabilities during the division. "Weighted" divides replicas by weight according to WeightPreference.
+      当 ReplicaSchedulingType 设置为 Divided 时，由 ReplicaDivisionPreference 确定副本的分配策略。取值包括 Aggregated 和 Weighted。Aggregated：将副本分配给尽可能少的集群，同时考虑集群的资源可用性。Weighted：根据 WeightPreference 按权重分配副本。
 
-    - **placement.replicaScheduling.replicaSchedulingType** (string)
+    - **placement.replicaScheduling.replicaSchedulingType**（string）
 
-      ReplicaSchedulingType determines how the replicas is scheduled when karmada propagating a resource. Valid options are Duplicated and Divided. "Duplicated" duplicates the same replicas to each candidate member cluster from resource. "Divided" divides replicas into parts according to number of valid candidate member clusters, and exact replicas for each cluster are determined by ReplicaDivisionPreference.
+      ReplicaSchedulingType 确定 karmada 分发资源副本的调度方式。取值包括 Duplicated 和 Divided。Duplicated：将相同的副本从资源复制到每个候选成员群集。Divided：根据有效候选成员集群的数量分配副本，每个集群的副本由 ReplicaDivisionPreference 确定。
 
     - **placement.replicaScheduling.weightPreference** (ClusterPreferences)
 
-      WeightPreference describes weight for each cluster or for each group of cluster If ReplicaDivisionPreference is set to "Weighted", and WeightPreference is not set, scheduler will weight all clusters the same.
+      WeightPreference 描述每个集群或每组集群的权重。如果 ReplicaDivisionPreference 设置为 Weighted，但 WeightPreference 未设置，调度器将为所有集群设置相同的权重。
 
       <a name="ClusterPreferences"></a>
 
-      *ClusterPreferences describes weight for each cluster or for each group of cluster.*
+      *ClusterPreferences 描述每个集群或每组集群的权重。*
 
-      - **placement.replicaScheduling.weightPreference.dynamicWeight** (string)
+      - **placement.replicaScheduling.weightPreference.dynamicWeight**（string）
 
-        DynamicWeight specifies the factor to generates dynamic weight list. If specified, StaticWeightList will be ignored.
+        DynamicWeight 指生成动态权重列表的因子。如果指定，StaticWeightList 将被忽略。
 
       - **placement.replicaScheduling.weightPreference.staticWeightList** ([]StaticClusterWeight)
 
-        StaticWeightList defines the static cluster weight.
+        StaticWeightList 罗列静态集群权重。
 
         <a name="StaticClusterWeight"></a>
 
-        *StaticClusterWeight defines the static cluster weight.*
+        *StaticClusterWeight 定义静态集群权重。*
 
-        - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster** (ClusterAffinity), required
+        - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster** (ClusterAffinity)，必选
 
-          TargetCluster describes the filter to select clusters.
+          TargetCluster 是用于选择集群的过滤条件。
 
           <a name="ClusterAffinity"></a>
 
-          *ClusterAffinity represents the filter to select clusters.*
+          *ClusterAffinity 是用于选择集群的过滤条件。*
 
           - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.clusterNames** ([]string)
 
-            ClusterNames is the list of clusters to be selected.
+            ClusterNames 罗列待选择的集群。
 
           - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.exclude** ([]string)
 
-            ExcludedClusters is the list of clusters to be ignored.
+            ExcludedClusters 罗列待忽略的集群。
 
           - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.fieldSelector** (FieldSelector)
 
-            FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+            FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
             <a name="FieldSelector"></a>
 
-            *FieldSelector is a field filter.*
+            *FieldSelector 是一个字段过滤器。*
 
             - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-              A list of field selector requirements.
+              字段选择器要求列表。
 
           - **placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-            LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+            LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
-        - **placement.replicaScheduling.weightPreference.staticWeightList.weight** (int64), required
+        - **placement.replicaScheduling.weightPreference.staticWeightList.weight**（int64），必选
 
-          Weight expressing the preference to the cluster(s) specified by 'TargetCluster'.
+          Weight表示优先选择 TargetCluster 指定的集群。
 
   - **placement.spreadConstraints** ([]SpreadConstraint)
 
-    SpreadConstraints represents a list of the scheduling constraints.
+    SpreadConstraints 表示调度约束的列表。
 
     <a name="SpreadConstraint"></a>
 
-    *SpreadConstraint represents the spread constraints on resources.*
+    *SpreadConstraint 表示资源分布的约束。*
 
-    - **placement.spreadConstraints.maxGroups** (int32)
+    - **placement.spreadConstraints.maxGroups**（int32）
 
-      MaxGroups restricts the maximum number of cluster groups to be selected.
+      MaxGroups 表示要选择的集群组的最大数量。
 
-    - **placement.spreadConstraints.minGroups** (int32)
+    - **placement.spreadConstraints.minGroups**（int32）
 
-      MinGroups restricts the minimum number of cluster groups to be selected. Defaults to 1.
+      MinGroups 表示要选择的集群组的最小数量。默认值为 1。
 
-    - **placement.spreadConstraints.spreadByField** (string)
+    - **placement.spreadConstraints.spreadByField**（string）
 
-      SpreadByField represents the fields on Karmada cluster API used for dynamically grouping member clusters into different groups. Resources will be spread among different cluster groups. Available fields for spreading are: cluster, region, zone, and provider. SpreadByField should not co-exist with SpreadByLabel. If both SpreadByField and SpreadByLabel are empty, SpreadByField will be set to "cluster" by system.
+      SpreadByField 是 Karmada 集群 API 中的字段，该 API 用于将成员集群分到不同集群组。资源将被分发到不同的集群组中。可用的字段包括 cluster、region、zone 和 provider。SpreadByField 不能与 SpreadByLabel 共存。如果两个字段都为空，SpreadByField 默认为 cluster。
 
-    - **placement.spreadConstraints.spreadByLabel** (string)
+    - **placement.spreadConstraints.spreadByLabel**（string）
 
-      SpreadByLabel represents the label key used for grouping member clusters into different groups. Resources will be spread among different cluster groups. SpreadByLabel should not co-exist with SpreadByField.
+      SpreadByLabel 表示用于将成员集群分到不同集群组的标签键。资源将被分发到不同的集群组中。SpreadByLabel 不能与 SpreadByField 共存。
 
-- **propagateDeps** (boolean)
+  - **propagateDeps**（boolean）
 
-  PropagateDeps tells if relevant resources should be propagated automatically. It is inherited from PropagationPolicy or ClusterPropagationPolicy. default false.
+    PropagateDeps 表示相关资源是否被自动分发，继承自 PropagationPolicy 或 ClusterPropagationPolicy。默认值为 false。
 
-- **replicaRequirements** (ReplicaRequirements)
+  - **replicaRequirements** (ReplicaRequirements)
 
-  ReplicaRequirements represents the requirements required by each replica.
+    ReplicaRequirements 表示每个副本的需求。
 
-  <a name="ReplicaRequirements"></a>
+    <a name="ReplicaRequirements"></a>
 
-  *ReplicaRequirements represents the requirements required by each replica.*
+    *ReplicaRequirements 表示每个副本的需求。*
 
   - **replicaRequirements.nodeClaim** (NodeClaim)
 
-    NodeClaim represents the node claim HardNodeAffinity, NodeSelector and Tolerations required by each replica.
+    NodeClaim 表示每个副本所需的节点声明 HardNodeAffinity、NodeSelector 和 Tolerations。
 
     <a name="NodeClaim"></a>
 
-    *NodeClaim represents the node claim HardNodeAffinity, NodeSelector and Tolerations required by each replica.*
+    *NodeClaim 表示每个副本所需的节点声明 HardNodeAffinity、NodeSelector 和 Tolerations。*
 
     - **replicaRequirements.nodeClaim.hardNodeAffinity** (NodeSelector)
 
-      A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms. Note that only PodSpec.Affinity.NodeAffinity.RequiredDuringSchedulingIgnoredDuringExecution is included here because it has a hard limit on pod scheduling.
+      一个节点选择器可以匹配要调度到一组节点上的一个或多个标签。以节点选择条件形式表示的节点选择器之间是“或”的关系。注意：因为该字段对 Pod 调度有硬性限制，所以此处仅包含 PodSpec.Affinity.NodeAffinity 中 RequiredDuringSchedulingIgnoredDuringExecution。
 
       <a name="NodeSelector"></a>
 
-      *A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.*
+      *一个节点选择器可以匹配要调度到一组节点上的一个或多个标签。以节点选择条件为形式的节点选择器之间是“或”的关系。*
 
-      - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms** ([]NodeSelectorTerm), required
+      - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms** ([]NodeSelectorTerm)，必选
 
-        Required. A list of node selector terms. The terms are ORed.
+        节点选择条件列表。这些条件之间是“或”的关系。
 
         <a name="NodeSelectorTerm"></a>
 
-        *A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.*
+        *如果取值为 null 或留空，不会匹配任何对象。这些条件的要求是“与”的关系。TopologySelectorTerm 类型是 NodeSelectorTerm 的子集。*
 
         - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-          A list of node selector requirements by node's labels.
+          按节点标签列出的节点选择器需求列表。
 
         - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchFields** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-          A list of node selector requirements by node's fields.
+          按节点字段列出的节点选择器需求列表。
 
     - **replicaRequirements.nodeClaim.nodeSelector** (map[string]string)
 
-      NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+      NodeSelector 取值为 true 时才会认为 Pod 适合在节点上运行。选择器必须与节点的标签匹配，以便在该节点上调度 Pod。
 
     - **replicaRequirements.nodeClaim.tolerations** ([]Toleration)
 
-      If specified, the pod's tolerations.
+      如果设置了此字段，则作为 Pod 的容忍度。
 
       <a name="Toleration"></a>
 
-      *The pod this Toleration is attached to tolerates any taint that matches the triple &lt;key,value,effect&gt; using the matching operator &lt;operator&gt;.*
+      *附加此容忍度的 Pod 能够容忍任何使用匹配运算符 &lt;operator&gt; 匹配三元组 &lt;key,value,effect&gt; 所得到的污点。*
 
-      - **replicaRequirements.nodeClaim.tolerations.effect** (string)
+      - **replicaRequirements.nodeClaim.tolerations.effect**（string）
 
-        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
-        
-        Possible enum values:
-         - `"NoExecute"` Evict any already-running pods that do not tolerate the taint. Currently enforced by NodeController.
-         - `"NoSchedule"` Do not allow new pods to schedule onto the node unless they tolerate the taint, but allow all pods submitted to Kubelet without going through the scheduler to start, and allow all already-running pods to continue running. Enforced by the scheduler.
-         - `"PreferNoSchedule"` Like TaintEffectNoSchedule, but the scheduler tries not to schedule new pods onto the node, rather than prohibiting new pods from scheduling onto the node entirely. Enforced by the scheduler.
+        Effect 表示要匹配的污点效果。留空表示匹配所有污点效果。如果要设置此字段，允许的值为 NoSchedule、PreferNoSchedule 或 NoExecute。
 
-      - **replicaRequirements.nodeClaim.tolerations.key** (string)
+        枚举值包括：
+        - `"NoExecute"`：任何不能容忍该污点的 Pod 都会被驱逐。当前由 NodeController 强制执行。
+        - `"NoSchedule"`：如果新 pod 无法容忍该污点，不允许新 pod 调度到节点上，但允许由 Kubelet 调度但不需要调度器启动的所有 pod，并允许节点上已存在的 Pod 继续运行。由调度器强制执行。
+        - `"PreferNoSchedule"`：和 TaintEffectNoSchedule 相似，不同的是调度器尽量避免将新 Pod 调度到具有该污点的节点上，除非没有其他节点可调度。由调度器强制执行。
 
-        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+      - **replicaRequirements.nodeClaim.tolerations.key**（string）
 
-      - **replicaRequirements.nodeClaim.tolerations.operator** (string)
+        Key 是容忍度的污点键。留空表示匹配所有污点键。如果键为空，则运算符必须为 Exist，所有值和所有键都会被匹配。
 
-        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
-        
-        Possible enum values:
-         - `"Equal"`
-         - `"Exists"`
+      - **replicaRequirements.nodeClaim.tolerations.operator**（string）
 
-      - **replicaRequirements.nodeClaim.tolerations.tolerationSeconds** (int64)
+        Operator 表示一个键与值的关系。有效的运算符为 Exists 和 Equal。默认为 Equal。Exists 相当于将值设置为通配符，因此一个 Pod 可以容忍特定类别的所有污点。
 
-        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        枚举值包括：
+        - `"Equal"`
+        - `"Exists"`
 
-      - **replicaRequirements.nodeClaim.tolerations.value** (string)
+      - **replicaRequirements.nodeClaim.tolerations.tolerationSeconds**（int64）
 
-        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        TolerationSeconds 表示容忍度容忍污点的时间段（Effect 的取值为 NoExecute，否则忽略此字段）。默认情况下，不设置此字段，表示永远容忍污点（不驱逐）。零和负值将被系统视为 0（立即驱逐）。
+
+      - **replicaRequirements.nodeClaim.tolerations.value**（string）
+
+        Value 是容忍度匹配到的污点值。如果运算符为 Exists，则值应为空，否则就是一个普通字符串。
 
   - **replicaRequirements.resourceRequest** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    ResourceRequest represents the resources required by each replica.
+    ResourceRequest 表示每个副本所需的资源。
 
-- **replicas** (int32)
+  - **replicas**（int32）
 
-  Replicas represents the replica number of the referencing resource.
+    Replicas 表示引用资源的副本编号。
 
-- **requiredBy** ([]BindingSnapshot)
+  - **requiredBy** ([]BindingSnapshot)
 
-  RequiredBy represents the list of Bindings that depend on the referencing resource.
+    RequiredBy 表示依赖于引用资源的 Bindings 列表。
 
-  <a name="BindingSnapshot"></a>
+    <a name="BindingSnapshot"></a>
 
-  *BindingSnapshot is a snapshot of a ResourceBinding or ClusterResourceBinding.*
+    *BindingSnapshot 是 ResourceBinding 或 ClusterResourceBinding 的快照。*
 
-  - **requiredBy.name** (string), required
+    - **requiredBy.name**（string），必选
 
-    Name represents the name of the Binding.
+      Name 表示 Binding 的名称。
 
-  - **requiredBy.clusters** ([]TargetCluster)
+    - **requiredBy.clusters** ([]TargetCluster)
 
-    Clusters represents the scheduled result.
+      Clusters 表示计划结果。
 
-    <a name="TargetCluster"></a>
+      <a name="TargetCluster"></a>
 
-    *TargetCluster represents the identifier of a member cluster.*
+      *TargetCluster 是成员集群的标识符。*
 
-    - **requiredBy.clusters.name** (string), required
+      - **requiredBy.clusters.name**（string），必选
 
-      Name of target cluster.
+        Name 是目标集群的名称。
 
-    - **requiredBy.clusters.replicas** (int32)
+      - **requiredBy.clusters.replicas**（int32）
 
-      Replicas in target cluster
+        Replicas 表示目标集群中的副本。
 
-  - **requiredBy.namespace** (string)
+    - **requiredBy.namespace**（string）
 
-    Namespace represents the namespace of the Binding. It is required for ResourceBinding. If Namespace is not specified, means the referencing is ClusterResourceBinding.
+      Namespace 表示 Binding 的命名空间，是 ResourceBinding 所必需的。如果未指定命名空间，引用为 ClusterResourceBinding。
 
-- **schedulerName** (string)
+  - **schedulerName**（string）
 
-  SchedulerName represents which scheduler to proceed the scheduling. It inherits directly from the associated PropagationPolicy(or ClusterPropagationPolicy).
+    SchedulerName 表示要继续调度的调度器，可直接从所关联的 PropagationPolicy（或 ClusterPropagationPolicy）继承。
 
-## ResourceBindingStatus 
+## ResourceBindingStatus
 
-ResourceBindingStatus represents the overall status of the strategy as well as the referenced resources.
+ResourceBindingStatus 表示策略及所引用资源的整体状态。
 
 <hr/>
 
 - **aggregatedStatus** ([]AggregatedStatusItem)
 
-  AggregatedStatus represents status list of the resource running in each member cluster.
+  AggregatedStatus 罗列每个成员集群中资源的状态。
 
   <a name="AggregatedStatusItem"></a>
 
-  *AggregatedStatusItem represents status of the resource running in a member cluster.*
+  *AggregatedStatusItem 表示某个成员集群中资源的状态。*
 
-  - **aggregatedStatus.clusterName** (string), required
+  - **aggregatedStatus.clusterName**（string），必选
 
-    ClusterName represents the member cluster name which the resource deployed on.
+    ClusterName 表示资源所在的成员集群。
 
-  - **aggregatedStatus.applied** (boolean)
+  - **aggregatedStatus.applied**（boolean）
 
-    Applied represents if the resource referencing by ResourceBinding or ClusterResourceBinding is successfully applied on the cluster.
+    **applied**表示 ResourceBinding 或 ClusterResourceBinding 引用的资源是否成功应用到集群中。
 
-  - **aggregatedStatus.appliedMessage** (string)
+  - **aggregatedStatus.appliedMessage**（string）
 
-    AppliedMessage is a human readable message indicating details about the applied status. This is usually holds the error message in case of apply failed.
+    AppliedMessage 是有关应用状态的详细信息（人类可读消息）。通常是应用失败的错误信息。
 
-  - **aggregatedStatus.health** (string)
+  - **aggregatedStatus.health**（string）
 
-    Health represents the healthy state of the current resource. There maybe different rules for different resources to achieve health status.
+    Health 表示当前资源的健康状态。可以设置不同规则来保障不同资源的健康。
 
   - **aggregatedStatus.status** (RawExtension)
 
-    Status reflects running status of current manifest.
+    Status 反映当前清单的运行状态。
 
     <a name="RawExtension"></a>
 
-    *RawExtension is used to hold extensions in external versions.
-    
-    To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.
-    
-    // Internal package:
-    
+    *RawExtension 用于在外部版本中保存扩展数据。
+
+    要使用此字段，请生成一个字段，在外部、版本化结构中以 RawExtension 作为其类型，在内部结构中以 Object 作为其类型。此外，还需要注册各个插件类型。
+
+    //内部包：
+
     	type MyAPIObject struct [
     		runtime.TypeMeta `json:",inline"`
     		MyPlugin runtime.Object `json:"myPlugin"`
     	]
-    
+
     	type PluginA struct [
     		AOption string `json:"aOption"`
     	]
-    
-    // External package:
-    
+
+    //外部包：
+
     	type MyAPIObject struct [
     		runtime.TypeMeta `json:",inline"`
     		MyPlugin runtime.RawExtension `json:"myPlugin"`
     	]
-    
+
     	type PluginA struct [
     		AOption string `json:"aOption"`
     	]
-    
-    // On the wire, the JSON will look something like this:
-    
+
+    //在网络上，JSON 看起来像这样：
+
     	[
     		"kind":"MyAPIObject",
     		"apiVersion":"v1",
@@ -614,56 +609,56 @@ ResourceBindingStatus represents the overall status of the strategy as well as t
     			"aOption":"foo",
     		],
     	]
-    
-    So what happens? Decode first uses json or yaml to unmarshal the serialized data into your external MyAPIObject. That causes the raw JSON to be stored, but not unpacked. The next step is to copy (using pkg/conversion) into the internal struct. The runtime package's DefaultScheme has conversion functions installed which will unpack the JSON stored in RawExtension, turning it into the correct object type, and storing it in the Object. (TODO: In the case where the object is of an unknown type, a runtime.Unknown object will be created and stored.)*
+
+    那么会发生什么？解码首先需要使用 JSON 或 YAML 将序列化数据解组到外部 MyAPIObject 中。这会导致原始 JSON 被存储下来，但不会被解包。下一步是复制（使用 pkg/conversion）到内部结构中。runtime 包的 DefaultScheme 安装了转换函数，它将解析存储在 RawExtension 中的 JSON，将其转换为正确的对象类型，并将其存储在对象中。（TODO：如果对象是未知类型，将创建并存储一个 runtime.Unknown 对象。）*
 
 - **conditions** ([]Condition)
 
-  Conditions contain the different condition statuses.
+  Conditions 包含不同的状况。
 
   <a name="Condition"></a>
 
-  *Condition contains details for one aspect of the current state of this API Resource.*
+  *Condition 包含此 API 资源当前状态某个方面的详细信息。*
 
-  - **conditions.lastTransitionTime** (Time), required
+  - **conditions.lastTransitionTime** (Time)，必选
 
-    lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+    lastTransitionTime 是最近一次从一种状态转换到另一种状态的时间。这种变化通常出现在下层状况发生变化的时候。如果无法了解下层状况变化，使用 API 字段更改的时间也是可以接受的。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-  - **conditions.message** (string), required
+  - **conditions.message**（string），必选
 
-    message is a human readable message indicating details about the transition. This may be an empty string.
+    Message 是有关转换的详细信息（人类可读消息）。可以是空字符串。
 
-  - **conditions.reason** (string), required
+  - **conditions.reason**（string），必选
 
-    reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+    reason 是一个程序标识符，表明状况最后一次转换的原因。特定状况类型的生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保证的 API。取值应该是一个 CamelCase 字符串。此字段不能为空。
 
-  - **conditions.status** (string), required
+  - **conditions.status**（string），必选
 
-    status of the condition, one of True, False, Unknown.
+    Status 表示状况的状态。取值为 True、False 或 Unknown。
 
-  - **conditions.type** (string), required
+  - **conditions.type**（string），必选
 
-    type of condition in CamelCase or in foo.example.com/CamelCase.
+    type 表示 CamelCase 或 foo.example.com/CamelCase 形式的状况类型。
 
-  - **conditions.observedGeneration** (int64)
+  - **conditions.observedGeneration**（int64）
 
-    observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+    **observedGeneration**表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
 
-- **schedulerObservedGeneration** (int64)
+- **schedulerObservedGeneration**（int64）
 
-  SchedulerObservedGeneration is the generation(.metadata.generation) observed by the scheduler. If SchedulerObservedGeneration is less than the generation in metadata means the scheduler hasn't confirmed the scheduling result or hasn't done the schedule yet.
+  SchedulerObservedGeneration 表示调度器观测到的元数据（.metadata.generation）。如果该字段的值比 .metadata.genation 生成的元数据少，则表示调度器尚未确认调度结果或尚未完成调度。
 
-- **schedulerObservingAffinityName** (string)
+- **schedulerObservingAffinityName**（string）
 
-  SchedulerObservedAffinityName is the name of affinity term that is the basis of current scheduling.
+  SchedulerObservedAffinityName 表示亲和性规则的名称，是当前调度的基础。
 
-## ResourceBindingList 
+## ResourceBindingList
 
-ResourceBindingList contains a list of ResourceBinding.
+ResourceBindingList 中包含 ResourceBinding 列表。
 
 <hr/>
 
@@ -673,211 +668,210 @@ ResourceBindingList contains a list of ResourceBinding.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)), required
+- **items** ([][ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding))，必选
 
-  Items is the list of ResourceBinding.
+  Items 表示 ResourceBinding 列表。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified ResourceBinding
+### `get`：查询指定的 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
-### `get` read status of the specified ResourceBinding
+### `get`：查询指定 ResourceBinding 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding 名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
-### `list` list or watch objects of kind ResourceBinding
+### `list`：查询全部 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([ResourceBindingList](../work-resources/resource-binding-v1alpha2#resourcebindinglist)): OK
 
-### `list` list or watch objects of kind ResourceBinding
+### `list`：查询全部 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/work.karmada.io/v1alpha2/resourcebindings
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([ResourceBindingList](../work-resources/resource-binding-v1alpha2#resourcebindinglist)): OK
 
-### `create` create a ResourceBinding
+### `create`：创建一个 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding), required
+- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
@@ -885,289 +879,282 @@ POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
 202 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): Accepted
 
-### `update` replace the specified ResourceBinding
+### `update`：更新指定的 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding), required
+- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
 201 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): Created
 
-### `update` replace status of the specified ResourceBinding
+### `update`：更新指定 ResourceBinding 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding), required
+- **body**: [ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
 201 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): Created
 
-### `patch` partially update the specified ResourceBinding
+### `patch`：更新指定 ResourceBinding 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding 名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
 201 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): Created
 
-### `patch` partially update status of the specified ResourceBinding
+### `patch`：更新指定 ResourceBinding 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding 名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): OK
 
 201 ([ResourceBinding](../work-resources/resource-binding-v1alpha2#resourcebinding)): Created
 
-### `delete` delete a ResourceBinding
+### `delete`：删除一个 ResourceBinding
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceBinding
+  ResourceBinding名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of ResourceBinding
+### `deletecollection`：删除 ResourceBinding 的集合
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-
