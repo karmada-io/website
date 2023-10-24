@@ -20,369 +20,365 @@ auto_generated: true
 
 ## ClusterPropagationPolicy 
 
-ClusterPropagationPolicy represents the cluster-wide policy that propagates a group of resources to one or more clusters. Different with PropagationPolicy that could only propagate resources in its own namespace, ClusterPropagationPolicy is able to propagate cluster level resources and resources in any namespace other than system reserved ones. System reserved namespaces are: karmada-system, karmada-cluster, karmada-es-*.
+ClusterPropagationPolicy 表示将一组资源分发到一个或多个集群的集群策略。与只能在其命名空间内分发资源的 PropagationPolicy 相比，ClusterPropagationPolicy 能够在系统命名空间之外的任何命名空间内分发集群级别的资源。系统命名空间包括：karmada-system、karmada-cluster、karmada-es-*。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
-- **kind**: ClusterPropagationPolicy
+- **kind**：ClusterPropagationPolicy
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** (PropagationSpec), required
+- **spec** (PropagationSpec)，必选
 
-  Spec represents the desired behavior of ClusterPropagationPolicy.
+  Spec 表示 ClusterPropagationPolicy 的规范。
 
   <a name="PropagationSpec"></a>
 
-  *PropagationSpec represents the desired behavior of PropagationPolicy.*
+  *PropagationSpec 表示 PropagationPolicy 的规范。*
 
-  - **spec.resourceSelectors** ([]ResourceSelector), required
+  - **spec.resourceSelectors** ([]ResourceSelector)，必选
 
-    ResourceSelectors used to select resources. Nil or empty selector is not allowed and doesn't mean match all kinds of resources for security concerns that sensitive resources(like Secret) might be accidentally propagated.
+    ResourceSelectors 用于选择资源。不允许设置为 nil 或者留空。为安全起见，避免 Secret 等敏感资源被无意分发，不会匹配全部的资源。
 
     <a name="ResourceSelector"></a>
 
-    *ResourceSelector the resources will be selected.*
+    *ResourceSelector 用于选择资源。*
 
-    - **spec.resourceSelectors.apiVersion** (string), required
+    - **spec.resourceSelectors.apiVersion** (string)，必选
 
-      APIVersion represents the API version of the target resources.
+      APIVersion 表示目标资源的 API 版本。
 
-    - **spec.resourceSelectors.kind** (string), required
+    - **spec.resourceSelectors.kind** (string)，必选
 
-      Kind represents the Kind of the target resources.
+      Kind 表示目标资源的类别。
 
     - **spec.resourceSelectors.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-      A label query over a set of resources. If name is not empty, labelSelector will be ignored.
+      查询一组资源的标签。如果 name 不为空，labelSelector 会被忽略。
 
     - **spec.resourceSelectors.name** (string)
 
-      Name of the target resource. Default is empty, which means selecting all resources.
+      目标资源的名称。默认值为空，意味着将选择所有的资源。
 
     - **spec.resourceSelectors.namespace** (string)
 
-      Namespace of the target resource. Default is empty, which means inherit from the parent object scope.
+      目标资源的 namespace。默认值为空，意味着从父对象作用域继承资源。
 
   - **spec.association** (boolean)
 
-    Association tells if relevant resources should be selected automatically. e.g. a ConfigMap referred by a Deployment. default false. Deprecated: in favor of PropagateDeps.
+    Association 表示是否自动选择相关资源，例如，被 Deployment 引用的 ConfigMap。默认值为 false。Deprecated 表示改用 PropagateDeps。
 
   - **spec.conflictResolution** (string)
 
-    ConflictResolution declares how potential conflict should be handled when a resource that is being propagated already exists in the target cluster.
-    
-    It defaults to "Abort" which means stop propagating to avoid unexpected overwrites. The "Overwrite" might be useful when migrating legacy cluster resources to Karmada, in which case conflict is predictable and can be instructed to Karmada take over the resource by overwriting.
+    ConflictResolution 表示当目标集群中已存在正在分发的资源时，处理潜在冲突的方式。
+
+    默认值为 Abort，表示停止分发资源以避免意外覆盖。将原集群资源迁移到 Karmada 时，可设置为“Overwrite”。此时，冲突是可预测的，且 Karmada 可通过覆盖来接管资源。
 
   - **spec.dependentOverrides** ([]string)
 
-    DependentOverrides represents the list of overrides(OverridePolicy) which must present before the current PropagationPolicy takes effect.
-    
-    It used to explicitly specify overrides which current PropagationPolicy rely on. A typical scenario is the users create OverridePolicy(ies) and resources at the same time, they want to ensure the new-created policies would be adopted.
-    
-    Note: For the overrides, OverridePolicy(ies) in current namespace and ClusterOverridePolicy(ies), which not present in this list will still be applied if they matches the resources.
+    DependentOverrides 罗列在当前 PropagationPolicy 生效之前必须出现的覆盖（OverridePolicy）。
+
+    它指明当前 PropagationPolicy 所依赖的覆盖。当用户同时创建 OverridePolicy 和资源时，一般希望可以采用新创建的策略。
+
+    注意：如果当前命名空间中的 OverridePolicy 和 ClusterOverridePolicy 与资源匹配，即使它们不在列表中，仍将被应用于覆盖。
 
   - **spec.failover** (FailoverBehavior)
 
-    Failover indicates how Karmada migrates applications in case of failures. If this value is nil, failover is disabled.
+    Failover 表示 Karmada 在故障场景中迁移应用的方式。如果值为 nil，则禁用故障转移。
 
     <a name="FailoverBehavior"></a>
 
-    *FailoverBehavior indicates failover behaviors in case of an application or cluster failure.*
+    *FailoverBehavior 表示应用或集群的故障转移。*
 
     - **spec.failover.application** (ApplicationFailoverBehavior)
 
-      Application indicates failover behaviors in case of application failure. If this value is nil, failover is disabled. If set, the PropagateDeps should be true so that the dependencies could be migrated along with the application.
+      Application 表示应用的故障转移。如果值为 nil，则禁用故障转移。如果值不为 nil，则 PropagateDeps 应设置为 true，以便依赖项随应用一起迁移。
 
       <a name="ApplicationFailoverBehavior"></a>
 
-      *ApplicationFailoverBehavior indicates application failover behaviors.*
+      *ApplicationFailoverBehavior 表示应用的故障转移。*
 
-      - **spec.failover.application.decisionConditions** (DecisionConditions), required
+      - **spec.failover.application.decisionConditions** (DecisionConditions)，必选
 
-        DecisionConditions indicates the decision conditions of performing the failover process. Only when all conditions are met can the failover process be performed. Currently, DecisionConditions includes several conditions: - TolerationSeconds (optional)
+        DecisionConditions 表示执行故障转移的先决条件。只有满足所有条件，才能执行故障转移。当前条件为 TolerationSeconds（可选）。
 
         <a name="DecisionConditions"></a>
 
-        *DecisionConditions represents the decision conditions of performing the failover process.*
+        *DecisionConditions 表示执行故障转移的先决条件。*
 
         - **spec.failover.application.decisionConditions.tolerationSeconds** (int32)
 
-          TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process. If not specified, Karmada will immediately perform failover process. Defaults to 300s.
+          TolerationSeconds 表示应用达到预期状态后，Karmada 在执行故障转移之前应等待的时间。如果未指定，Karmada 将立即执行故障转移。默认为 300 秒。
 
       - **spec.failover.application.gracePeriodSeconds** (int32)
 
-        GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Graciously" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
+        GracePeriodSeconds 表示从新集群中删除应用之前的最长等待时间（以秒为单位）。仅当 PurgeMode 设置为 Graciously 且默认时长为 600 秒时，才需要设置该字段。如果新群集中的应用无法达到健康状态，Karmada 将在达到最长等待时间后删除应用。取值只能为正整数。
 
       - **spec.failover.application.purgeMode** (string)
 
-        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never". Defaults to "Graciously".
+        PurgeMode 表示表示原集群中应用的处理方式。取值包括 Immediately、Graciously 和 Never。默认为 Graciously。
 
   - **spec.placement** (Placement)
 
-    Placement represents the rule for select clusters to propagate resources.
+    Placement 表示选择集群以分发资源的规则。
 
     <a name="Placement"></a>
 
-    *Placement represents the rule for select clusters.*
+    *Placement 表示选择集群的规则。*
 
     - **spec.placement.clusterAffinities** ([]ClusterAffinityTerm)
 
-      ClusterAffinities represents scheduling restrictions to multiple cluster groups that indicated by ClusterAffinityTerm.
-      
-      The scheduler will evaluate these groups one by one in the order they appear in the spec, the group that does not satisfy scheduling restrictions will be ignored which means all clusters in this group will not be selected unless it also belongs to the next group(a cluster could belong to multiple groups).
-      
-      If none of the groups satisfy the scheduling restrictions, then scheduling fails, which means no cluster will be selected.
-      
-      Note:
-        1. ClusterAffinities can not co-exist with ClusterAffinity.
-        2. If both ClusterAffinity and ClusterAffinities are not set, any cluster
-           can be scheduling candidates.
-      
-      Potential use case 1: The private clusters in the local data center could be the main group, and the managed clusters provided by cluster providers could be the secondary group. So that the Karmada scheduler would prefer to schedule workloads to the main group and the second group will only be considered in case of the main group does not satisfy restrictions(like, lack of resources).
-      
-      Potential use case 2: For the disaster recovery scenario, the clusters could be organized to primary and backup groups, the workloads would be scheduled to primary clusters firstly, and when primary cluster fails(like data center power off), Karmada scheduler could migrate workloads to the backup clusters.
+      ClusterAffinities 表示多个集群组的调度限制（ClusterAffinityTerm 指定每种限制）。
+
+      调度器将按照这些组在规范中出现的顺序逐个评估，不满足调度限制的组将被忽略。除非该组中的所有集群也属于下一个组（同一集群可以属于多个组），否则将不会选择此组中的所有集群。
+
+      如果任何组都不满足调度限制，则调度失败，任何群集都不会被选择。
+
+      注意：
+      1. ClusterAffinities 不能与 ClusterAffinity 共存。
+      2. 如果未同时设置 ClusterAffinities 和 ClusterAffinity，则任何集群都可以作为调度候选集群。
+
+      潜在用例1：本地数据中心的私有集群为主集群组，集群提供商的托管集群是辅助集群组。Karmada 调度器更愿意将工作负载调度到主集群组，只有在主集群组不满足限制（如缺乏资源）的情况下，才会考虑辅助集群组。
+
+      潜在用例2：对于容灾场景，系统管理员可定义主集群组和备份集群组，工作负载将首先调度到主集群组，当主集群组中的集群发生故障（如数据中心断电）时，Karmada 调度器可以将工作负载迁移到备份集群组。
 
       <a name="ClusterAffinityTerm"></a>
 
-      *ClusterAffinityTerm selects a set of cluster.*
+      *ClusterAffinityTerm 用于选择集群。*
 
-      - **spec.placement.clusterAffinities.affinityName** (string), required
+      - **spec.placement.clusterAffinities.affinityName** (string)，必选
 
-        AffinityName is the name of the cluster group.
+        AffinityName 是集群组的名称。
 
       - **spec.placement.clusterAffinities.clusterNames** ([]string)
 
-        ClusterNames is the list of clusters to be selected.
+        ClusterNames 罗列待选择的集群。
 
       - **spec.placement.clusterAffinities.exclude** ([]string)
 
-        ExcludedClusters is the list of clusters to be ignored.
+        ExcludedClusters 罗列待忽略的集群。
 
       - **spec.placement.clusterAffinities.fieldSelector** (FieldSelector)
 
-        FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+        FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
         <a name="FieldSelector"></a>
 
-        *FieldSelector is a field filter.*
+        *FieldSelector 是一个字段过滤器。*
 
         - **spec.placement.clusterAffinities.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-          A list of field selector requirements.
+          字段选择器要求列表。
 
       - **spec.placement.clusterAffinities.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+        LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
     - **spec.placement.clusterAffinity** (ClusterAffinity)
 
-      ClusterAffinity represents scheduling restrictions to a certain set of clusters. Note:
-        1. ClusterAffinity can not co-exist with ClusterAffinities.
-        2. If both ClusterAffinity and ClusterAffinities are not set, any cluster
-           can be scheduling candidates.
+      ClusterAffinity 表示对某组集群的调度限制。注意：
+      1. ClusterAffinity 不能与 ClusterAffinities 共存。
+      2. 如果未同时设置 ClusterAffinities 和 ClusterAffinity，则任何集群都可以作为调度候选集群。
 
       <a name="ClusterAffinity"></a>
 
-      *ClusterAffinity represents the filter to select clusters.*
+      *ClusterAffinity 是用于选择集群的过滤条件。*
 
       - **spec.placement.clusterAffinity.clusterNames** ([]string)
 
-        ClusterNames is the list of clusters to be selected.
+        ClusterNames 罗列待选择的集群。
 
       - **spec.placement.clusterAffinity.exclude** ([]string)
 
-        ExcludedClusters is the list of clusters to be ignored.
+        ExcludedClusters 罗列待忽略的集群。
 
       - **spec.placement.clusterAffinity.fieldSelector** (FieldSelector)
 
-        FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+        FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
         <a name="FieldSelector"></a>
 
-        *FieldSelector is a field filter.*
+        *FieldSelector 是一个字段过滤器。*
 
         - **spec.placement.clusterAffinity.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-          A list of field selector requirements.
+          字段选择器要求列表。
 
       - **spec.placement.clusterAffinity.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+        LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
     - **spec.placement.clusterTolerations** ([]Toleration)
 
-      ClusterTolerations represents the tolerations.
+      ClusterTolerations 表示容忍度。
 
       <a name="Toleration"></a>
 
-      *The pod this Toleration is attached to tolerates any taint that matches the triple &lt;key,value,effect&gt; using the matching operator &lt;operator&gt;.*
+      *附加此容忍度的 Pod 能够容忍任何使用匹配运算符 &lt;operator&gt; 匹配三元组 &lt;key,value,effect&gt; 所得到的污点。*
 
       - **spec.placement.clusterTolerations.effect** (string)
 
-        Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
-        
-        Possible enum values:
-         - `"NoExecute"` Evict any already-running pods that do not tolerate the taint. Currently enforced by NodeController.
-         - `"NoSchedule"` Do not allow new pods to schedule onto the node unless they tolerate the taint, but allow all pods submitted to Kubelet without going through the scheduler to start, and allow all already-running pods to continue running. Enforced by the scheduler.
-         - `"PreferNoSchedule"` Like TaintEffectNoSchedule, but the scheduler tries not to schedule new pods onto the node, rather than prohibiting new pods from scheduling onto the node entirely. Enforced by the scheduler.
+        Effect 表示要匹配的污点效果。留空表示匹配所有污点效果。如果设置此字段，允许的值为 NoSchedule、PreferNoSchedule 或 NoExecute。
+
+        枚举值包括：
+        - `"NoExecute"`：任何不能容忍该污点的 Pod 都会被驱逐。当前由 NodeController 强制执行。
+        - `"NoSchedule"`：如果新 pod 无法容忍该污点，不允许新 pod 调度到节点上，但允许由 kubelet 调度但不需要调度器启动的所有 pod，并允许节点上已存在的 pod 继续运行。由调度器强制执行。
+        - `"PreferNoSchedule"`：和 TaintEffectNoSchedule 相似，不同的是调度器尽量避免将新 Pod 调度到具有该污点的节点上，除非没有其他节点可调度。由调度器强制执行。
 
       - **spec.placement.clusterTolerations.key** (string)
 
-        Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+        key 是容忍度的污点键。留空表示匹配所有污点键。如果键为空，则运算符必须为 Exists，所有值和所有键都会被匹配。
 
       - **spec.placement.clusterTolerations.operator** (string)
 
-        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
-        
-        Possible enum values:
-         - `"Equal"`
-         - `"Exists"`
+        Operator 表示一个键与其值的关系。有效的运算符包括 Exists 和 Equal。默认为 Equal。Exists 相当于将值设置为通配符，因此一个 Pod 可以容忍特定类别的所有污点。
+
+        枚举值包括：
+        - `"Equal"`
+        - `"Exists"`
 
       - **spec.placement.clusterTolerations.tolerationSeconds** (int64)
 
-        TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+        TolerationSeconds 表示容忍度容忍污点的时间段（Effect 的取值为 NoExecute，否则忽略此字段）。默认情况下，不设置此字段，表示永远容忍污点（不驱逐）。零和负值将被系统视为 0（立即驱逐）。
 
       - **spec.placement.clusterTolerations.value** (string)
 
-        Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+        Value 是容忍度匹配到的污点值。如果运算符为 Exists，则值留空，否则就是一个普通字符串。
 
     - **spec.placement.replicaScheduling** (ReplicaSchedulingStrategy)
 
-      ReplicaScheduling represents the scheduling policy on dealing with the number of replicas when propagating resources that have replicas in spec (e.g. deployments, statefulsets) to member clusters.
+      ReplicaScheduling 表示将 spec 中规约的副本资源（例如 Deployments、Statefulsets）分发到成员集群时处理副本数量的调度策略。
 
       <a name="ReplicaSchedulingStrategy"></a>
 
-      *ReplicaSchedulingStrategy represents the assignment strategy of replicas.*
+      *ReplicaSchedulingStrategy 表示副本的分配策略。*
 
       - **spec.placement.replicaScheduling.replicaDivisionPreference** (string)
 
-        ReplicaDivisionPreference determines how the replicas is divided when ReplicaSchedulingType is "Divided". Valid options are Aggregated and Weighted. "Aggregated" divides replicas into clusters as few as possible, while respecting clusters' resource availabilities during the division. "Weighted" divides replicas by weight according to WeightPreference.
+        当 ReplicaSchedulingType 设置为 Divided 时，由 ReplicaDivisionPreference 确定副本的分配策略。取值包括 Aggregated 和 Weighted。Aggregated：将副本分配给尽可能少的集群，同时考虑集群的资源可用性。Weighted：根据 WeightPreference 按权重分配副本。
 
       - **spec.placement.replicaScheduling.replicaSchedulingType** (string)
 
-        ReplicaSchedulingType determines how the replicas is scheduled when karmada propagating a resource. Valid options are Duplicated and Divided. "Duplicated" duplicates the same replicas to each candidate member cluster from resource. "Divided" divides replicas into parts according to number of valid candidate member clusters, and exact replicas for each cluster are determined by ReplicaDivisionPreference.
+        ReplicaSchedulingType 确定 Karmada 分发资源时副本的调度方式。取值包括 Duplicated 和 Divided。Duplicated：将相同的副本从资源复制到每个候选成员群集。Divided：根据有效候选成员集群的数量分配副本，每个集群的副本由 ReplicaDivisionPreference 确定。
 
       - **spec.placement.replicaScheduling.weightPreference** (ClusterPreferences)
 
-        WeightPreference describes weight for each cluster or for each group of cluster If ReplicaDivisionPreference is set to "Weighted", and WeightPreference is not set, scheduler will weight all clusters the same.
+        WeightPreference 描述每个集群或每组集群的权重。如果 ReplicaDivisionPreference 设置为 Weighted，但 WeightPreference 未设置，调度器将为所有集群设置相同的权重。
 
         <a name="ClusterPreferences"></a>
 
-        *ClusterPreferences describes weight for each cluster or for each group of cluster.*
+        *ClusterPreferences 描述了每个集群或每组集群的权重。*
 
         - **spec.placement.replicaScheduling.weightPreference.dynamicWeight** (string)
 
-          DynamicWeight specifies the factor to generates dynamic weight list. If specified, StaticWeightList will be ignored.
+          DynamicWeight 指生成动态权重列表的因子。如果指定，StaticWeightList 将被忽略。
 
         - **spec.placement.replicaScheduling.weightPreference.staticWeightList** ([]StaticClusterWeight)
 
-          StaticWeightList defines the static cluster weight.
+          StaticWeightList 罗列静态集群权重。
 
           <a name="StaticClusterWeight"></a>
 
-          *StaticClusterWeight defines the static cluster weight.*
+          *StaticClusterWeight 定义静态集群权重。*
 
-          - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster** (ClusterAffinity), required
+          - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster** (ClusterAffinity)，必选
 
-            TargetCluster describes the filter to select clusters.
+            TargetCluster 是选择集群的过滤器。
 
             <a name="ClusterAffinity"></a>
 
-            *ClusterAffinity represents the filter to select clusters.*
+            *ClusterAffinity 表示用于选择集群的过滤条件。*
 
             - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.clusterNames** ([]string)
 
-              ClusterNames is the list of clusters to be selected.
+              ClusterNames 罗列待选择的集群。
 
             - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.exclude** ([]string)
 
-              ExcludedClusters is the list of clusters to be ignored.
+              ExcludedClusters 罗列待忽略的集群。
 
             - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.fieldSelector** (FieldSelector)
 
-              FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+              FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
               <a name="FieldSelector"></a>
 
-              *FieldSelector is a field filter.*
+              *FieldSelector 是一个字段过滤器。*
 
               - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-                A list of field selector requirements.
+                字段选择器要求列表。
 
             - **spec.placement.replicaScheduling.weightPreference.staticWeightList.targetCluster.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-              LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+              LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
           - **spec.placement.replicaScheduling.weightPreference.staticWeightList.weight** (int64), required
 
-            Weight expressing the preference to the cluster(s) specified by 'TargetCluster'.
+            Weight 表示优先选则 TargetCluster 指定的集群。
 
     - **spec.placement.spreadConstraints** ([]SpreadConstraint)
 
-      SpreadConstraints represents a list of the scheduling constraints.
+      SpreadConstraints 表示调度约束列表。
 
       <a name="SpreadConstraint"></a>
 
-      *SpreadConstraint represents the spread constraints on resources.*
+      *SpreadConstraint 表示资源分布的约束。*
 
       - **spec.placement.spreadConstraints.maxGroups** (int32)
 
-        MaxGroups restricts the maximum number of cluster groups to be selected.
+        MaxGroups 表示要选择的集群组的最大数量。
 
       - **spec.placement.spreadConstraints.minGroups** (int32)
 
-        MinGroups restricts the minimum number of cluster groups to be selected. Defaults to 1.
+        MinGroups 表示要选择的集群组的最小数量。默认值为 1。
 
       - **spec.placement.spreadConstraints.spreadByField** (string)
 
-        SpreadByField represents the fields on Karmada cluster API used for dynamically grouping member clusters into different groups. Resources will be spread among different cluster groups. Available fields for spreading are: cluster, region, zone, and provider. SpreadByField should not co-exist with SpreadByLabel. If both SpreadByField and SpreadByLabel are empty, SpreadByField will be set to "cluster" by system.
+        SpreadByField 是 Karmada 集群 API 中的字段，该API用于将成员集群分到不同集群组。资源将被分发到不同的集群组中。可用的字段包括 cluster、region、zone 和 provider。SpreadByField 不能与 SpreadByLabel 共存。如果两个字段都为空，SpreadByField 默认为 cluster。
 
       - **spec.placement.spreadConstraints.spreadByLabel** (string)
 
-        SpreadByLabel represents the label key used for grouping member clusters into different groups. Resources will be spread among different cluster groups. SpreadByLabel should not co-exist with SpreadByField.
+        SpreadByLabel 表示用于将成员集群分到不同集群组的标签键。资源将被分发到不同的集群组中。SpreadByLabel 不能与 SpreadByField 共存。
 
   - **spec.preemption** (string)
 
-    Preemption declares the behaviors for preempting. Valid options are "Always" and "Never".
-    
-    
-    Possible enum values:
-     - `"Always"` means that preemption is allowed. If it is applied to a PropagationPolicy, it can preempt any resource as per Priority, regardless of whether it has been claimed by a PropagationPolicy or a ClusterPropagationPolicy, as long as it can match the rules defined in ResourceSelector. In addition, if a resource has already been claimed by a ClusterPropagationPolicy, the PropagationPolicy can still preempt it without considering Priority. If it is applied to a ClusterPropagationPolicy, it can only preempt from ClusterPropagationPolicy, and from PropagationPolicy is not allowed.
-     - `"Never"` means that a PropagationPolicy(ClusterPropagationPolicy) never preempts resources.
+    Preemption 表示资源抢占。取值包括 Always 和 Never。
 
-  - **spec.priority** (int32)
+    枚举值包括：
+    - `"Always"`：允许抢占。如果 Always 应用于 PropagationPolicy，则会根据优先级抢占资源。只要 PropagationPolicy 和 ClusterPropagationPolicy 能匹配 ResourceSelector 中定义的规则，均可用于声明资源。此外，如果资源已经被 ClusterPropagationPolicy 声明，PropagationPolicy 仍然可以抢占该资源，无需考虑优先级。如果 Always 应用于 ClusterPropagationPolicy，只有 ClusterPropagationPolicy 能抢占资源。
+    - `"Never"`：PropagationPolicy（或 ClusterPropagationPolicy）不抢占资源。
 
-    Priority indicates the importance of a policy(PropagationPolicy or ClusterPropagationPolicy). A policy will be applied for the matched resource templates if there is no other policies with higher priority at the point of the resource template be processed. Once a resource template has been claimed by a policy, by default it will not be preempted by following policies even with a higher priority. See Preemption for more details.
-    
-    In case of two policies have the same priority, the one with a more precise matching rules in ResourceSelectors wins: - matching by name(resourceSelector.name) has higher priority than
-      by selector(resourceSelector.labelSelector)
-    - matching by selector(resourceSelector.labelSelector) has higher priority
-      than by APIVersion(resourceSelector.apiVersion) and Kind(resourceSelector.kind).
-    If there is still no winner at this point, the one with the lower alphabetic order wins, e.g. policy 'bar' has higher priority than 'foo'.
-    
-    The higher the value, the higher the priority. Defaults to zero.
+- **spec.priority** (int32)
 
-  - **spec.propagateDeps** (boolean)
+  Priority 表示策略（PropagationPolicy 或 ClusterPropagationPolicy）的重要性。对于每条策略，如果在资源模板中没有其他优先级更高的策略，则将为匹配的资源模板应用该策略。一旦资源模板被某个策略声明，默认情况下该模板不会被优先级更高的策略抢占。查看 Preemption 字段，了解更多信息。
 
-    PropagateDeps tells if relevant resources should be propagated automatically. Take 'Deployment' which referencing 'ConfigMap' and 'Secret' as an example, when 'propagateDeps' is 'true', the referencing resources could be omitted(for saving config effort) from 'resourceSelectors' as they will be propagated along with the Deployment. In addition to the propagating process, the referencing resources will be migrated along with the Deployment in the fail-over scenario.
-    
-    Defaults to false.
+  如果两条策略有相同的优先级，会使用 ResourceSelector 中有更精确匹配规则的策略。
+  - 按 name(resourceSelector.name) 匹配的优先级高于按 selector(resourceSelector.labelSelector) 匹配。
+  - 按 selector(resourceSelector.labelSelector) 匹配的优先级又高于按 APIVersion(resourceSelector.apiVersion) 或 Kind(resourceSelector.kind) 匹配。
+    如果优先级相同，则按字母顺序，会使用字母排名更前的策略，比如，名称以 bar 开头的策略的优先级高于以 foo 开头的策略。
+
+  值越大，优先级越高。默认值为 0。
+
+- **spec.propagateDeps** (boolean)
+
+  PropagateDeps 表示相关资源是否被自动分发。以引用 ConfigMap 和 Secret 的 Deployment 为例，当 propagateDeps 为 true 时，resourceSelectors 不引用资源（以减少配置），ConfigMap 和 Secret 将与 Deployment 一起被分发。此外，在故障转移场景中，引用资源将与 Deployment 一起迁移。
+
+  默认值为 false。
 
   - **spec.schedulerName** (string)
 
-    SchedulerName represents which scheduler to proceed the scheduling. If specified, the policy will be dispatched by specified scheduler. If not specified, the policy will be dispatched by default scheduler.
+    SchedulerName 表示要继续进行调度的调度器。如果指定，将由指定的调度器调度策略。如果未指定，将由默认调度器调度策略。
 
 ## ClusterPropagationPolicyList 
 
-ClusterPropagationPolicyList contains a list of ClusterPropagationPolicy.
+ClusterPropagationPolicyList 罗列 ClusterPropagationPolicy。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
 - **kind**: ClusterPropagationPolicyList
 
@@ -390,401 +386,393 @@ ClusterPropagationPolicyList contains a list of ClusterPropagationPolicy.
 
 - **items** ([][ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)), required
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified ClusterPropagationPolicy
+### `get`：查询指定的 ClusterPropagationPolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-### `get` read status of the specified ClusterPropagationPolicy
+### `get`：查询指定 ClusterPropagationPolicy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-### `list` list or watch objects of kind ClusterPropagationPolicy
+### `list` 罗列或者监听 ClusterPropagationPolicy 类型的对象
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks** （*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*in query*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** （查询参数）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*in query*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicyList](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicylist)): OK
+200 ([ClusterPropagationPolicyList](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicylist))：OK
 
-### `create` create a ClusterPropagationPolicy
+### `create`：创建一条 ClusterPropagationPolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 
-#### Parameters
+#### 参数
 
-- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy), required
+- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Created
+201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Created
 
-202 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Accepted
+202 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Accepted
 
-### `update` replace the specified ClusterPropagationPolicy
+### `update`：更新指定的 ClusterPropagationPolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
-- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy), required
+- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Created
+201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Created
 
-### `update` replace status of the specified ClusterPropagationPolicy
+### `update`：更新指定 ClusterPropagationPolicy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
-- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy), required
+- **body**: [ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Created
+201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Created
 
-### `patch` partially update the specified ClusterPropagationPolicy
+### `patch`：更新指定 ClusterPropagationPolicy 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Created
+201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Created
 
-### `patch` partially update status of the specified ClusterPropagationPolicy
+### `patch`：更新指定 ClusterPropagationPolicy 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): OK
+200 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：OK
 
-201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy)): Created
+201 ([ClusterPropagationPolicy](../policy-resources/cluster-propagation-policy-v1alpha1#clusterpropagationpolicy))：Created
 
-### `delete` delete a ClusterPropagationPolicy
+### `delete`：删除一条 ClusterPropagationPolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterPropagationPolicy
+  ClusterPropagationPolicy 的名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*in query*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*in query*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
+200 ([Status](../common-definitions/status#status))：OK
 
-202 ([Status](../common-definitions/status#status)): Accepted
+202 ([Status](../common-definitions/status#status))：Accepted
 
-### `deletecollection` delete collection of ClusterPropagationPolicy
+### `deletecollection`：删除所有 ClusterPropagationPolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*in query*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*in query*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** （*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
-
+200 ([Status](../common-definitions/status#status))：OK

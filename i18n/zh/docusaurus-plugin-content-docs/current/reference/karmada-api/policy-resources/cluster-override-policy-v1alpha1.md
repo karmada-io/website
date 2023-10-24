@@ -20,837 +20,831 @@ auto_generated: true
 
 ## ClusterOverridePolicy 
 
-ClusterOverridePolicy represents the cluster-wide policy that overrides a group of resources to one or more clusters.
+ClusterOverridePolicy 表示将一组资源覆盖到一个或多个集群的集群范围策略。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
-- **kind**: ClusterOverridePolicy
+- **kind**：ClusterOverridePolicy
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** (OverrideSpec), required
+- **spec** (OverrideSpec)，必选
 
-  Spec represents the desired behavior of ClusterOverridePolicy.
+  Spec 表示 ClusterOverridePolicy 的规范。
 
   <a name="OverrideSpec"></a>
 
-  *OverrideSpec defines the desired behavior of OverridePolicy.*
+  *OverrideSpec 定义了 OverridePolicy 的规范。*
 
   - **spec.overrideRules** ([]RuleWithCluster)
 
-    OverrideRules defines a collection of override rules on target clusters.
+    OverrideRules 定义了一组针对目标集群的覆盖规则。
 
     <a name="RuleWithCluster"></a>
 
-    *RuleWithCluster defines the override rules on clusters.*
+    *RuleWithCluster 定义集群的覆盖规则。*
 
-    - **spec.overrideRules.overriders** (Overriders), required
+    - **spec.overrideRules.overriders** (Overriders), 必选
 
-      Overriders represents the override rules that would apply on resources
+      *Overriders 表示将应用于资源的覆盖规则。*
 
       <a name="Overriders"></a>
 
-      *Overriders offers various alternatives to represent the override rules.
-      
-      If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - Plaintext*
+      *Overriders 提供各种表示覆盖规则的替代方案。
+
+      如果多个替代方案并存，将按以下顺序应用：ImageOverrider > CommandOverrider > ArgsOverrider > LabelsOverrider > AnnotationsOverrider > Plaintext*
 
       - **spec.overrideRules.overriders.annotationsOverrider** ([]LabelAnnotationOverrider)
 
-        AnnotationsOverrider represents the rules dedicated to handling workload annotations
+        AnnotationsOverrider 表示用于处理工作负载注解的专属规则。
 
         <a name="LabelAnnotationOverrider"></a>
 
-        *LabelAnnotationOverrider represents the rules dedicated to handling workload labels/annotations*
+        *LabelAnnotationOverrider 表示用于处理工作负载标签/注解的专属规则。*
 
-        - **spec.overrideRules.overriders.annotationsOverrider.operator** (string), required
+        - **spec.overrideRules.overriders.annotationsOverrider.operator** (string)，必选
 
-          Operator represents the operator which will apply on the workload.
+          Operator 表示将应用于工作负载的运算符。
 
         - **spec.overrideRules.overriders.annotationsOverrider.value** (map[string]string)
 
-          Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
+          Value 表示工作负载 annotation/label 的值。当运算符为“add（添加）"时，Value 中的项会附加在 annotation/label 之后。当运算符为“remove（移除）”时，Value 中与 annotation/label 匹配的项将被删除。当运算符为“replace（替换）”时，Value 中与 annotation/label 匹配的项将被替换。
 
       - **spec.overrideRules.overriders.argsOverrider** ([]CommandArgsOverrider)
 
-        ArgsOverrider represents the rules dedicated to handling container args
+        ArgsOverrider 表示用于处理容器 args 的专属规则。
 
         <a name="CommandArgsOverrider"></a>
 
-        *CommandArgsOverrider represents the rules dedicated to handling command/args overrides.*
+        *CommandArgsOverrider 表示用于处理 command/args 覆盖的专属规则。*
 
-        - **spec.overrideRules.overriders.argsOverrider.containerName** (string), required
+        - **spec.overrideRules.overriders.argsOverrider.containerName** (string)，必选
 
-          The name of container
+          容器的名称。
 
-        - **spec.overrideRules.overriders.argsOverrider.operator** (string), required
+        - **spec.overrideRules.overriders.argsOverrider.operator** (string)，必选
 
-          Operator represents the operator which will apply on the command/args.
+          Operator 表示将应用于 command/args 的运算符。
 
         - **spec.overrideRules.overriders.argsOverrider.value** ([]string)
 
-          Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+          Value 表示 command/args 的值。当运算符为“add（添加）"时，Value 中的项会附加在 command/args 之后。当运算符为“remove（移除）”时，Value 中与 command/args 匹配的项将被删除。如果 Value 为空，command/args 将保持不变。
 
       - **spec.overrideRules.overriders.commandOverrider** ([]CommandArgsOverrider)
 
-        CommandOverrider represents the rules dedicated to handling container command
+        CommandOverrider 表示用于处理容器 command 的专属规则。
 
         <a name="CommandArgsOverrider"></a>
 
-        *CommandArgsOverrider represents the rules dedicated to handling command/args overrides.*
+        *CommandArgsOverrider 表示用于处理 command/args 覆盖的专属规则。*
 
-        - **spec.overrideRules.overriders.commandOverrider.containerName** (string), required
+        - **spec.overrideRules.overriders.commandOverrider.containerName** (string)，必选
 
-          The name of container
+          容器的名称。
 
-        - **spec.overrideRules.overriders.commandOverrider.operator** (string), required
+        - **spec.overrideRules.overriders.commandOverrider.operator** (string)，必选
 
-          Operator represents the operator which will apply on the command/args.
+          Operator 表示将应用于 command/args 的运算符。
 
         - **spec.overrideRules.overriders.commandOverrider.value** ([]string)
 
-          Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+          Value 表示 command/args 的值。当运算符为“add（添加）"时，Value 中的项会附加在 command/args 之后。当运算符为“remove（移除）”时，Value 中与 command/args 匹配的项将被删除。如果 Value 为空，command/args 将保持不变。
 
       - **spec.overrideRules.overriders.imageOverrider** ([]ImageOverrider)
 
-        ImageOverrider represents the rules dedicated to handling image overrides.
+        ImageOverrider 表示用于处理镜像覆盖的专属规则。
 
         <a name="ImageOverrider"></a>
 
-        *ImageOverrider represents the rules dedicated to handling image overrides.*
+        *ImageOverrider 表示用于处理镜像覆盖的专属规则。*
 
-        - **spec.overrideRules.overriders.imageOverrider.component** (string), required
+        - **spec.overrideRules.overriders.imageOverrider.component** (string)，必选
 
-          Component is part of image name. Basically we presume an image can be made of '[registry/]repository[:tag]'. The registry could be: - registry.k8s.io - fictional.registry.example:10443 The repository could be: - kube-apiserver - fictional/nginx The tag cloud be: - latest - v1.19.1 - @sha256:dbcc1c35ac38df41fd2f5e4130b32ffdb93ebae8b3dbe638c23575912276fc9c
+          组件是镜像名称的一部分。镜像名称通常表示为[registry/]repository[:tag]。registry 可能是 - registry.k8s.io - fictional.registry.example:10443；repository 可能是 kube-apiserver - fictional/nginx；标签可能是 -latest- v1.19.1 - @sha256:dbcc1c35ac38df41fd2f5e4130b32ffdb93ebae8b3dbe638c23575912276fc9c
 
-        - **spec.overrideRules.overriders.imageOverrider.operator** (string), required
+        - **spec.overrideRules.overriders.imageOverrider.operator** (string)，必选
 
-          Operator represents the operator which will apply on the image.
+          Operator 表示将应用于镜像的运算符。
 
         - **spec.overrideRules.overriders.imageOverrider.predicate** (ImagePredicate)
 
-          Predicate filters images before applying the rule.
-          
-          Defaults to nil, in that case, the system will automatically detect image fields if the resource type is Pod, ReplicaSet, Deployment, StatefulSet, DaemonSet or Job by following rule:
-            - Pod: /spec/containers/&lt;N&gt;/image
-            - ReplicaSet: /spec/template/spec/containers/&lt;N&gt;/image
+          在应用规则之前，Predicate 会对镜像进行过滤。
+
+          默认值为 nil。如果设置为默认值，并且资源类型为 Pod、ReplicaSet、Deployment、StatefulSet、DaemonSet 或 Job，系统将按照以下规则自动检测镜像字段：
+          - Pod: /spec/containers/&lt;N&gt;/image
+          - ReplicaSet: /spec/template/spec/containers/&lt;N&gt;/image
             - Deployment: /spec/template/spec/containers/&lt;N&gt;/image
             - DaemonSet: /spec/template/spec/containers/&lt;N&gt;/image
             - StatefulSet: /spec/template/spec/containers/&lt;N&gt;/image
             - Job: /spec/template/spec/containers/&lt;N&gt;/image
-          In addition, all images will be processed if the resource object has more than one container.
-          
-          If not nil, only images matches the filters will be processed.
+
+          此外，如果资源对象有多个容器，所有镜像都将被处理。
+
+          如果值不是 nil，仅处理与过滤条件匹配的镜像。
 
           <a name="ImagePredicate"></a>
 
-          *ImagePredicate describes images filter.*
+          *ImagePredicate 定义了镜像的过滤条件。*
 
-          - **spec.overrideRules.overriders.imageOverrider.predicate.path** (string), required
+          - **spec.overrideRules.overriders.imageOverrider.predicate.path** (string)，必选
 
-            Path indicates the path of target field
+            Path 表示目标字段的路径。
 
         - **spec.overrideRules.overriders.imageOverrider.value** (string)
 
-          Value to be applied to image. Must not be empty when operator is 'add' or 'replace'. Defaults to empty and ignored when operator is 'remove'.
+          Value 表示镜像的值。当运算符为“add（添加）”或“replace（替换）”时，不得为空。当运算符为“remove（删除）”时，默认为空且可忽略。
 
       - **spec.overrideRules.overriders.labelsOverrider** ([]LabelAnnotationOverrider)
 
-        LabelsOverrider represents the rules dedicated to handling workload labels
+        LabelsOverrider 表示用于处理工作负载标签的专属规则。
 
         <a name="LabelAnnotationOverrider"></a>
 
-        *LabelAnnotationOverrider represents the rules dedicated to handling workload labels/annotations*
+        **LabelAnnotationOverrider**表示用于处理工作负载 labels/annotations 的专属规则。
 
-        - **spec.overrideRules.overriders.labelsOverrider.operator** (string), required
+        - **spec.overrideRules.overriders.labelsOverrider.operator** (string)，必选
 
-          Operator represents the operator which will apply on the workload.
+          Operator 表示将应用于工作负载的运算符。
 
         - **spec.overrideRules.overriders.labelsOverrider.value** (map[string]string)
 
-          Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
+          Value 表示工作负载的 annotation/label 的值。当运算符为“add（添加）"时，Value 中的项会附加在 annotation/label 之后。当运算符为“remove（移除）”时，Value 中与 annotation/label 匹配的项将被删除。当运算符为“replace（替换）”时，Value 中与 annotation/label 匹配的项将被替换。
 
       - **spec.overrideRules.overriders.plaintext** ([]PlaintextOverrider)
 
-        Plaintext represents override rules defined with plaintext overriders.
+        Plaintext 表示用明文定义的覆盖规则。
 
         <a name="PlaintextOverrider"></a>
 
-        *PlaintextOverrider is a simple overrider that overrides target fields according to path, operator and value.*
+        *PlaintextOverrider 根据路径、运算符和值覆盖目标字段。*
 
-        - **spec.overrideRules.overriders.plaintext.operator** (string), required
+        - **spec.overrideRules.overriders.plaintext.operator** (string)，必选
 
-          Operator indicates the operation on target field. Available operators are: add, replace and remove.
+          Operator 表示对目标字段进行的操作。可用的运算符有：添加（add）、替换（replace）和删除（remove）。
 
-        - **spec.overrideRules.overriders.plaintext.path** (string), required
+        - **spec.overrideRules.overriders.plaintext.path** (string)，必选
 
-          Path indicates the path of target field
+          Path 表示目标字段的路径。
 
         - **spec.overrideRules.overriders.plaintext.value** (JSON)
 
-          Value to be applied to target field. Must be empty when operator is Remove.
+          Value 表示目标字段的值。当操作符为“remove（删除）”时，必须为空。
 
           <a name="JSON"></a>
 
-          *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
+          *JSON 表示任何有效的 JSON 值。支持以下类型：bool、int64、float64、string、[]interface[]、map[string]interface[]和 nil*
 
     - **spec.overrideRules.targetCluster** (ClusterAffinity)
 
-      TargetCluster defines restrictions on this override policy that only applies to resources propagated to the matching clusters. nil means matching all clusters.
+      TargetCluster 定义了对此覆盖策略的限制，此覆盖策略仅适用于分发到匹配集群的资源。nil 表示匹配所有集群。
 
       <a name="ClusterAffinity"></a>
 
-      *ClusterAffinity represents the filter to select clusters.*
+      *ClusterAffinity 表示用于选择集群的过滤条件。*
 
       - **spec.overrideRules.targetCluster.clusterNames** ([]string)
 
-        ClusterNames is the list of clusters to be selected.
+        ClusterNames 罗列待选择的集群。
 
       - **spec.overrideRules.targetCluster.exclude** ([]string)
 
-        ExcludedClusters is the list of clusters to be ignored.
+        ExcludedClusters 罗列待忽略的集群。
 
       - **spec.overrideRules.targetCluster.fieldSelector** (FieldSelector)
 
-        FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+        FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
         <a name="FieldSelector"></a>
 
-        *FieldSelector is a field filter.*
+        *FieldSelector 是一个字段过滤器。*
 
         - **spec.overrideRules.targetCluster.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-          A list of field selector requirements.
+          字段选择器要求列表。
 
       - **spec.overrideRules.targetCluster.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+        LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
   - **spec.overriders** (Overriders)
 
-    Overriders represents the override rules that would apply on resources
-    
-    Deprecated: This filed is deprecated in v1.0 and please use the OverrideRules instead.
+    Overriders 表示将应用于资源的覆盖规则。
+
+    Deprecated：此字段已在 v1.0 中被弃用，请改用 OverrideRules。
 
     <a name="Overriders"></a>
 
-    *Overriders offers various alternatives to represent the override rules.
-    
-    If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - Plaintext*
+    *Overriders 提供各种表示覆盖规则的替代方案。
+
+    如果多个替代方案并存，将按以下顺序应用： ImageOverrider > CommandOverrider > ArgsOverrider > LabelsOverrider > AnnotationsOverrider > Plaintext*
 
     - **spec.overriders.annotationsOverrider** ([]LabelAnnotationOverrider)
 
-      AnnotationsOverrider represents the rules dedicated to handling workload annotations
+      AnnotationsOverrider 表示用于处理工作负载注解的专属规则。
 
       <a name="LabelAnnotationOverrider"></a>
 
-      *LabelAnnotationOverrider represents the rules dedicated to handling workload labels/annotations*
+      **LabelAnnotationOverrider**表示用于处理工作负载 labels/annotations 的专属规则。
 
-      - **spec.overriders.annotationsOverrider.operator** (string), required
+      - **spec.overriders.annotationsOverrider.operator** (string)，必选
 
-        Operator represents the operator which will apply on the workload.
+        Operator 表示将应用于工作负载的运算符。
 
       - **spec.overriders.annotationsOverrider.value** (map[string]string)
 
-        Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
+        Value 表示工作负载的注解/标签的值。当运算符为“add（添加）"时，Value 中的项会附加在 annotation/label 之后。当运算符为“remove（移除）”时，Value 中与 annotation/label 匹配的项将被删除。当运算符为“replace（替换）”时，Value 中与 annotation/label 匹配的项将被替换。
 
     - **spec.overriders.argsOverrider** ([]CommandArgsOverrider)
 
-      ArgsOverrider represents the rules dedicated to handling container args
+      ArgsOverrider 表示用于处理容器 args 的专属规则。
 
       <a name="CommandArgsOverrider"></a>
 
-      *CommandArgsOverrider represents the rules dedicated to handling command/args overrides.*
+      *CommandArgsOverrider 表示用于处理 command/args 覆盖的专属规则。*
 
-      - **spec.overriders.argsOverrider.containerName** (string), required
+      - **spec.overriders.argsOverrider.containerName** (string)，必选
 
-        The name of container
+        容器的名称。
 
-      - **spec.overriders.argsOverrider.operator** (string), required
+      - **spec.overriders.argsOverrider.operator** (string)，必选
 
-        Operator represents the operator which will apply on the command/args.
+        Operator 表示将应用于 command/args 的运算符。
 
       - **spec.overriders.argsOverrider.value** ([]string)
 
-        Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+        Value 表示 command/args 的值。当运算符为“add（添加）"时，Value 中的项会附加在 command/args 之后。当运算符为“remove（移除）”时，Value 中与 command/args 匹配的项将被删除。如果 Value 为空，则 command/args 将保持不变。
 
     - **spec.overriders.commandOverrider** ([]CommandArgsOverrider)
 
-      CommandOverrider represents the rules dedicated to handling container command
+      CommandOverrider 表示用于处理容器命令的专属规则。
 
       <a name="CommandArgsOverrider"></a>
 
-      *CommandArgsOverrider represents the rules dedicated to handling command/args overrides.*
+      *CommandArgsOverrider 表示用于处理 command/args 覆盖的专属规则。*
 
-      - **spec.overriders.commandOverrider.containerName** (string), required
+      - **spec.overriders.commandOverrider.containerName** (string)，必选
 
-        The name of container
+        容器的名称。
 
-      - **spec.overriders.commandOverrider.operator** (string), required
+      - **spec.overriders.commandOverrider.operator** (string)，必选
 
-        Operator represents the operator which will apply on the command/args.
+        Operator 表示将应用于 command/args 的运算符。
 
       - **spec.overriders.commandOverrider.value** ([]string)
 
-        Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+        Value 表示 command/args 的值。当运算符为“add（添加）"时，Value 中的项会附加在 command/args 之后。当运算符为“remove（移除）”时，Value 中与 command/args 匹配的项将被删除。如果 Value 为空，则 command/args 将保持不变。
 
     - **spec.overriders.imageOverrider** ([]ImageOverrider)
 
-      ImageOverrider represents the rules dedicated to handling image overrides.
+      ImageOverrider 表示用于处理镜像覆盖的专属规则。
 
       <a name="ImageOverrider"></a>
 
-      *ImageOverrider represents the rules dedicated to handling image overrides.*
+      *ImageOverrider 表示用于处理镜像覆盖的专属规则。*
 
-      - **spec.overriders.imageOverrider.component** (string), required
+      - **spec.overriders.imageOverrider.component** (string)，必选
 
-        Component is part of image name. Basically we presume an image can be made of '[registry/]repository[:tag]'. The registry could be: - registry.k8s.io - fictional.registry.example:10443 The repository could be: - kube-apiserver - fictional/nginx The tag cloud be: - latest - v1.19.1 - @sha256:dbcc1c35ac38df41fd2f5e4130b32ffdb93ebae8b3dbe638c23575912276fc9c
+        组件是镜像名称的一部分。镜像名称通常表示为[registry/]repository[:tag]。registry 可能是 - registry.k8s.io - fictional.registry.example:10443；repository 可能是 kube-apiserver - fictional/nginx；标签可能是 -latest- v1.19.1 - @sha256:dbcc1c35ac38df41fd2f5e4130b32ffdb93ebae8b3dbe638c23575912276fc9c
 
-      - **spec.overriders.imageOverrider.operator** (string), required
+      - **spec.overriders.imageOverrider.operator** (string)，必选
 
-        Operator represents the operator which will apply on the image.
+        Operator 表示将应用于镜像的运算符。
 
       - **spec.overriders.imageOverrider.predicate** (ImagePredicate)
 
-        Predicate filters images before applying the rule.
-        
-        Defaults to nil, in that case, the system will automatically detect image fields if the resource type is Pod, ReplicaSet, Deployment, StatefulSet, DaemonSet or Job by following rule:
-          - Pod: /spec/containers/&lt;N&gt;/image
-          - ReplicaSet: /spec/template/spec/containers/&lt;N&gt;/image
+        在应用规则之前，Predicate 会对镜像进行过滤。
+
+        默认值为 nil。如果设置为默认值，并且资源类型为 Pod、ReplicaSet、Deployment、StatefulSet、DaemonSet 或 Job，系统将按照以下规则自动检测镜像字段：
+        - Pod: /spec/containers/&lt;N&gt;/image
+        - ReplicaSet: /spec/template/spec/containers/&lt;N&gt;/image
           - Deployment: /spec/template/spec/containers/&lt;N&gt;/image
           - DaemonSet: /spec/template/spec/containers/&lt;N&gt;/image
           - StatefulSet: /spec/template/spec/containers/&lt;N&gt;/image
           - Job: /spec/template/spec/containers/&lt;N&gt;/image
-        In addition, all images will be processed if the resource object has more than one container.
-        
-        If not nil, only images matches the filters will be processed.
+
+        此外，如果资源对象有多个容器，所有镜像都将被处理。
+
+        如果值不是 nil，仅处理与过滤条件匹配的镜像。
 
         <a name="ImagePredicate"></a>
 
-        *ImagePredicate describes images filter.*
+        *ImagePredicate 定义了镜像的过滤条件。*
 
-        - **spec.overriders.imageOverrider.predicate.path** (string), required
+        - **spec.overriders.imageOverrider.predicate.path** (string)，必选
 
-          Path indicates the path of target field
+          Path 表示目标字段的路径。
 
       - **spec.overriders.imageOverrider.value** (string)
 
-        Value to be applied to image. Must not be empty when operator is 'add' or 'replace'. Defaults to empty and ignored when operator is 'remove'.
+        Value 表示应用于镜像的值。当运算符为“add（添加）”或“replace（替换）”时，不得为空。当运算符为“remove（删除）”时，默认为空且可忽略。
 
     - **spec.overriders.labelsOverrider** ([]LabelAnnotationOverrider)
 
-      LabelsOverrider represents the rules dedicated to handling workload labels
+      LabelsOverrider 表示用于处理工作负载标签的专属规则。
 
       <a name="LabelAnnotationOverrider"></a>
 
-      *LabelAnnotationOverrider represents the rules dedicated to handling workload labels/annotations*
+      *LabelAnnotationOverrider 表示用于处理工作负载 labels/annotations 的专属规则。*
 
-      - **spec.overriders.labelsOverrider.operator** (string), required
+      - **spec.overriders.labelsOverrider.operator** (string)，必选
 
-        Operator represents the operator which will apply on the workload.
+        Operator 表示将应用于工作负载的运算符。
 
       - **spec.overriders.labelsOverrider.value** (map[string]string)
 
-        Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
+        Value 表示工作负载的注解/标签的值。当运算符为“add（添加）"时，Value 中的项会附加在 annotation/label 之后。当运算符为“remove（移除）”时，Value 中与 annotation/label 匹配的项将被删除。当运算符为“replace（替换）”时，Value 中与 annotation/label 匹配的项将被替换。
 
     - **spec.overriders.plaintext** ([]PlaintextOverrider)
 
-      Plaintext represents override rules defined with plaintext overriders.
+      Plaintext 表示用明文定义的覆盖规则。
 
       <a name="PlaintextOverrider"></a>
 
-      *PlaintextOverrider is a simple overrider that overrides target fields according to path, operator and value.*
+      *PlaintextOverrider 根据路径、运算符和值覆盖目标字段。*
 
-      - **spec.overriders.plaintext.operator** (string), required
+      - **spec.overriders.plaintext.operator** (string)，必选
 
-        Operator indicates the operation on target field. Available operators are: add, replace and remove.
+        Operator 表示对目标字段进行的操作。可用的运算符有：添加（add）、替换（replace）和删除（remove）。
 
-      - **spec.overriders.plaintext.path** (string), required
+      - **spec.overriders.plaintext.path** (string)，必选
 
-        Path indicates the path of target field
+        Path 表示目标字段的路径。
 
       - **spec.overriders.plaintext.value** (JSON)
 
-        Value to be applied to target field. Must be empty when operator is Remove.
+        Value 表示应用于目标字段的值。当操作符为“remove（删除）”时，必须为空。
 
         <a name="JSON"></a>
 
-        *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
+        *JSON 表示任何有效的 JSON 值。支持以下类型：bool、int64、float64、string、[]interface[]、map[string]interface[]和 nil*
 
   - **spec.resourceSelectors** ([]ResourceSelector)
 
-    ResourceSelectors restricts resource types that this override policy applies to. nil means matching all resources.
+    ResourceSelectors 限制此覆盖策略适用的资源类型。nil 表示此覆盖策略适用于所有资源。
 
     <a name="ResourceSelector"></a>
 
-    *ResourceSelector the resources will be selected.*
+    *ResourceSelector 用于选择资源。*
 
-    - **spec.resourceSelectors.apiVersion** (string), required
+    - **spec.resourceSelectors.apiVersion** (string)，必选
 
-      APIVersion represents the API version of the target resources.
+      APIVersion 表示目标资源的 API 版本。
 
-    - **spec.resourceSelectors.kind** (string), required
+    - **spec.resourceSelectors.kind** (string)，必选
 
-      Kind represents the Kind of the target resources.
+      Kind 表示目标资源的类别。
 
     - **spec.resourceSelectors.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-      A label query over a set of resources. If name is not empty, labelSelector will be ignored.
+      查询一组资源的标签。如果 name 不为空，labelSelector 会被忽略。
 
     - **spec.resourceSelectors.name** (string)
 
-      Name of the target resource. Default is empty, which means selecting all resources.
+      目标资源的名称。默认值为空，表示选择所有资源。
 
     - **spec.resourceSelectors.namespace** (string)
 
-      Namespace of the target resource. Default is empty, which means inherit from the parent object scope.
+      目标资源的 namespace。默认值为空，表示从父对象作用域继承资源。
 
   - **spec.targetCluster** (ClusterAffinity)
 
-    TargetCluster defines restrictions on this override policy that only applies to resources propagated to the matching clusters. nil means matching all clusters.
-    
-    Deprecated: This filed is deprecated in v1.0 and please use the OverrideRules instead.
+    TargetCluster 定义对此覆盖策略的限制，此覆盖策略仅适用于分发到匹配集群的资源。nil：匹配所有集群。
+
+    Deprecated：此字段已在 v1.0 中被弃用，请改用 OverrideRules。
 
     <a name="ClusterAffinity"></a>
 
-    *ClusterAffinity represents the filter to select clusters.*
+    *ClusterAffinity 表示用于选择集群的过滤条件。*
 
     - **spec.targetCluster.clusterNames** ([]string)
 
-      ClusterNames is the list of clusters to be selected.
+      ClusterNames 罗列待选择的集群。
 
     - **spec.targetCluster.exclude** ([]string)
 
-      ExcludedClusters is the list of clusters to be ignored.
+      ExcludedClusters 罗列待忽略的集群。
 
     - **spec.targetCluster.fieldSelector** (FieldSelector)
 
-      FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+      FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
       <a name="FieldSelector"></a>
 
-      *FieldSelector is a field filter.*
+      *FieldSelector 是一个字段过滤器。*
 
       - **spec.targetCluster.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-        A list of field selector requirements.
+        字段选择器要求列表。
 
     - **spec.targetCluster.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-      LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+      LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
 ## ClusterOverridePolicyList 
 
-ClusterOverridePolicyList is a collection of ClusterOverridePolicy.
+ClusterOverridePolicyList 表示一组 ClusterOverridePolicy 的集合。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
-- **kind**: ClusterOverridePolicyList
+- **kind**：ClusterOverridePolicyList
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)), required
+- **items** ([][ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))，必选
 
-  Items holds a list of ClusterOverridePolicy.
+  Items 罗列 ClusterOverridePolicy。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified ClusterOverridePolicy
+### `get`：查询指定的 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-### `get` read status of the specified ClusterOverridePolicy
+### `get`：查询指定 ClusterOverridePolicy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-### `list` list or watch objects of kind ClusterOverridePolicy
+### `list`：查询所有的 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicyList](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicylist)): OK
+200 ([ClusterOverridePolicyList](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicylist))：OK
 
-### `create` create a ClusterOverridePolicy
+### `create`：创建一条 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies
 
-#### Parameters
+#### 参数
 
-- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy), required
+- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Created
+201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Created
 
-202 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Accepted
+202 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Accepted
 
-### `update` replace the specified ClusterOverridePolicy
+### `update`：更新指定的 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy), required
+- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Created
+201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Created
 
-### `update` replace status of the specified ClusterOverridePolicy
+### `update`：更新指定 ClusterOverridePolicy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy), required
+- **body**: [ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Created
+201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Created
 
-### `patch` partially update the specified ClusterOverridePolicy
+### `patch`：更新指定 ClusterOverridePolicy 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Created
+201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Created
 
-### `patch` partially update status of the specified ClusterOverridePolicy
+### `patch`：更新指定 ClusterOverridePolicy 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): OK
+200 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：OK
 
-201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy)): Created
+201 ([ClusterOverridePolicy](../policy-resources/cluster-override-policy-v1alpha1#clusteroverridepolicy))：Created
 
-### `delete` delete a ClusterOverridePolicy
+### `delete`：删除一条 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the ClusterOverridePolicy
+  ClusterOverridePolicy 的名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
+200 ([Status](../common-definitions/status#status))：OK
 
-202 ([Status](../common-definitions/status#status)): Accepted
+202 ([Status](../common-definitions/status#status))：Accepted
 
-### `deletecollection` delete collection of ClusterOverridePolicy
+### `deletecollection`：删除所有 ClusterOverridePolicy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** （查询参数）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
-
+200 ([Status](../common-definitions/status#status))：OK
