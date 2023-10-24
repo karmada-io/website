@@ -19,7 +19,7 @@ Karmada默认的调度器有几个内置的插件：
 * APIEnablement: 一个过滤插件，用于检查需要下发的API资源（CRD）是否已在目标集群中被安装。
 * TaintToleration: 一个过滤插件，用于检查调度策略是否容忍集群的污点。
 * ClusterAffinity: 一个过滤和打分插件，用于实现集群的亲和性调度，支持通过names、labels、cluster的字段进行集群过滤。
-* SpreadConstraint: 一个过滤插件，用于检查集群是否满足调度策略的传播属性。
+* SpreadConstraint: 一个过滤插件，用于检查集群是否满足调度策略的分发属性。
 * ClusterLocality: 一个打分插件，用于检查集群是否已存在被调度的资源，实现资源的聚合调度。
 
 用户可以基于自身的场景自定义插件，并且通过Karmada的调度器框架实现自身的调度器。

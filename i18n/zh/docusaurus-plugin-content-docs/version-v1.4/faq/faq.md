@@ -7,9 +7,9 @@ title: 常见问题
 `PropagationPolicy` 是一种作用于命名空间的资源类型，意味着这种类型的对象必须处于一个命名空间中。
 而 `ClusterPropagationPolicy` 是作用于集群的资源类型，意味着这种类型的对象没有命名空间。
 
-二者都用于保留传播声明，但其权能有所不同：
-- PropagationPolicy：只能表示同一命名空间中资源的传播策略。
-- ClusterPropagationPolicy：可以表示所有资源的传播策略，包括作用于命名空间和作用于集群的资源。
+二者都用于保留分发声明，但其权能有所不同：
+- PropagationPolicy：只能表示同一命名空间中资源的分发策略。
+- ClusterPropagationPolicy：可以表示所有资源的分发策略，包括作用于命名空间和作用于集群的资源。
 
 ## 集群的 'Push' 和 'Pull' 模式有何区别？
 

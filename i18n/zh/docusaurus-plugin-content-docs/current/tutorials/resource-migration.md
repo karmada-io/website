@@ -9,7 +9,7 @@ title: 平滑迁移
 在此背景下，本节将引导您完成：
 
 - 以资源为粒度将所有已部署资源从原集群迁移到 Karmada。
-- 应用更高优先级的 `PropagationPolicy`，以满足以应用为粒度的更多传播需求。
+- 应用更高优先级的 `PropagationPolicy`，以满足以应用为粒度的更多分发需求。
 
 ## 前提条件
 
@@ -229,4 +229,4 @@ nginx-svc    NodePort    10.13.161.255   <none>        80:30000/TCP   54s   app=
 ...
 ```
 
-您将看到 `nginx` 应用相关的资源被传播到 `member2` 集群，这表示更高优先级的 `PropagationPolicy` 生效了。
+您将看到 `nginx` 应用相关的资源被分发到 `member2` 集群，这表示更高优先级的 `PropagationPolicy` 生效了。

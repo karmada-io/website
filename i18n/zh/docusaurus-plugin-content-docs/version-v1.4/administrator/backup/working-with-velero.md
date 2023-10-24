@@ -226,7 +226,7 @@ spec:
 EOF
 ```
 
-在 "karmada-apiserver " 中创建一个恢复，并通过传播策略分发到 "member2 " 集群中。
+在 "karmada-apiserver " 中创建一个恢复，并通过分发策略分发到 "member2 " 集群中。
 
 ```shell
 # 创建恢复策略
