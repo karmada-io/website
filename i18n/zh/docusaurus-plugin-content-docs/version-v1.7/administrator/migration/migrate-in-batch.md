@@ -18,7 +18,7 @@ title: 批量迁移
 如果用户只需迁移个别资源，参考 [promote-legacy-workload](./promote-legacy-workload) 逐个资源迁移即可。
 
 如果用户想批量迁移资源，建议您首先通过几个 `PropagationPolicy` 以资源为粒度接管所有资源，
-然后，如果您还有其他以应用为粒度的传播需求，则可以应用更高优先级的 `PropagationPolicy` 来抢占它们。
+然后，如果您还有其他以应用为粒度的分发需求，则可以应用更高优先级的 `PropagationPolicy` 来抢占它们。
 
 那么，如何以资源为粒度接管所有资源？你可以按如下操作：
 
@@ -91,5 +91,5 @@ spec:
 
 ## PropagationPolicy 抢占及 Demo
 
-在此基础上，如果您还有以应用为粒度的传播需求，则可以应用更高优先级的 `PropagationPolicy` 来抢占上文提及的用于迁移的 Policy。
+在此基础上，如果您还有以应用为粒度的分发需求，则可以应用更高优先级的 `PropagationPolicy` 来抢占上文提及的用于迁移的 Policy。
 详细的 Demo 可以参考教程：[平滑迁移](../../tutorials/resource-migration.md)

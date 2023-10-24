@@ -130,7 +130,7 @@ spec:
 
 需要注意的是，重调度不会删除原本状态为Ready的集群member1上的工作负载。在其余3个集群中，只有member3和member5匹配`clusterAffinity`策略。
 
-由于传播约束的限制，最后应用调度的结果将会是[member1, member3]或[member1, member5]。
+由于分发约束的限制，最后应用调度的结果将会是[member1, member3]或[member1, member5]。
 
 ### Divided调度类型
 
