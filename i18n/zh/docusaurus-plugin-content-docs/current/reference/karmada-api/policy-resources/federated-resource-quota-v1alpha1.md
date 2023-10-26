@@ -20,91 +20,91 @@ auto_generated: true
 
 ## FederatedResourceQuota 
 
-FederatedResourceQuota sets aggregate quota restrictions enforced per namespace across all clusters.
+FederatedResourceQuota 用于设置所有集群每个命名空间内强制执行的聚合配额限制。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
-- **kind**: FederatedResourceQuota
+- **kind**：FederatedResourceQuota
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([FederatedResourceQuotaSpec](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotaspec)), required
+- **spec** ([FederatedResourceQuotaSpec](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotaspec))，必选
 
-  Spec defines the desired quota.
+  Spec 规定预期配额。
 
 - **status** ([FederatedResourceQuotaStatus](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotastatus))
 
-  Status defines the actual enforced quota and its current usage.
+  Status 表示实际的强制配额和已使用配额。
 
 ## FederatedResourceQuotaSpec 
 
-FederatedResourceQuotaSpec defines the desired hard limits to enforce for Quota.
+FederatedResourceQuotaSpec 定义强制配额的预期硬限制。
 
 <hr/>
 
-- **overall** (map[string][Quantity](../common-definitions/quantity#quantity)), required
+- **overall** (map[string][Quantity](../common-definitions/quantity#quantity))，必选
 
-  Overall is the set of desired hard limits for each named resource.
+  Overall 是每个命名资源的预期硬限制。
 
 - **staticAssignments** ([]StaticClusterAssignment)
 
-  StaticAssignments represents the subset of desired hard limits for each cluster. Note: for clusters not present in this list, Karmada will set an empty ResourceQuota to them, which means these clusters will have no quotas in the referencing namespace.
+  StaticAssignments 是每个集群的预期硬限制。注意：对于不在此列表中的集群，Karmada 会将其 ResourceQuota 留空，这些集群在引用的命名空间中没有配额。
 
   <a name="StaticClusterAssignment"></a>
 
-  *StaticClusterAssignment represents the set of desired hard limits for a specific cluster.*
+  *StaticClusterAssignment 表示某个指定集群的预期硬限制。*
 
-  - **staticAssignments.clusterName** (string), required
+  - **staticAssignments.clusterName** (string)，必选
 
-    ClusterName is the name of the cluster the limits enforce to.
+    ClusterName 表示将执行限制的集群的名称。
 
-  - **staticAssignments.hard** (map[string][Quantity](../common-definitions/quantity#quantity)), required
+  - **staticAssignments.hard** (map[string][Quantity](../common-definitions/quantity#quantity))，必选
 
-    Hard is the set of desired hard limits for each named resource.
+    Hard 表示每个命名资源的预期硬限制。
 
 ## FederatedResourceQuotaStatus 
 
-FederatedResourceQuotaStatus defines the enforced hard limits and observed use.
+FederatedResourceQuotaStatus 表示强制硬限制和所观测到的使用情况。
 
 <hr/>
 
 - **aggregatedStatus** ([]ClusterQuotaStatus)
 
-  AggregatedStatus is the observed quota usage of each cluster.
+  AggregatedStatus 表示每个集群所观测到的配额使用情况。
 
   <a name="ClusterQuotaStatus"></a>
 
-  *ClusterQuotaStatus represents the set of desired limits and observed usage for a specific cluster.*
+  *ClusterQuotaStatus 表示某个指定集群的预期限制和所观测到的使用情况。*
 
-  - **aggregatedStatus.clusterName** (string), required
+  - **aggregatedStatus.clusterName** (string)，必选
 
-    ClusterName is the name of the cluster the limits enforce to.
+    ClusterName 表示将执行限制的集群的名称。
 
   - **aggregatedStatus.hard** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    Hard is the set of enforced hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+    Hard 表示每个命名资源的强制硬限制。更多信息，请浏览 https://kubernetes.io/docs/concepts/policy/resource-quotas/。
 
   - **aggregatedStatus.used** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    Used is the current observed total usage of the resource in the namespace.
+    Used 是当前所观测到的命名空间中资源的总体使用情况。
 
 - **overall** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-  Overall is the set of enforced hard limits for each named resource.
+  Overall 是每个命名资源的强制硬限制。
 
 - **overallUsed** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-  OverallUsed is the current observed total usage of the resource in the namespace.
+  OverallUsed 是当前所观测到的命名空间中资源的总体使用情况。
 
 ## FederatedResourceQuotaList 
 
-FederatedResourceQuotaList contains a list of FederatedResourceQuota.
+FederatedResourceQuotaList 罗列 FederatedResourceQuota。
 
 <hr/>
 
-- **apiVersion**: policy.karmada.io/v1alpha1
+- **apiVersion**：policy.karmada.io/v1alpha1
 
 - **kind**: FederatedResourceQuotaList
 
@@ -112,497 +112,489 @@ FederatedResourceQuotaList contains a list of FederatedResourceQuota.
 
 - **items** ([][FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)), required
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified FederatedResourceQuota
+### `get`：查询指定的 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-### `get` read status of the specified FederatedResourceQuota
+### `get`：查询指定 FederatedResourceQuota 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-### `list` list or watch objects of kind FederatedResourceQuota
+### `list`：查询指定命名空间内的所有 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks** （*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** （查询参数）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
+200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist))：OK
 
-### `list` list or watch objects of kind FederatedResourceQuota
+### `list`：查询所有的 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/policy.karmada.io/v1alpha1/federatedresourcequotas
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
+200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist))：OK
 
-### `create` create a FederatedResourceQuota
+### `create`：创建一个 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota), required
+- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Created
+201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Created
 
-202 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Accepted
+202 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Accepted
 
-### `update` replace the specified FederatedResourceQuota
+### `update`：更新指定的 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota), required
+- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Created
+201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Created
 
-### `update` replace status of the specified FederatedResourceQuota
+### `update`：更新指定 FederatedResourceQuota 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota), required
+- **body**: [FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Created
+201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Created
 
-### `patch` partially update the specified FederatedResourceQuota
+### `patch`：更新指定 FederatedResourceQuota 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Created
+201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Created
 
-### `patch` partially update status of the specified FederatedResourceQuota
+### `patch`：更新指定 FederatedResourceQuota 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
-200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
+200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：OK
 
-201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): Created
+201 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota))：Created
 
-### `delete` delete a FederatedResourceQuota
+### `delete`：删除一个 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the FederatedResourceQuota
+  FederatedResourceQuota的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*in query*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
+200 ([Status](../common-definitions/status#status))：OK
 
-202 ([Status](../common-definitions/status#status)): Accepted
+202 ([Status](../common-definitions/status#status))：Accepted
 
-### `deletecollection` delete collection of FederatedResourceQuota
+### `deletecollection`：删除所有 FederatedResourceQuota
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** （查询参数）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
-200 ([Status](../common-definitions/status#status)): OK
-
+200 ([Status](../common-definitions/status#status))：OK
