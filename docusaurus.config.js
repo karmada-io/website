@@ -134,6 +134,7 @@ module.exports = {
           href: "https://github.com/karmada-io/karmada",
           className: "header-github-link",
           position: "right",
+          "aria-label": "GitHub repository",
         },
       ],
     },
