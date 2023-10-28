@@ -20,7 +20,7 @@ auto_generated: true
 
 ## CronFederatedHPA 
 
-CronFederatedHPA represents a collection of repeating schedule to scale replica number of a specific workload. It can scale any resource implementing the scale subresource as well as FederatedHPA.
+CronFederatedHPA 表示一组可重复的计划，这些计划用于伸缩特定工作负载的副本数量。CronFederatedHPA 可以伸缩任何实现了 scale 子资源的资源，也可以是 FederatedHPA。
 
 <hr/>
 
@@ -30,179 +30,179 @@ CronFederatedHPA represents a collection of repeating schedule to scale replica 
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([CronFederatedHPASpec](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpaspec)), required
+- **spec** ([CronFederatedHPASpec](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpaspec))，必选
 
-  Spec is the specification of the CronFederatedHPA.
+  Spec 表示 CronFederatedHPA 的规范。
 
 - **status** ([CronFederatedHPAStatus](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpastatus))
 
-  Status is the current status of the CronFederatedHPA.
+  Status 是 CronFederatedHPA 当前的状态。
 
 ## CronFederatedHPASpec 
 
-CronFederatedHPASpec is the specification of the CronFederatedHPA.
+CronFederatedHPASpec 表示 CronFederatedHPA 的规范。
 
 <hr/>
 
-- **rules** ([]CronFederatedHPARule), required
+- **rules** ([]CronFederatedHPARule)，必选
 
-  Rules contains a collection of schedules that declares when and how the referencing target resource should be scaled.
+  Rules 是一组计划，用于声明伸缩引用目标资源的时间和动作。
 
   <a name="CronFederatedHPARule"></a>
 
-  *CronFederatedHPARule declares a schedule as well as scale actions.*
+  *CronFederatedHPARule 声明伸缩计划及伸缩动作。*
 
-  - **rules.name** (string), required
+  - **rules.name** (string)，必选
 
-    Name of the rule. Each rule in a CronFederatedHPA must have a unique name.
+    规则名称 CronFederatedHPA 中的每条规则必须有唯一的名称。
     
-    Note: the name will be used as an identifier to record its execution history. Changing the name will be considered as deleting the old rule and adding a new rule, that means the original execution history will be discarded.
+    注意：每条规则的名称是记录其执行历史记录的标识符。如果更改某条规则的名称，将被视为删掉该规则，并添加一条新规则，这意味着原始执行历史将被丢弃。
 
-  - **rules.schedule** (string), required
+  - **rules.schedule** (string)，必选
 
-    Schedule is the cron expression that represents a periodical time. The syntax follows https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax.
+    Schedule 是表示周期时间的 cron 表达式。欲了解其语法，请浏览 https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#schedule-syntax
 
   - **rules.failedHistoryLimit** (int32)
 
-    FailedHistoryLimit represents the count of failed execution items for each rule. The value must be a positive integer. It defaults to 3.
+    FailedHistoryLimit 表示每条规则的失败执行次数。取值只能为正整数，默认值为 3。
 
   - **rules.successfulHistoryLimit** (int32)
 
-    SuccessfulHistoryLimit represents the count of successful execution items for each rule. The value must be a positive integer. It defaults to 3.
+    SuccessfulHistoryLimit 表示每条规则的成功执行次数。取值只能为正整数，默认值为 3。
 
   - **rules.suspend** (boolean)
 
-    Suspend tells the controller to suspend subsequent executions. Defaults to false.
+    Suspend 通知控制器暂停后续执行。默认值为 false。
 
   - **rules.targetMaxReplicas** (int32)
 
-    TargetMaxReplicas is the target MaxReplicas to be set for FederatedHPA. Only needed when referencing resource is FederatedHPA. TargetMinReplicas and TargetMaxReplicas can be specified together or either one can be specified alone. nil means the MaxReplicas(.spec.maxReplicas) of the referencing FederatedHPA will not be updated.
+    TargetMaxReplicas 是为 FederatedHPA 设置的最大副本数（MaxReplicas）。此字段只有当引用资源是 FederatedHPA 才需要。TargetMaxReplicas 可与 TargetMinReplicas 同时指定，也可单独指定。nil 表示不会更新引用 FederatedHPA 的 MaxReplicas(.spec.maxReplicas)。
 
   - **rules.targetMinReplicas** (int32)
 
-    TargetMinReplicas is the target MinReplicas to be set for FederatedHPA. Only needed when referencing resource is FederatedHPA. TargetMinReplicas and TargetMaxReplicas can be specified together or either one can be specified alone. nil means the MinReplicas(.spec.minReplicas) of the referencing FederatedHPA will not be updated.
+    TargetMinReplicas 是为 FederatedHPA 设置的最小副本数（MinReplicas）。此字段只有当引用资源是 FederatedHPA 才需要。TargetMinReplicas 可与 TargetMaxReplicas 同时指定，也可单独指定。nil 表示不会更新引用 FederatedHPA 的 MinReplicas(.spec.minReplicas)。
 
   - **rules.targetReplicas** (int32)
 
-    TargetReplicas is the target replicas to be scaled for resources referencing by ScaleTargetRef of this CronFederatedHPA. Only needed when referencing resource is not FederatedHPA.
+    TargetReplicas 是资源伸缩的目标副本，资源被 CronFederatedHPA 的 ScaleTargetRef 所引用。此字段只有当引用资源不是 FederatedHPA 才需要。
 
   - **rules.timeZone** (string)
 
-    TimeZone for the giving schedule. If not specified, this will default to the time zone of the karmada-controller-manager process. Invalid TimeZone will be rejected when applying by karmada-webhook. see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for the all timezones.
+    TimeZone 表示计划所用的时区。如果未指定，默认使用 karmada-controller-manager 进程的时区。当应用此资源模板时，无效的 TimeZone 会被 karmada-webhook 拒绝。欲了解所有时区，请浏览 https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
-- **scaleTargetRef** (CrossVersionObjectReference), required
+- **scaleTargetRef** (CrossVersionObjectReference)，必选
 
-  ScaleTargetRef points to the target resource to scale. Target resource could be any resource that implementing the scale subresource like Deployment, or FederatedHPA.
+  ScaleTargetRef 指向待伸缩的目标资源。目标资源可以是任何资源，比如 Deployment 等子资源或 FederatedHPA。
 
   <a name="CrossVersionObjectReference"></a>
 
-  *CrossVersionObjectReference contains enough information to let you identify the referred resource.*
+  *CrossVersionObjectReference 包含可以识别被引用资源的足够信息。*
 
-  - **scaleTargetRef.kind** (string), required
+  - **scaleTargetRef.kind** (string)，必选
 
-    kind is the kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    kind 表示引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
-  - **scaleTargetRef.name** (string), required
+  - **scaleTargetRef.name** (string)，必选
 
-    name is the name of the referent; More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+    name 表示引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
   - **scaleTargetRef.apiVersion** (string)
 
-    apiVersion is the API version of the referent
+    apiVersion 是引用资源的API版本。
 
 ## CronFederatedHPAStatus 
 
-CronFederatedHPAStatus represents the current status of a CronFederatedHPA.
+CronFederatedHPAStatus 表示 CronFederatedHPA 当前的状态。
 
 <hr/>
 
 - **executionHistories** ([]ExecutionHistory)
 
-  ExecutionHistories record the execution histories of CronFederatedHPARule.
+  ExecutionHistories 记录 CronFederatedHPARule 的执行历史。
 
   <a name="ExecutionHistory"></a>
 
-  *ExecutionHistory records the execution history of specific CronFederatedHPARule.*
+  *ExecutionHistory 记录特定 CronFederatedHPARule 的执行历史。*
 
-  - **executionHistories.ruleName** (string), required
+  - **executionHistories.ruleName** (string)，必选
 
-    RuleName is the name of the CronFederatedHPARule.
+    RuleName是 CronFederatedHPARule 的名称。
 
   - **executionHistories.failedExecutions** ([]FailedExecution)
 
-    FailedExecutions records failed executions.
+    FailedExecutions 是失败的执行记录。
 
     <a name="FailedExecution"></a>
 
-    *FailedExecution records a failed execution.*
+    *FailedExecution 记录了一次失败的执行。*
 
-    - **executionHistories.failedExecutions.executionTime** (Time), required
+    - **executionHistories.failedExecutions.executionTime** (Time)，必选
 
-      ExecutionTime is the actual execution time of CronFederatedHPARule. Tasks may not always be executed at ScheduleTime. ExecutionTime is used to evaluate the efficiency of the controller's execution.
-
-      <a name="Time"></a>
-
-      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
-
-    - **executionHistories.failedExecutions.message** (string), required
-
-      Message is the human-readable message indicating details about the failure.
-
-    - **executionHistories.failedExecutions.scheduleTime** (Time), required
-
-      ScheduleTime is the expected execution time declared in CronFederatedHPARule.
+      ExecutionTime 表示 CronFederatedHPARule 的实际执行时间。任务可能并不总是在 ScheduleTime 执行。ExecutionTime 用于评估控制器执行的效率。
 
       <a name="Time"></a>
 
-      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
+
+    - **executionHistories.failedExecutions.message** (string)，必选
+
+      Message 是有关失败的详细信息（人类可读消息）。
+
+    - **executionHistories.failedExecutions.scheduleTime** (Time)，必选
+
+      ScheduleTime 是 CronFederatedHPARule 中声明的期待执行时间。
+
+      <a name="Time"></a>
+
+      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
   - **executionHistories.nextExecutionTime** (Time)
 
-    NextExecutionTime is the next time to execute. Nil means the rule has been suspended.
+    NextExecutionTime 是下一次执行的时间。nil 表示规则已被暂停。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
   - **executionHistories.successfulExecutions** ([]SuccessfulExecution)
 
-    SuccessfulExecutions records successful executions.
+    SuccessfulExecutions 是成功的执行记录。
 
     <a name="SuccessfulExecution"></a>
 
-    *SuccessfulExecution records a successful execution.*
+    *SuccessfulExecution 记录了一次成功的执行。*
 
-    - **executionHistories.successfulExecutions.executionTime** (Time), required
+    - **executionHistories.successfulExecutions.executionTime** (Time)，必选
 
-      ExecutionTime is the actual execution time of CronFederatedHPARule. Tasks may not always be executed at ScheduleTime. ExecutionTime is used to evaluate the efficiency of the controller's execution.
-
-      <a name="Time"></a>
-
-      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
-
-    - **executionHistories.successfulExecutions.scheduleTime** (Time), required
-
-      ScheduleTime is the expected execution time declared in CronFederatedHPARule.
+      ExecutionTime 表示 CronFederatedHPARule 的实际执行时间。任务可能并不总是在 ScheduleTime 执行。ExecutionTime 用于评估控制器执行的效率。
 
       <a name="Time"></a>
 
-      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
+
+    - **executionHistories.successfulExecutions.scheduleTime** (Time)，必选
+
+      ScheduleTime 是 CronFederatedHPARule 中声明的期待执行时间。
+
+      <a name="Time"></a>
+
+      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
     - **executionHistories.successfulExecutions.appliedMaxReplicas** (int32)
 
-      AppliedMaxReplicas is the MaxReplicas have been applied. It is required if .spec.rules[*].targetMaxReplicas is not empty.
+      AppliedMaxReplicas 表示已应用的最大副本数（MaxReplicas）。此字段只有在 .spec.rules[*].targetMaxReplicas 未留空时需要。
 
     - **executionHistories.successfulExecutions.appliedMinReplicas** (int32)
 
-      AppliedMinReplicas is the MinReplicas have been applied. It is required if .spec.rules[*].targetMinReplicas is not empty.
+      AppliedMinReplicas 表示已应用的最小副本数（MinReplicas）。此字段只有在 .spec.rules[*].targetMinReplicas 未留空时需要。
 
     - **executionHistories.successfulExecutions.appliedReplicas** (int32)
 
-      AppliedReplicas is the replicas have been applied. It is required if .spec.rules[*].targetReplicas is not empty.
+      AppliedReplicas 表示已应用的副本。此字段只有在 .spec.rules[*].targetReplicas 未留空时需要。
 
 ## CronFederatedHPAList 
 
-CronFederatedHPAList contains a list of CronFederatedHPA.
+CronFederatedHPAList 罗列 CronFederatedHPA。
 
 <hr/>
 
@@ -212,209 +212,209 @@ CronFederatedHPAList contains a list of CronFederatedHPA.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)), required
+- **items** ([][CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa))，必选
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified CronFederatedHPA
+### `get`：查询指定的 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-### `get` read status of the specified CronFederatedHPA
+### `get`：查询指定 CronFederatedHPA 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-### `list` list or watch objects of kind CronFederatedHPA
+### `list`：查询指定命名空间内的所有 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
-### `list` list or watch objects of kind CronFederatedHPA
+### `list`：查询所有 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/autoscaling.karmada.io/v1alpha1/cronfederatedhpas
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
-### `create` create a CronFederatedHPA
+### `create`：创建一条 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
@@ -422,195 +422,195 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedh
 
 202 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Accepted
 
-### `update` replace the specified CronFederatedHPA
+### `update`：更新指定的 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
-### `update` replace status of the specified CronFederatedHPA
+### `update`：更新指定 CronFederatedHPA 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
-### `patch` partially update the specified CronFederatedHPA
+### `patch`：更新指定 CronFederatedHPA 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
-### `patch` partially update status of the specified CronFederatedHPA
+### `patch`：更新指定 CronFederatedHPA 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
-### `delete` delete a CronFederatedHPA
+### `delete`：删除一条 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **名称**（*路径参数*）：string，必选
 
-  name of the CronFederatedHPA
+  CronFederatedHPA 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -618,37 +618,37 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederate
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of CronFederatedHPA
+### `deletecollection`：删除指定命名空间内的所有 CronFederatedHPA
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -656,55 +656,54 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederate
 
   
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-
