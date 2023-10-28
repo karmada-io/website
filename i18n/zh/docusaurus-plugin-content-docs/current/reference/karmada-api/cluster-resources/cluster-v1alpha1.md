@@ -20,7 +20,7 @@ auto_generated: true
 
 ## Cluster 
 
-Cluster represents the desire state and status of a member cluster.
+Cluster 表示成员集群的预期状态和当前状态。
 
 <hr/>
 
@@ -30,79 +30,84 @@ Cluster represents the desire state and status of a member cluster.
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([ClusterSpec](../cluster-resources/cluster-v1alpha1#clusterspec)), required
+- **spec** ([ClusterSpec](../cluster-resources/cluster-v1alpha1#clusterspec))，必选
 
-  Spec represents the specification of the desired behavior of member cluster.
+  Spec 表示成员集群的规范。
 
 - **status** ([ClusterStatus](../cluster-resources/cluster-v1alpha1#clusterstatus))
 
-  Status represents the status of member cluster.
+  Status 表示成员集群的状态。
 
 ## ClusterSpec 
 
-ClusterSpec defines the desired state of a member cluster.
+ClusterSpec 定义成员集群的预期状态。
 
 <hr/>
 
-- **syncMode** (string), required
+- **syncMode**（string），必选
 
-  SyncMode describes how a cluster sync resources from karmada control plane.
+  SyncMode 描述集群从 Karmada 控制面同步资源的方式。
 
 - **apiEndpoint** (string)
 
-  The API endpoint of the member cluster. This can be a hostname, hostname:port, IP or IP:port.
+  成员集群的 API 端点。取值包括 hostname、hostname:port、IP 和 IP:port。
 
 - **id** (string)
 
-  ID is the unique identifier for the cluster. It is different from the object uid(.metadata.uid) and typically collected automatically from member cluster during the progress of registration.
-  
-  The value is collected in order: 1. If the registering cluster enabled ClusterProperty API and defined the cluster ID by
-    creating a ClusterProperty object with name 'cluster.clusterset.k8s.io', Karmada would
-    take the defined value in the ClusterProperty object.
-    See https://github.com/kubernetes-sigs/about-api for more details about ClusterProperty API.
-  2. Take the uid of 'kube-system' namespace on the registering cluster.
-  
-  Please don't update this value unless you know what you are doing, because it will/may be used to : - uniquely identify the clusters within the Karmada system. - compose the DNS name of multi-cluster services.
+  ID 是集群的唯一标识符。它不同于 uid(.metadata.uid)，通常会在注册过程中自动从成员集群收集。
+
+  收集顺序如下：
+
+  1. 如果注册集群启用了 ClusterProperty API 并通过创建名为 cluster.clusterset.k8s.io 的 ClusterProperty 对象来定义集群 ID，则 Karmada 将在 ClusterProperty 对象中获取定义的值。有关 ClusterProperty API 的更多详情，请浏览：https://github.com/kubernetes-sigs/about-api
+
+  2. 在注册集群上获取命名空间 kube-system 的 UID。
+
+  此 UID 有以下用途：
+  - 是识别 Karmada 系统中的集群的唯一标识；
+  - 组成多集群服务的 DNS 名称。
+    一般情况下，不更新此 UID ，请谨慎操作。
 
 - **impersonatorSecretRef** (LocalSecretReference)
 
-  ImpersonatorSecretRef represents the secret contains the token of impersonator. The secret should hold credentials as follows: - secret.data.token
+  ImpersonatorSecretRef 表示包含用于伪装的令牌的密钥。密钥应包含以下凭据：- secret.data.token
 
   <a name="LocalSecretReference"></a>
 
-  *LocalSecretReference is a reference to a secret within the enclosing namespace.*
+  *LocalSecretReference 是指封闭命名空间内的密钥引用。*
 
-  - **impersonatorSecretRef.name** (string), required
+  - **impersonatorSecretRef.name** (string)，必选
 
-    Name is the name of resource being referenced.
+    Name 指被引用资源的名称。
 
-  - **impersonatorSecretRef.namespace** (string), required
+  - **impersonatorSecretRef.namespace** (string)，必选
 
-    Namespace is the namespace for the resource being referenced.
+    Namespace 指所引用资源的命名空间。
 
 - **insecureSkipTLSVerification** (boolean)
 
-  InsecureSkipTLSVerification indicates that the karmada control plane should not confirm the validity of the serving certificate of the cluster it is connecting to. This will make the HTTPS connection between the karmada control plane and the member cluster insecure. Defaults to false.
+  InsecureSkipTLSVerification 表示 Karmada 控制平面不应确认其所连接的集群的服务证书的有效性，这样会导致 Karmada 控制面与成员集群之间的 HTTPS 连接不安全。默认值为 false。
 
 - **provider** (string)
 
-  Provider represents the cloud provider name of the member cluster.
+  Provider 表示成员集群的云提供商名称。
 
 - **proxyHeader** (map[string]string)
 
-  ProxyHeader is the HTTP header required by proxy server. The key in the key-value pair is HTTP header key and value is the associated header payloads. For the header with multiple values, the values should be separated by comma(e.g. 'k1': 'v1,v2,v3').
+  ProxyHeader 是代理服务器所需的 HTTP 头。其中，键为 HTTP 头键，值为HTTP 头的负载。如果 HTTP 头有多个值，所有的值使用逗号分隔（例如，k1: v1,v2,v3）。
 
 - **proxyURL** (string)
 
-  ProxyURL is the proxy URL for the cluster. If not empty, the karmada control plane will use this proxy to talk to the cluster. More details please refer to: https://github.com/kubernetes/client-go/issues/351
+  ProxyURL 是集群的代理URL。如果不为空，则 Karmada 控制面会使用此代理与集群通信。更多详情，请参考：https://github.com/kubernetes/client-go/issues/351
 
 - **region** (string)
 
-  Region represents the region of the member cluster locate in.
+  Region 表示成员集群所在的区域。
 
 - **resourceModels** ([]ResourceModel)
 
-  ResourceModels is the list of resource modeling in this cluster. Each modeling quota can be customized by the user. Modeling name must be one of the following: cpu, memory, storage, ephemeral-storage. If the user does not define the modeling name and modeling quota, it will be the default model. The default model grade from 0 to 8. When grade = 0 or grade = 1, the default model's cpu quota and memory quota is a fix value. When grade greater than or equal to 2, each default model's cpu quota is [2^(grade-1), 2^grade), 2 &lt;= grade &lt;= 7 Each default model's memory quota is [2^(grade + 2), 2^(grade + 3)), 2 &lt;= grade &lt;= 7 E.g. grade 0 likes this: - grade: 0
+  ResourceModels 是集群中资源建模的列表。每个建模配额都可以由用户自定义。建模名称必须是 cpu、memory、storage 或 ephemeral-storage。如果用户未定义建模名称和建模配额，将使用默认模型。默认模型的等级为 0 到 8。当 grade 设置为 0 或 1 时，默认模型的 CPU 配额和内存配额为固定值。当 grade 大于或等于 2 时，每个默认模型的 CPU 配额为：[2^(grade-1), 2^grade), 2 &lt;= grade &lt;= 7。每个默认模型的内存配额为：[2^(grade + 2), 2^(grade + 3)), 2 &lt;= grade &lt;= 7。例如：
+
+  - grade: 0
     ranges:
     - name: "cpu"
       min: 0 C
@@ -110,7 +115,7 @@ ClusterSpec defines the desired state of a member cluster.
     - name: "memory"
       min: 0 GB
       max: 4 GB
-  
+
   - grade: 1
     ranges:
     - name: "cpu"
@@ -128,7 +133,7 @@ ClusterSpec defines the desired state of a member cluster.
     - name: "memory"
       min: 16 GB
       max: 32 GB
-  
+
   - grade: 7
     range:
     - name: "cpu"
@@ -137,230 +142,232 @@ ClusterSpec defines the desired state of a member cluster.
     - name: "memory"
       min: 512 GB
       max: 1024 GB
-  
-  grade 8, the last one likes below. No matter what Max value you pass, the meaning of Max value in this grade is infinite. You can pass any number greater than Min value. - grade: 8
-    range:
-    - name: "cpu"
-      min: 128 C
-      max: MAXINT
-    - name: "memory"
-      min: 1024 GB
-      max: MAXINT
 
-  <a name="ResourceModel"></a>
+  如果 grade 为 8，无论设置的 Max 值为多少，该等级中 Max 值的含义都表示无限。因此，可以设置任何大于 Min 值的数字。
 
-  *ResourceModel describes the modeling that you want to statistics.*
+- grade: 8
+  range:
+  - name: "cpu"
+    min: 128 C
+    max: MAXINT
+  - name: "memory"
+    min: 1024 GB
+    max: MAXINT
 
-  - **resourceModels.grade** (int32), required
+<a name="ResourceModel"></a>
 
-    Grade is the index for the resource modeling.
+*ResourceModel 描述要统计的建模。*
 
-  - **resourceModels.ranges** ([]ResourceModelRange), required
+- **resourceModels.grade** (int32)，必选
 
-    Ranges describes the resource quota ranges.
+  Grade 是资源建模的索引。
 
-    <a name="ResourceModelRange"></a>
+- **resourceModels.ranges** ([]ResourceModelRange)，必选
 
-    *ResourceModelRange describes the detail of each modeling quota that ranges from min to max. Please pay attention, by default, the value of min can be inclusive, and the value of max cannot be inclusive. E.g. in an interval, min = 2, max =10 is set, which means the interval [2,10). This rule ensure that all intervals have the same meaning. If the last interval is infinite, it is definitely unreachable. Therefore, we define the right interval as the open interval. For a valid interval, the value on the right is greater than the value on the left, in other words, max must be greater than min. It is strongly recommended that the [Min, Max) of all ResourceModelRanges can make a continuous interval.*
+  Ranges 描述资源配额范围。
 
-    - **resourceModels.ranges.max** ([Quantity](../common-definitions/quantity#quantity)), required
+  <a name="ResourceModelRange"></a>
 
-      Max is the maximum amount of this resource represented by resource name. Special Instructions, for the last ResourceModelRange, which no matter what Max value you pass, the meaning is infinite. Because for the last item, any ResourceModelRange's quota larger than Min will be classified to the last one. Of course, the value of the Max field is always greater than the value of the Min field. It should be true in any case.
+  *ResourceModelRange 描述每个建模配额从 min 到 max 的详细信息。注意：默认情况下，包含 min 值，但不包含 max 值。例如，设置 min = 2，max =10，则间隔为 [2, 10)。此规则能确保所有间隔具有相同的含义。如果最后一个间隔是无限的，肯定无法实现。因此，我们将正确的间隔定义为开放间隔。对于有效的间隔，右侧的值大于左侧的值，即 max 值 必须大于 min 值。建议所有 ResourceModelRanges 的 [Min, Max) 都可以是连续的间隔。*
 
-    - **resourceModels.ranges.min** ([Quantity](../common-definitions/quantity#quantity)), required
+  - **resourceModels.ranges.max** ([Quantity](../common-definitions/quantity#quantity))，必选
 
-      Min is the minimum amount of this resource represented by resource name. Note: The Min value of first grade(usually 0) always acts as zero. E.g. [1,2) equal to [0,2).
+    Max 指定资源的最大数量，由资源名称表示。特别说明，对于最后一个 ResourceModelRange ，无论传递的 Max 值是什么，都表示无限。因为对于最后一项，任何大于 Min 值的 ResourceModelRange 配额都将归为最后一项。任何情况下，Max 的值都大于 Min 的值。
 
-    - **resourceModels.ranges.name** (string), required
+  - **resourceModels.ranges.min** ([Quantity](../common-definitions/quantity#quantity))，必选
 
-      Name is the name for the resource that you want to categorize.
+    Min 指定资源的最小数量，由资源名称表示。注意：等级 1 的 Min 值（通常为0）始终为零，例如，[1,2)等同于[0, 2)。
+
+  - **resourceModels.ranges.name** (string)，必选
+
+    Name 是要分类的资源的名称。
 
 - **secretRef** (LocalSecretReference)
 
-  SecretRef represents the secret contains mandatory credentials to access the member cluster. The secret should hold credentials as follows: - secret.data.token - secret.data.caBundle
+  SecretRef 表示密钥包含访问成员集群的强制性凭据。取值包括：- secret.data.token - secret.data.caBundle
 
   <a name="LocalSecretReference"></a>
 
-  *LocalSecretReference is a reference to a secret within the enclosing namespace.*
+  *LocalSecretReference 指封闭命名空间内的密钥引用。*
 
-  - **secretRef.name** (string), required
+  - **secretRef.name** (string)，必选
 
-    Name is the name of resource being referenced.
+    Name 指所引用资源的名称。
 
-  - **secretRef.namespace** (string), required
+  - **secretRef.namespace** (string)，必选
 
-    Namespace is the namespace for the resource being referenced.
+    Namespace 指所引用资源的命名空间。
 
 - **taints** ([]Taint)
 
-  Taints attached to the member cluster. Taints on the cluster have the "effect" on any resource that does not tolerate the Taint.
+  附加到成员集群的污点。集群的污点对任何不容忍该污点的资源都有“影响”。
 
   <a name="Taint"></a>
 
-  *The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.*
+  *此污点所在的节点对任何不容忍污点的 Pod 都有“影响”。*
 
-  - **taints.effect** (string), required
+  - **taints.effect** (string)，必选
 
-    Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.
-    
-    Possible enum values:
-     - `"NoExecute"` Evict any already-running pods that do not tolerate the taint. Currently enforced by NodeController.
-     - `"NoSchedule"` Do not allow new pods to schedule onto the node unless they tolerate the taint, but allow all pods submitted to Kubelet without going through the scheduler to start, and allow all already-running pods to continue running. Enforced by the scheduler.
-     - `"PreferNoSchedule"` Like TaintEffectNoSchedule, but the scheduler tries not to schedule new pods onto the node, rather than prohibiting new pods from scheduling onto the node entirely. Enforced by the scheduler.
+    必选。污点对不容忍该污点的 Pod 的影响。有效取值包括 NoSchedule、PreferNoSchedule 和 NoExecute。
 
-  - **taints.key** (string), required
+    枚举值包括：
+    - `"NoExecute"`：任何不能容忍该污点的 Pod 都会被驱逐。当前由 NodeController 强制执行。
+    - `"NoSchedule"`：如果新 pod 无法容忍该污点，不允许新 pod 调度到节点上，但允许由 Kubelet 调度但不需要调度器启动的所有 pod ，并允许节点上已存在的 Pod 继续运行。由调度器强制执行。
+    - `"PreferNoSchedule"`：和 TaintEffectNoSchedule 相似，不同的是调度器尽量避免将新 Pod 调度到具有该污点的节点上，除非没有其他节点可调度。由调度器强制执行。
 
-    Required. The taint key to be applied to a node.
+  - **taints.key** (string)，必选
+
+    必选。应用到节点上的污点的键。
 
   - **taints.timeAdded** (Time)
 
-    TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
+    TimeAdded 表示添加污点的时间。仅适用于 NoExecute 的污点。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
   - **taints.value** (string)
 
-    The taint value corresponding to the taint key.
+    与污点键对应的污点值。
 
 - **zone** (string)
 
-  Zone represents the zone of the member cluster locate in. Deprecated: This filed was never been used by Karmada, and it will not be removed from v1alpha1 for backward compatibility, use Zones instead.
+  Zone 表示成员集群所在的区域。Deprecated 表示 Karmada 从未使用过该字段。为了向后兼容，不会从 v1alpha1 中删除该字段，请改用 Zones。
 
 - **zones** ([]string)
 
-  Zones represents the failure zones(also called availability zones) of the member cluster. The zones are presented as a slice to support the case that cluster runs across multiple failure zones. Refer https://kubernetes.io/docs/setup/best-practices/multiple-zones/ for more details about running Kubernetes in multiple zones.
+  Zones 表示成员集群的故障区域（也称为可用区域）。这些区域以切片的形式显示，这样集群便可跨多个故障区域运行。欲了解在多个区域运行 Kubernetes的更多细节，请浏览：https://kubernetes.io/docs/setup/best-practices/multiple-zones/
 
 ## ClusterStatus 
 
-ClusterStatus contains information about the current status of a cluster updated periodically by cluster controller.
+ClusterStatus 包含有关集群当前状态的信息，由集群控制器定期更新。
 
 <hr/>
 
 - **apiEnablements** ([]APIEnablement)
 
-  APIEnablements represents the list of APIs installed in the member cluster.
+  APIEnablements 表示成员集群的 API 列表。
 
   <a name="APIEnablement"></a>
 
-  *APIEnablement is a list of API resource, it is used to expose the name of the resources supported in a specific group and version.*
+  *APIEnablement 表示 API 列表，用于公开特定群组和版本中支持的资源的名称*。
 
-  - **apiEnablements.groupVersion** (string), required
+  - **apiEnablements.groupVersion** (string)，必选
 
-    GroupVersion is the group and version this APIEnablement is for.
+    GroupVersion 是此 APIEnablement 的群组和版本。
 
   - **apiEnablements.resources** ([]APIResource)
 
-    Resources is a list of APIResource.
+    Resources 是 APIResource 的列表。
 
     <a name="APIResource"></a>
 
-    *APIResource specifies the name and kind names for the resource.*
+    *APIResource 指定资源的名称和类别。*
 
-    - **apiEnablements.resources.kind** (string), required
+    - **apiEnablements.resources.kind** (string)，必选
 
-      Kind is the kind for the resource (e.g. 'Deployment' is the kind for resource 'deployments')
+      Kind 是资源的类别（例如，资源 deployments 的类别是 Deployment）
 
-    - **apiEnablements.resources.name** (string), required
+    - **apiEnablements.resources.name** (string)，必选
 
-      Name is the plural name of the resource.
+      Name 表示资源的复数名称。
 
 - **conditions** ([]Condition)
 
-  Conditions is an array of current cluster conditions.
+  Conditions 表示当前集群的状况（数组结构）。
 
   <a name="Condition"></a>
 
-  *Condition contains details for one aspect of the current state of this API Resource.*
+  *Condition 包含此 API 资源当前状态某个方面的详细信息。*
 
-  - **conditions.lastTransitionTime** (Time), required
+  - **conditions.lastTransitionTime** (Time)，必选
 
-    lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+    lastTransitionTime 是状况最近一次从一种状态转换到另一种状态的时间。这种变化通常出现在下层状况发生变化的时候。如果无法了解下层状况变化，使用 API 字段更改的时间也是可以接受的。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-  - **conditions.message** (string), required
+  - **conditions.message**（string），必选
 
-    message is a human readable message indicating details about the transition. This may be an empty string.
+    message 是有关转换的详细信息（人类可读消息）。可以是空字符串。
 
-  - **conditions.reason** (string), required
+  - **conditions.reason**（string），必选
 
-    reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+    reason 是一个程序标识符，表明状况最后一次转换的原因。特定状况类型的生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保证的 API。取值应该是一个 CamelCase 字符串。此字段不能为空。
 
-  - **conditions.status** (string), required
+  - **conditions.status**（string），必选
 
-    status of the condition, one of True, False, Unknown.
+    status 表示状况的状态。取值为True、False或Unknown。
 
-  - **conditions.type** (string), required
+  - **conditions.type**（string），必选
 
-    type of condition in CamelCase or in foo.example.com/CamelCase.
+    type 表示状况的类型，采用 CamelCase 或 foo.example.com/CamelCase 形式。
 
   - **conditions.observedGeneration** (int64)
 
-    observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+    observedGeneration 表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
 
 - **kubernetesVersion** (string)
 
-  KubernetesVersion represents version of the member cluster.
+  KubernetesVersion 表示成员集群的版本。
 
 - **nodeSummary** (NodeSummary)
 
-  NodeSummary represents the summary of nodes status in the member cluster.
+  NodeSummary 表示成员集群中节点状态的汇总。
 
   <a name="NodeSummary"></a>
 
-  *NodeSummary represents the summary of nodes status in a specific cluster.*
+  *NodeSummary 表示特定集群中节点状态的汇总。*
 
   - **nodeSummary.readyNum** (int32)
 
-    ReadyNum is the number of ready nodes in the cluster.
+    ReadyNum 指集群中就绪节点的数量。
 
   - **nodeSummary.totalNum** (int32)
 
-    TotalNum is the total number of nodes in the cluster.
+    TotalNum 指集群中的节点总数。
 
 - **resourceSummary** (ResourceSummary)
 
-  ResourceSummary represents the summary of resources in the member cluster.
+  ResourceSummary 表示成员集群中资源的汇总。
 
   <a name="ResourceSummary"></a>
 
-  *ResourceSummary represents the summary of resources in the member cluster.*
+  *ResourceSummary 表示成员集群中资源的汇总。*
 
   - **resourceSummary.allocatable** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    Allocatable represents the resources of a cluster that are available for scheduling. Total amount of allocatable resources on all nodes.
+    Allocatable 表示集群中可用于调度的资源，是所有节点上可分配资源的总量。
 
   - **resourceSummary.allocatableModelings** ([]AllocatableModeling)
 
-    AllocatableModelings represents the statistical resource modeling.
+    AllocatableModelings 表示统计资源建模。
 
     <a name="AllocatableModeling"></a>
 
-    *AllocatableModeling represents the number of nodes in which allocatable resources in a specific resource model grade. E.g. AllocatableModeling[Grade: 2, Count: 10] means 10 nodes belong to resource model in grade 2.*
+    *AllocatableModeling 表示特定资源模型等级中可分配资源的节点数。例如，AllocatableModeling[Grade: 2, Count: 10] 表示有 10 个节点属于等级为 2 的资源模型。*
 
-    - **resourceSummary.allocatableModelings.count** (int32), required
+    - **resourceSummary.allocatableModelings.count** (int32)，必选
 
-      Count is the number of nodes that own the resources delineated by this modeling.
+      Count 统计能使用此建模所划定的资源的节点数。
 
-    - **resourceSummary.allocatableModelings.grade** (int32), required
+    - **resourceSummary.allocatableModelings.grade** (int32)，必选
 
-      Grade is the index of ResourceModel.
+      Grade 是 ResourceModel 的索引。
 
   - **resourceSummary.allocated** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    Allocated represents the resources of a cluster that have been scheduled. Total amount of required resources of all Pods that have been scheduled to nodes.
+    Allocated 表示集群中已调度的资源，是已调度到节点的所有 Pod 所需资源的总和。
 
   - **resourceSummary.allocating** (map[string][Quantity](../common-definitions/quantity#quantity))
 
-    Allocating represents the resources of a cluster that are pending for scheduling. Total amount of required resources of all Pods that are waiting for scheduling.
+    Allocating 表示集群中待调度的资源，是所有等待调度的 Pod 所需资源的总和。
 
 ## ClusterList 
 
-ClusterList contains a list of member cluster
+ClusterList 罗列成员集群。
 
 <hr/>
 
@@ -370,139 +377,138 @@ ClusterList contains a list of member cluster
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][Cluster](../cluster-resources/cluster-v1alpha1#cluster)), required
+- **items** ([][Cluster](../cluster-resources/cluster-v1alpha1#cluster))，必选
 
-  Items holds a list of Cluster.
+  Items 中包含 Cluster 列表。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified Cluster
+### `get`：查询指定的集群
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  Cluster 名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
-### `get` read status of the specified Cluster
+### `get`：查询指定集群的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  集群的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
-### `list` list or watch objects of kind Cluster
+### `list`：查询所有集群
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/cluster.karmada.io/v1alpha1/clusters
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([ClusterList](../cluster-resources/cluster-v1alpha1#clusterlist)): OK
 
-### `create` create a Cluster
+### `create`：创建一个集群
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/cluster.karmada.io/v1alpha1/clusters
 
 #### Parameters
 
-- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster), required
+- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
@@ -510,265 +516,258 @@ POST /apis/cluster.karmada.io/v1alpha1/clusters
 
 202 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): Accepted
 
-### `update` replace the specified Cluster
+### `update`：更新指定的集群
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  集群的名称
 
-- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster), required
+- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
 201 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): Created
 
-### `update` replace status of the specified Cluster
+### `update`：更新指定集群的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  集群的名称
 
-- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster), required
+- **body**: [Cluster](../cluster-resources/cluster-v1alpha1#cluster)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
 201 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): Created
 
-### `patch` partially update the specified Cluster
+### `patch`：更新指定集群的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  集群的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
 201 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): Created
 
-### `patch` partially update status of the specified Cluster
+### `patch`：更新指定集群状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  集群的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): OK
 
 201 ([Cluster](../cluster-resources/cluster-v1alpha1#cluster)): Created
 
-### `delete` delete a Cluster
+### `delete`：删除一个集群
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the Cluster
+  Cluster 名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of Cluster
+### `deletecollection`：删除所有集群
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/cluster.karmada.io/v1alpha1/clusters
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-
