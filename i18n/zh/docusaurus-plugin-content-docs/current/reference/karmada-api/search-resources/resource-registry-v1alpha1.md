@@ -20,7 +20,7 @@ auto_generated: true
 
 ## ResourceRegistry 
 
-ResourceRegistry represents the configuration of the cache scope, mainly describes which resources in which clusters should be cached.
+ResourceRegistry 表示缓存范围的配置，主要描述在哪些集群缓存资源。
 
 <hr/>
 
@@ -32,151 +32,151 @@ ResourceRegistry represents the configuration of the cache scope, mainly describ
 
 - **spec** ([ResourceRegistrySpec](../search-resources/resource-registry-v1alpha1#resourceregistryspec))
 
-  Spec represents the desired behavior of ResourceRegistry.
+  Spec 表示 ResourceRegistry 的规范。
 
 - **status** ([ResourceRegistryStatus](../search-resources/resource-registry-v1alpha1#resourceregistrystatus))
 
-  Status represents the status of ResourceRegistry.
+  Status 表示 ResourceRegistry 的状态。
 
 ## ResourceRegistrySpec 
 
-ResourceRegistrySpec defines the desired state of ResourceRegistry.
+ResourceRegistrySpec 定义 ResourceRegistry 的预期状态。
 
 <hr/>
 
-- **resourceSelectors** ([]ResourceSelector), required
+- **resourceSelectors** ([]ResourceSelector)，必选
 
-  ResourceSelectors specifies the resources type that should be cached by cache system.
+  ResourceSelectors 指定缓存系统应缓存的资源类型。
 
   <a name="ResourceSelector"></a>
 
-  *ResourceSelector specifies the resources type and its scope.*
+  *ResourceSelector 指定资源类型及其范围。*
 
-  - **resourceSelectors.apiVersion** (string), required
+  - **resourceSelectors.apiVersion**（string），必选
 
-    APIVersion represents the API version of the target resources.
+    APIVersion 表示目标资源的 API 版本。
 
-  - **resourceSelectors.kind** (string), required
+  - **resourceSelectors.kind**（string），必选
 
-    Kind represents the kind of the target resources.
+    Kind 表示目标资源的类别。
 
   - **resourceSelectors.namespace** (string)
 
-    Namespace of the target resource. Default is empty, which means all namespaces.
+    目标资源的命名空间。默认为空，表示所有命名空间。
 
-- **targetCluster** (ClusterAffinity), required
+- **targetCluster** (ClusterAffinity)，必选
 
-  TargetCluster specifies the clusters where the cache system collect resource from.
+  TargetCluster 指定缓存系统收集资源的集群。
 
   <a name="ClusterAffinity"></a>
 
-  *ClusterAffinity represents the filter to select clusters.*
+  *ClusterAffinity 是用来选择集群的过滤器。*
 
   - **targetCluster.clusterNames** ([]string)
 
-    ClusterNames is the list of clusters to be selected.
+    ClusterNames 罗列了待选择的集群。
 
   - **targetCluster.exclude** ([]string)
 
-    ExcludedClusters is the list of clusters to be ignored.
+    ExcludedClusters 罗列了待忽略的集群。
 
   - **targetCluster.fieldSelector** (FieldSelector)
 
-    FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+    FieldSelector 是一个按字段选择成员集群的过滤器。匹配表达式的键（字段）为 provider、region 或 zone，匹配表达式的运算符为 In 或 NotIn。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
     <a name="FieldSelector"></a>
 
-    *FieldSelector is a field filter.*
+    *FieldSelector 是一个字段过滤器。*
 
     - **targetCluster.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
-      A list of field selector requirements.
+      字段选择器要求列表。
 
   - **targetCluster.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-    LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+    LabelSelector 是一个按标签选择成员集群的过滤器。如果值不为 nil，也未留空，仅选择与此过滤器匹配的集群。
 
 - **backendStore** (BackendStoreConfig)
 
-  BackendStore specifies the location where to store the cached items.
+  BackendStore 指定缓存项的存储位置。
 
   <a name="BackendStoreConfig"></a>
 
-  *BackendStoreConfig specifies backend store.*
+  *BackendStoreConfig 表示后端存储。*
 
   - **backendStore.openSearch** (OpenSearchConfig)
 
-    OpenSearch is a community-driven, open source search and analytics suite. Refer to website(https://opensearch.org/) for more details about OpenSearch.
+    OpenSearch 是一款由社区驱动的开源搜索和分析套件。更多详情，请浏览：https://opensearch.org/
 
     <a name="OpenSearchConfig"></a>
 
-    *OpenSearchConfig holds the necessary configuration for client to access and config an OpenSearch server.*
+    *OpenSearchConfig 包含了客户端访问 OpenSearch 服务器所需的配置。*
 
-    - **backendStore.openSearch.addresses** ([]string), required
+    - **backendStore.openSearch.addresses** ([]string)，必选
 
-      Addresses is a list of node endpoint(e.g. 'https://localhost:9200') to use. For the 'node' concept, please refer to: https://opensearch.org/docs/latest/opensearch/index/#clusters-and-nodes
+      Addresses 罗列了待使用的节点端点（例如，https://localhost:9200）。有关“节点”的概念，请浏览：https://opensearch.org/docs/latest/opensearch/index/#clusters-and-nodes
 
     - **backendStore.openSearch.secretRef** (LocalSecretReference)
 
-      SecretRef represents the secret contains mandatory credentials to access the server. The secret should hold credentials as follows: - secret.data.userName - secret.data.password
+      SecretRef 表示密钥包含访问服务器的强制性凭据。取值包括 secret.data.userName 和 secret.data.password。
 
       <a name="LocalSecretReference"></a>
 
-      *LocalSecretReference is a reference to a secret within the enclosing namespace.*
+      *LocalSecretReference 指封闭命名空间内的密钥引用。*
 
-      - **backendStore.openSearch.secretRef.name** (string), required
+      - **backendStore.openSearch.secretRef.name** ([]string)，必选
 
-        Name is the name of resource being referenced.
+        Name 指被引用资源的名称。
 
-      - **backendStore.openSearch.secretRef.namespace** (string), required
+      - **backendStore.openSearch.secretRef.namespace** ([]string)，必选
 
-        Namespace is the namespace for the resource being referenced.
+        Namespace 指所引用资源的命名空间。
 
 ## ResourceRegistryStatus 
 
-ResourceRegistryStatus defines the observed state of ResourceRegistry
+ResourceRegistryStatus 定义 ResourceRegistry 的预期状态。
 
 <hr/>
 
 - **conditions** ([]Condition)
 
-  Conditions contain the different condition statuses.
+  Conditions 包含不同的状况。
 
   <a name="Condition"></a>
 
-  *Condition contains details for one aspect of the current state of this API Resource.*
+  *Condition 包含此 API 资源当前状态某个方面的详细信息。*
 
-  - **conditions.lastTransitionTime** (Time), required
+  - **conditions.lastTransitionTime** (Time)，必选
 
-    lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+    lastTransitionTime 是状况最近一次从一种状态转换到另一种状态的时间。这种变化通常出现在下层状况发生变化的时候。如果无法了解下层状况变化，使用 API 字段更改的时间也是可以接受的。
 
     <a name="Time"></a>
 
-    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-  - **conditions.message** (string), required
+  - **conditions.message**（string），必选
 
-    message is a human readable message indicating details about the transition. This may be an empty string.
+    message 是有关转换的详细信息（人类可读消息）。可以是空字符串。
 
-  - **conditions.reason** (string), required
+  - **conditions.reason**（string），必选
 
-    reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+    reason 是一个程序标识符，表明状况最后一次转换的原因。特定状况类型的生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保证的 API。取值应该是一个驼峰式（CamelCase）字符串。此字段不能为空。
 
-  - **conditions.status** (string), required
+  - **conditions.status**（string），必选
 
-    status of the condition, one of True, False, Unknown.
+    status 表示状况的状态。取值为True、False 或 Unknown。
 
-  - **conditions.type** (string), required
+  - **conditions.type**（string），必选
 
-    type of condition in CamelCase or in foo.example.com/CamelCase.
+    type 表示状况的类型，采用 CamelCase 或 foo.example.com/CamelCase 形式。
 
   - **conditions.observedGeneration** (int64)
 
-    observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+    observedGeneration 表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
 
 ## ResourceRegistryList 
 
-ResourceRegistryList if a collection of ResourceRegistry.
+ResourceRegistryList 是 ResourceRegistry 的集合。
 
 <hr/>
 
@@ -186,139 +186,138 @@ ResourceRegistryList if a collection of ResourceRegistry.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)), required
+- **items** ([][ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry))，必选
 
-  Items holds a list of ResourceRegistry.
+  Items 是 ResourceRegistry 的列表。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified ResourceRegistry
+### `get`：查询指定的 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
-### `get` read status of the specified ResourceRegistry
+### `get`：查询指定 ResourceRegistry 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
-### `list` list or watch objects of kind ResourceRegistry
+### `list`：查询所有 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/search.karmada.io/v1alpha1/resourceregistries
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistryList](../search-resources/resource-registry-v1alpha1#resourceregistrylist)): OK
 
-### `create` create a ResourceRegistry
+### `create`：创建一个 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/search.karmada.io/v1alpha1/resourceregistries
 
-#### Parameters
+#### 参数
 
-- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry), required
+- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
@@ -326,265 +325,258 @@ POST /apis/search.karmada.io/v1alpha1/resourceregistries
 
 202 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): Accepted
 
-### `update` replace the specified ResourceRegistry
+### `update`：更新指定的 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
-- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry), required
+- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
 201 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): Created
 
-### `update` replace status of the specified ResourceRegistry
+### `update`：更新指定 ResourceRegistry 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
-- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry), required
+- **body**: [ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
 201 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): Created
 
-### `patch` partially update the specified ResourceRegistry
+### `patch`：更新指定 ResourceRegistry 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
 201 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): Created
 
-### `patch` partially update status of the specified ResourceRegistry
+### `patch`：更新指定 ResourceRegistry 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): OK
 
 201 ([ResourceRegistry](../search-resources/resource-registry-v1alpha1#resourceregistry)): Created
 
-### `delete` delete a ResourceRegistry
+### `delete`：删除一个 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceRegistry
+  ResourceRegistry 的名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of ResourceRegistry
+### `deletecollection`：删除所有 ResourceRegistry
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/search.karmada.io/v1alpha1/resourceregistries
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-
