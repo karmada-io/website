@@ -20,7 +20,7 @@ auto_generated: true
 
 ## MultiClusterService 
 
-MultiClusterService is a named abstraction of multi-cluster software service. The name field of MultiClusterService is the same as that of Service name. Services with the same name in different clusters are regarded as the same service and are associated with the same MultiClusterService. MultiClusterService can control the exposure of services to outside multiple clusters, and also enable service discovery between clusters.
+MultiClusterService 是多集群软件服务的命名抽象。MultiClusterService 的 name 字段与 Service 的 name 字段相同。不同集群中同名的服务将被视为同一服务，会被关联到同一 MultiClusterService。MultiClusterService 可以控制服务向多集群外部暴露，还可以在集群之间启用服务发现。
 
 <hr/>
 
@@ -30,153 +30,155 @@ MultiClusterService is a named abstraction of multi-cluster software service. Th
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([MultiClusterServiceSpec](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservicespec)), required
+- **spec** ([MultiClusterServiceSpec](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservicespec))，必选
 
-  Spec is the desired state of the MultiClusterService.
+  Spec 是 MultiClusterService 的期望状态。
 
 - **status** (ServiceStatus)
 
-  Status is the current state of the MultiClusterService.
+  Status 是 MultiClusterService 的当前状态。
 
   <a name="ServiceStatus"></a>
 
-  *ServiceStatus represents the current status of a service.*
+  *ServiceStatus 表示服务的当前状态。*
 
   - **status.conditions** ([]Condition)
 
-    *Patch strategy: merge on key `type`*
+    *补丁策略：以键的**`类型`**为基础进行合并。*
     
-    *Map: unique values on key type will be kept during a merge*
+    *Map: 键类型的唯一值将在合并期间保留*
     
-    Current service state
+    服务的当前状态。
 
     <a name="Condition"></a>
 
-    *Condition contains details for one aspect of the current state of this API Resource.*
+    *Condition 包含此 API 资源当前状态某个方面的详细信息。*
 
-    - **status.conditions.lastTransitionTime** (Time), required
+    - **status.conditions.lastTransitionTime** (Time)，必选
 
-      lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+      lastTransitionTime 是状况最近一次从一种状态转换到另一种状态的时间。这种变化通常出现在下层状况发生变化的时候。如果无法了解下层状况变化，使用 API 字段更改的时间也是可以接受的。
 
       <a name="Time"></a>
 
-      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
-    - **status.conditions.message** (string), required
+    - **status.conditions.message** (string)，必选
 
-      message is a human readable message indicating details about the transition. This may be an empty string.
+      message 是有关转换的详细信息（人类可读消息）。可以是空字符串。
 
-    - **status.conditions.reason** (string), required
+    - **status.conditions.reason** (string)，必选
 
-      reason contains a programmatic identifier indicating the reason for the condition's last transition. Producers of specific condition types may define expected values and meanings for this field, and whether the values are considered a guaranteed API. The value should be a CamelCase string. This field may not be empty.
+      reason 是一个程序标识符，表明状况最后一次转换的原因。特定状况类型的生产者可以定义该字段的预期值和含义，以及这些值是否可被视为有保证的 API。取值应该是一个 CamelCase 字符串。此字段不能为空。
 
-    - **status.conditions.status** (string), required
+    - **status.conditions.status** (string)，必选
 
-      status of the condition, one of True, False, Unknown.
+      status 表示状况的状态。取值为True、False或Unknown。
 
-    - **status.conditions.type** (string), required
+    - **status.conditions.type** (string)，必选
 
-      type of condition in CamelCase or in foo.example.com/CamelCase.
+      type 表示状况的类型，采用 CamelCase 或 foo.example.com/CamelCase 形式。
 
     - **status.conditions.observedGeneration** (int64)
 
-      observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+      observedGeneration 表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
 
   - **status.loadBalancer** (LoadBalancerStatus)
 
-    LoadBalancer contains the current status of the load-balancer, if one is present.
+    loadBalancer 包含负载均衡器的当前状态（如果存在）。
 
     <a name="LoadBalancerStatus"></a>
 
-    *LoadBalancerStatus represents the status of a load-balancer.*
+    *LoadBalancerStatus 表示负载均衡器的状态。*
 
     - **status.loadBalancer.ingress** ([]LoadBalancerIngress)
 
-      Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
+      ingress 是一个包含负载均衡器入口点的列表。服务的流量需要被发送到这些入口点。
 
       <a name="LoadBalancerIngress"></a>
 
-      *LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.*
+      *LoadBalancerIngress 表示负载均衡器入口点的状态，用于服务的流量是否被发送到入口点。*
 
       - **status.loadBalancer.ingress.hostname** (string)
 
-        Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
+        Hostname 为基于 DNS 的负载均衡器入口点（通常是 AWS 负载均衡器）所设置。
 
       - **status.loadBalancer.ingress.ip** (string)
 
-        IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
+        IP 为基于 IP 的负载均衡器入口点（通常是 GCE 或 OpenStack 负载均衡器）所设置。
 
       - **status.loadBalancer.ingress.ports** ([]PortStatus)
 
-        *Atomic: will be replaced during a merge*
+        *Atomic：将在合并期间被替换*
         
-        Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
+        Ports 是服务的端口列表。如果设置了此字段，服务中定义的每个端口都应该在此列表中。
 
         <a name="PortStatus"></a>
 
         **
 
-        - **status.loadBalancer.ingress.ports.port** (int32), required
+        - **status.loadBalancer.ingress.ports.port** (int32)，必选
 
-          Port is the port number of the service port of which status is recorded here
+          Port 是所记录的服务端口状态的端口号。
 
-        - **status.loadBalancer.ingress.ports.protocol** (string), required
+        - **status.loadBalancer.ingress.ports.protocol** (string)，必选
 
-          Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
+          Protocol 是所记录的服务端口状态的协议。取值包括：TCP、UDP 和 SCTP。
           
-          Possible enum values:
-           - `"SCTP"` is the SCTP protocol.
-           - `"TCP"` is the TCP protocol.
-           - `"UDP"` is the UDP protocol.
+          枚举值包括：
+           - `"SCTP"`：SCTP协议。
+           - `"TCP"`：TCP协议。
+           - `"UDP"`：UDP协议。
 
         - **status.loadBalancer.ingress.ports.error** (string)
 
-          Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
-            CamelCase names
-          - cloud provider specific error values must have names that comply with the
-            format foo.example.com/CamelCase.
+          error 用来记录服务端口的问题。错误的格式应符合以下规则：
+          
+          - 应在此文件中指定内置错误码，并且错误码应使用驼峰法命名。
+             
+          - 特定于云驱动的错误码名称必须符合 foo.example.com/CamelCase 格式。
+             
 
 ## MultiClusterServiceSpec 
 
-MultiClusterServiceSpec is the desired state of the MultiClusterService.
+MultiClusterServiceSpec 是 MultiClusterService 的期望状态。
 
 <hr/>
 
-- **types** ([]string), required
+- **types** ([]string)，必选
 
-  Types specifies how to expose the service referencing by this MultiClusterService.
+  Types 指定公开此 MultiClusterService 的服务引用的方式。
 
 - **ports** ([]ExposurePort)
 
-  Ports is the list of ports that are exposed by this MultiClusterService. No specified port will be filtered out during the service exposure and discovery process. All ports in the referencing service will be exposed by default.
+  Ports 罗列了此 MultiClusterService 公开的端口。在服务暴露和发现过程中，不会过滤指定的端口。默认情况下，引用服务中的所有端口都将公开。
 
   <a name="ExposurePort"></a>
 
-  *ExposurePort describes which port will be exposed.*
+  *ExposurePort 描述了将暴露的端口。*
 
-  - **ports.port** (int32), required
+  - **ports.port** (int32)，必选
 
-    Port specifies the exposed service port.
+    Port 表示暴露的服务端口。
 
   - **ports.name** (string)
 
-    Name is the name of the port that needs to be exposed within the service. The port name must be the same as that defined in the service.
+    Name 是需要在服务中公开的端口的名称。端口名称必须与服务中定义的端口名称一致。
 
 - **range** (ExposureRange)
 
-  Range specifies the ranges where the referencing service should be exposed. Only valid and optional in case of Types contains CrossCluster. If not set and Types contains CrossCluster, all clusters will be selected, that means the referencing service will be exposed across all registered clusters.
+  Range 指定引用服务应公开的范围。仅在 Types 包含 CrossCluster 的情况下有效和可选。如果未设置且 Types 包含 CrossCluster，将选择所有群集，这意味着引用服务将在所有注册的集群上公开。
 
   <a name="ExposureRange"></a>
 
-  *ExposureRange describes a list of clusters where the service is exposed. Now supports selecting cluster by name, leave the room for extend more methods such as using label selector.*
+  *ExposureRange 罗列了暴露服务的集群。当前支持按名称选择集群，为扩展更多方法留出空间，如使用标签选择器。*
 
   - **range.clusterNames** ([]string)
 
-    ClusterNames is the list of clusters to be selected.
+    ClusterNames 罗列了待选择的集群。
 
 ## MultiClusterServiceList 
 
-MultiClusterServiceList is a collection of MultiClusterService.
+MultiClusterServiceList 是 MultiClusterService 的集合。
 
 <hr/>
 
@@ -186,211 +188,211 @@ MultiClusterServiceList is a collection of MultiClusterService.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)), required
+- **items** ([][MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice))，必选
 
-  Items is the list of MultiClusterService.
+  Items 是 MultiClusterService 的列表。
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified MultiClusterService
+### `get`：查询指定的 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
-### `get` read status of the specified MultiClusterService
+### `get`：查询指定 MultiClusterService 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
-### `list` list or watch objects of kind MultiClusterService
+### `list`：查询指定命名空间内的所有 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterServiceList](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservicelist)): OK
 
-### `list` list or watch objects of kind MultiClusterService
+### `list`：查询所有 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/networking.karmada.io/v1alpha1/multiclusterservices
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterServiceList](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservicelist)): OK
 
-### `create` create a MultiClusterService
+### `create`：创建一个 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice), required
+- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
@@ -398,195 +400,195 @@ POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterser
 
 202 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): Accepted
 
-### `update` replace the specified MultiClusterService
+### `update`：更新指定的 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice), required
+- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
 201 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): Created
 
-### `update` replace status of the specified MultiClusterService
+### `update`：更新指定 MultiClusterService 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice), required
+- **body**: [MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
 201 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): Created
 
-### `patch` partially update the specified MultiClusterService
+### `patch`：更新指定 MultiClusterService 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
 201 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): Created
 
-### `patch` partially update status of the specified MultiClusterService
+### `patch`：更新指定 MultiClusterService 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): OK
 
 201 ([MultiClusterService](../networking-resources/multi-cluster-service-v1alpha1#multiclusterservice)): Created
 
-### `delete` delete a MultiClusterService
+### `delete`：删除一个 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the MultiClusterService
+  MultiClusterService 的名称
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -594,37 +596,37 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusters
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of MultiClusterService
+### `deletecollection`：删除所有 MultiClusterService
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
 
-#### Parameters
+#### 参数
 
-- **namespace** (*in path*): string, required
+- **namespace**（*路径参数*）：string，必选
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -632,55 +634,54 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusters
 
   
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
 #### Response
 
 200 ([Status](../common-definitions/status#status)): OK
-
