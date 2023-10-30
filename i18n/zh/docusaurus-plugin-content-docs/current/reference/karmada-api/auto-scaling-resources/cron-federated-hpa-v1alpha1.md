@@ -100,15 +100,15 @@ CronFederatedHPASpec 表示 CronFederatedHPA 的规范。
 
   - **scaleTargetRef.kind** (string)，必选
 
-    kind 表示引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    kind 表示被引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
   - **scaleTargetRef.name** (string)，必选
 
-    name 表示引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+    name 表示被引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
   - **scaleTargetRef.apiVersion** (string)
 
-    apiVersion 是引用资源的API版本。
+    apiVersion 是被引用资源的API版本。
 
 ## CronFederatedHPAStatus 
 
