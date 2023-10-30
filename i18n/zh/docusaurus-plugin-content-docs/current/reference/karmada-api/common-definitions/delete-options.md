@@ -16,47 +16,50 @@ auto_generated: true
 
 `import "k8s.io/apimachinery/pkg/apis/meta/v1"`
 
-DeleteOptions may be provided when deleting an API object.
+删除 API 对象时，可以提供 DeleteOptions。
 
 <hr/>
 
 - **apiVersion** (string)
 
-  APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+  APIVersion 定义对象的版本化模式。服务器应将已识别的模式转换为最新的内部值，可能拒绝无法识别的值。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 
 - **dryRun** ([]string)
 
-  When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+  如果存在，表示修改不会被保留。无效或无法识别的 dryRun 指令会导致错误响应，也不会进一步处理请求。有效值为：
+  - All：将处理所有空运行阶段。
 
 - **gracePeriodSeconds** (int64)
 
-  The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+  此字段表示删除对象之前的持续时间（单位为秒）。取值只能为正整数。取值为 0，表示立即删除。取值为 nil，表示使用指定类型的默认宽限期。如果未指定，则为每个对象的默认值。0 表示立即删除。
 
 - **kind** (string)
 
-  Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+  Kind 是对象所表示的 REST 资源的字符串值。服务器可从客户端提交请求的端点推断出字符串的值。此字段无法更新，必须采用驼峰形式（ CamelCase）表示。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
 - **orphanDependents** (boolean)
 
-  Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.
+  Deprecated：此字段将在1.7中废弃，请使用 PropagationPolicy。此字段表示是否孤立依赖项。如果取值为 true，会向对象的终结器列表中添加 orphan 终结器。如果取值为 false，会删除对象终结器列表中的 orphan 终结器。可设置此字段或 PropagationPolicy，但不可两个同时设置。
 
 - **preconditions** (Preconditions)
 
-  Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
+  删除前必须满足先决条件。如果无法满足，将返回 409 Conflict。
 
   <a name="Preconditions"></a>
 
-  *Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.*
+  *在执行操作（更新、删除等）之前，必须满足先决条件。*
 
   - **preconditions.resourceVersion** (string)
 
-    Specifies the target ResourceVersion
+    目标资源版本。
 
   - **preconditions.uid** (string)
 
-    Specifies the target UID.
+    目标UID。
 
 - **propagationPolicy** (string)
 
-  Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
-
+  是否以及如何执行垃圾收集。可以设置此字段或 OrphanDependents，但不能同时设置。默认策略由 metadata.finalizers 中现有的终结器和特定资源的默认策略设置所决定。可接受的值是：
+  - Orphan：孤立依赖项；
+  - Background：允许垃圾回收器后台删除依赖；
+  - Foreground：一个级联策略，前台删除所有依赖项。

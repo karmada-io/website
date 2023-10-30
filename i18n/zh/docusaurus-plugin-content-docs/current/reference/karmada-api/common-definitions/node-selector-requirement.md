@@ -16,19 +16,19 @@ auto_generated: true
 
 `import "k8s.io/api/core/v1"`
 
-A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
+*节点选择器要求由键、值和关联键与值的运算符组成。*
 
 <hr/>
 
-- **key** (string), required
+- **key** (string)，必选
 
-  The label key that the selector applies to.
+  key 是选择器应用的标签键。
 
-- **operator** (string), required
+- **operator** (string)，必选
 
-  Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.
+  operator 表示一个键与其值的关系。有效的运算符包括 In、NotIn、Exists、DoesNotExist、Gt 和 Lt。
   
-  Possible enum values:
+  枚举值包括：
    - `"DoesNotExist"`
    - `"Exists"`
    - `"Gt"`
@@ -38,5 +38,4 @@ A node selector requirement is a selector that contains values, a key, and an op
 
 - **values** ([]string)
 
-  An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
-
+  字符串值的数组。如果运算符为 In 或 NotIn ，则 values 的数组必须非空。如果运算符为 Exists 或 DoesNotExist，则 values 的数组必须为空。如果运算符是 Gt 或 Lt，则 values 的数组只能包含一个元素，该元素将被解释为整数。此数组会在策略性合并补丁期间被替换。

@@ -16,19 +16,18 @@ auto_generated: true
 
 `import "k8s.io/api/core/v1"`
 
-TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.
+TypedLocalObjectReference 包含足够的信息，使您能够在同一命名空间内按类别定位被引用的对象。
 
 <hr/>
 
-- **kind** (string), required
+- **kind** (string)，必选
 
-  Kind is the type of resource being referenced
+  Kind 是被引用资源的类别。
 
-- **name** (string), required
+- **name** (string)，必选
 
-  Name is the name of resource being referenced
+  Name 是被引用资源的名称。
 
 - **apiGroup** (string)
 
-  APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
-
+  APIGroup 是被引用资源所在的组。如果未指定 APIGroup，则核心 API 组中必须包含指定的 Kind。对于任何其他第三方类型，APIGroup 都是必需的。

@@ -16,33 +16,32 @@ auto_generated: true
 
 `import "k8s.io/apimachinery/pkg/apis/meta/v1"`
 
-A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
+标签选择器是对一组资源的标签进行查询。matchLabels 和 matchExpressions 的结果之间是与的关系。如果留空，表示匹配所有对象。null 表示不匹配任何对象。
 
 <hr/>
 
 - **matchExpressions** ([]LabelSelectorRequirement)
 
-  matchExpressions is a list of label selector requirements. The requirements are ANDed.
+  matchExpressions 是标签选择器要求的列表。要求之间是与的关系（即所有的要求都要满足）。
 
   <a name="LabelSelectorRequirement"></a>
 
-  *A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.*
+  *标签选择器要求由键、值和关联键与值的运算符组成。*
 
-  - **matchExpressions.key** (string), required
+  - **matchExpressions.key** (string)，必选
 
-    *Patch strategy: merge on key `key`*
-    
-    key is the label key that the selector applies to.
+    *补丁策略：根据键 `key` 进行合并。*
 
-  - **matchExpressions.operator** (string), required
+    key 是选择器应用的标签键。
 
-    operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+  - **matchExpressions.operator** (string)，必选
+
+    operator 表示一个键与其值的关系。有效的运算符包括 In、NotIn、Exists 和 DoesNotExist。
 
   - **matchExpressions.values** ([]string)
 
-    values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+    values 是字符串值的数组。如果运算符为 In 或 NotIn ，则 values 的数组必须非空。如果运算符为 Exists 或 DoesNotExist，则 values 的数组必须为空。在策略性合并补丁期间会替换此数组。
 
 - **matchLabels** (map[string]string)
 
-  matchLabels is a map of [key,value] pairs. A single [key,value] in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
-
+  matchLabels 是键值对的映射。matchLabels 映射中的单个键值对相当于 matchExpressions 的一个元素，键的字段为 key，运算符为 In，值为包含 value 的 values 数组。要求之间是与的关系（即所有的要求都要满足）。
