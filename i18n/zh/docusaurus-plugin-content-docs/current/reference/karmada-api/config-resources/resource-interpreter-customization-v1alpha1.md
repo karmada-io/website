@@ -20,7 +20,7 @@ auto_generated: true
 
 ## ResourceInterpreterCustomization 
 
-ResourceInterpreterCustomization describes the configuration of a specific resource for Karmada to get the structure. It has higher precedence than the default interpreter and the interpreter webhook.
+ResourceInterpreterCustomization 描述特定资源的配置，方便 Karmada 获取结构。它的优先级高于默认解释器和 webhook 解释器。
 
 <hr/>
 
@@ -30,247 +30,256 @@ ResourceInterpreterCustomization describes the configuration of a specific resou
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([ResourceInterpreterCustomizationSpec](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomizationspec)), required
+- **spec** ([ResourceInterpreterCustomizationSpec](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomizationspec))，必选
 
-  Spec describes the configuration in detail.
+  Spec 是配置的详情。
 
-## ResourceInterpreterCustomizationSpec 
+## ResourceInterpreterCustomizationSpec
 
-ResourceInterpreterCustomizationSpec describes the configuration in detail.
+ResourceInterpreterCustomizationSpec 是配置的详情。
 
 <hr/>
 
-- **customizations** (CustomizationRules), required
+- **customizations** (CustomizationRules)，必选
 
-  Customizations describe the interpretation rules.
+  Customizations 是对解释规则的描述。
 
   <a name="CustomizationRules"></a>
 
-  *CustomizationRules describes the interpretation rules.*
+  *CustomizationRules 是对解释规则的描述。*
 
-  - **customizations.dependencyInterpretation** (DependencyInterpretation)
+    - **customizations.dependencyInterpretation** (DependencyInterpretation)
 
-    DependencyInterpretation describes the rules for Karmada to analyze the dependent resources. Karmada provides built-in rules for several standard Kubernetes types, see: https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#interpretdependency If DependencyInterpretation is set, the built-in rules will be ignored.
+      DependencyInterpretation 描述了 Karmada 分析依赖资源的规则。Karmada 为几种标准的 Kubernetes 类型提供了内置规则。如果设置了 DependencyInterpretation，内置规则将被忽略。更多信息，请浏览：https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#interpretdependency
 
-    <a name="DependencyInterpretation"></a>
+      <a name="DependencyInterpretation"></a>
 
-    *DependencyInterpretation holds the rules for interpreting the dependent resources of a specific resources.*
+      *DependencyInterpretation 是用于解释特定资源的依赖资源的规则。*
 
-    - **customizations.dependencyInterpretation.luaScript** (string), required
+        - **customizations.dependencyInterpretation.luaScript** (string)，必选
 
-      LuaScript holds the Lua script that is used to interpret the dependencies of a specific resource. The script should implement a function as follows:
-          luaScript: &gt;
-              function GetDependencies(desiredObj)
-                  dependencies = []
-                  if desiredObj.spec.serviceAccountName ~= nil and desiredObj.spec.serviceAccountName ~= "default" then
-                      dependency = []
-                      dependency.apiVersion = "v1"
-                      dependency.kind = "ServiceAccount"
-                      dependency.name = desiredObj.spec.serviceAccountName
-                      dependency.namespace = desiredObj.namespace
-                      dependencies[1] = []
-                      dependencies[1] = dependency
-                  end
-                  return dependencies
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - desiredObj: the object represents the configuration to be applied
-            to the member cluster.
-      
-      The returned value should be expressed by a slice of DependentObjectReference.
+          LuaScript 是用于解释特定资源的依赖关系的 Lua 脚本。该脚本应实现以下功能：
+      ```yaml
+            luaScript: &gt;
+                function GetDependencies(desiredObj)
+                    dependencies = []
+                    if desiredObj.spec.serviceAccountName ~= nil and desiredObj.spec.serviceAccountName ~= "default" then
+                        dependency = []
+                        dependency.apiVersion = "v1"
+                        dependency.kind = "ServiceAccount"
+                        dependency.name = desiredObj.spec.serviceAccountName
+                        dependency.namespace = desiredObj.namespace
+                        dependencies[1] = []
+                        dependencies[1] = dependency
+                    end
+                    return dependencies
+                end
+      ```
 
-  - **customizations.healthInterpretation** (HealthInterpretation)
+      LuaScript 的内容是一个完整的函数，包括声明和定义。
 
-    HealthInterpretation describes the health assessment rules by which Karmada can assess the health state of the resource type.
+      以下参数将由系统提供：
+      - desiredObj：将应用于成员集群的配置。
 
-    <a name="HealthInterpretation"></a>
+      返回值由 DependentObjectReference 的列表表示。
 
-    *HealthInterpretation holds the rules for interpreting the health state of a specific resource.*
+- **customizations.healthInterpretation** (HealthInterpretation)
 
-    - **customizations.healthInterpretation.luaScript** (string), required
+  HealthInterpretation 描述了健康评估规则，Karmada 可以通过这些规则评估各类资源的健康状态。
 
-      LuaScript holds the Lua script that is used to assess the health state of a specific resource. The script should implement a function as follows:
-          luaScript: &gt;
-              function InterpretHealth(observedObj)
-                  if observedObj.status.readyReplicas == observedObj.spec.replicas then
-                      return true
-                  end
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - observedObj: the object represents the configuration that is observed
-            from a specific member cluster.
-      
-      The returned boolean value indicates the health status.
+  <a name="HealthInterpretation"></a>
 
-  - **customizations.replicaResource** (ReplicaResourceRequirement)
+  *HealthInterpretation 是解释特定资源健康状态的规则。*
 
-    ReplicaResource describes the rules for Karmada to discover the resource's replica as well as resource requirements. It would be useful for those CRD resources that declare workload types like Deployment. It is usually not needed for Kubernetes native resources(Deployment, Job) as Karmada knows how to discover info from them. But if it is set, the built-in discovery rules will be ignored.
+    - **customizations.healthInterpretation.luaScript** (string)，必选
 
-    <a name="ReplicaResourceRequirement"></a>
+      LuaScript 是评估特定资源的健康状态的 Lua 脚本。该脚本应实现以下功能：
+    ```yaml
+      luaScript: &gt;
+        function InterpretHealth(observedObj)
+          if observedObj.status.readyReplicas == observedObj.spec.replicas then
+            return true
+          end
+        end
+    ```
 
-    *ReplicaResourceRequirement holds the scripts for getting the desired replicas as well as the resource requirement of each replica.*
+      LuaScript 的内容是一个完整的函数，包括声明和定义。
 
-    - **customizations.replicaResource.luaScript** (string), required
+      以下参数将由系统提供：
+        - observedObj：从特定成员集群观测到的配置。
 
-      LuaScript holds the Lua script that is used to discover the resource's replica as well as resource requirements
-      
-      The script should implement a function as follows:
-          luaScript: &gt;
-              function GetReplicas(desiredObj)
-                  replica = desiredObj.spec.replicas
-                  requirement = []
-                  requirement.nodeClaim = []
-                  requirement.nodeClaim.nodeSelector = desiredObj.spec.template.spec.nodeSelector
-                  requirement.nodeClaim.tolerations = desiredObj.spec.template.spec.tolerations
-                  requirement.resourceRequest = desiredObj.spec.template.spec.containers[1].resources.limits
-                  return replica, requirement
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - desiredObj: the object represents the configuration to be applied
-            to the member cluster.
-      
-      The function expects two return values:
-        - replica: the declared replica number
-        - requirement: the resource required by each replica expressed with a
-            ResourceBindingSpec.ReplicaRequirements.
-      The returned values will be set into a ResourceBinding or ClusterResourceBinding.
+      返回的 boolean 值表示健康状态。
 
-  - **customizations.replicaRevision** (ReplicaRevision)
+- **customizations.replicaResource** (ReplicaResourceRequirement)
 
-    ReplicaRevision describes the rules for Karmada to revise the resource's replica. It would be useful for those CRD resources that declare workload types like Deployment. It is usually not needed for Kubernetes native resources(Deployment, Job) as Karmada knows how to revise replicas for them. But if it is set, the built-in revision rules will be ignored.
+  ReplicaResource 描述了 Karmada 发现资源副本及资源需求的规则。对于声明式工作负载类型（如 Deployment）的 CRD 资源，可能会有用。由于 Karmada 知晓发现 Kubernetes 本机资源信息的方式，因此 Kubernetes 本机资源（Deployment、Job）通常不需要该字段。但如果已设置该字段，内置的发现规则将被忽略。
 
-    <a name="ReplicaRevision"></a>
+  <a name="ReplicaResourceRequirement"></a>
 
-    *ReplicaRevision holds the scripts for revising the desired replicas.*
+  *ReplicaResourceRequirement 保存了获取所需副本及每个副本资源要求的脚本。*
 
-    - **customizations.replicaRevision.luaScript** (string), required
+    - **customizations.replicaResource.luaScript** (string)，必选
 
-      LuaScript holds the Lua script that is used to revise replicas in the desired specification. The script should implement a function as follows:
-          luaScript: &gt;
-              function ReviseReplica(desiredObj, desiredReplica)
-                  desiredObj.spec.replicas = desiredReplica
-                  return desiredObj
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - desiredObj: the object represents the configuration to be applied
-            to the member cluster.
-        - desiredReplica: the replica number should be applied with.
-      
-      The returned object should be a revised configuration which will be applied to member cluster eventually.
+      LuaScript 是发现资源所用的副本以及资源需求的 Lua 脚本。
+
+      该脚本应实现以下功能：
+    ```yaml
+      luaScript: &gt;
+        function GetReplicas(desiredObj)
+          replica = desiredObj.spec.replicas
+          requirement = []
+          requirement.nodeClaim = []
+          requirement.nodeClaim.nodeSelector = desiredObj.spec.template.spec.nodeSelector
+          requirement.nodeClaim.tolerations = desiredObj.spec.template.spec.tolerations
+          requirement.resourceRequest = desiredObj.spec.template.spec.containers[1].resources.limits
+          return replica, requirement
+        end
+    ```
+
+      LuaScript 的内容是一个完整的函数，包括声明和定义。
+
+      以下参数将由系统提供：
+        - desiredObj：待应用于成员集群的配置。
+
+      该函数有两个返回值：
+        - replica：声明的副本编号。
+        - requirement：每个副本所需的资源，使用 ResourceBindingSpec.ReplicaRequirements 表示。
+             
+      返回值将被 ResourceBinding 或 ClusterResourceBinding 使用。
+
+- **customizations.replicaRevision** (ReplicaRevision)
+
+  ReplicaRevision 描述了 Karmada 修改资源副本的规则。对于声明式工作负载类型（如 Deployment）的 CRD 资源，可能会有用。由于 Karmada 知晓修改 Kubernetes 本机资源副本的方式，因此 Kubernetes 本机资源（Deployment、Job）通常不需要该字段。但如果已设置该字段，内置的修改规则将被忽略。
+
+  <a name="ReplicaRevision"></a>
+
+  *ReplicaRevision 保存了用于修改所需副本的脚本。*
+
+    - **customizations.replicaRevision.luaScript** (string)，必选
+
+      LuaScript 是修改所需规范中的副本的 Lua 脚本。该脚本应实现以下功能：
+    ```yaml
+      luaScript: &gt;
+        function ReviseReplica(desiredObj, desiredReplica)
+          desiredObj.spec.replicas = desiredReplica
+          return desiredObj
+        end
+    ```
+
+      LuaScript 的内容是一个完整的函数，包括声明和定义。
+
+      以下参数将由系统提供：
+        - desiredObj：待应用于成员集群的配置。
+
+        - desiredReplica：待应用于成员集群的期望副本数。
+
+      返回的是修订后的配置，最终将应用于成员集群。
 
   - **customizations.retention** (LocalValueRetention)
 
-    Retention describes the desired behavior that Karmada should react on the changes made by member cluster components. This avoids system running into a meaningless loop that Karmada resource controller and the member cluster component continually applying opposite values of a field. For example, the "replicas" of Deployment might be changed by the HPA controller on member cluster. In this case, Karmada should retain the "replicas" and not try to change it.
+    Retention 描述了 Karmada 对成员集群组件变化的预期反应。这样可以避免系统进入无意义循环，即 Karmada 资源控制器和成员集群组件，对同一个字段采用不同的值。例如，成员群集的 HPA 控制器可能会更改 Deployment 的 replicas。在这种情况下，Karmada 会保留 replicas，而不会去更改它。
 
     <a name="LocalValueRetention"></a>
 
-    *LocalValueRetention holds the scripts for retention. Now only supports Lua.*
+    *LocalValueRetention 保存了要保留的脚本。当前只支持 Lua 脚本。*
 
-    - **customizations.retention.luaScript** (string), required
+      - **customizations.retention.luaScript** (string)，必选
 
-      LuaScript holds the Lua script that is used to retain runtime values to the desired specification.
-      
-      The script should implement a function as follows:
-          luaScript: &gt;
-              function Retain(desiredObj, observedObj)
-                  desiredObj.spec.fieldFoo = observedObj.spec.fieldFoo
-                  return desiredObj
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - desiredObj: the object represents the configuration to be applied
-            to the member cluster.
-        - observedObj: the object represents the configuration that is observed
-            from a specific member cluster.
-      
-      The returned object should be a retained configuration which will be applied to member cluster eventually.
+        LuaScript 是将运行时值保留到所需规范的 Lua 脚本。
 
-  - **customizations.statusAggregation** (StatusAggregation)
+        该脚本应实现以下功能：
+        ```yaml
+        luaScript: &gt;
+          function Retain(desiredObj, observedObj)
+            desiredObj.spec.fieldFoo = observedObj.spec.fieldFoo
+            return desiredObj
+          end
+        ```
 
-    StatusAggregation describes the rules for Karmada to aggregate status collected from member clusters to resource template. Karmada provides built-in rules for several standard Kubernetes types, see: https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#aggregatestatus If StatusAggregation is set, the built-in rules will be ignored.
+        LuaScript 的内容是一个完整的函数，包括声明和定义。
 
-    <a name="StatusAggregation"></a>
+        以下参数将由系统提供：
+          - desiredObj：待应用于成员集群的配置。
 
-    *StatusAggregation holds the scripts for aggregating several decentralized statuses.*
+          - observedObj：从特定成员集群观测到的配置。
 
-    - **customizations.statusAggregation.luaScript** (string), required
+      返回的是保留的配置，最终将应用于成员集群。
 
-      LuaScript holds the Lua script that is used to aggregate decentralized statuses to the desired specification. The script should implement a function as follows:
-          luaScript: &gt;
-              function AggregateStatus(desiredObj, statusItems)
-                  for i = 1, #statusItems do
-                      desiredObj.status.readyReplicas = desiredObj.status.readyReplicas + items[i].readyReplicas
-                  end
-                  return desiredObj
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - desiredObj: the object represents a resource template.
-        - statusItems: the slice of status expressed with AggregatedStatusItem.
-      
-      The returned object should be a whole object with status aggregated.
+- **customizations.statusAggregation** (StatusAggregation)
+
+  StatusAggregation 描述了 Karmada 从成员集群收集的状态汇总到资源模板的规则。Karmada 为几种标准的 Kubernetes 类型提供了内置规则。如果设置了 StatusAggregation，内置规则将被忽略。更多信息，请浏览：https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#aggregatestatus
+
+  <a name="StatusAggregation"></a>
+
+  *StatusAggregation 保存了用于聚合多个分散状态的脚本。*
+
+    - **customizations.statusAggregation.luaScript** (string)，必选
+
+      LuaScript 是将分散状态聚合到所需规范的 Lua 脚本。该脚本应实现以下功能：
+    ```yaml
+      luaScript: &gt;
+       function AggregateStatus(desiredObj, statusItems)
+        for i = 1, #statusItems do
+         desiredObj.status.readyReplicas = desiredObj.status.readyReplicas + items[i].readyReplicas
+        end
+        return desiredObj
+       end
+    ```
+
+      LuaScript 的内容是一个完整的函数，包括声明和定义。
+
+      以下参数将由系统提供：
+        - desiredObj：资源模板。
+        - statusItems：用 AggregatedStatusItem 表示的状态列表。
+
+      返回的是状态聚合成的完整对象。
 
   - **customizations.statusReflection** (StatusReflection)
 
-    StatusReflection describes the rules for Karmada to pick the resource's status. Karmada provides built-in rules for several standard Kubernetes types, see: https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#interpretstatus If StatusReflection is set, the built-in rules will be ignored.
+    StatusReflection 描述了 Karmada 挑选资源状态的规则。Karmada 为几种标准的 Kubernetes 类型提供了内置规则。如果设置了 StatusReflection，内置规则将被忽略。更多信息，请浏览：https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter/#interpretstatus
 
     <a name="StatusReflection"></a>
 
-    *StatusReflection holds the scripts for getting the status.*
+    *StatusReflection 保存了用于获取状态的脚本。*
 
-    - **customizations.statusReflection.luaScript** (string), required
+      - **customizations.statusReflection.luaScript** (string)，必选
 
-      LuaScript holds the Lua script that is used to get the status from the observed specification. The script should implement a function as follows:
-          luaScript: &gt;
-              function ReflectStatus(observedObj)
-                  status = []
-                  status.readyReplicas = observedObj.status.observedObj
-                  return status
-              end
-      
-      The content of the LuaScript needs to be a whole function including both declaration and implementation.
-      
-      The parameters will be supplied by the system:
-        - observedObj: the object represents the configuration that is observed
-            from a specific member cluster.
-      
-      The returned status could be the whole status or part of it and will be set into both Work and ResourceBinding(ClusterResourceBinding).
+        LuaScript 是从观测到的规范中获取状态的 Lua 脚本。该脚本应实现以下功能：
+        ```yaml
+        luaScript: &gt;
+          function ReflectStatus(observedObj)
+            status = []
+            status.readyReplicas = observedObj.status.observedObj
+            return status
+          end
+        ```
 
-- **target** (CustomizationTarget), required
+        LuaScript 的内容是一个完整的函数，包括声明和定义。
 
-  CustomizationTarget represents the resource type that the customization applies to.
+        以下参数将由系统提供：
+          - observedObj：从特定成员集群观测到的配置。
+
+      返回的是整个状态，也可以是状态的一部分，并会被 Work 和 ResourceBinding(ClusterResourceBinding) 使用。
+
+- **target** (CustomizationTarget)，必选
+
+  CustomizationTarget 表示自定义的资源类型。
 
   <a name="CustomizationTarget"></a>
 
-  *CustomizationTarget represents the resource type that the customization applies to.*
+  *CustomizationTarget 表示自定义的资源类型。*
 
-  - **target.apiVersion** (string), required
+    - **target.apiVersion**（string），必选
 
-    APIVersion represents the API version of the target resource.
+      APIVersion 表示目标资源的 API 版本。
 
-  - **target.kind** (string), required
+    - **target.kind**（string），必选
 
-    Kind represents the Kind of target resources.
+      Kind 表示目标资源的类别。
 
-## ResourceInterpreterCustomizationList 
+## ResourceInterpreterCustomizationList
 
-ResourceInterpreterCustomizationList contains a list of ResourceInterpreterCustomization.
+ResourceInterpreterCustomizationList 包含 ResourceInterpreterCustomization 的列表。
 
 <hr/>
 
@@ -280,137 +289,136 @@ ResourceInterpreterCustomizationList contains a list of ResourceInterpreterCusto
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)), required
+- **items** ([][ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization))，必选
 
-## Operations 
+## 操作
 
 <hr/>
 
-### `get` read the specified ResourceInterpreterCustomization
+### `get`：查询指定的 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 的名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
-### `get` read status of the specified ResourceInterpreterCustomization
+### `get`：查询指定 ResourceInterpreterCustomization 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 名称
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
-### `list` list or watch objects of kind ResourceInterpreterCustomization
+### `list`：查询所有 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks**（*查询参数*）：boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch**（*查询参数*）：boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomizationList](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomizationlist)): OK
 
-### `create` create a ResourceInterpreterCustomization
+### `create`：创建一个 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
-#### Parameters
+#### 参数
 
-- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization), required
+- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
@@ -418,265 +426,258 @@ POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
 202 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): Accepted
 
-### `update` replace the specified ResourceInterpreterCustomization
+### `update`：更新指定的 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 名称
 
-- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization), required
+- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
 201 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): Created
 
-### `update` replace status of the specified ResourceInterpreterCustomization
+### `update`：更新指定 ResourceInterpreterCustomization 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 的名称
 
-- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization), required
+- **body**: [ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
 201 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): Created
 
-### `patch` partially update the specified ResourceInterpreterCustomization
+### `patch`：更新指定 ResourceInterpreterCustomization 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
 201 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): Created
 
-### `patch` partially update status of the specified ResourceInterpreterCustomization
+### `patch`：更新指定 ResourceInterpreterCustomization 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch)，必选
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager**（*查询参数*）：string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation**（*查询参数*）：string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force**（*查询参数*）：boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): OK
 
 201 ([ResourceInterpreterCustomization](../config-resources/resource-interpreter-customization-v1alpha1#resourceinterpretercustomization)): Created
 
-### `delete` delete a ResourceInterpreterCustomization
+### `delete`：删除一个 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name**（*路径参数*）：string，必选
 
-  name of the ResourceInterpreterCustomization
+  ResourceInterpreterCustomization 名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of ResourceInterpreterCustomization
+### `deletecollection`：删除所有 ResourceInterpreterCustomization
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
-  
 
-- **continue** (*in query*): string
+- **continue**（*查询参数*）：string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun**（*查询参数*）：string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector**（*查询参数*）：string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds**（*查询参数*）：integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector**（*查询参数*）：string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit**（*查询参数*）：integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty**（*查询参数*）：string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy**（*查询参数*）：string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion**（*查询参数*）：string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch**（*查询参数*）：string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents**（*查询参数*）：boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds**（*查询参数*）：integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
-
