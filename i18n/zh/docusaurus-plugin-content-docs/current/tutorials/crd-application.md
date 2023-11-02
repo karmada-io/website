@@ -69,7 +69,7 @@ spec:
 根据 ClusterPropagationPolicy 中定义的规则，此 CRD 将分发到成员集群。
 
 > 注意：在这里我们只能使用 ClusterPropagationPolicy 而不是 PropagationPolicy。
-> 更多详细信息，请参考 FAQ [PropagationPolicy and ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/docs/frequently-asked-questions.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)
+> 更多详细信息，请参考 FAQ [PropagationPolicy and ClusterPropagationPolicy](https://karmada.io/zh/docs/faq/#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)
 
 3. 在 Karmada 控制平面上创建名为 `guestbook-sample` 的 Guestbook CR
 
