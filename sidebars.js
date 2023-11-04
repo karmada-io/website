@@ -153,7 +153,8 @@ module.exports = {
                     type: "category",
                     label: "Configuration",
                     items: [
-                        "administrator/configuration/configure-controllers"
+                        "administrator/configuration/configure-controllers",
+                        "administrator/configuration/resource-deletion-protection",
                     ],
                 },
                 {
