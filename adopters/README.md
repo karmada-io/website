@@ -14,7 +14,7 @@ To add your organisation follow these steps:
 2. Clone it locally with `git clone https://github.com/<YOUR-GH-USERNAME>/website.git`.
 3. (Optional) Add the logo of your organisation to `static/img/supporters`. Good practice is for the logo to be called e.g. `<company>.png`.
    This will not be used for commercial purposes. You can refer to https://github.com/karmada-io/website/pull/55.
-4. Edit the list of adopters in [adopters.md](../docs/casestudies/adopters.md).
+4. Edit the list of adopters in [adopters.md](../src/pages/adopters.md).
    You can refer to the following sample table for the format.
 
 
