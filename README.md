@@ -1,7 +1,7 @@
 # Karmada Docs & Website
 
 This repo contains the source code of [Karmada website](http://Karmada.io/) and all of the docs for Karmada.
-It's built by [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+It's built by [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
 Welcome to join us and you are more than appreciated to contribute!
 
