@@ -20,7 +20,7 @@ title: 常见问题
 `kube-controller-manager` 由许多控制器组成，Karmada 从其继承了一些控制器以保持一致的用户体验和行为。
 
 值得注意的是，Karmada 并不需要所有控制器。
-有关推荐的控制器，请参阅[推荐的控制器](../administrator/configuration/configure-controllers.md#recommended-controllers)。
+有关推荐的控制器，请参阅[Kubernetes Controllers](../administrator/configuration/configure-controllers.md#kubernetes-controllers)。
 
 
 ## 我可以在 Kubernetes 集群中安装 Karmada 并将 kube-apiserver 重用为 Karmada apiserver 吗？
