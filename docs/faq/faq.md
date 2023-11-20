@@ -51,4 +51,10 @@ Therefore, `Cluster` resources do not have a CRD YAML file, and they are not vis
 
 So, why would we choose to use the Kubernetes API Aggregation Layer to extend `Cluster` resources instead of using Custom Resource?
 
-This is because the `Cluster` resource requires the setup of the `proxy` sub-resource. By using `proxy`, you can access resources in member clusters. For details, please refer to [Aggregation Layer APIServer](https://karmada.io/docs/next/userguide/globalview/aggregated-api-endpoint/). At present, Custom Resource do not support configuring `proxy` sub-resources, which is why it was not chosen for this purpose.
+This is because the `Cluster` resource requires the setup of the `Proxy` sub-resource. By using `Proxy`, you can access resources in member clusters. For details, please refer to [Aggregation Layer APIServer](https://karmada.io/docs/next/userguide/globalview/aggregated-api-endpoint/). At present, Custom Resource do not support configuring `Proxy` sub-resources, which is why it was not chosen for this purpose.
+
+## How to prevent automatic propagation of Namespace to all member clusters?
+
+Karmada will propagate the `Namespace` resources created by users to member clusters by default. This functionality is handled by the `namespace` controller in the `karmada-controller-manager` component, and can be configured by referring to [Configure Karmada Controllers](../administrator/configuration/configure-controllers.md#configure-karmada-controllers).
+
+After disabling the `namespace` controller, users can propagate `Namespace` resources to specified clusters through `ClusterPropagationPolicy` resources.
