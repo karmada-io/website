@@ -21,7 +21,7 @@ Please refer to [Overview of Push and Pull](../userguide/clustermanager/cluster-
 to keep a consistent user experience and behavior.
 
 It's worth noting that not all controllers are needed by Karmada, for the recommended controllers please
-refer to [Recommended Controllers](../administrator/configuration/configure-controllers.md#recommended-controllers).
+refer to [Kubernetes Controllers](../administrator/configuration/configure-controllers.md#kubernetes-controllers).
 
 
 ## Can I install Karmada in a Kubernetes cluster and reuse the kube-apiserver as Karmada apiserver?
