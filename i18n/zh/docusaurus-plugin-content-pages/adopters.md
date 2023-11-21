@@ -39,3 +39,4 @@ hide_table_of_contents: true
 | 中通快递       | https://www.zto.com           | 使用 Karmada 构建多集群平台                                                                             | 待定                                                                                    |
 | 网易         | https://www.netease.com/         | 使用 Karmada 构建分布式高可用中间件平台                                                                       | 待定                                                                                    |
 | 中国科学院软件研究所 | https://isrc.iscas.ac.cn/ | 使用 karmada 构建多地域业务部署环境                                                                     | 待定                                                                                          |
+| 快手       | https://kuaishou.com           | 使用 Karmada 构建多集群平台                                                                                | 待定                                                                                    |
