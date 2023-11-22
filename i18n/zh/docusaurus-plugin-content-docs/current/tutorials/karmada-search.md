@@ -1,17 +1,16 @@
 ---
-title: Use Karmada-search to experience multi-cloud search
+title: 使用 Karmada-search 来体验多集群检索
 ---
 
-This guide will cover:
+本指南将涵盖以下内容：
 
-* Install `karmada-search` component in the Karmada control plane.
-* Cache `Deployment` resources across multiple clusters.
-* Use `OpenSearch` to graphically retrieve Kubernetes resources.
+* 在 Karmada 控制面上安装 `karmada-search` 组件
+* 缓存多个集群的 `Deployment` 资源。
+* 使用 `OpenSearch` 图形界面检索 Kubernetes 资源。
 
-## Prerequisites
+## 前提条件
 
-Before installing `karmada-search`, you must install Karmada control plane first. To start up Karmada, you can refer to [here](../installation/installation.md).
-If you just want to try Karmada, we recommend building a development environment by `hack/local-up-karmada.sh`.
+在安装 `karmada-search` 之前，您必须先安装 Karmada 控制平面。要启动 Karmada，您可以参考[安装概述](../installation/installation.md)。如果您只是想尝试 Karmada，我们建议使用 `hack/local-up-karmada.sh` 构建开发环境。
 
 ```shell
 git clone https://github.com/karmada-io/karmada
@@ -19,22 +18,22 @@ cd karmada
 hack/local-up-karmada.sh
 ```
 
-## Install karmada-search
+## 安装 karmada-search
 
-If you use `hack/local-up-karmada.sh`, `karmada-search` has been already installed.
+如果您使用 `hack/local-up-karmada.sh`，那 `karmada-search` 已经安装好了。
 
-If you install Karmada by Helm, you can choose any of the following ways to install:
+如果您通过 Helm 安装 Karmada，可以选择以下任意一种方式进行安装：
 
-* Install `karmada-search` together in `host` mode
+* 在 `host` 模式下安装 `karmada-search`
 ```shell
 helm upgrade --install karmada -n karmada-system --create-namespace --dependency-update \
      --cleanup-on-fail ./charts/karmada \
      --set components={"search"}
 ```
 
-* Install `karmada-search` separately in `component` mode
+* 在 `component` 模式下单独安装 `karmada-search`
 
-Edit values.yaml for karmada-search
+为 `karmada-search` 编辑 `values.yaml` 文件：
 ```yaml
 installMode: "component"
 components: [
@@ -43,24 +42,23 @@ components: [
 ...
 ```
 
-Execute command (switch to the `root` directory of the repo, and sets the current-context in a kubeconfig file)
+执行下述命令：
 ```shell
 kubectl config use-context host
 helm install karmada -n karmada-system ./charts/karmada
 ```
 
-In addition, `karmadactl` supports one-click installation for `karmada-search`.
+此外，`karmadactl` 支持一键安装 `karmada-search`。
 ```shell
 karmadactl addons enable karmada-search
 ```
-For more details, you can refer to [karmadactl addons instruction](https://karmada.io/docs/next/reference/karmadactl/karmadactl-commands/karmadactl_addons/).
+有关更多详细信息，您可以参考 [karmadactl addons instruction](../reference/karmadactl/karmadactl-commands/karmadactl_addons.md)。
 
-## Cache Deployment resources across multi-clusters
+## 缓存多个集群的 Deployment 资源
 
-In the following steps, we are going to cache `Deployment` resources across member clusters.
-Now we have propagated a nginx Deployment to member1 and member2 according to [the example](../get-started/nginx-example.md).
+在接下来的步骤中，我们将在缓存成员集群的 Deployment 资源。根据[示例](../get-started/nginx-example.md)，我们已经将一个 nginx `Deployment` 分发到了 member1 和 member2。
 
-### 1. Create ResourceRegistry that will cache deployment across target clusters
+### 1. 创建一个 ResourceRegistry，它将缓存目标集群中的 Deployment 资源。
 
 ```yaml
 ### deployment-search.yaml
@@ -82,15 +80,15 @@ spec:
 kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver create -f deployment-search.yaml
 ```
 
-### 2. Test By Kubernetes API
+### 2. 通过 Kubernetes API 进行测试
 
-You can obtain deployment resources from member1 and member2 by the following command.
+您可以通过以下命令从 member1 和 member2 获取 deployment 资源。
 
 ```shell
 kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver get --raw /apis/search.karmada.io/v1alpha1/search/cache/apis/apps/v1/deployments
 ```
 
-The output is similar to(irrelevant deployments and fields omitted):
+输出类似于（忽略不相关的字段）：
 
 ```json
 {
@@ -147,28 +145,27 @@ The output is similar to(irrelevant deployments and fields omitted):
 }
 ```
 
-## Use OpenSearch to graphically retrieve Kubernetes resources
+## 使用 OpenSearch 图形界面检索 Kubernetes 资源
 
-The karmada-search also supports syncing cached resources to backend stores like [Elasticsearch](https://en.wikipedia.org/wiki/Elasticsearch) or [OpenSearch](https://github.com/opensearch-project/OpenSearch).
-By leveraging the search engine, you can perform full-text searches with all desired features, by field, and by indice; rank results by score, sort results by field, and aggregate results.
+`karmada-search` 还支持将缓存资源同步到独立存储服务，如 [Elasticsearch](https://en.wikipedia.org/wiki/Elasticsearch) 或 [OpenSearch](https://github.com/opensearch-project/OpenSearch)。通过利用搜索引擎，您可以按字段和索引执行具有所有所需功能的全文搜索；根据分数对结果进行排名、按字段对结果进行排序，并聚合结果。
 
-The following is an example about using `OpenSearch` to graphically retrieve Kubernetes resources.
+以下是使用 `OpenSearch` 以图形界面检索 Kubernetes 资源的示例。
 
-### 1.  Deploy OpenSearch and OpenSearch Dashboard
+### 1. 部署 OpenSearch 和 OpenSearch 仪表盘
 
-Use the following script to deploy OpenSearch and OpenSearch dashboard.
+使用以下脚本部署 `OpenSearch` 和 `OpenSearch` 仪表盘。
 
 ```shell
 ./hack/deploy-karmada-opensearch.sh $HOME/.kube/karmada.config karmada-host
 ```
 
-Verify the installation:
+验证安装结果：
 
 ```shell
 kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-host get po -A
 ```
 
-The output is similar to:
+输出类似于：
 
 ```
 NAMESPACE            NAME                                                   READY   STATUS    RESTARTS   AGE
@@ -177,7 +174,7 @@ karmada-system       karmada-opensearch-dashboards-596bf4d9dd-n9429         1/1 
 ...
 ```
 
-### 2. Update ResourceRegistry with backendStore
+### 2. 更新 ResourceRegistry 与 backendStore
 
 ```yaml
 ### deployment-search.yaml
@@ -203,19 +200,18 @@ spec:
 kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver apply -f deployment-search.yaml
 ```
 
-### 3. Expose the service of dashboard
+### 3. 暴露仪表板的服务
 
-You need to expose the web service to the host port so that you can visit the dashboard by http.
+您需要将 Web 服务暴露到主机端口，以便可以通过 HTTP 访问仪表板。
 
 ```shell
 kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-host port-forward svc/karmada-opensearch-dashboards 5601:5601 -nkarmada-system --address=0.0.0.0
 ```
 
-### 4. Visit the dashboard
+### 4. 访问仪表盘
 
-Visit OpenSearch dashboard(http://NodeIP:5601):
+访问 OpenSearch 仪表板（http://NodeIP:5601）：
 
 ![opensearch](../resources/tutorials/opensearch.png)
 
-Now data of `Deployment` across member1 and member2 have uploaded to `OpenSearch`.
-You can experience multi-cloud search yourself by leveraging the search engine.
+现在 `Deployment` 的数据已经上传到 `OpenSearch` 中的 member1 和 member2。您可以利用搜索引擎自己体验多集群检索。

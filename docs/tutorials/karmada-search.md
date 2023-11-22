@@ -53,7 +53,7 @@ In addition, `karmadactl` supports one-click installation for `karmada-search`.
 ```shell
 karmadactl addons enable karmada-search
 ```
-For more details, you can refer to [karmadactl addons instruction](https://karmada.io/docs/next/reference/karmadactl/karmadactl-commands/karmadactl_addons/).
+For more details, you can refer to [karmadactl addons instruction](../reference/karmadactl/karmadactl-commands/karmadactl_addons.md).
 
 ## Cache Deployment resources across clusters
 
