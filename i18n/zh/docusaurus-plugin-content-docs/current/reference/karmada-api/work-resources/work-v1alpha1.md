@@ -219,7 +219,7 @@ WorkList 是 Work 的集合。
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+`GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}`
 
 #### 参数
 
@@ -243,7 +243,7 @@ GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+`GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status`
 
 #### 参数
 
@@ -267,7 +267,7 @@ GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+`GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works`
 
 #### 参数
 
@@ -383,7 +383,7 @@ GET /apis/work.karmada.io/v1alpha1/works
 
 #### HTTP 请求
 
-POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+`POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works`
 
 #### 参数
 
@@ -422,7 +422,7 @@ POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+`PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}`
 
 #### 参数
 
@@ -463,7 +463,7 @@ PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+`PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status`
 
 #### 参数
 
@@ -504,7 +504,7 @@ PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+`PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}`
 
 #### 参数
 
@@ -549,7 +549,7 @@ PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+`PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status`
 
 #### 参数
 
@@ -594,7 +594,7 @@ PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+`DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}`
 
 #### 参数
 
@@ -635,7 +635,7 @@ DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP 请求
 
-DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+`DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works`
 
 #### 参数
 

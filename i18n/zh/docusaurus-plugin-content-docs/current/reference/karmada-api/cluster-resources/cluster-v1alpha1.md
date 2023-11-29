@@ -389,7 +389,7 @@ ClusterList 罗列成员集群。
 
 #### HTTP 请求
 
-GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### 参数
 
@@ -409,7 +409,7 @@ GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP 请求
 
-GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### 参数
 
@@ -520,7 +520,7 @@ POST /apis/cluster.karmada.io/v1alpha1/clusters
 
 #### HTTP 请求
 
-PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### 参数
 
@@ -557,7 +557,7 @@ PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP 请求
 
-PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### 参数
 
@@ -594,7 +594,7 @@ PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### 参数
 
@@ -635,7 +635,7 @@ PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP 请求
 
-PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### 参数
 
@@ -676,7 +676,7 @@ PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`DELETE /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### 参数
 

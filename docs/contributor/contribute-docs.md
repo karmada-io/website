@@ -93,7 +93,7 @@ The top section between two lines of --- is the Front Matter section. Here we de
 
 You can easily route to other places by adding any of the following links:
 * Absolute URLs to external sites like `https://github.com` or `https://k8s.io` - you can use any of the Markdown notations for this, so
-  * `<https://github.com>` or
+  * `https://github.com` or
   * `[kubernetes](https://k8s.io)` will work.
 * Link to markdown files or the resulting path.
   You can use relative paths to index the corresponding files.
@@ -111,7 +111,7 @@ Creating a sidebar is useful to:
 * Display a sidebar on each of those documents
 * Provide paginated navigation, with next/previous button
 
-For our docs, you can know how our documents are organized from <https://github.com/karmada-io/website/blob/main/sidebars.js>.
+For our docs, you can know how our documents are organized from https://github.com/karmada-io/website/blob/main/sidebars.js.
 
 ```
 module.exports = {
@@ -157,7 +157,7 @@ If you add a document, you must add it to `sidebars.js` to make it display prope
 ### About Chinese docs
 
 If you want to contribute to our Chinese documentation, you can:
-* Translate our existing English docs to Chinese. In this case, you need to modify the corresponding file content from <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current>.
+* Translate our existing English docs to Chinese. In this case, you need to modify the corresponding file content from https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current.
   The organization of this directory is exactly the same as the outer layer. `current.json` holds translations for the documentation directory. You can edit it if you want to translate the name of directory.
 * Submit Chinese docs without the English version. No limits on the topic or category. In this case, you can add an empty article and its title to the main directory first, and complete the rest later.
   Then add the corresponding Chinese content to the Chinese directory.

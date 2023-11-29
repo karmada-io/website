@@ -158,7 +158,7 @@ ResourceInterpreterWebhookConfigurationList 包含 ResourceInterpreterWebhookCon
 
 #### HTTP 请求
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+`GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}`
 
 #### 参数
 
@@ -178,7 +178,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP 请求
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+`GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status`
 
 #### 参数
 
@@ -290,7 +290,7 @@ POST /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations
 
 #### HTTP 请求
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+`PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}`
 
 #### 参数
 
@@ -328,7 +328,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP 请求
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+`PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status`
 
 #### 参数
 
@@ -366,7 +366,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP 请求
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+`PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}`
 
 #### 参数
 
@@ -408,7 +408,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/
 
 #### HTTP 请求
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+`PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status`
 
 #### 参数
 
@@ -450,7 +450,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/
 
 #### HTTP 请求
 
-DELETE /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+`DELETE /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}`
 
 #### 参数
 

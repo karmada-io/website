@@ -198,7 +198,7 @@ ResourceRegistryList 是 ResourceRegistry 的集合。
 
 #### HTTP 请求
 
-GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+`GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}`
 
 #### 参数
 
@@ -218,7 +218,7 @@ GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP 请求
 
-GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+`GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status`
 
 #### 参数
 
@@ -329,7 +329,7 @@ POST /apis/search.karmada.io/v1alpha1/resourceregistries
 
 #### HTTP 请求
 
-PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+`PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}`
 
 #### 参数
 
@@ -366,7 +366,7 @@ PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP 请求
 
-PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+`PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status`
 
 #### 参数
 
@@ -403,7 +403,7 @@ PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+`PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}`
 
 #### 参数
 
@@ -444,7 +444,7 @@ PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP 请求
 
-PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+`PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status`
 
 #### 参数
 
@@ -485,7 +485,7 @@ PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+`DELETE /apis/search.karmada.io/v1alpha1/resourceregistries/{name}`
 
 #### 参数
 

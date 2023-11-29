@@ -407,7 +407,7 @@ In this case, you will use Gatekeeper v3.7.2. Related deployment files are from 
      name: kubeconfig
      namespace: gatekeeper-system
    ``` 
-   You need to fill in the dummy pod created in step 1 to {{ POD_NAME }} and fill in the secret which represents kubeconfig pointing to karmada-apiserver.
+   You need to fill in the dummy pod created in step 1 to `{{ POD_NAME }}` and fill in the secret which represents kubeconfig pointing to karmada-apiserver.
    
    Deploy ResourceQuota: https://github.com/open-policy-agent/gatekeeper/blob/release-3.7/deploy/gatekeeper.yaml#L10-L26
 

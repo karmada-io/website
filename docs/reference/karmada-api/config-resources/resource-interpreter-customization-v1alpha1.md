@@ -290,7 +290,7 @@ ResourceInterpreterCustomizationList contains a list of ResourceInterpreterCusto
 
 #### HTTP Request
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+`GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}`
 
 #### Parameters
 
@@ -310,7 +310,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP Request
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+`GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status`
 
 #### Parameters
 
@@ -330,7 +330,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/st
 
 #### HTTP Request
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
+`GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations`
 
 #### Parameters
 
@@ -386,7 +386,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
 #### HTTP Request
 
-POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
+`POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations`
 
 #### Parameters
 
@@ -422,7 +422,7 @@ POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
 #### HTTP Request
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+`PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}`
 
 #### Parameters
 
@@ -460,7 +460,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP Request
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+`PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status`
 
 #### Parameters
 
@@ -498,7 +498,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/st
 
 #### HTTP Request
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+`PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}`
 
 #### Parameters
 
@@ -540,7 +540,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP Request
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+`PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status`
 
 #### Parameters
 
@@ -582,7 +582,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/
 
 #### HTTP Request
 
-DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+`DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}`
 
 #### Parameters
 
@@ -620,7 +620,7 @@ DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP Request
 
-DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
+`DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations`
 
 #### Parameters
 

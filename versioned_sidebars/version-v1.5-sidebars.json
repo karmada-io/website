@@ -1,42 +1,42 @@
 {
-  "version-v1.5/docs": [
+  "docs": [
     {
       "type": "category",
       "label": "Core Concepts",
       "collapsed": false,
       "items": [
-        "version-v1.5/core-concepts/introduction",
-        "version-v1.5/core-concepts/concepts",
-        "version-v1.5/core-concepts/architecture"
+        "core-concepts/introduction",
+        "core-concepts/concepts",
+        "core-concepts/architecture"
       ]
     },
     {
       "type": "doc",
-      "id": "version-v1.5/key-features/features"
+      "id": "key-features/features"
     },
     {
       "type": "category",
       "label": "Get Started",
       "items": [
-        "version-v1.5/get-started/nginx-example"
+        "get-started/nginx-example"
       ]
     },
     {
       "type": "category",
       "label": "Tutorials",
       "items": [
-        "version-v1.5/tutorials/crd-application",
-        "version-v1.5/tutorials/karmada-search"
+        "tutorials/crd-application",
+        "tutorials/karmada-search"
       ]
     },
     {
       "type": "category",
       "label": "Installation",
       "items": [
-        "version-v1.5/installation/installation",
-        "version-v1.5/installation/install-cli-tools",
-        "version-v1.5/installation/fromsource",
-        "version-v1.5/installation/install-binary"
+        "installation/installation",
+        "installation/install-cli-tools",
+        "installation/fromsource",
+        "installation/install-binary"
       ]
     },
     {
@@ -47,81 +47,81 @@
           "type": "category",
           "label": "Cross-cloud Multi-cluster Management",
           "items": [
-            "version-v1.5/userguide/clustermanager/cluster-registration",
-            "version-v1.5/userguide/clustermanager/working-with-anp"
+            "userguide/clustermanager/cluster-registration",
+            "userguide/clustermanager/working-with-anp"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster Scheduling",
           "items": [
-            "version-v1.5/userguide/scheduling/resource-propagating",
-            "version-v1.5/userguide/scheduling/override-policy",
-            "version-v1.5/userguide/scheduling/propagate-dependencies",
-            "version-v1.5/userguide/scheduling/descheduler",
-            "version-v1.5/userguide/scheduling/scheduler-estimator",
-            "version-v1.5/userguide/scheduling/cluster-resources"
+            "userguide/scheduling/resource-propagating",
+            "userguide/scheduling/override-policy",
+            "userguide/scheduling/propagate-dependencies",
+            "userguide/scheduling/descheduler",
+            "userguide/scheduling/scheduler-estimator",
+            "userguide/scheduling/cluster-resources"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster Failover",
           "items": [
-            "version-v1.5/userguide/failover/failover-overview",
-            "version-v1.5/userguide/failover/determine-cluster-failures",
-            "version-v1.5/userguide/failover/failover-analysis"
+            "userguide/failover/failover-overview",
+            "userguide/failover/determine-cluster-failures",
+            "userguide/failover/failover-analysis"
           ]
         },
         {
           "type": "category",
           "label": "Global Uniform Resource View",
           "items": [
-            "version-v1.5/userguide/globalview/aggregated-api-endpoint",
-            "version-v1.5/userguide/globalview/customizing-resource-interpreter",
-            "version-v1.5/userguide/globalview/global-search-for-resources",
-            "version-v1.5/userguide/globalview/proxy-global-resource"
+            "userguide/globalview/aggregated-api-endpoint",
+            "userguide/globalview/customizing-resource-interpreter",
+            "userguide/globalview/global-search-for-resources",
+            "userguide/globalview/proxy-global-resource"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster Service Governance",
           "items": [
-            "version-v1.5/userguide/service/multi-cluster-service",
-            "version-v1.5/userguide/service/multi-cluster-ingress",
-            "version-v1.5/userguide/service/working-with-istio-on-flat-network",
-            "version-v1.5/userguide/service/working-with-istio-on-non-flat-network"
+            "userguide/service/multi-cluster-service",
+            "userguide/service/multi-cluster-ingress",
+            "userguide/service/working-with-istio-on-flat-network",
+            "userguide/service/working-with-istio-on-non-flat-network"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster Network",
           "items": [
-            "version-v1.5/userguide/network/working-with-submariner"
+            "userguide/network/working-with-submariner"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster CI/CD",
           "items": [
-            "version-v1.5/userguide/cicd/working-with-argocd",
-            "version-v1.5/userguide/cicd/working-with-flux"
+            "userguide/cicd/working-with-argocd",
+            "userguide/cicd/working-with-flux"
           ]
         },
         {
           "type": "category",
           "label": "Multi-cluster Security Compliance Governance",
           "items": [
-            "version-v1.5/userguide/security-governance/working-with-gatekeeper",
-            "version-v1.5/userguide/security-governance/working-with-kyverno"
+            "userguide/security-governance/working-with-gatekeeper",
+            "userguide/security-governance/working-with-kyverno"
           ]
         },
         {
           "type": "category",
           "label": "Best Production Practices",
           "items": [
-            "version-v1.5/userguide/bestpractices/namespace-management",
-            "version-v1.5/userguide/bestpractices/unified-auth",
-            "version-v1.5/userguide/bestpractices/federated-resource-quota"
+            "userguide/bestpractices/namespace-management",
+            "userguide/bestpractices/unified-auth",
+            "userguide/bestpractices/federated-resource-quota"
           ]
         }
       ]
@@ -134,46 +134,46 @@
           "type": "category",
           "label": "Configuration",
           "items": [
-            "version-v1.5/administrator/configuration/configure-controllers"
+            "administrator/configuration/configure-controllers"
           ]
         },
         {
           "type": "category",
           "label": "Migration",
           "items": [
-            "version-v1.5/administrator/migration/promote-legacy-workload",
-            "version-v1.5/administrator/migration/migration-from-kubefed"
+            "administrator/migration/promote-legacy-workload",
+            "administrator/migration/migration-from-kubefed"
           ]
         },
         {
           "type": "category",
           "label": "Monitoring",
           "items": [
-            "version-v1.5/administrator/monitoring/working-with-filebeat",
-            "version-v1.5/administrator/monitoring/working-with-prometheus-in-control-plane",
-            "version-v1.5/administrator/monitoring/working-with-prometheus"
+            "administrator/monitoring/working-with-filebeat",
+            "administrator/monitoring/working-with-prometheus-in-control-plane",
+            "administrator/monitoring/working-with-prometheus"
           ]
         },
         {
           "type": "category",
           "label": "Upgrading",
           "items": [
-            "version-v1.5/administrator/upgrading/README",
-            "version-v1.5/administrator/upgrading/v0.8-v0.9",
-            "version-v1.5/administrator/upgrading/v0.9-v0.10",
-            "version-v1.5/administrator/upgrading/v0.10-v1.0",
-            "version-v1.5/administrator/upgrading/v1.0-v1.1",
-            "version-v1.5/administrator/upgrading/v1.1-v1.2",
-            "version-v1.5/administrator/upgrading/v1.2-v1.3",
-            "version-v1.5/administrator/upgrading/v1.3-v1.4",
-            "version-v1.5/administrator/upgrading/v1.4-v1.5"
+            "administrator/upgrading/README",
+            "administrator/upgrading/v0.8-v0.9",
+            "administrator/upgrading/v0.9-v0.10",
+            "administrator/upgrading/v0.10-v1.0",
+            "administrator/upgrading/v1.0-v1.1",
+            "administrator/upgrading/v1.1-v1.2",
+            "administrator/upgrading/v1.2-v1.3",
+            "administrator/upgrading/v1.3-v1.4",
+            "administrator/upgrading/v1.4-v1.5"
           ]
         },
         {
           "type": "category",
           "label": "Backup",
           "items": [
-            "version-v1.5/administrator/backup/working-with-velero"
+            "administrator/backup/working-with-velero"
           ]
         }
       ]
@@ -182,40 +182,40 @@
       "type": "category",
       "label": "Developer Guide",
       "items": [
-        "version-v1.5/developers/profiling-karmada",
-        "version-v1.5/developers/performance-test-setup-for-karmada",
-        "version-v1.5/developers/releasing",
-        "version-v1.5/developers/customize-karmada-scheduler",
-        "version-v1.5/developers/document-releasing"
+        "developers/profiling-karmada",
+        "developers/performance-test-setup-for-karmada",
+        "developers/releasing",
+        "developers/customize-karmada-scheduler",
+        "developers/document-releasing"
       ]
     },
     {
       "type": "category",
       "label": "Contributor Guide",
       "items": [
-        "version-v1.5/contributor/contribute-docs",
-        "version-v1.5/contributor/cherry-picks",
-        "version-v1.5/contributor/github-workflow",
-        "version-v1.5/contributor/lifted"
+        "contributor/contribute-docs",
+        "contributor/cherry-picks",
+        "contributor/github-workflow",
+        "contributor/lifted"
       ]
     },
     {
       "type": "category",
       "label": "Case Study",
       "items": [
-        "version-v1.5/casestudies/adopters",
-        "version-v1.5/casestudies/vipkid",
-        "version-v1.5/casestudies/ci123",
-        "version-v1.5/casestudies/daocloud"
+        "casestudies/adopters",
+        "casestudies/vipkid",
+        "casestudies/ci123",
+        "casestudies/daocloud"
       ]
     },
     {
       "type": "doc",
-      "id": "version-v1.5/troubleshooting/trouble-shooting"
+      "id": "troubleshooting/trouble-shooting"
     },
     {
       "type": "doc",
-      "id": "version-v1.5/faq/faq"
+      "id": "faq/faq"
     },
     {
       "type": "doc",
@@ -229,36 +229,36 @@
           "type": "category",
           "label": "Command line tool(karmadactl)",
           "items": [
-            "version-v1.5/reference/karmadactl/bash-auto-completion-on-linux",
-            "version-v1.5/reference/karmadactl/karmadactl-commands/karmadactl_index",
-            "version-v1.5/reference/karmadactl/karmadactl-commands/karmadactl",
-            "version-v1.5/reference/karmadactl/karmadactl-usage-conventions"
+            "reference/karmadactl/bash-auto-completion-on-linux",
+            "reference/karmadactl/karmadactl-commands/karmadactl_index",
+            "reference/karmadactl/karmadactl-commands/karmadactl",
+            "reference/karmadactl/karmadactl-usage-conventions"
           ]
         },
         {
           "type": "category",
           "label": "Component tools",
           "items": [
-            "version-v1.5/reference/components/karmada-agent",
-            "version-v1.5/reference/components/karmada-aggregated-apiserver",
-            "version-v1.5/reference/components/karmada-controller-manager",
-            "version-v1.5/reference/components/karmada-descheduler",
-            "version-v1.5/reference/components/karmada-scheduler",
-            "version-v1.5/reference/components/karmada-scheduler-estimator",
-            "version-v1.5/reference/components/karmada-search",
-            "version-v1.5/reference/components/karmada-webhook"
+            "reference/components/karmada-agent",
+            "reference/components/karmada-aggregated-apiserver",
+            "reference/components/karmada-controller-manager",
+            "reference/components/karmada-descheduler",
+            "reference/components/karmada-scheduler",
+            "reference/components/karmada-scheduler-estimator",
+            "reference/components/karmada-search",
+            "reference/components/karmada-webhook"
           ]
         },
         {
           "type": "category",
           "label": "Instrumentation",
           "items": [
-            "version-v1.5/reference/instrumentation/event",
-            "version-v1.5/reference/instrumentation/metrics"
+            "reference/instrumentation/event",
+            "reference/instrumentation/metrics"
           ]
         },
-        "version-v1.5/reference/reserved-namespaces",
-        "version-v1.5/reference/object-association-mapping"
+        "reference/reserved-namespaces",
+        "reference/object-association-mapping"
       ]
     }
   ]

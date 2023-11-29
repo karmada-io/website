@@ -68,17 +68,17 @@ karmada-controller-manager运行着各种控制器，这些控制器watch着Karm
 1. API Call Latency
 
 
-| Status  | SLI                                                        | SLO                                                                           |
-|---------|------------------------------------------------------------|-------------------------------------------------------------------------------|
-| Offical | 最近5min对单个资源对象Mutating API调用（包括POST、PUT、DELETE、PATCH）的P99时延 | P99 <= 1s                                                                     |
-| Offical | 最近5min的non-streaming的只读API调用（包括GET和LIST）的P99时延             | (a)Scope=resource, P99 <= 1s, (b)Scope=namespace or Scope=cluster, P99 <= 30s |
+| Status  | SLI                                                        | SLO                                                                               |
+|---------|------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| Offical | 最近5min对单个资源对象Mutating API调用（包括POST、PUT、DELETE、PATCH）的P99时延 | P99 \<\= 1s                                                                       |
+| Offical | 最近5min的non-streaming的只读API调用（包括GET和LIST）的P99时延             | (a)Scope=resource, P99 \<\= 1s, (b)Scope=namespace or Scope=cluster, P99 \<\= 30s |
 
 2. Resource Distribution Latency
 
 
-| Status  | SLI                                                       | SLO       |
-|---------|-----------------------------------------------------------|-----------|
-| Offical | 用户在联邦控制面提交资源模板和下发策略后到资源在成员集群上被创建的P99时延，不考虑控制面与成员集群之间的网络波动 | P99 <= 2s |
+| Status  | SLI                                                       | SLO         |
+|---------|-----------------------------------------------------------|-------------|
+| Offical | 用户在联邦控制面提交资源模板和下发策略后到资源在成员集群上被创建的P99时延，不考虑控制面与成员集群之间的网络波动 | P99 \<\= 2s |
 
 3. Cluster Registration Latency
 

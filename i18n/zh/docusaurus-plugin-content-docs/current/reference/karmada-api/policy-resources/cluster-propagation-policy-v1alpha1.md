@@ -394,7 +394,7 @@ ClusterPropagationPolicyList 罗列 ClusterPropagationPolicy。
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+`GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}`
 
 #### 参数
 
@@ -414,7 +414,7 @@ GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+`GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status`
 
 #### 参数
 
@@ -525,7 +525,7 @@ POST /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+`PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}`
 
 #### 参数
 
@@ -562,7 +562,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+`PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status`
 
 #### 参数
 
@@ -599,7 +599,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+`PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}`
 
 #### 参数
 
@@ -640,7 +640,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+`PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status`
 
 #### 参数
 
@@ -681,7 +681,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+`DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}`
 
 #### 参数
 

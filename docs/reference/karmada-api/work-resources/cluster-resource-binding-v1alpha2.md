@@ -62,7 +62,7 @@ ClusterResourceBindingList contains a list of ClusterResourceBinding.
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### Parameters
 
@@ -82,7 +82,7 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### Parameters
 
@@ -194,7 +194,7 @@ POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### Parameters
 
@@ -232,7 +232,7 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### Parameters
 
@@ -270,7 +270,7 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### Parameters
 
@@ -312,7 +312,7 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### Parameters
 
@@ -354,7 +354,7 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### Parameters
 

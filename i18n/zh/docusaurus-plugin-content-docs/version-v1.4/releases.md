@@ -75,7 +75,7 @@ For example, [here](https://hub.docker.com/r/karmada/karmada-controller-manager)
 Since v1.2.0, the following artifacts are uploaded:
 
 * crds.tar.gz
-* karmada-chart-v<version_number>.tgz
+* karmada-chart-v\<version_number>\.tgz
 * karmadactl-darwin-amd64.tgz
 * karmadactl-darwin-amd64.tgz.sha256
 * karmadactl-darwin-arm64.tgz

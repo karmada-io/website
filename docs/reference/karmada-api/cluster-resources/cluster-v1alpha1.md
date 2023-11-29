@@ -382,7 +382,7 @@ ClusterList contains a list of member cluster
 
 #### HTTP Request
 
-GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### Parameters
 
@@ -402,7 +402,7 @@ GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP Request
 
-GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`GET /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### Parameters
 
@@ -514,7 +514,7 @@ POST /apis/cluster.karmada.io/v1alpha1/clusters
 
 #### HTTP Request
 
-PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### Parameters
 
@@ -552,7 +552,7 @@ PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP Request
 
-PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### Parameters
 
@@ -590,7 +590,7 @@ PUT /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### Parameters
 
@@ -632,7 +632,7 @@ PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}
 
 #### HTTP Request
 
-PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
+`PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status`
 
 #### Parameters
 
@@ -674,7 +674,7 @@ PATCH /apis/cluster.karmada.io/v1alpha1/clusters/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/cluster.karmada.io/v1alpha1/clusters/{name}
+`DELETE /apis/cluster.karmada.io/v1alpha1/clusters/{name}`
 
 #### Parameters
 

@@ -62,7 +62,7 @@ ClusterResourceBindingList 中包含 ClusterResourceBinding 列表。
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### 参数
 
@@ -82,7 +82,7 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### 参数
 
@@ -193,7 +193,7 @@ POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### 参数
 
@@ -230,7 +230,7 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### 参数
 
@@ -267,7 +267,7 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### 参数
 
@@ -308,7 +308,7 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
+`PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status`
 
 #### 参数
 
@@ -349,7 +349,7 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}
+`DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/{name}`
 
 #### 参数
 

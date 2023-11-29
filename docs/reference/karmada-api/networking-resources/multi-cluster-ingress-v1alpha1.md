@@ -288,7 +288,7 @@ MultiClusterIngressList is a collection of MultiClusterIngress.
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}`
 
 #### Parameters
 
@@ -312,7 +312,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status`
 
 #### Parameters
 
@@ -336,7 +336,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses`
 
 #### Parameters
 
@@ -396,7 +396,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses
+`GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses`
 
 #### Parameters
 
@@ -452,7 +452,7 @@ GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses
 
 #### HTTP Request
 
-POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+`POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses`
 
 #### Parameters
 
@@ -492,7 +492,7 @@ POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclustering
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+`PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}`
 
 #### Parameters
 
@@ -534,7 +534,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+`PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status`
 
 #### Parameters
 
@@ -576,7 +576,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+`PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}`
 
 #### Parameters
 
@@ -622,7 +622,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+`PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status`
 
 #### Parameters
 
@@ -668,7 +668,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+`DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}`
 
 #### Parameters
 
@@ -710,7 +710,7 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteri
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+`DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses`
 
 #### Parameters
 

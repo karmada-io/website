@@ -398,7 +398,7 @@ PropagationPolicyList contains a list of PropagationPolicy.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}`
 
 #### Parameters
 
@@ -422,7 +422,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status`
 
 #### Parameters
 
@@ -446,7 +446,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies`
 
 #### Parameters
 
@@ -562,7 +562,7 @@ GET /apis/policy.karmada.io/v1alpha1/propagationpolicies
 
 #### HTTP Request
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+`POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies`
 
 #### Parameters
 
@@ -602,7 +602,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+`PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}`
 
 #### Parameters
 
@@ -644,7 +644,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+`PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status`
 
 #### Parameters
 
@@ -686,7 +686,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+`PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}`
 
 #### Parameters
 
@@ -732,7 +732,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicie
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+`PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status`
 
 #### Parameters
 
@@ -778,7 +778,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicie
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+`DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}`
 
 #### Parameters
 
@@ -820,7 +820,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolici
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+`DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies`
 
 #### Parameters
 

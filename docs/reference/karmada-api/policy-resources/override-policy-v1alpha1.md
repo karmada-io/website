@@ -464,7 +464,7 @@ OverridePolicyList is a collection of OverridePolicy.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}`
 
 #### Parameters
 
@@ -488,7 +488,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status`
 
 #### Parameters
 
@@ -512,7 +512,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+`GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies`
 
 #### Parameters
 
@@ -628,7 +628,7 @@ GET /apis/policy.karmada.io/v1alpha1/overridepolicies
 
 #### HTTP Request
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+`POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies`
 
 #### Parameters
 
@@ -668,7 +668,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+`PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}`
 
 #### Parameters
 
@@ -710,7 +710,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+`PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status`
 
 #### Parameters
 
@@ -752,7 +752,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+`PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}`
 
 #### Parameters
 
@@ -798,7 +798,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+`PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status`
 
 #### Parameters
 
@@ -844,7 +844,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+`DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}`
 
 #### Parameters
 
@@ -886,7 +886,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+`DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies`
 
 #### Parameters
 

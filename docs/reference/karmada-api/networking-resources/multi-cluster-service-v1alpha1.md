@@ -198,7 +198,7 @@ MultiClusterServiceList is a collection of MultiClusterService.
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}`
 
 #### Parameters
 
@@ -222,7 +222,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterserv
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status`
 
 #### Parameters
 
@@ -246,7 +246,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterserv
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
+`GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices`
 
 #### Parameters
 
@@ -306,7 +306,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterserv
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/multiclusterservices
+`GET /apis/networking.karmada.io/v1alpha1/multiclusterservices`
 
 #### Parameters
 
@@ -362,7 +362,7 @@ GET /apis/networking.karmada.io/v1alpha1/multiclusterservices
 
 #### HTTP Request
 
-POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
+`POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices`
 
 #### Parameters
 
@@ -402,7 +402,7 @@ POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterser
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
+`PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}`
 
 #### Parameters
 
@@ -444,7 +444,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterserv
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
+`PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status`
 
 #### Parameters
 
@@ -486,7 +486,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterserv
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
+`PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}`
 
 #### Parameters
 
@@ -532,7 +532,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterse
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status
+`PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}/status`
 
 #### Parameters
 
@@ -578,7 +578,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterse
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}
+`DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices/{name}`
 
 #### Parameters
 
@@ -620,7 +620,7 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusters
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices
+`DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterservices`
 
 #### Parameters
 
