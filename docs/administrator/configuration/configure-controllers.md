@@ -8,7 +8,7 @@ See [Kubernetes Controller Concepts][1] for more details.
 
 ## Karmada Controllers
 
-The controllers are embedded into components of `karmada-controller-manager` or `karmada-agent` and will be launched  
+The controllers are embedded into components of `karmada-controller-manager` or `karmada-agent` and will be launched
 along with components startup. Some controllers may be shared by `karmada-controller-manager` and `karmada-agent`.
 
 | Controller                           | In karmada-controller-manager | In karmada-agent       |
@@ -30,6 +30,9 @@ along with components startup. Some controllers may be shared by `karmada-contro
 | applicationFailover                  | Y                             | N                      |
 | federatedHorizontalPodAutoscaler     | Y                             | N                      |
 | cronFederatedHorizontalPodAutoscaler | Y                             | N                      |
+| multiclusterservice                  | Y                             | N                      |
+| endpointsliceCollect                 | Y                             | Y                      |
+| endpointsliceDispatch                | Y                             | N                      |
 
 ### Configure Karmada Controllers
 
@@ -69,16 +72,16 @@ The following controllers are tested and recommended by Karmada.
 
 #### namespace
 
-The `namespace` controller runs as part of `kube-controller-manager`. It watches `Namespace` deletion and deletes 
+The `namespace` controller runs as part of `kube-controller-manager`. It watches `Namespace` deletion and deletes
 all resources in the given namespace.
 
 For the Karmada control plane, we inherit this behavior to keep a consistent user experience. More than that, we also
 rely on this feature in the implementation of Karmada controllers, for example, when un-registering a cluster,
-Karmada would delete the `execution namespace`(named `karmada-es-<cluster name>`) that stores all the resources 
-propagated to that cluster, to ensure all the resources could be cleaned up from both the Karmada control plane and the 
+Karmada would delete the `execution namespace`(named `karmada-es-<cluster name>`) that stores all the resources
+propagated to that cluster, to ensure all the resources could be cleaned up from both the Karmada control plane and the
 given cluster.
 
-More details about the `namespace` controller, please refer to 
+More details about the `namespace` controller, please refer to
 [namespace controller sync logic](https://github.com/kubernetes/kubernetes/blob/v1.23.4/pkg/controller/namespace/deletion/namespaced_resources_deleter.go#L82-L94).
 
 #### garbagecollector
