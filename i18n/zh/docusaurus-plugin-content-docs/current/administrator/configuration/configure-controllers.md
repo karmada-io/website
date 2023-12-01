@@ -25,10 +25,13 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 | federatedResourceQuotaSync           | 是                               | 否                 |
 | federatedResourceQuotaStatus         | 是                               | 否                 |
 | gracefulEviction                     | 是                               | 否                 |
-| certRotation                         | 否                               | 是（默认禁用）           |
+| certRotation                         | 否                               | 是（默认禁用）      |
 | applicationFailover                  | 是                               | 否                 |
 | federatedHorizontalPodAutoscaler     | 是                               | 否                 |
 | cronFederatedHorizontalPodAutoscaler | 是                               | 否                 |
+| multiclusterservice                  | 是                               | 否                 |
+| endpointsliceCollect                 | 是                               | 是                 |
+| endpointsliceDispatch                | 是                               | 否                 |
 
 ### 配置 Karmada 控制器
 
