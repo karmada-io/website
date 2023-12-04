@@ -176,7 +176,7 @@ ResourceRegistryStatus defines the observed state of ResourceRegistry
 
 ## ResourceRegistryList 
 
-ResourceRegistryList if a collection of ResourceRegistry.
+ResourceRegistryList is a collection of ResourceRegistry.
 
 <hr/>
 
