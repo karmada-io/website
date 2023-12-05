@@ -74,10 +74,10 @@ With reference to the SLI (Service Level Indicator)/SLO (Service Level Objective
 1. API Call Latency
 
 
-| Status  | SLI                                                                                                                      | SLO                                                                               |
-|---------|--------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
-| Offical | P99 latency of Mutating API calls (including POST, PUT, DELETE, PATCH) to a single resource object in the last 5 minutes | P99 \<\= 1s                                                                       |
-| Offical | P99 latency of non-streaming read-only API calls (including GET and LIST) in the last 5 minutes                          | (a)Scope=resource, P99 \<\= 1s, (b)Scope=namespace or Scope=cluster, P99 \<\= 30s |
+| Status  | SLI                                                                                                                      | SLO                                                                             |
+|---------|--------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| Offical | P99 latency of Mutating API calls (including POST, PUT, DELETE, PATCH) to a single resource object in the last 5 minutes | P99 \<\= 1s                                                                     |
+| Offical | P99 latency of non-streaming read-only API calls (including GET and LIST) in the last 5 minutes                          | (a)Scope=resource, P99 \<\= 1s, (b)Scope=namespace or Scope=cluster, P99 <= 30s |
 
 2. Resource Distribution Latency
 
