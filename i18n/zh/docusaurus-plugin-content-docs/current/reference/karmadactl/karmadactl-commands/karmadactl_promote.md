@@ -29,6 +29,9 @@ karmadactl promote <RESOURCE_TYPE> <RESOURCE_NAME> -n <NAME_SPACE> -C <CLUSTER_N
   # Promote secret(default/default-token) from cluster1 to Karmada
   karmadactl promote secret default-token -n default -C cluster1
   
+  # Support to use '--dependencies=true' or '-d=true' to promote resource with its dependencies automatically, default to false
+  karmadactl promote deployment nginx -n default -C cluster1 -d=true
+  
   # Support to use '--cluster-kubeconfig' to specify the configuration of member cluster
   karmadactl promote deployment nginx -n default -C cluster1 --cluster-kubeconfig=<CLUSTER_KUBECONFIG_PATH>
   
@@ -43,6 +46,7 @@ karmadactl promote <RESOURCE_TYPE> <RESOURCE_NAME> -n <NAME_SPACE> -C <CLUSTER_N
   -C, --cluster string              the name of legacy cluster (eg -C=member1)
       --cluster-context string      Context name of legacy cluster in kubeconfig. Only works when there are multiple contexts in the kubeconfig.
       --cluster-kubeconfig string   Path of the legacy cluster's kubeconfig.
+  -d, --dependencies                Promote resource with its dependencies automatically, default to false
       --dry-run                     Run the command in dry-run mode, without making any server requests.
   -h, --help                        help for promote
       --karmada-context string      The name of the kubeconfig context to use

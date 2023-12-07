@@ -102,6 +102,7 @@ karmada-search [flags]
                                                                 RemainingItemCount=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
+                                                                UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=false)
                                                                 ValidatingAdmissionPolicy=true|false (ALPHA - default=false)
                                                                 WatchList=true|false (ALPHA - default=false)
   -h, --help                                                    help for karmada-search

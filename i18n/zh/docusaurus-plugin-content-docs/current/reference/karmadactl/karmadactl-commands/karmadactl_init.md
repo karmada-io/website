@@ -70,6 +70,11 @@ karmadactl init
       --etcd-pvc-size string                             etcd data path,valid in pvc mode. (default "5Gi")
       --etcd-replicas int32                              etcd replica set, cluster 3,5...singular (default 1)
       --etcd-storage-mode string                         etcd data storage mode(emptyDir,hostPath,PVC). value is PVC, specify --storage-classes-name (default "hostPath")
+      --external-etcd-ca-cert-path string                The path of CA certificate of the external etcd cluster in pem format.
+      --external-etcd-client-cert-path string            The path of client side certificate to the external etcd cluster in pem format.
+      --external-etcd-client-key-path string             The path of client side private key to the external etcd cluster in pem format.
+      --external-etcd-key-prefix string                  The key prefix to be configured to kube-apiserver through --etcd-prefix.
+      --external-etcd-servers string                     The server urls of external etcd cluster, to be used by kube-apiserver through --etcd-servers.
   -h, --help                                             help for init
       --host-cluster-domain string                       The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --image-pull-secrets strings                       Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
