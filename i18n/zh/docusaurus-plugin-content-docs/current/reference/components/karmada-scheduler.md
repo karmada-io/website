@@ -38,8 +38,11 @@ karmada-scheduler [flags]
       --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
       --kubeconfig string                           Path to karmada control plane kubeconfig file.
       --leader-elect                                Enable leader election, which must be true when running multi instances. (default true)
+      --leader-elect-lease-duration duration        The duration that non-leader candidates will wait after observing a leadership renewal until attempting to acquire leadership of a led but unrenewed leader slot. This is effectively the maximum duration that a leader can be stopped before it is replaced by another candidate. This is only applicable if leader election is enabled. (default 15s)
+      --leader-elect-renew-deadline duration        The interval between attempts by the acting master to renew a leadership slot before it stops leading. This must be less than or equal to the lease duration. This is only applicable if leader election is enabled. (default 10s)
       --leader-elect-resource-name string           The name of resource object that is used for locking during leader election. (default "karmada-scheduler")
       --leader-elect-resource-namespace string      The namespace of resource object that is used for locking during leader election. (default "karmada-system")
+      --leader-elect-retry-period duration          The duration the clients should wait between attempting acquisition and renewal of a leadership. This is only applicable if leader election is enabled. (default 2s)
       --log_backtrace_at traceLocation              when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                              If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log_file string                             If non-empty, use this log file (no effect when -logtostderr=true)
@@ -50,6 +53,10 @@ karmada-scheduler [flags]
       --plugins strings                             A list of plugins to enable. '*' enables all build-in and customized plugins, 'foo' enables the plugin named 'foo', '*,-foo' disables the plugin named 'foo'.
                                                     All build-in plugins: APIEnablement,ClusterAffinity,ClusterEviction,ClusterLocality,SpreadConstraint,TaintToleration. (default [*])
       --profiling-bind-address string               The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
+      --rate-limiter-base-delay duration            The base delay for rate limiter. (default 5ms)
+      --rate-limiter-bucket-size int                The bucket size for rate limier. (default 100)
+      --rate-limiter-max-delay duration             The max delay for rate limiter. (default 16m40s)
+      --rate-limiter-qps int                        The QPS for rate limier. (default 10)
       --scheduler-estimator-port int                The secure port on which to connect the accurate scheduler estimator. (default 10352)
       --scheduler-estimator-service-prefix string   The prefix of scheduler estimator service name (default "karmada-scheduler-estimator")
       --scheduler-estimator-timeout duration        Specifies the timeout period of calling the scheduler estimator service. (default 3s)

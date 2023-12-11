@@ -1,0 +1,148 @@
+{
+  "version.label": {
+    "message": "v1.8",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Core Concepts": {
+    "message": "核心概念",
+    "description": "The label for category Core Concepts in sidebar docs"
+  },
+  "sidebar.docs.category.Get Started": {
+    "message": "快速开始",
+    "description": "The label for category Get Started in sidebar docs"
+  },
+  "sidebar.docs.category.Tutorials": {
+    "message": "使用教程",
+    "description": "The label for category Tutorials in sidebar docs"
+  },
+  "sidebar.docs.category.Installation": {
+    "message": "安装",
+    "description": "The label for category Installation in sidebar docs"
+  },
+  "sidebar.docs.category.User Guide": {
+    "message": "用户指南",
+    "description": "The label for category User Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Cross-cloud Multi-cluster Management": {
+    "message": "跨云多集群管理",
+    "description": "The label for category Cross-cloud Multi-cluster Management in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster Scheduling": {
+    "message": "多集群调度",
+    "description": "The label for category Multi-cluster Scheduling in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster Failover": {
+    "message": "多集群故障迁移",
+    "description": "The label for category Multi-cluster Failover in sidebar docs"
+  },
+  "sidebar.docs.category.Global Uniform Resource View": {
+    "message": "全局统一资源视图",
+    "description": "The label for category Global Uniform Resource View in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster Service Governance": {
+    "message": "多集群服务治理",
+    "description": "The label for category Multi-cluster Service Governance in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster Network": {
+    "message": "多集群网络",
+    "description": "The label for category Multi-cluster Network in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster CI/CD": {
+    "message": "多集群 CI/CD",
+    "description": "The label for category Multi-cluster CI/CD in sidebar docs"
+  },
+  "sidebar.docs.category.Multi-cluster Security Compliance Governance": {
+    "message": "多集群安全合规治理",
+    "description": "The label for category Multi-cluster Security Compliance Governance in sidebar docs"
+  },
+  "sidebar.docs.category.Best Production Practices": {
+    "message": "最佳生产实践",
+    "description": "The label for category Best Production Practices in sidebar docs"
+  },
+  "sidebar.docs.category.Autoscaling across clusters": {
+    "message": "跨集群弹性伸缩",
+    "description": "The label for category Autoscaling across clusters in sidebar docs"
+  },
+  "sidebar.docs.category.Administrator Guide": {
+    "message": "运维指南",
+    "description": "The label for category Administrator Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Configuration": {
+    "message": "配置",
+    "description": "The label for category Configuration in sidebar docs"
+  },
+  "sidebar.docs.category.Migration": {
+    "message": "迁移",
+    "description": "The label for category Migration in sidebar docs"
+  },
+  "sidebar.docs.category.Monitoring": {
+    "message": "监控",
+    "description": "The label for category Monitoring in sidebar docs"
+  },
+  "sidebar.docs.category.Upgrading": {
+    "message": "升级",
+    "description": "The label for category Upgrading in sidebar docs"
+  },
+  "sidebar.docs.category.Backup": {
+    "message": "备份",
+    "description": "The label for category Backup in sidebar docs"
+  },
+  "sidebar.docs.category.Developer Guide": {
+    "message": "开发者指南",
+    "description": "The label for category Developer Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Contributor Guide": {
+    "message": "贡献者指南",
+    "description": "The label for category Contributor Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Case Study": {
+    "message": "用户案例",
+    "description": "The label for category Case Study in sidebar docs"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "引用",
+    "description": "The label for category Reference in sidebar docs"
+  },
+  "sidebar.docs.category.Command line tool(karmadactl)": {
+    "message": "命令行工具（karmadactl）",
+    "description": "The label for category Command line tool(karmadactl) in sidebar docs"
+  },
+  "sidebar.docs.category.Component tools": {
+    "message": "组件工具",
+    "description": "The label for category Component tools in sidebar docs"
+  },
+  "sidebar.docs.category.Karmada API": {
+    "message": "Karmada API",
+    "description": "The label for category Karmada API in sidebar docs"
+  },
+  "sidebar.docs.category.Karmada API.link.generated-index.description": {
+    "message": "Karmada API 是通过 RESTful 接口提供 Karmada 功能服务并负责 Karmada 状态存储的应用程序。Karmada 资源和\"意向记录\"都是作为 API 对象储存的，并可以通过调用 RESTful 风格的 API 进行修改。API 允许以声明方式管理配置。用户可以直接和 Karmada API 交互，也可以通过 kubectl 这样的工具进行交互。核心的 Karmada API 是很灵活的，可以扩展以支持定制资源。"
+  },
+  "sidebar.docs.category.Auto Scaling Resources": {
+    "message": "Auto Scaling 资源"
+  },
+  "sidebar.docs.category.Cluster Resources": {
+    "message": "Cluster 资源"
+  },
+  "sidebar.docs.category.Common Definitions": {
+    "message": "公共定义"
+  },
+  "sidebar.docs.category.Common Parameters": {
+    "message": "常用参数"
+  },
+  "sidebar.docs.category.Config Resources": {
+    "message": "Config 资源"
+  },
+  "sidebar.docs.category.Networking Resources": {
+    "message": "Networking 资源"
+  },
+  "sidebar.docs.category.Policy Resources": {
+    "message": "Policy 资源"
+  },
+  "sidebar.docs.category.Search Resources": {
+    "message": "Search 资源"
+  },
+  "sidebar.docs.category.Work Resources": {
+    "message": "Work 资源"
+  }
+}

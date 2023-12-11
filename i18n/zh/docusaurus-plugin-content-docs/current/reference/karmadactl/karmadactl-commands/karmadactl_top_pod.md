@@ -36,6 +36,7 @@ karmadactl top pod [NAME | -l label]
 
 ```
   -A, --all-namespaces           If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
+  -C, --clusters strings         -C=member1,member2
       --containers               If present, print usage of containers within a pod.
       --field-selector string    Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
   -h, --help                     help for pod

@@ -35,6 +35,7 @@ karmada-agent [flags]
       --cluster-region string                          The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
       --cluster-status-update-frequency duration       Specifies how often karmada-agent posts cluster status to karmada-apiserver. Note: be cautious when changing the constant, it must work with ClusterMonitorGracePeriod in karmada-controller-manager. (default 10s)
       --cluster-success-threshold duration             The duration of successes for the cluster to be considered healthy after recovery. (default 30s)
+      --cluster-zones strings                          The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
       --concurrent-cluster-syncs int                   The number of Clusters that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. All controllers: certRotation, clusterStatus, execution, serviceExport, workStatus. (default [*])

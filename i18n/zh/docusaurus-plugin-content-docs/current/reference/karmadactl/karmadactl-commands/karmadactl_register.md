@@ -33,6 +33,7 @@ karmadactl register [karmada-apiserver-endpoint]
       --cluster-namespace string                      Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
       --cluster-provider string                       Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
       --cluster-region string                         The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
+      --cluster-zones strings                         The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
       --context string                                Name of the cluster context in kubeconfig file.
       --discovery-timeout duration                    The timeout to discovery karmada apiserver client. (default 5m0s)
       --discovery-token-ca-cert-hash strings          For token-based discovery, validate that the root CA public key matches this hash (format: "<type>:<value>").
@@ -44,6 +45,7 @@ karmadactl register [karmada-apiserver-endpoint]
       --karmada-agent-replicas int32                  Karmada agent replicas. (default 1)
       --kubeconfig string                             Path to the kubeconfig file of member cluster.
   -n, --namespace string                              Namespace the karmada-agent component deployed. (default "karmada-system")
+      --proxy-server-address string                   Address of the proxy server that is used to proxy to the cluster.
       --token string                                  For token-based discovery, the token used to validate cluster information fetched from the API server.
 ```
 
