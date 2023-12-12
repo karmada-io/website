@@ -4,8 +4,8 @@ module.exports = {
   tagline: "Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration",
   url: "https://karmada.io",
   baseUrl: "/",
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "throw",
   organizationName: "karmada-io",
   projectName: "website",
   i18n: {
