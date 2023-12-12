@@ -8,7 +8,7 @@ Karmada supports:
 
 * Safe isolation:
   * Create a namespace for each cluster, prefixed with `karmada-es-`.
-* [Multi-mode](https://karmada.io/docs/userguide/clustermanager/cluster-registration) connection:
+* [Multi-mode](../userguide/clustermanager/cluster-registration.md) connection:
   * Push: Karmada is directly connected to the cluster kube-apiserver.
   * Pull: Deploy one agent component in the cluster, Karmada delegates tasks to the agent component.
 * Multi-cloud support(Only if compliant with Kubernetes specifications):
@@ -24,17 +24,17 @@ The overall relationship between the member cluster and the control plane is sho
 
 Karmada supports:
 
-* Cluster distribution capability under [different scheduling strategies](https://karmada.io/docs/userguide/scheduling/resource-propagating):
+* Cluster distribution capability under [different scheduling strategies](../userguide/scheduling/resource-propagating.md):
   * ClusterAffinity: Oriented scheduling based on ClusterName, Label, Field.
   * Toleration: Scheduling based on Taint and Toleration.
   * SpreadConstraint: Scheduling based on cluster topology.
   * ReplicasScheduling: Replication mode and split mode for instanced workloads.
-* Differential configuration([OverridePolicy](https://karmada.io/docs/userguide/scheduling/override-policy)):
+* Differential configuration([OverridePolicy](../userguide/scheduling/override-policy.md)):
   * ImageOverrider: Differentiated configuration of mirrors.
   * ArgsOverrider: Differentiated configuration of execution parameters.
   * CommandOverrider: Differentiated configuration for execution commands.
   * PlainText: Customized Differentiation Configuration.
-* [Support reschedule](https://karmada.io/docs/userguide/scheduling/descheduler) with following components:
+* [Support reschedule](../userguide/scheduling/descheduler.md) with following components:
   * Descheduler(karmada-descheduler): Trigger rescheduling based on instance state changes in member clusters.
   * Scheduler-estimator(karmada-scheduler-estimator): Provides the scheduler with a more precise desired state of the running instances of the member cluster.
 
@@ -50,7 +50,7 @@ If one cluster does not have enough resource to accommodate their pods, Karamda 
 
 Karmada supports:
 
-* [Cluster failover](https://karmada.io/docs/userguide/failover/):
+* [Cluster failover](../userguide/failover/failover-overview.md):
   * Karmada supports users to set distribution policies, and automatically migrates the faulty cluster replicas in a centralized or decentralized manner after a cluster failure.
 * Cluster taint settings:
   * When the user sets a taint for the cluster and the resource distribution strategy cannot tolerate the taint, Karmada will also automatically trigger the migration of the cluster replicas.
@@ -65,12 +65,12 @@ Karmada supports failover for clusters, one cluster failure will cause failover 
 
 Karmada supports:
 
-* [Resource status collection and aggregation](https://karmada.io/docs/userguide/globalview/customizing-resource-interpreter): Collect and aggregate state into resource templates with the help of the Resource Interpreter.
+* [Resource status collection and aggregation](../userguide/globalview/customizing-resource-interpreter.md): Collect and aggregate state into resource templates with the help of the Resource Interpreter.
   * User-defined resource, triggering webhook remote calls.
   * Fixed encoding in Karmada for some common resource types.
-* [Unified resource management](https://karmada.io/docs/userguide/globalview/aggregated-api-endpoint): Unified management for `create`, `update`, `delete`, `query`.
-* [Unified operations](https://karmada.io/docs/userguide/globalview/proxy-global-resource): Exec operations command(`describe`, `exec`, `logs`) in one k8s context.
-* [Global search for resources and events](https://karmada.io/docs/tutorials/karmada-search/):
+* [Unified resource management](../userguide/globalview/aggregated-api-endpoint.md): Unified management for `create`, `update`, `delete`, `query`.
+* [Unified operations](../userguide/globalview/proxy-global-resource.md): Exec operations command(`describe`, `exec`, `logs`) in one k8s context.
+* [Global search for resources and events](../tutorials/karmada-search.md):
   * Cache query: global fuzzy search and global precise search are supported.
   * Third-party storage: Search engine (Elasticsearch or OpenSearch), relational database, graph database are supported.
 
@@ -108,11 +108,11 @@ Users also can defined global resource quota via `FederatedResourceQuota`:
 
 karmada supports:
 
-* [Multi-cluster service discovery](https://karmada.io/docs/userguide/service/multi-cluster-service):
+* [Multi-cluster service discovery](../userguide/service/multi-cluster-service.md):
   * With ServiceExport and ServiceImport, achieving cross-cluster service discovery.
-* [Multi-cluster network support](https://karmada.io/docs/userguide/network/working-with-submariner):
+* [Multi-cluster network support](../userguide/network/working-with-submariner.md):
   * Use `Submariner` to open up the container network between clusters.
-* [Cross-Cluster service governance via ErieCanal](https://karmada.io/docs/userguide/service/working-with-eriecanal)
+* [Cross-Cluster service governance via ErieCanal](../userguide/service/working-with-eriecanal.md)
   * Integrate with `ErieCanal` to empower cross-cluster service governance.
 
 Users can enable service governance for cross-cluster with Karmada:  
