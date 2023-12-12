@@ -19,6 +19,6 @@ To begin, visit your profile [page](https://openprofile.dev/edit/profile) and en
 
 ## Update the CNCF repository used for calculating your contributions
 Once you have verified your organization in the CNCF system, you must create a pull request in gitdm with the updated affiliations.  
-To do this, you'll need to modify two files: `company_developers*.txt` and `developers_affiliations*.txt`. For reference, please see this example pull request: [PR Example](https://github.com/cncf/gitdm/pull/1257).
+To do this, you'll need to modify two files: `company_developers*.txt` and `developers_affiliations*.txt`. For reference, please see this example pull request: [PR Example](https://github.com/cncf/gitdm/pull/183).
 
 After the pull request has been successfully merged, it may take up to four weeks for the changes to be synced.
