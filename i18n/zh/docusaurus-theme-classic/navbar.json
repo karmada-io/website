@@ -14,5 +14,9 @@
   "item.label.Adopters": {
     "message": "采用者",
     "description": "Navbar item with label Adopters"
+  },
+  "item.label.Partners": {
+    "message": "合作伙伴",
+    "description": "Navbar item with label Partners"
   }
 }

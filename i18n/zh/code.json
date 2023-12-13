@@ -193,5 +193,11 @@
   "theme.SearchBar.label": {
     "message": "查询",
     "description": "The ARIA label and placeholder for search button"
+  },
+  "partners.huawei.description": {
+    "message": "构建无处不在的云原生服务，通过智能流量分配跨区域和跨云运行应用程序。"
+  },
+  "partners.daocloud.description": {
+    "message": "使用 Karmada 构建更具弹性的混合多云平台。"
   }
 }
