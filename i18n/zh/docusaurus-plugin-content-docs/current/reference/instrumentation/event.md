@@ -7,7 +7,7 @@ title: Karmada 事件参考
 本章节详细介绍了 Karmada 中记录关键过程的事件，更多详细信息请参考 [这里](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/event-v1/)。
 
 
-| 时间原因                                    | 关联对象                                                                                        | 类型      | 源组件                                                                                                                       |
+| 原因                                      | 关联对象                                                                                        | 类型      | 源组件                                                                                                                       |
 |-----------------------------------------|---------------------------------------------------------------------------------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
 | CreateExecutionSpaceFailed              | Cluster                                                                                     | Warning | cluster-controller                                                                                                        |
 | CreateExecutionSpaceSucceed             | Cluster                                                                                     | Normal  | cluster-controller                                                                                                        |
