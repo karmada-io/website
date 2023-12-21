@@ -20,6 +20,8 @@ You need to install the following tools:
 
 Karmada introduced the `cosign` verification tool since release 1.7. For a list of published mirrors, see [karmada mirrors](https://hub.docker.com/u/karmada).
 
+> Note: image of helm chart introduced the `cosign` verification tool since release 1.8.
+
 Select an image from these images and verify its signature using `cosign verify` command：
 
 ```shell
