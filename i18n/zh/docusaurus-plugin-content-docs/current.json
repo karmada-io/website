@@ -87,6 +87,10 @@
     "message": "备份",
     "description": "The label for category Backup in sidebar docs"
   },
+  "sidebar.docs.category.Security": {
+    "message": "安全",
+    "description": "The label for category Security in sidebar docs"
+  },
   "sidebar.docs.category.Developer Guide": {
     "message": "开发者指南",
     "description": "The label for category Developer Guide in sidebar docs"
