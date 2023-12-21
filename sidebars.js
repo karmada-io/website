@@ -201,8 +201,12 @@ module.exports = {
                     ],
                 },
                 {
-                    type: "doc",
-                    id: "administrator/verify-artifacts"
+                    type: "category",
+                    label: "Security",
+                    items: [
+                        "administrator/security/security-considerations",
+                        "administrator/security/verify-artifacts"
+                    ],
                 },
             ],
         },
