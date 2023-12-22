@@ -31,7 +31,7 @@ All organisations are sorted alphabetically.
 | Shopee                    | https://shopee.com            | Use Karmada to manage multi-cluster application delivery     | [Karmada in Shopee](https://www.youtube.com/watch?v=jZg6TmyciyI ) |
 | Sina                      | http://www.sina.com.cn        | Use Karmada to build multi-clusters that running database    |                                                              |
 | Trip.com                  | https://www.trip.com/         | Build a more resilient and elastic hybrid-multi-cloud platform using Karmada |                                                              |
-| Unicom Digital Tech       | http://www.chinaunicom.com.cn | Use Karmada to build a intelligent and distributed container platform with multi-policy and multi-region |                                                              |
+| Unicom Digital Tech       | http://www.chinaunicom.com.cn | Use Karmada to build a intelligent and distributed container platform with multi-policy and multi-region | [DSK Service](https://www.cucloud.cn/product/dsk.html)       |
 | VIPKID                    | https://www.vipkid.com/       | Use Karmada to build multi-cloud PaaS platform with multi-vendor and multi-region | [Building a PaaS Platform with Karmada to Run Containers --VIPKID](/docs/casestudies/vipkid) |
 | Vivo                      | https://www.vivo.com/         | Build a more resilient and elastic hybrid-multi-cloud platform using Karmada |                                                              |
 | Youzan                    | https://www.youzan.com/       | Manage both Stateless and Stateful on-line workloads across multiple clusters |                                                              |
