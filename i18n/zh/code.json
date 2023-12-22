@@ -199,5 +199,8 @@
   },
   "partners.daocloud.description": {
     "message": "使用 Karmada 构建更具弹性的混合多云平台。"
+  },
+  "partners.DSK.description": {
+    "message": "使用 Karmada 构建多策略和多地域的智能分布式容器平台。"
   }
 }
