@@ -536,3 +536,18 @@ Kyverno的`ClusterPolicy`是一个规则的集合，它不依赖于其他资源�
 [15]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L79-L84
 [16]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L94-L97
 [17]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L99-L105
+
+## 注意事项
+
+### 使用 Retain 解释器解决控制面与成员集群的控制权冲突
+
+问题：Retain是在Karmada控制面与成员集群同时具备对成员集群资源控制权时，用户可自定义的用于解决控制权冲突的解释器。
+一个典型的场景是当成员集群 Deployment 的副本数同时被控制面资源模版和成员集群 HPA 控制时，
+两者无限次来回修改成员集群 Deployment 的副本数，导致成员集群的 Deployment 状态会出现异常。
+
+解决措施：
+* 针对您的工作负载类资源实现相应的 Retain 解释器，决策什么场景下该响应控制面资源模版的修改，什么场景下该响应成员集群 HPA 的修改。
+  目前 Karmada 只针对 Deployment 资源实现了相应的 Retain 解释器，具体实现方式为：如果资源模板有 `resourcetemplate.karmada.io/retain-replicas` 的 label，
+  就由成员集群 HPA 控制，否则就由控制面资源模板控制（在显式开启 `hpaReplicasSyncer` 控制器情况下，Karmada 可以自动为启用 HPA 的 Deployment 标记该 label）。
+  如果您需要针对其他资源或自定义的 CRD 资源解决该冲突问题，可参考 Deployment 的 Retain 方案。 
+* 如果您期望更优雅并彻底地解决上述问题，我们更推荐您将 HPA 更换为 [FederatedHPA](../../userguide/autoscaling/federatedhpa.md)。
