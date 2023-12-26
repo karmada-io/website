@@ -9,11 +9,10 @@ const PartnersList = [
   {
     image: huawei,
     title: "Huawei",
-    webURL: "https://www.huaweicloud.com/intl/en-us/",
+    webURL: "https://www.huaweicloud.com/intl/en-us/product/ucs.html",
     description: (
       <Translate id="partners.huawei.description">
-        Huawei Cloud is a leading cloud service provider in China and Asia
-        Pacific.
+        UCS provides consistent experience in cloud native application deployment, management, and ecosystem. Cloud native applications can freely run across regions and clouds with intelligent traffic distribution.
       </Translate>
     ),
   },

@@ -19,15 +19,15 @@ export default function Partners() {
             <div className="col col--12">
               <h1>
                 <Translate id="partners.title">
-                  Become a Karmada Partner
+                  Karmada Partner
                 </Translate>
               </h1>
             </div>
             <div className="col col--12">
               <p className={styles.font}>
                 <Translate id="partners.description1">
-                  Welcome to join us and look forward to your arrival. For more
-                  information, Create an issue in the Karmada repository.
+                  Vetted partners with deep experience helping enterprises successfully adopt Karmada.
+                  Interested in becoming a partner?
                 </Translate>
               </p>
             </div>
