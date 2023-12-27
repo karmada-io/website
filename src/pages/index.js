@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       </header>
 
-      <WhatIs />   
+      <WhatIs />
 
       <div className={clsx('hero', styles.hero)}>
         <div className="container">
@@ -71,7 +71,7 @@ export default function Home() {
         <SupportersList />
 
           <h2 className="hero__subtitle">
-            <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>sandbox project</Translate>
+            <Translate>Karmada is a</Translate> <a href="https://cncf.io/">CNCF (Cloud Native Computing Foundation)</a> <Translate>incubation project</Translate>
           </h2>
           <div className={clsx('cncf-logo', styles.cncfLogo)} />
         </div>
