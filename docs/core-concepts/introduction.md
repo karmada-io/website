@@ -11,7 +11,7 @@ Karmada (Kubernetes Armada) is a Kubernetes management system that enables you t
 Karmada aims to provide turnkey automation for multi-cluster application management in multi-cloud and hybrid cloud scenarios,
 with key features such as centralized multi-cloud management, high availability, failure recovery, and traffic scheduling.
 
-Karmada is a sandbox project of the [Cloud Native Computing Foundation](https://cncf.io/) (CNCF).
+Karmada is an incubation project of the [Cloud Native Computing Foundation](https://cncf.io/) (CNCF).
 
 ## Why Karmada:
 - __K8s Native API Compatible__
