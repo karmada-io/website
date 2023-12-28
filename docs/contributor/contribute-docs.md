@@ -176,6 +176,14 @@ Click **Next** and you can see the corresponding changes. If you have changes re
 
 If the previewed page is not what you expected, please check your docs again.
 
+### Typos Check (optional)
+
+You can use [spell checker](https://github.com/crate-ci/typos) to find and correct spelling mistakes after you updated the documents.
+
+To install the spell checker tool, you can refer to [Install](https://github.com/crate-ci/typos?tab=readme-ov-file#install).
+
+Then, just executing `typos . --config ./typos.toml` at the repo root path in your local commandline.
+
 ## FAQ
 
 ### Versioning

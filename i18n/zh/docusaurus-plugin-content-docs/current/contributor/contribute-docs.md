@@ -180,6 +180,14 @@ items: [
 
 如果预览的页面与预期不符，请再次检查文档。
 
+### 拼写检查 (可选)
+
+更新文件后，你可以使用 [拼写检查工具](https://github.com/crate-ci/typos) 查找并纠正拼写错误。
+
+要安装拼写检查工具，可以参考 [安装](https://github.com/crate-ci/typos?tab=readme-ov-file#install)。
+
+然后，只需在本地命令行的仓库 root 路径下执行 `typos . --config ./typos.toml`命令。
+
 ## FAQ
 
 ### 版本控制
