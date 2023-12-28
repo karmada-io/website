@@ -27,7 +27,7 @@ Please refer to the [istioctl](https://istio.io/latest/docs/setup/getting-starte
 
 Following the steps [plug-in-certificates-and-key-into-the-cluster](https://istio.io/latest/docs/tasks/security/cert-management/plugin-ca-cert/#plug-in-certificates-and-key-into-the-cluster) to configure Istio CA.
 
-Replace the cluster name `cluster1` with `primary`, the output will looks like as follwing:
+Replace the cluster name `cluster1` with `primary`, the output will looks like as following:
 ```bash
 root@karmada-demo  istio-on-karmada# tree certs
 certs

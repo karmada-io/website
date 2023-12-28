@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# genererate CA & leaf certificates of etcd.
+# generate CA & leaf certificates of etcd.
 
 set -e
 set -o pipefail

@@ -68,7 +68,7 @@ As the release progresses several issues may be moved to the next milestone. Hen
 
 ### Release Artifacts
 
-The Karmada container images are availble at `dockerHub`. 
+The Karmada container images are available at `dockerHub`. 
 You can visit `https://hub.docker.com/r/karmada/<component_name>` to see the details of images.
 For example, [here](https://hub.docker.com/r/karmada/karmada-controller-manager) for karmada-controller-manager.
 
