@@ -45,7 +45,7 @@ When using the `karmadactl init` command to install Karmada, `init` command rais
 deploy.go:55] Post "https://192.168.24.211:32443/api/v1/namespaces": x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "karmada")
 ```
 
-Cause: Karmada has been installed on the cluster before. `karmada-etcd` uses the `hostpath` mode to mount the local storage. When `karmada-etcd` is uninstalled, residual data exists. We need to delete files in the defualt directory`/var/lib/karmada-etcd`. If the karmdactl  [--etcd-data](https://github.com/karmada-io/karmada/blob/master/pkg/karmadactl/cmdinit/cmdinit.go#L119) parameter is used, please delete the corresponding directory.
+Cause: Karmada has been installed on the cluster before. `karmada-etcd` uses the `hostpath` mode to mount the local storage. When `karmada-etcd` is uninstalled, residual data exists. We need to delete files in the default directory`/var/lib/karmada-etcd`. If the karmadactl  [--etcd-data](https://github.com/karmada-io/karmada/blob/master/pkg/karmadactl/cmdinit/cmdinit.go#L119) parameter is used, please delete the corresponding directory.
 
 Related Issue: [#1467](https://github.com/karmada-io/karmada/issues/1467), [#2504](https://github.com/karmada-io/karmada/issues/2504).
 

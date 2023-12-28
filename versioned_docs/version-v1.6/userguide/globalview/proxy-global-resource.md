@@ -75,9 +75,9 @@ nginx-65c54cc984-2jjw6  10s
 
 But it doesn't affect usaging of `client-go`, which use `application/json` as `content-type`.
 
-### What will happen when I access resource with same name accross clusters.
+### What will happen when I access resource with same name across clusters.
 
-In this stage, proxy cannot discern the resources with same name accross clusters. So get/update/patch/delete and subresources requests will return a conflict error. When list resources, the resources with same name will be returned in item list.
+In this stage, proxy cannot discern the resources with same name across clusters. So get/update/patch/delete and subresources requests will return a conflict error. When list resources, the resources with same name will be returned in item list.
 
 Users shall design to avoid or tolerate this error.
 

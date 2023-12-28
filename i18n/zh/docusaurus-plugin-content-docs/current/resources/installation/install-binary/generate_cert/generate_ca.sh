@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# genererate front-proxy-ca, server-ca
+# generate front-proxy-ca, server-ca
 
 set -e
 set -o pipefail

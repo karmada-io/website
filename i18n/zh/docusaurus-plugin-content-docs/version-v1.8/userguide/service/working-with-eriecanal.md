@@ -43,7 +43,7 @@ ErieCanal 会运行在控制面集群和成员集群上，成员集群需要注�
 
 ## 前提条件
 
-- 4 个集群：control-plane、clutser-1、cluster-2、cluster-3
+- 4 个集群：control-plane、cluster-1、cluster-2、cluster-3
 - Docker
 - k3d
 - helm
@@ -53,7 +53,7 @@ ErieCanal 会运行在控制面集群和成员集群上，成员集群需要注�
 
 ### 1. 安装 Karmada 控制面
 
-参考 [Karmada文档](https://karmada.io/zh/docs/installation/)，安装 Karmada 的控制面。Karmada 初始化完成后，将 **三个成员集群** clutser-1、cluster-2、cluster-3 注册到 Karmada 控制面，可 [参考 Karmada 的集群注册指引](https://karmada.io/zh/docs/userguide/clustermanager/cluster-registration/)。
+参考 [Karmada文档](https://karmada.io/zh/docs/installation/)，安装 Karmada 的控制面。Karmada 初始化完成后，将 **三个成员集群** cluster-1、cluster-2、cluster-3 注册到 Karmada 控制面，可 [参考 Karmada 的集群注册指引](https://karmada.io/zh/docs/userguide/clustermanager/cluster-registration/)。
 
 这里使用 push 模式，集群注册参考下面的命令（在控制面集群 control-plane 上执行 ）：
 

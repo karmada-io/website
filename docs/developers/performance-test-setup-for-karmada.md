@@ -121,7 +121,7 @@ fake-pod-78884479b7-h2fv6   1/1     Running   0          6s    10.0.0.31   fake-
 
 ### ClusterLoader2
 
-[ClusterLoader2](https://github.com/kubernetes/perf-tests/tree/master/clusterloader2) is an open source Kubernetes cluster testing tool. It tests against Kubernetes-defined SLIs/SLOs metrics to verify that clusters meet various quality of service standards. ClusterLoader2 is a tool oriented single cluster, it is complex to test karmada control plane meanwhile distribute resouces to member clusters. Therefore, we just use the ClusterLoader2 to distribute resources to clusters managed by karmada.
+[ClusterLoader2](https://github.com/kubernetes/perf-tests/tree/master/clusterloader2) is an open source Kubernetes cluster testing tool. It tests against Kubernetes-defined SLIs/SLOs metrics to verify that clusters meet various quality of service standards. ClusterLoader2 is a tool oriented single cluster, it is complex to test karmada control plane meanwhile distribute resources to member clusters. Therefore, we just use the ClusterLoader2 to distribute resources to clusters managed by karmada.
 
 ### Prepare a simple config
 
@@ -317,7 +317,7 @@ Here's an example to monitor the mutating api call latency for works and resourc
 
 #### Create a dashboard
 
-> Follw the [Grafana support For Prometheus](https://prometheus.io/docs/visualization/grafana/)  document.
+> Follow the [Grafana support For Prometheus](https://prometheus.io/docs/visualization/grafana/)  document.
 
 #### Modify Query Statement
 

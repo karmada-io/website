@@ -36,7 +36,7 @@ However, Kyverno 1.7.x removes the `kubeconfig` parameter and does not support o
 kubectl config use-context karmada-apiserver
 ```
 
-2. Create resource objects of Kyverno in Karmada controll plane. The content is as follows and does not need to be modified.
+2. Create resource objects of Kyverno in Karmada control plane. The content is as follows and does not need to be modified.
 
 Deploy namespace: https://github.com/kyverno/kyverno/blob/release-1.6/config/install.yaml#L1-L12
    
