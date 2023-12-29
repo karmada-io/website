@@ -558,3 +558,22 @@ A Kyverno `ClusterPolicy` is a collection of rules, which doesn't depend on othe
 [15]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L79-L84
 [16]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L94-L97
 [17]: https://github.com/karmada-io/karmada/blob/master/pkg/apis/config/v1alpha1/resourceinterpretercustomization_types.go#L99-L105
+
+## Important Notes
+
+### Use the Retain Interpreter to Resolve Control Conflict between the Control Plane and Member Clusters
+
+Issue: Retain is a user-customizable interpreter in Karmada that resolves control conflicts when both the Karmada control plane 
+and member clusters have control over member cluster resources. 
+A typical scenario is when the replicas of a member cluster's Deployment is controlled by both the control plane's resource template and the member cluster's HPA. 
+This leads to an abnormal state of the member cluster's Deployment due to repeated modifications of the replicas by both entities.
+
+Solution:
+* Implement the corresponding Retain Interpreter for your workload type resources to decide when to respond to modifications from the control plane's resource template 
+and when to respond to modifications from the member cluster's HPA. 
+Currently, Karmada has only implemented the Retain interpreter for Deployment resources. The specific implementation is as follows: 
+if the resource template has the label resource template.karmada.io/retain-replicas, it will be controlled by the member cluster's HPA; 
+otherwise, it will be controlled by the control plane's resource template (if the hpaReplicasSyncer controller is explicitly enabled, 
+Karmada can automatically label the Deployment enabled with HPA with this label). If you need to resolve this conflict for other resources or custom CRD resources, 
+you can refer to the Retain solution for Deployments.
+* If you want a more elegant and comprehensive solution to the above problem, we recommend replacing HPA with [FederatedHPA](../../userguide/autoscaling/federatedhpa.md).
