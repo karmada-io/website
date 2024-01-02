@@ -25,7 +25,7 @@ export default function Partners() {
             </div>
             <div className="col col--12">
               <p className={styles.font}>
-                <Translate id="partners.description1">
+                <Translate id="partners.description">
                   Vetted partners with deep experience helping enterprises successfully adopt Karmada.
                   Interested in becoming a partner?
                 </Translate>
