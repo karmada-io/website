@@ -193,5 +193,14 @@
   "theme.SearchBar.label": {
     "message": "查询",
     "description": "The ARIA label and placeholder for search button"
+  },
+  "partners.huawei.description": {
+    "message": "Ubiquitous Cloud Native Service（UCS）是业界首个分布式云原生产品，为企业构建云原生业务部署、管理、应用生态的全域一致性体验 ，实现客户在使用云原生应用时，感受不到地域、跨云、流量的限制，让云原生的能力进入企业的每一个业务场景，加速千行百业拥抱云原生。"
+  },
+  "partners.daocloud.description": {
+    "message": "使用 Karmada 构建更具弹性的混合多云平台。"
+  },
+  "partners.DSK.description": {
+    "message": "使用 Karmada 构建多策略和多地域的智能分布式容器平台。"
   }
 }

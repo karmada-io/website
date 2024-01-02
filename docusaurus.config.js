@@ -127,6 +127,12 @@ module.exports = {
           position: "left",
         },
         {
+          label: 'Partners',
+          activeBasePath: 'partners',
+          to: '/partners',
+          position: 'left',
+        },
+        {
           type: "localeDropdown",
           position: "right",
         },
