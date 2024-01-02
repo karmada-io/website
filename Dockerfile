@@ -22,4 +22,4 @@ RUN npm install -g browser-sync
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "start:watch"]
+CMD ["yarn", "run", "start:watch"]
