@@ -26,7 +26,8 @@
     "clsx": "^1.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-github-btn": "^1.4.0"
+    "react-github-btn": "^1.4.0",
+    "yarn": "^1.22.21"
   },
   "browserslist": {
     "production": [
