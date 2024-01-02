@@ -46,6 +46,7 @@ module.exports = {
                 "installation/fromsource",
                 "installation/install-binary",
                 "installation/ha-installation",
+                "installation/ha-installation-with-cli",
             ],
         },
         {
