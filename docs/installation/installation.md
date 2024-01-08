@@ -173,12 +173,14 @@ Please refer to [installing from source](./fromsource.md).
 
 If you want to try Karmada, we recommend that build a development environment by
 `hack/local-up-karmada.sh` which will do the following tasks for you:
+
 - Start a Kubernetes cluster by [kind](https://kind.sigs.k8s.io/) to run the Karmada control plane, aka. the `host cluster`.
 - Build Karmada control plane components based on a current codebase.
 - Deploy Karmada control plane components on the `host cluster`.
 - Create member clusters and join Karmada.
 
 **1. Clone Karmada repo to your machine:**
+
 ```
 git clone https://github.com/karmada-io/karmada
 ```
@@ -199,12 +201,6 @@ run the following script:
 ```
 hack/local-up-karmada.sh
 ```
-This script will do the following tasks for you:
-- Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
-- Build Karmada control plane components based on a current codebase.
-- Deploy Karmada control plane components on the `host cluster`.
-- Create member clusters and join Karmada.
-
 If everything goes well, at the end of the script output, you will see similar messages as follows:
 ```
 Local Karmada is running.
