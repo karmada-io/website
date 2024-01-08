@@ -186,12 +186,6 @@ cd karmada
 ```
 hack/local-up-karmada.sh
 ```
-该脚本将为你执行以下任务：
-- 启动一个 Kubernetes 集群以运行 Karmada 控制面（也称为 `host cluster`）。
-- 基于当前代码库构建 Karmada 控制面组件。
-- 在 `host cluster` 上部署 Karmada 控制面组件。
-- 创建成员集群并接入 Karmada。
-
 如果一切良好，在脚本输出结束时，你将看到类似以下的消息：
 ```
 Local Karmada is running.
