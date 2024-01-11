@@ -244,6 +244,7 @@ module.exports = {
                 "casestudies/ci123",
                 "casestudies/daocloud",
                 "casestudies/hurricane_engine",
+                "casestudies/unionbigdata",
             ],
         },
         {
