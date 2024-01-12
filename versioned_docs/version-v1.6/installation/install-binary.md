@@ -287,7 +287,7 @@ Notice:
 >
 >
 >
->You can use `EnvironmentFile` to seperate mutable configs from immutable configs.
+>You can use `EnvironmentFile` to separate mutable configs from immutable configs.
 
 ### Start etcd cluster
 

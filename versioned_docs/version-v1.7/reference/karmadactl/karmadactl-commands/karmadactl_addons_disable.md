@@ -33,7 +33,7 @@ karmadactl addons disable
   # Specify the Karmada control plane kubeconfig
   karmadactl addons disable karmada-search --karmada-kubeconfig /etc/karmada/karmada-apiserver.config
   
-  # Sepcify the namespace where Karmada components are installed
+  # Specify the namespace where Karmada components are installed
   karmadactl addons disable karmada-search --namespace karmada-system
 ```
 

@@ -159,7 +159,7 @@ Based on Karmada's propagation policy, you can schedule Helm releases to your de
 
 ## Customize the Helm release for specific clusters
 
-The example above shows how to propogate the same Helm release to multiple clusters in Karmada. Besides, you can use Karmada's OverridePolicy to customize applications for specific clusters.
+The example above shows how to propagate the same Helm release to multiple clusters in Karmada. Besides, you can use Karmada's OverridePolicy to customize applications for specific clusters.
 For example, if you just want to change replicas in member1, you can refer to the overridePolicy below.
 
 1. Define a Karmada `OverridePolicy`:

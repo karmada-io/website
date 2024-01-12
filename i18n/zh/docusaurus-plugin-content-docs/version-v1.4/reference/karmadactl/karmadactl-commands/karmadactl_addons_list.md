@@ -27,7 +27,7 @@ karmadactl addons list
   # Specify the karmada control plane kubeconfig
   karmadactl addons list --karmada-kubeconfig /etc/karmada/karmada-apiserver.config
   
-  # Sepcify the namespace where Karmada components are installed
+  # Specify the namespace where Karmada components are installed
   karmadactl addons list --namespace karmada-system
 ```
 
