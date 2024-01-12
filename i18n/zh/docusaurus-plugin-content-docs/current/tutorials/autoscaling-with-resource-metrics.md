@@ -9,6 +9,7 @@ This document walk you through an example of enabling FederatedHPA to automatica
 
 The walkthrough example will do as follows:  
 ![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
+
 * One deployment's pod exists in `member1` cluster.
 * The service is deployed in `member1` and `member2` cluster.
 * Request the multi-cluster service and trigger the pod's CPU usage increases.
@@ -90,10 +91,7 @@ We need to install `karmada-metrics-adapter` in Karmada control plane to provide
 hack/deploy-metrics-adapter.sh ${host_cluster_kubeconfig} ${host_cluster_context} ${karmada_apiserver_kubeconfig} ${karmada_apiserver_context_name}
 ```
 
-If you use the `hack/local-up-karmada.sh` script to deploy Karmada, you can run following command to deploy `karmada-metrics-adapter`:
-```sh
-hack/deploy-metrics-adapter.sh $HOME/.kube/karmada.config karmada-host $HOME/.kube/karmada.config karmada-apiserver
-```
+If you use the `hack/local-up-karmada.sh` script to deploy Karmada, `karmada-metrics-adapter` will be installed by default.
 
 ## Deploy workload in `member1` and `member2` cluster
 
