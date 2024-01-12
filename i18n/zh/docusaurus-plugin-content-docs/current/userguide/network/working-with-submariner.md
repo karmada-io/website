@@ -6,6 +6,8 @@ title: 使用 Submariner 实现 Karmada 成员集群彼此联网
 
 [Submariner](https://github.com/submariner-io/submariner) 将相连集群之间的网络扁平化，并实现 Pod 和服务之间的 IP 可达性。
 
+您可以参考 Submariner [QUICKSTART GUIDES](https://submariner.io/getting-started/quickstart/)，获取更多 Submariner 安装指导。
+
 ## 安装 Karmada
 
 ### 安装 Karmada 控制面
@@ -57,6 +59,7 @@ cluster2   v1.21.1   Push   True    5s
 ```
 
 ## 部署 Submariner
+
 我们将使用 `subctl` CLI 在 `host cluster` 和 `member clusters` 上部署 `Submariner` 组件。
 按照[Submariner 官方文档](https://github.com/submariner-io/submariner/tree/b4625514061c1d85c10432a78ca0ad46e679367a#installation)，这是推荐的部署方法。
 
@@ -70,10 +73,10 @@ Broker 必须部署在单个 Kubernetes 集群上。该集群的 API server必�
 ### 使用 karmada-host 用作 Broker
 
 ```shell
-subctl deploy-broker --kubeconfig /root/.kube/karmada.config --kubecontext karmada-host
+subctl deploy-broker --kubeconfig /root/.kube/karmada.config --context karmada-host
 ```
 
-### 集群 1 和集群 2 接入到 Broker
+### cluster1 和 cluster2 接入到 Broker
 
 ```shell
 subctl join --kubeconfig /root/.kube/cluster1.config broker-info.subm --natt=false

@@ -6,6 +6,8 @@ This document demonstrates how to use the `Submariner` to connect the network be
 
 [Submariner](https://github.com/submariner-io/submariner) flattens the networks between the connected clusters, and enables IP reachability between Pods and Services.
 
+You can refer to the Submariner [QUICKSTART GUIDES](https://submariner.io/getting-started/quickstart/) for more installation instructions with Submariner.
+
 ## Install Karmada
 
 ### Install Karmada control plane
@@ -69,7 +71,7 @@ Please refer to the [SUBCTL Installation](https://submariner.io/operations/deplo
 ### Use karmada-host as Broker
 
 ```shell
-subctl deploy-broker --kubeconfig /root/.kube/karmada.config --kubecontext karmada-host
+subctl deploy-broker --kubeconfig /root/.kube/karmada.config --context karmada-host
 ```
 
 ### Join cluster1 and cluster2 to the Broker
