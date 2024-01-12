@@ -483,7 +483,7 @@ statusAggregation:
 
 [StatusReflection][15] describes the rules for Karmada to pick the resource's status.
 
-A Kyverno `ClusterPolicy` is a collection of rules, whose `.status` contains policy runtime data. `StatusReflection` determines which fields Karmada collect from the member clusters. Here we pick some fields from resouce in member cluster.
+A Kyverno `ClusterPolicy` is a collection of rules, whose `.status` contains policy runtime data. `StatusReflection` determines which fields Karmada collect from the member clusters. Here we pick some fields from resource in member cluster.
 
 <details>
 <summary>StatusReflection-Defined-In-ResourceInterpreterCustomization</summary>

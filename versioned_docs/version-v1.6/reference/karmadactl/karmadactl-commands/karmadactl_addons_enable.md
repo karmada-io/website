@@ -36,7 +36,7 @@ karmadactl addons enable
   # Specify the karmada-search image
   karmadactl addons enable karmada-search --karmada-search-image docker.io/karmada/karmada-search:latest
   
-  # Sepcify the namespace where Karmada components are installed
+  # Specify the namespace where Karmada components are installed
   karmadactl addons enable karmada-search --namespace karmada-system
 ```
 

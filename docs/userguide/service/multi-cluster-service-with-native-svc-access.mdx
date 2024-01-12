@@ -11,9 +11,9 @@ In Karmada, the MultiClusterService can enable users to access services across c
     <img src={MCSOverview} width="80%"/>
 </p>
 
-Once the network is connected between clusters, with MultiClusterSerivce, the accessing will be directed to the active backend pods distributed across these clusters.
+Once the network is connected between clusters, with MultiClusterService, the accessing will be directed to the active backend pods distributed across these clusters.
 
-The MultiCluster Service is implemented as a Karmada API resource and multiple controllers, the resource determines the behavior of the controller. The multiple controllers, runnning within the Karmada control plane, sync the services' backend EndpointSlice resource between clusters, to add the multiple clusters' pods' IP to the services' backend.
+The MultiCluster Service is implemented as a Karmada API resource and multiple controllers, the resource determines the behavior of the controller. The multiple controllers, running within the Karmada control plane, sync the services' backend EndpointSlice resource between clusters, to add the multiple clusters' pods' IP to the services' backend.
 
 ## How does a MultiCluster Service work?
 

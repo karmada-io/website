@@ -466,4 +466,4 @@ kubectl exec -it ${FORTIO_POD} -nistio-demo -- fortio load -t 3s productpage:908
 
 ## What's next
 
-Folling the [guide](https://istio.io/latest/docs/examples/bookinfo/#confirm-the-app-is-accessible-from-outside-the-cluster) to confirm the app is accessible from outside the cluster.
+Following the [guide](https://istio.io/latest/docs/examples/bookinfo/#confirm-the-app-is-accessible-from-outside-the-cluster) to confirm the app is accessible from outside the cluster.
