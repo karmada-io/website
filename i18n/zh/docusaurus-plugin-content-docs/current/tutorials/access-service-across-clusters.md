@@ -1,5 +1,5 @@
 ---
-title: Access service acrosss clusters within native service
+title: Access service across clusters within native service
 ---
 
 In Karmada, the MultiClusterService can enable users to access services across clusters with the native service domain name, like `foo.svc`, with the aim of providing users with a seamless experience when accessing services across multiple clusters, as if they were operating within a single cluster.

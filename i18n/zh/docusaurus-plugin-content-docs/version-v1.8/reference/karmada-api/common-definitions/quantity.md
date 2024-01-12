@@ -16,7 +16,7 @@ auto_generated: true
 
 `import "k8s.io/apimachinery/pkg/api/resource"`
 
-Quantity 是数字的定点表示。除了 String() 和 AsInt64() 的访问接口之外，此字段还在 JSON 和 YAML 中提供了方便的序列化（marshaling）和反序列化（unmarshaling）。
+Quantity 是数字的定点表示。除了 String() 和 AsInt64() 的访问接口之外，此字段还在 JSON 和 YAML 中提供了方便的序列化（marshaling）和反序列化（unmarshalling）。
 
 序列化格式如下：
 

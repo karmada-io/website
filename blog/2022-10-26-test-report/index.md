@@ -76,15 +76,15 @@ With reference to the SLI (Service Level Indicator)/SLO (Service Level Objective
 
 | Status  | SLI                                                                                                                      | SLO                                                                           |
 |---------|--------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| Offical | P99 latency of Mutating API calls (including POST, PUT, DELETE, PATCH) to a single resource object in the last 5 minutes | P99 <= 1s                                                                     |
-| Offical | P99 latency of non-streaming read-only API calls (including GET and LIST) in the last 5 minutes                          | (a)Scope=resource, P99 <= 1s, (b)Scope=namespace or Scope=cluster, P99 <= 30s |
+| Official | P99 latency of Mutating API calls (including POST, PUT, DELETE, PATCH) to a single resource object in the last 5 minutes | P99 <= 1s                                                                     |
+| Official | P99 latency of non-streaming read-only API calls (including GET and LIST) in the last 5 minutes                          | (a)Scope=resource, P99 <= 1s, (b)Scope=namespace or Scope=cluster, P99 <= 30s |
 
 2. Resource Distribution Latency
 
 
 | Status  | SLI                                                                                                                                                                                                                                                                         | SLO       |
 |---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| Offical | After the user submits the resource template and delivers the policy on the federated control plane, the P99 delay from the time when the resource is created on the member cluster, regardless of the network fluctuation between the control plane and the member cluster | P99 <= 2s |
+| Official | After the user submits the resource template and delivers the policy on the federated control plane, the P99 delay from the time when the resource is created on the member cluster, regardless of the network fluctuation between the control plane and the member cluster | P99 <= 2s |
 
 3. Cluster Registration Latency
 
@@ -431,7 +431,7 @@ Based on this, the number of resources for the control plane does not depend on 
 
 Karmada's arthrecture inherits the simplicity and scalability of Kubernetes. Karmada-apiserver as the entry point of the control plane is like kube-apiserver in Kubernetes. You can optimize the component in multi-cluster scenarios using the parameters you need in single cluster configuration.
 
-During the entire resource distribution process, API call latency is within a resonable range.
+During the entire resource distribution process, API call latency is within a reasonable range.
 
 ### Cluster Registry and Resource Distribution
 
@@ -465,7 +465,7 @@ In Pull mode, the main resource consumption of the control plane is concentrated
 From the qps of karmada-apiserver and the request latency of karmada-etcd, we can know that the number of requests to karmada-apiserver is kept at a high level.
 In Pull mode, karmada-agent of each member cluster needs to maintain a long connection with karmada-apiserver.
 We can easily conclude that the number of requests for karmada-apiserver will be N times that of configuration in karmada-agent(N=`#Num of clusters`).
-Therefore, in the scenario of a large number of Pull mode clusters, we recommand increasing the `--max-requests-inflight`, `--max-mutating-requests-inflight` in karmada-apiserver and `--quota-backend-bytes` in karmada-etcd to improve the throughout of the control plane.
+Therefore, in the scenario of a large number of Pull mode clusters, we recommend increasing the `--max-requests-inflight`, `--max-mutating-requests-inflight` in karmada-apiserver and `--quota-backend-bytes` in karmada-etcd to improve the throughout of the control plane.
 
 Now Karmada provides the ability named [cluster resource modeling](https://karmada.io/docs/next/userguide/scheduling/cluster-resources) to make scheduling decisions in scenario of dynamic replica assignment based on idle cluster resources.
 In the process of resource modeling, it will collect node and pod information from all clusters managed by Karmada. This imposes a considerable performance burden in large-scale scenarios.
