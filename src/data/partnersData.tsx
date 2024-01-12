@@ -3,7 +3,7 @@ import React from "react";
 
 import huawei from "../../static/img/supporters/huawei.png";
 import daocloud from "../../static/img/supporters/DaoCloud.png";
-import DSK from "../../static/img/supporters/DSK.png";
+import unionbigdata from "../../static/img/supporters/unionbigdata.png";
 
 const PartnersList = [
   {
@@ -27,11 +27,11 @@ const PartnersList = [
     ),
   },
   {
-    image: DSK,
-    title: "DSK",
+    image: unionbigdata,
+    title: "Unionbigdata",
     webURL: "https://www.unionbigdata.com/",
     description: (
-      <Translate id="partners.DSK.description">
+      <Translate id="partners.unionbigdata.description">
         Use Karmada to build a intelligent and distributed container platform with multi-policy and multi-region.
       </Translate>
     ),
