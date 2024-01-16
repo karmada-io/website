@@ -43,3 +43,4 @@ hide_table_of_contents: true
 | 数之联        | https://www.unionbigdata.com/ | 在 BOE 的工业智能检测平台 I3Plat 建设中使用 Karmada                                                           |                                                                                       |
 | 京东方        | https://www.boe.com/          | 在工业智能检测平台 I3Plat 建设中使用 Karmada                                                                 |                                                                                       |
 | 爱奇艺        | https://www.iq.com            | 使用 Karmada 在多云多集群间调度和管理工作负载                                                                     |                                                                                       |
+| 京东云        | https://www.jdcloud.com       | 基于Karmada进行多集群管理，调度以及资源分发和控制，基于karmada实现联邦集群级Operator。并实现跨集群服务发现，网络等功能。|                                                                              |
