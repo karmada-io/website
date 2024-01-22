@@ -49,6 +49,22 @@ kubectl config use-context host
 helm install karmada -n karmada-system ./charts/karmada
 ```
 
+If you install Karmada by Karmada Operator, you can execute the following command while installing Karmada components:
+
+```shell
+kubectl create namespace test
+kubectl apply -f - <<EOF
+apiVersion: operator.karmada.io/v1alpha1
+kind: Karmada
+metadata:
+  name: karmada-demo
+  namespace: test
+spec:
+  components:
+    KarmadaSearch: {}
+EOF
+```
+
 In addition, `karmadactl` supports one-click installation for `karmada-search`.
 ```shell
 karmadactl addons enable karmada-search
