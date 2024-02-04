@@ -52,7 +52,7 @@ Execute operations at `karmada-01`.
 
 Download the `kubernetes` binary package.
 
-Refer to this page to download binaries of different versions and architectures: <https://kubernetes.io/releases/download/#binaries>
+Refer to this page to download binaries of different versions and architectures: [https://kubernetes.io/releases/download/#binaries](https://kubernetes.io/releases/download/#binaries)
 
 ```bash
 wget https://dl.k8s.io/v1.23.3/kubernetes-server-linux-amd64.tar.gz
@@ -65,7 +65,7 @@ mv kube-apiserver kube-controller-manager kubectl /usr/local/sbin/
 
 Download the `etcd` binary package.
 
-You may want to use a newer version of etcd, please refer to this page: <https://etcd.io/docs/latest/install/>
+You may want to use a newer version of etcd, please refer to this page: [https://etcd.io/docs/latest/install/](https://etcd.io/docs/latest/install/)
 
 ```bash
 wget https://github.com/etcd-io/etcd/releases/download/v3.5.1/etcd-v3.5.1-linux-amd64.tar.gz
@@ -943,7 +943,7 @@ systemctl status karmada-webhook.service
 
 ### Configurate karmada-webhook
 
-Download the `webhook-configuration.yaml` file: <https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml>
+Download the `webhook-configuration.yaml` file: [https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml)
 
 ```bash
 ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
