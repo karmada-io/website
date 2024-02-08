@@ -120,7 +120,7 @@ FederatedResourceQuotaList contains a list of FederatedResourceQuota.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+GET /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}
 
 #### Parameters
 
@@ -144,7 +144,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}/status
 
 #### Parameters
 
@@ -168,7 +168,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+GET /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas
 
 #### Parameters
 
@@ -284,7 +284,7 @@ GET /apis/policy.karmada.io/v1alpha1/federatedresourcequotas
 
 #### HTTP Request
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+POST /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas
 
 #### Parameters
 
@@ -324,7 +324,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequ
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}
 
 #### Parameters
 
@@ -366,7 +366,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}/status
 
 #### Parameters
 
@@ -408,7 +408,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}
 
 #### Parameters
 
@@ -454,7 +454,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}/status
 
 #### Parameters
 
@@ -500,7 +500,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas/\{name\}
 
 #### Parameters
 
@@ -542,7 +542,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresource
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/\{namespace\}/federatedresourcequotas
 
 #### Parameters
 

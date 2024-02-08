@@ -222,7 +222,7 @@ CronFederatedHPAList contains a list of CronFederatedHPA.
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}
 
 #### Parameters
 
@@ -246,7 +246,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}/status
 
 #### Parameters
 
@@ -270,7 +270,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas
 
 #### Parameters
 
@@ -386,7 +386,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/cronfederatedhpas
 
 #### HTTP Request
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas
 
 #### Parameters
 
@@ -426,7 +426,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedh
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}
 
 #### Parameters
 
@@ -468,7 +468,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}/status
 
 #### Parameters
 
@@ -510,7 +510,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}
 
 #### Parameters
 
@@ -556,7 +556,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}/status
 
 #### Parameters
 
@@ -602,7 +602,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas/\{name\}
 
 #### Parameters
 
@@ -644,7 +644,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederate
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/\{namespace\}/cronfederatedhpas
 
 #### Parameters
 
