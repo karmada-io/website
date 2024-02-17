@@ -45,27 +45,21 @@ kubectl create deployment nginx --image nginx
 > Note: The resource exists only as a template in karmada. After being propagated to a member cluster, the behavior of the resource is the same as that of a single kubernetes cluster.
 
 > Note: Resources and PropagationPolicy are created in no sequence.
-   
 3. Display information of the deployment:
 ```shell
 karmadactl get deployment
 ```
 The output is similar to this:
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME    CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE   ADOPTION
 nginx   member1   1/1     1            1           52s   Y
 ```
-   
 4. List the pods created by the deployment:
 ```shell
 karmadactl get pod -l app=nginx
 ```
 The output is similar to this:
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-6799fc88d8-s7vv9   member1   1/1     Running   0          52s
 ```
@@ -97,15 +91,11 @@ kubectl apply -f propagationpolicy-update.yaml
 ```
 2. Display information of the deployment (the output is similar to this):
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME    CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE   ADOPTION
 nginx   member2   1/1     1            1           5s    Y
 ```
 3. List the pods of the deployment (the output is similar to this):
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-6799fc88d8-8t8cc   member2   1/1     Running   0          17s
 ```
@@ -118,15 +108,11 @@ You can update the deployment template. The changes will be automatically synchr
 1. Update deployment replicas to 2
 2. Display information of the deployment (the output is similar to this):
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME    CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE     ADOPTION
 nginx   member2   2/2     2            2           7m59s   Y
 ```
 3. List the pods of the deployment (the output is similar to this):
 ```shell
-The karmadactl get command now only supports the push mode. [ member3 ] is not running in push mode.
-
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-6799fc88d8-8t8cc   member2   1/1     Running   0          8m12s
 nginx-6799fc88d8-zpl4j   member2   1/1     Running   0          17s
