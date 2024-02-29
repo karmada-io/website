@@ -65,7 +65,7 @@ karmadactl init
       --crds string                                      Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz")
       --etcd-data string                                 etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
       --etcd-image string                                etcd image
-      --etcd-init-image string                           etcd init container image (default "docker.io/alpine:3.15.1")
+      --etcd-init-image string                           etcd init container image (default "docker.io/alpine:3.19.1")
       --etcd-node-selector-labels string                 etcd pod select the labels of the node. valid in hostPath mode ( e.g. --etcd-node-selector-labels karmada.io/etcd=true)
       --etcd-pvc-size string                             etcd data path,valid in pvc mode. (default "5Gi")
       --etcd-replicas int32                              etcd replica set, cluster 3,5...singular (default 1)
@@ -95,7 +95,7 @@ karmadactl init
       --karmada-webhook-replicas int32                   Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                 Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                       Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
-      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.25.4")
+      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.26.12")
       --kubeconfig string                                absolute path to the kubeconfig file
   -n, --namespace string                                 Kubernetes namespace (default "karmada-system")
   -p, --port int32                                       Karmada apiserver service node port (default 32443)
