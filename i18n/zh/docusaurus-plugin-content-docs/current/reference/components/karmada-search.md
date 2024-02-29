@@ -58,7 +58,7 @@ karmada-search [flags]
       --authorization-kubeconfig string                         kubeconfig file pointing at the 'core' kubernetes server with enough rights to create subjectaccessreviews.authorization.k8s.io.
       --authorization-webhook-cache-authorized-ttl duration     The duration to cache 'authorized' responses from the webhook authorizer. (default 10s)
       --authorization-webhook-cache-unauthorized-ttl duration   The duration to cache 'unauthorized' responses from the webhook authorizer. (default 10s)
-      --bind-address ip                                         The IP address on which to listen for the --secure-port port. The associated interface(s) must be reachable by the rest of the cluster, and by CLI/web clients. If blank or an unspecified address (0.0.0.0 or ::), all interfaces will be used. (default 0.0.0.0)
+      --bind-address ip                                         The IP address on which to listen for the --secure-port port. The associated interface(s) must be reachable by the rest of the cluster, and by CLI/web clients. If blank or an unspecified address (0.0.0.0 or ::), all interfaces and IP address families will be used. (default 0.0.0.0)
       --cert-dir string                                         The directory where the TLS certs are located. If --tls-cert-file and --tls-private-key-file are provided, this flag will be ignored. (default "apiserver.local.config/certificates")
       --client-ca-file string                                   If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate.
       --contention-profiling                                    Enable block profiling, if profiling is enabled
@@ -90,20 +90,22 @@ karmada-search [flags]
                                                                 APIResponseCompression=true|false (BETA - default=true)
                                                                 APIServerIdentity=true|false (BETA - default=true)
                                                                 APIServerTracing=true|false (BETA - default=true)
-                                                                AdmissionWebhookMatchConditions=true|false (ALPHA - default=false)
+                                                                AdmissionWebhookMatchConditions=true|false (BETA - default=true)
                                                                 AggregatedDiscoveryEndpoint=true|false (BETA - default=true)
                                                                 AllAlpha=true|false (ALPHA - default=false)
                                                                 AllBeta=true|false (BETA - default=false)
                                                                 ComponentSLIs=true|false (BETA - default=true)
+                                                                ConsistentListFromCache=true|false (ALPHA - default=false)
                                                                 CustomResourceValidationExpressions=true|false (BETA - default=true)
                                                                 InPlacePodVerticalScaling=true|false (ALPHA - default=false)
                                                                 KMSv2=true|false (BETA - default=true)
+                                                                KMSv2KDF=true|false (BETA - default=false)
                                                                 OpenAPIEnums=true|false (BETA - default=true)
                                                                 RemainingItemCount=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
                                                                 UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=false)
-                                                                ValidatingAdmissionPolicy=true|false (ALPHA - default=false)
+                                                                ValidatingAdmissionPolicy=true|false (BETA - default=false)
                                                                 WatchList=true|false (ALPHA - default=false)
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default. (default 1000)

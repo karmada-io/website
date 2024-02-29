@@ -7,7 +7,7 @@ title: karmada-controller-manager
 ### Synopsis
 
 The karmada-controller-manager runs various controllers.
-The controllers watch Karmada objects and then talk to the underlying clusters' API servers 
+The controllers watch Karmada objects and then talk to the underlying clusters' API servers
 to create regular Kubernetes resources.
 
 ```
@@ -42,7 +42,7 @@ karmada-controller-manager [flags]
       --concurrent-resourcebinding-syncs int                           The number of ResourceBindings that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. 
-                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, endpointSlice, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaReplicasSyncer, multiclusterservice, namespace, serviceExport, serviceImport, unifiedAuth, workStatus.
+                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaReplicasSyncer, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus.
                                                                        Disabled-by-default controllers: hpaReplicasSyncer (default [*])
       --enable-cluster-resource-modeling                               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
@@ -56,8 +56,10 @@ karmada-controller-manager [flags]
                                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                        Failover=true|false (BETA - default=true)
                                                                        GracefulEviction=true|false (BETA - default=true)
+                                                                       MultiClusterService=true|false (ALPHA - default=false)
                                                                        PropagateDeps=true|false (BETA - default=true)
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
+                                                                       ResourceQuotaEstimate=true|false (ALPHA - default=false)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
   -h, --help                                                           help for karmada-controller-manager
       --horizontal-pod-autoscaler-cpu-initialization-period duration   The period after pod start when CPU samples might be skipped. (default 5m0s)
