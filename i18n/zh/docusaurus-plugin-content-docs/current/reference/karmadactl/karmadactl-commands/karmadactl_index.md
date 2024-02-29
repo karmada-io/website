@@ -60,12 +60,12 @@ title: Karmadactl Commands
  will first check for an exact match on TYPE and NAME_PREFIX. If no such resource exists, it will output details for every resource that has a name prefixed with NAME_PREFIX.
 * [karmadactl exec](karmadactl_exec.md)	 - Execute a command in a container in a cluster.
 * [karmadactl interpret](karmadactl_interpret.md)	 - Validate, test and edit interpreter customization before applying it to the control plane.
-  
-  1. Validate the ResourceInterpreterCustomization configuration as per API schema
-  and try to load the scripts for syntax check.
-  
-  2. Run the rules locally and test if the result is expected. Similar to the dry run.
-  
+        
+        1. Validate the ResourceInterpreterCustomization configuration as per API schema
+        and try to load the scripts for syntax check.
+        
+        2. Run the rules locally and test if the result is expected. Similar to the dry run.
+        
   1.  Edit customization. Similar to the kubectl edit.
 * [karmadactl logs](karmadactl_logs.md)	 - Print the logs for a container in a pod in a member cluster or specified resource. If the pod has only one container, the container name is optional.
 

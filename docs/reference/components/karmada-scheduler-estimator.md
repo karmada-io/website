@@ -21,6 +21,16 @@ karmada-scheduler-estimator [flags]
       --bind-address string              The IP address on which to listen for the --secure-port port. (default "0.0.0.0")
       --cluster-name string              Name of member cluster that the estimator serves for.
       --enable-pprof                     Enable profiling via web interface host:port/debug/pprof/.
+      --feature-gates mapStringBool      A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
+                                         AllAlpha=true|false (ALPHA - default=false)
+                                         AllBeta=true|false (BETA - default=false)
+                                         CustomizedClusterResourceModeling=true|false (BETA - default=true)
+                                         Failover=true|false (BETA - default=true)
+                                         GracefulEviction=true|false (BETA - default=true)
+                                         MultiClusterService=true|false (ALPHA - default=false)
+                                         PropagateDeps=true|false (BETA - default=true)
+                                         PropagationPolicyPreemption=true|false (ALPHA - default=false)
+                                         ResourceQuotaEstimate=true|false (ALPHA - default=false)
   -h, --help                             help for karmada-scheduler-estimator
       --kube-api-burst int               Burst to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 30)
       --kube-api-qps float32             QPS to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 20)

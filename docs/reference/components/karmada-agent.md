@@ -7,7 +7,7 @@ title: karmada-agent
 ### Synopsis
 
 The karmada-agent is the agent of member clusters. It can register a specific cluster to the Karmada control
-plane and sync manifests from the Karmada control plane to the member cluster. In addition, it also syncs the status of member 
+plane and sync manifests from the Karmada control plane to the member cluster. In addition, it also syncs the status of member
 cluster and manifests to the Karmada control plane.
 
 ```
@@ -38,7 +38,7 @@ karmada-agent [flags]
       --cluster-zones strings                          The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
       --concurrent-cluster-syncs int                   The number of Clusters that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                      The number of Works that are allowed to sync concurrently. (default 5)
-      --controllers strings                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. All controllers: certRotation, clusterStatus, execution, serviceExport, workStatus. (default [*])
+      --controllers strings                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. All controllers: certRotation, clusterStatus, endpointsliceCollect, execution, serviceExport, workStatus. (default [*])
       --enable-cluster-resource-modeling               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
                                                        Disable if it does not fit your cases for better performance. (default true)
@@ -49,8 +49,10 @@ karmada-agent [flags]
                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                        Failover=true|false (BETA - default=true)
                                                        GracefulEviction=true|false (BETA - default=true)
+                                                       MultiClusterService=true|false (ALPHA - default=false)
                                                        PropagateDeps=true|false (BETA - default=true)
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
+                                                       ResourceQuotaEstimate=true|false (ALPHA - default=false)
   -h, --help                                           help for karmada-agent
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.
       --karmada-kubeconfig string                      Path to karmada control plane kubeconfig file.
