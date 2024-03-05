@@ -425,6 +425,10 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   *ReplicaRequirements represents the requirements required by each replica.*
 
+  - **replicaRequirements.namespace** (string)
+
+    Namespace represents the resources namespaces
+
   - **replicaRequirements.nodeClaim** (NodeClaim)
 
     NodeClaim represents the node claim HardNodeAffinity, NodeSelector and Tolerations required by each replica.
@@ -497,6 +501,10 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
       - **replicaRequirements.nodeClaim.tolerations.value** (string)
 
         Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+
+  - **replicaRequirements.priorityClassName** (string)
+
+    PriorityClassName represents the resources priorityClassName
 
   - **replicaRequirements.resourceRequest** (map[string][Quantity](../common-definitions/quantity#quantity))
 

@@ -66,6 +66,14 @@ PropagationPolicy represents the policy that propagates a group of resources to 
 
       Namespace of the target resource. Default is empty, which means inherit from the parent object scope.
 
+  - **spec.activationPreference** (string)
+
+    ActivationPreference indicates how the referencing resource template will be propagated, in case of policy changes.
+    
+    If empty, the resource template will respond to policy changes immediately, in other words, any policy changes will drive the resource template to be propagated immediately as per the current propagation rules.
+    
+    If the value is 'Lazy' means the policy changes will not take effect for now but defer to the resource template changes, in other words, the resource template will not be propagated as per the current propagation rules until there is an update on it. This is an experimental feature that might help in a scenario where a policy manages huge amount of resource templates, changes to a policy typically affect numerous applications simultaneously. A minor misconfiguration could lead to widespread failures. With this feature, the change can be gradually rolled out through iterative modifications of resource templates.
+
   - **spec.association** (boolean)
 
     Association tells if relevant resources should be selected automatically. e.g. a ConfigMap referred by a Deployment. default false. Deprecated: in favor of PropagateDeps.

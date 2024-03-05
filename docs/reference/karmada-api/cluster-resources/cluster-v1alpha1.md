@@ -322,6 +322,10 @@ ClusterStatus contains information about the current status of a cluster updated
 
     TotalNum is the total number of nodes in the cluster.
 
+- **remedyActions** ([]string)
+
+  RemedyActions represents the remedy actions that needs to be performed on the cluster.
+
 - **resourceSummary** (ResourceSummary)
 
   ResourceSummary represents the summary of resources in the member cluster.
