@@ -52,7 +52,7 @@ vi /etc/hosts
 
 下载 `kubernetes` 二进制文件包。
 
-参阅本页下载不同版本和不同架构的二进制文件：<https://kubernetes.io/releases/download/#binaries>
+参阅本页下载不同版本和不同架构的二进制文件：[https://kubernetes.io/releases/download/#binaries](https://kubernetes.io/releases/download/#binaries)
 
 ```bash
 wget https://dl.k8s.io/v1.23.3/kubernetes-server-linux-amd64.tar.gz
@@ -65,7 +65,7 @@ mv kube-apiserver kube-controller-manager kubectl /usr/local/sbin/
 
 下载 `etcd` 二进制文件包。
 
-若要使用较新版本的 etcd，请参阅：<https://etcd.io/docs/latest/install/>
+若要使用较新版本的 etcd，请参阅：[https://etcd.io/docs/latest/install/](https://etcd.io/docs/latest/install/)
 
 ```bash
 wget https://github.com/etcd-io/etcd/releases/download/v3.5.1/etcd-v3.5.1-linux-amd64.tar.gz
@@ -946,7 +946,7 @@ systemctl status karmada-webhook.service
 
 ### 配置 karmada-webhook
 
-下载 `webhook-configuration.yaml` 文件：<https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml>
+下载 `webhook-configuration.yaml` 文件：[https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml)
 
 ```bash
 ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
