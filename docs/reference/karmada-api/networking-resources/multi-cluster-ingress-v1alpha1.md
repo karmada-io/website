@@ -202,67 +202,89 @@ MultiClusterIngress is a collection of rules that allow inbound connections to r
 
       secretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the "Host" header is used for routing.
 
-- **status** (IngressStatus)
+- **status** ([MultiClusterIngressStatus](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringressstatus))
 
   Status is the current state of the MultiClusterIngress.
 
-  <a name="IngressStatus"></a>
+## MultiClusterIngressStatus 
 
-  *IngressStatus describe the current state of the Ingress.*
+MultiClusterIngressStatus is the current state of the MultiClusterIngress.
 
-  - **status.loadBalancer** (IngressLoadBalancerStatus)
+<hr/>
 
-    loadBalancer contains the current status of the load-balancer.
+- **loadBalancer** (IngressLoadBalancerStatus)
 
-    <a name="IngressLoadBalancerStatus"></a>
+  loadBalancer contains the current status of the load-balancer.
 
-    *IngressLoadBalancerStatus represents the status of a load-balancer.*
+  <a name="IngressLoadBalancerStatus"></a>
 
-    - **status.loadBalancer.ingress** ([]IngressLoadBalancerIngress)
+  *IngressLoadBalancerStatus represents the status of a load-balancer.*
 
-      ingress is a list containing ingress points for the load-balancer.
+  - **loadBalancer.ingress** ([]IngressLoadBalancerIngress)
 
-      <a name="IngressLoadBalancerIngress"></a>
+    ingress is a list containing ingress points for the load-balancer.
 
-      *IngressLoadBalancerIngress represents the status of a load-balancer ingress point.*
+    <a name="IngressLoadBalancerIngress"></a>
 
-      - **status.loadBalancer.ingress.hostname** (string)
+    *IngressLoadBalancerIngress represents the status of a load-balancer ingress point.*
 
-        hostname is set for load-balancer ingress points that are DNS based.
+    - **loadBalancer.ingress.hostname** (string)
 
-      - **status.loadBalancer.ingress.ip** (string)
+      hostname is set for load-balancer ingress points that are DNS based.
 
-        ip is set for load-balancer ingress points that are IP based.
+    - **loadBalancer.ingress.ip** (string)
 
-      - **status.loadBalancer.ingress.ports** ([]IngressPortStatus)
+      ip is set for load-balancer ingress points that are IP based.
 
-        *Atomic: will be replaced during a merge*
+    - **loadBalancer.ingress.ports** ([]IngressPortStatus)
+
+      *Atomic: will be replaced during a merge*
+      
+      ports provides information about the ports exposed by this LoadBalancer.
+
+      <a name="IngressPortStatus"></a>
+
+      *IngressPortStatus represents the error condition of a service port*
+
+      - **loadBalancer.ingress.ports.port** (int32), required
+
+        port is the port number of the ingress port.
+
+      - **loadBalancer.ingress.ports.protocol** (string), required
+
+        protocol is the protocol of the ingress port. The supported values are: "TCP", "UDP", "SCTP"
         
-        ports provides information about the ports exposed by this LoadBalancer.
+        Possible enum values:
+         - `"SCTP"` is the SCTP protocol.
+         - `"TCP"` is the TCP protocol.
+         - `"UDP"` is the UDP protocol.
 
-        <a name="IngressPortStatus"></a>
+      - **loadBalancer.ingress.ports.error** (string)
 
-        *IngressPortStatus represents the error condition of a service port*
+        error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
+          CamelCase names
+        - cloud provider specific error values must have names that comply with the
+          format foo.example.com/CamelCase.
 
-        - **status.loadBalancer.ingress.ports.port** (int32), required
+- **serviceLocations** ([]ServiceLocation)
 
-          port is the port number of the ingress port.
+  ServiceLocations records the locations of MulticlusterIngress's backend Service resources. It will be set by the system controller.
 
-        - **status.loadBalancer.ingress.ports.protocol** (string), required
+  <a name="ServiceLocation"></a>
 
-          protocol is the protocol of the ingress port. The supported values are: "TCP", "UDP", "SCTP"
-          
-          Possible enum values:
-           - `"SCTP"` is the SCTP protocol.
-           - `"TCP"` is the TCP protocol.
-           - `"UDP"` is the UDP protocol.
+  *ServiceLocation records the locations of MulticlusterIngress's backend Service resources.*
 
-        - **status.loadBalancer.ingress.ports.error** (string)
+  - **serviceLocations.name** (string), required
 
-          error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
-            CamelCase names
-          - cloud provider specific error values must have names that comply with the
-            format foo.example.com/CamelCase.
+    name is the referenced service. The service must exist in the same namespace as the MultiClusterService object.
+
+  - **serviceLocations.clusters** ([]string)
+
+    Clusters records the cluster list where the Service is located.
+
+- **trafficBlockClusters** ([]string)
+
+  TrafficBlockClusters records the cluster name list that needs to perform traffic block. When the cloud provider implements its multicluster-cloud-provider and refreshes the service backend address to the LoadBalancer Service, it needs to filter out the backend addresses in these clusters.
 
 ## MultiClusterIngressList 
 
