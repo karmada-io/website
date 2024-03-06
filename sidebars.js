@@ -414,16 +414,6 @@ module.exports = {
                         },
                         {
                             type: "category",
-                            label: "Remedy Resources",
-                            link: {
-                                type: 'generated-index',
-                            },
-                            items: [
-                                "reference/karmada-api/remedy-resources/remedy-v1alpha1",
-                            ],
-                        },
-                        {
-                            type: "category",
                             label: "Search Resources",
                             link: {
                                 type: 'generated-index',
