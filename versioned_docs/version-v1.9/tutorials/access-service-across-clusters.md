@@ -21,6 +21,22 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 
 Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
 
+### Enable MultiClusterService in karmada-controller-manager
+
+To enable the MultiClusterService feature in the karmada-controller-manager, run the following command:
+
+```shell
+$ kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
+```
+
+Please note that the MultiClusterService feature is disabled by default and can be enabled using the `--feature-gates=MultiClusterService=true` flag.
+
+If you prefer a more cautious approach, follow these steps:
+
+1. Run `kubectl --context karmada-host edit deploy karmada-controller-manager -n karmada-system`
+2. Check if `--feature-gates=MultiClusterService=true` is present in the `spec.template.spec.containers[0].command` field.
+3. If not, add `--feature-gates=MultiClusterService=true` to enable the feature.
+
 ## Deploy deployment in `member1` cluster
 
 We need to deploy deployment in `member1` cluster:
