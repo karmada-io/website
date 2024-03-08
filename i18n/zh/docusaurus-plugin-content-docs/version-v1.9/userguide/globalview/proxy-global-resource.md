@@ -4,9 +4,9 @@ title: Proxy Global Resources
 
 ## Introduce
 
-The newly introduced [proxy](https://github.com/karmada-io/karmada/blob/master/docs/proposals/resource-aggregation-proxy/README.md) feature allows users to access all the resources both in karmada controller panel and member clusters. With it, users can:
+The newly introduced [proxy](https://github.com/karmada-io/karmada/blob/master/docs/proposals/resource-aggregation-proxy/README.md) feature allows users to access all the resources both in karmada control plane and member clusters. With it, users can:
 
-- create, update, patch, get, list, watch and delete resources in controller panel, such as deployments and jobs. All the request behaviors are supported, just like using `karmada-apiserver`.
+- create, update, patch, get, list, watch and delete resources in karmada control plane, such as deployments and jobs. All the request behaviors are supported, just like using `karmada-apiserver`.
 - update, patch, get, list, watch and delete resources in member clusters, such as pods, nodes, and customer resources.
 - access subresources, such as pods' `log` and `exec`.
 
@@ -22,23 +22,13 @@ For Karmada deployed using `hack/local-up-karmada.sh`, you can directly copy it 
 cp $HOME/.kube/karmada.config $HOME/karmada-proxy.config
 ```
 
-### Step2: Access by proxy
+### Step2: Define Resource To be Proxied
 
-Append `/apis/search.karmada.io/v1alpha1/proxying/karmada/proxy` to the server address of `karmada-proxy.config`. Then set this file as default config:
-
-```shell
-export KUBECONFIG=$HOME/karmada-proxy.config
-```
-
-### Step3: Define Resource To be Proxied
-
-Define which member cluster resource you want to be proxied with [`ResourceRegistry`](https://github.com/karmada-io/karmada/tree/master/docs/proposals/caching#define-the-scope-of-the-cached-resource). 
-
-For example:
+Define which member cluster resource you want to be proxied with [`ResourceRegistry`](https://github.com/karmada-io/karmada/tree/master/docs/proposals/caching#define-the-scope-of-the-cached-resource) by applying the following Yaml file in the karmada-apiserver:
 
 ```yaml
 apiVersion: search.karmada.io/v1alpha1
-kind:  ResourceRegistry
+kind: ResourceRegistry
 metadata:
   name: proxy-sample
 spec:
@@ -51,7 +41,37 @@ spec:
       kind: Node
 ```
 
-After applying it, you can access pods and nodes with kubectl. Enjoy it!
+```shell
+$ kubectl --context karmada-apiserver apply -f resourceregistry.yaml
+```
+
+Based on the ResourceRegistry above, you can access pods and nodes with proxy function.
+
+### Step2: Access by proxy
+
+Append `/apis/search.karmada.io/v1alpha1/proxying/karmada/proxy` to the server address of `karmada-proxy.config`. Then set this file as default config:
+
+```shell
+export KUBECONFIG=$HOME/karmada-proxy.config
+```
+
+After processing the above steps, you can access pods and nodes with kubectl.
+
+Taking getting the pod log as an example, you can use the following command:
+
+```shell
+$ kubectl get --raw /apis/search.karmada.io/v1alpha1/proxying/karmada/proxy/api/v1/namespaces/<ns>/pods/<pod-name>/log
+```
+
+or:
+
+```shell
+$ kubectl  logs <pod-name> -n <namespace-name>
+```
+
+Enjoy it!
+
+> Note: Use the current ability to rely on the Cluster's impersonator Secret. Please ensure that the correct `impersonatorSecretRef` is set in the Cluster object.
 
 ## FAQ
 
