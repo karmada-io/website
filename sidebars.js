@@ -222,7 +222,8 @@ module.exports = {
                 "developers/performance-test-setup-for-karmada",
                 "developers/releasing",
                 "developers/customize-karmada-scheduler",
-                "developers/document-releasing"
+                "developers/document-releasing",
+                "developers/add-new-api"
             ],
         },
         {
