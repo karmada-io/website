@@ -4,6 +4,9 @@ import React from "react";
 import huawei from "../../static/img/supporters/huawei.png";
 import daocloud from "../../static/img/supporters/DaoCloud.png";
 import unionbigdata from "../../static/img/supporters/unionbigdata.png";
+import cecloud from "../../static/img/supporters/CECloud.png"
+import neen from "../../static/img/supporters/neen.png"
+import chinaunicom from "../../static/img/supporters/chinaunicom.png"
 
 const PartnersList = [
   {
@@ -34,6 +37,36 @@ const PartnersList = [
       <Translate id="partners.unionbigdata.description">
         Use Karmada to build a intelligent and distributed container platform with multi-policy and multi-region.
       </Translate>
+    ),
+  },
+  {
+    image: cecloud,
+    title: "CECloud",
+    webURL: "https://cecloud.com/",
+    description: (
+        <Translate id="partners.cecloud.description">
+          Use Karmada to build multi-cluster platform.
+        </Translate>
+    ),
+  },
+  {
+    image: neen,
+    title: "Neen S.p.A",
+    webURL: "https://www.neen.it/",
+    description: (
+        <Translate id="partners.neen.description">
+          Use Karmada to manage failover in a multi-region cluster.
+        </Translate>
+    ),
+  },
+  {
+    image: chinaunicom,
+    title: "Unicom Digital Tech",
+    webURL: "https://www.chinaunicom.com.cn/",
+    description: (
+        <Translate id="partners.chinaunicom.description">
+          Use Karmada to build a intelligent and distributed container platform with multi-policy and multi-region.
+        </Translate>
     ),
   },
   // Add more partners information...
