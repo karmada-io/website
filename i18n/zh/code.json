@@ -202,5 +202,14 @@
   },
   "partners.unionbigdata.description": {
     "message": "使用 Karmada 构建多策略和多地域的智能分布式容器平台。"
+  },
+  "partners.cecloud.description": {
+    "message": "使用 Karmada 构建多集群平台。"
+  },
+  "partners.neen.description": {
+    "message": "使用 Karmada 管理多 region 集群中的故障切换。"
+  },
+  "partners.chinaunicom.description": {
+    "message": "使用 Karmada 构建多策略和多地域的智能分布式容器平台。"
   }
 }
