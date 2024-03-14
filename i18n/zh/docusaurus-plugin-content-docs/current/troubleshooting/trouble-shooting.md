@@ -83,3 +83,105 @@ Kubernetes 社区为了提高 token 使用的安全性和可扩展性，提出�
 随着`BoundServiceAccountTokenVolume`特性的GA，Kubernetes 社区认为已经没必要为 ServiceAccount 自动生成 token 了，因为这样并不安全，于是又提出了[KEP-2799](https://github.com/kubernetes/enhancements/tree/master/keps/sig-auth/2799-reduction-of-secret-based-service-account-token)，这个 KEP 的一个目的是不再为 ServiceAccount 自动生成 token Secret，另外一个目的是要清除未被使用的 ServiceAccount 产生的 token Secret。
 
 对于第一个目的，社区提供了`LegacyServiceAccountTokenNoAutoGeneration`特性开关，该特性开关在 Kubernetes 1.24 版本中已进入 Beta 阶段，这也正是 Karmada 控制面无法生成 token Secret 的原因。当然了，如果用户仍想使用之前的方式，为 ServiceAccount 生成 Secret，可以参考[此处](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#manually-create-an-api-token-for-a-serviceaccount)进行操作。
+
+## 因 "cluster(s) did not have the API resource" 调度失败
+
+**Karmada 的 detector 组件对于资源模板只关注 karmada-apiserver 首选版本。**
+
+假设 karmada-apiserver 是 v1.25 版本，则其 HPA 资源同时具有 `autoscaling/v1` 和 `autoscaling/v2` 版本。
+但是，由于 HPA 的首选版本是 `autoscaling/v2`，因此 detector 只会 list/watch `autoscaling/v2` 版本的 HPA。
+如果用户创建的是 `autoscaling/v1` 版本的 HPA 资源模板，kubernetes 会产生这两个版本 HPA 的创建事件，
+但 detector 只监听和处理 `autoscaling/v2` 版本 HPA 的创建事件。
+
+在此背景下，您需要注意以下两点：
+
+* **在编写 PropagationPolicy 时，其 `resourceSelector` 字段仅支持筛选该资源的首选版本。**
+* **成员集群 apiserver 也应支持该资源的首选版本。**
+
+
+更详细地说，还是以 HPA 为例，您被推荐在资源模板和 PropagationPolicy 中都使用 HPA 首选版本，即 `autoscaling/v2`，例如：
+
+<details>
+<summary>propagate autoscaling/v2 by select autoscaling/v2</summary>
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-hpa
+  namespace: default
+spec:
+  behavior:
+    scaleUp:
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+        - type: Pods
+          value: 4
+          periodSeconds: 15
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
+  maxReplicas: 10
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: d1
+---
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: tetst-hpa-pp
+spec:
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+  resourceSelectors:
+    - apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      name: test-hpa
+      namespace: default
+```
+</details>
+
+然而，如果您坚持要使用 `autoscaling/v1` 版本的 HPA 资源模板，通过在 PropagationPolicy 中的 `resourceSelector` 字段声明
+筛选版本为 `autoscaling/v2` 的 HPA 资源，也能实现成功分发，例如：
+
+<details>
+<summary>propagate autoscaling/v1 by select autoscaling/v2</summary>
+
+```yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: test-hpa
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx
+  targetCPUUtilizationPercentage: 10
+---
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: test-hpa-pp
+spec:
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+  resourceSelectors:
+    - apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+      name: test-hpa
+      namespace: default
+```
+</details>
+
+最终，Karmada 会将 `autoscaling/v2` 版本的 HPA 下发到成员集群 ，如果您的成员集群不支持 `autoscaling/v2` 版本的 HPA，
+您会得到例如 "cluster(s) did not have the API resource" 的调度失败报错事件。
