@@ -111,7 +111,7 @@ Docusaurus 2 使用一个侧边栏来管理文档。
 * 为每个文档显示侧边栏
 * 提供分页导航，有 Next/Previous 按钮
 
-对于 Karmada 文档，你可以查阅 <https://github.com/karmada-io/website/blob/main/sidebars.js> 了解文档的组成结构。
+对于 Karmada 文档，你可以查阅 [https://github.com/karmada-io/website/blob/main/sidebars.js](https://github.com/karmada-io/website/blob/main/sidebars.js) 了解文档的组成结构。
 
 ```
 module.exports = {
@@ -158,7 +158,7 @@ items: [
 
 贡献中文文档有以下两种情况：
 * 你想将现有的英文文档翻译成中文。
-  在这种情况下，你需要修改 <https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current> 中相应的文件内容。
+  在这种情况下，你需要修改 [https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current](https://github.com/karmada-io/website/tree/main/i18n/zh/docusaurus-plugin-content-docs/current) 中相应的文件内容。
   该目录的组织结构与英文完全相同。`current.json` 保存文档目录的中文译稿。如果要翻译目录名称，可以对其进行编辑。
 * 你想贡献没有英文版本的中文文档。任何类型的文章都是受欢迎的。
   在这种情况下，你可以先将文章和标题添加到英文目录。

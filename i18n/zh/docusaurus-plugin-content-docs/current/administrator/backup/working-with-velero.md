@@ -90,7 +90,7 @@ Velero 由两个部分组成。
 
   我们将使用 `velero install` 来设置服务器组件。
 
-  关于如何使用 `MinIO` 和 `Velero` 来备份资源的更多细节，请参考：<https://velero.io/docs/v1.7/contributions/minio/>
+  关于如何使用 `MinIO` 和 `Velero` 来备份资源的更多细节，请参考：[https://velero.io/docs/v1.7/contributions/minio/](https://velero.io/docs/v1.7/contributions/minio/)
 
   1. 在你的本地目录中创建一个 Velero 专用的证书文件（credentials-velero）:
 
@@ -281,5 +281,5 @@ nginx   2/2     2            2           10s
 
 以上关于 "Velero " 和 "MinIO " 的介绍只是来自官方网站和仓库的摘要，更多细节请参考：
 
-- Velero: <https://velero.io/>
-- MinIO: <https://min.io/>
+- Velero: [https://velero.io/](https://velero.io/)
+- MinIO: [https://min.io/](https://min.io/)
