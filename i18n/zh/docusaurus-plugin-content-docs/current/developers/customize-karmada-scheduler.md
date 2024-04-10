@@ -21,6 +21,7 @@ Karmada默认的调度器有几个内置的插件：
 * ClusterAffinity: 一个过滤和打分插件，用于实现集群的亲和性调度，支持通过names、labels、cluster的字段进行集群过滤。
 * SpreadConstraint: 一个过滤插件，用于检查集群是否满足调度策略的分发属性。
 * ClusterLocality: 一个打分插件，用于检查集群是否已存在被调度的资源，实现资源的聚合调度。
+* ClusterEviction: 一个过滤插件，用于检查目标集群是否在 `GracefulEvictionTasks` 中，这意味着该集群正处于被驱逐的过程中。
 
 用户可以基于自身的场景自定义插件，并且通过Karmada的调度器框架实现自身的调度器。
 以下给出了一个自定义开发调度器的具体例子。
@@ -45,6 +46,7 @@ hack/local-up-karmada.sh
 .
 ├── apienablement
 ├── clusteraffinity
+├── clustereviction
 ├── clusterlocality
 ├── spreadconstraint
 ├── tainttoleration
@@ -155,13 +157,14 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/k
 当你启动调度器后，你可以从调度器的日志中发现`TestFilter`插件已启用。
 
 ```
-I0105 09:50:11.809137       1 scheduler.go:109] karmada-scheduler version: version.Info{GitVersion:"v1.4.0-141-g119cb8e1", GitCommit:"119cb8e1e8be0142ca3d32c619c25e5ec4b0a1b6", GitTreeState:"dirty", BuildDate:"2023-01-05T09:42:41Z", GoVersion:"go1.19.3", Compiler:"gc", Platform:"linux/amd64"}
-I0105 09:50:11.813339       1 registry.go:63] Enable Scheduler plugin "SpreadConstraint"
-I0105 09:50:11.813470       1 registry.go:63] Enable Scheduler plugin "ClusterLocality"
-I0105 09:50:11.813483       1 registry.go:63] Enable Scheduler plugin "TestFilter"
-I0105 09:50:11.813489       1 registry.go:63] Enable Scheduler plugin "APIEnablement"
-I0105 09:50:11.813545       1 registry.go:63] Enable Scheduler plugin "TaintToleration"
-I0105 09:50:11.813596       1 registry.go:63] Enable Scheduler plugin "ClusterAffinity"
+I0408 12:57:14.563522       1 scheduler.go:141] karmada-scheduler version: version.Info{GitVersion:"v1.9.0-preview5", GitCommit:"0126b90fc89d2f5509842ff8dc7e604e84288b96", GitTreeState:"clean", BuildDate:"2024-01-29T13:29:49Z", GoVersion:"go1.20.11", Compiler:"gc", Platform:"linux/amd64"}
+I0408 12:57:14.564979       1 registry.go:79] Enable Scheduler plugin "ClusterAffinity"
+I0408 12:57:14.564991       1 registry.go:79] Enable Scheduler plugin "SpreadConstraint"
+I0408 12:57:14.564996       1 registry.go:79] Enable Scheduler plugin "ClusterLocality"
+I0408 12:57:14.564999       1 registry.go:79] Enable Scheduler plugin "ClusterEviction"
+I0408 12:57:14.565002       1 registry.go:79] Enable Scheduler plugin "APIEnablement"
+I0408 12:57:14.565005       1 registry.go:79] Enable Scheduler plugin "TaintToleration"
+I0408 12:57:14.565008       1 registry.go:79] Enable Scheduler plugin "TestFilter"
 ```
 
 ## 配置插件的启停
