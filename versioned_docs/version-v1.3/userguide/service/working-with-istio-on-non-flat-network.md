@@ -215,7 +215,7 @@ kubectl config use-context member2
 Prepare member2 cluster secret
 
 ```bash
-istioctl x create-remote-secret --name=member2 > istio-remote-secret-member2.yaml
+istioctl create-remote-secret --name=member2 > istio-remote-secret-member2.yaml
 ```
 
 Switch to `member1`:

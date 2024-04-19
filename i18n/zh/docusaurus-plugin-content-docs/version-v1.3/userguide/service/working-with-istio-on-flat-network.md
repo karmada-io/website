@@ -199,7 +199,7 @@ kubectl config use-context member1
 
 2. Create istio remote secret for member1:
 ```bash
-istioctl x create-remote-secret --name=member1 > istio-remote-secret-member1.yaml
+istioctl create-remote-secret --name=member1 > istio-remote-secret-member1.yaml
 ```
 
 ### Prepare member2 cluster secret
@@ -212,7 +212,7 @@ kubectl config use-context member2
 
 2. Create istio remote secret for member1:
 ```bash
-istioctl x create-remote-secret --name=member2 > istio-remote-secret-member2.yaml
+istioctl create-remote-secret --name=member2 > istio-remote-secret-member2.yaml
 ```
 
 ### Apply istio remote secret
