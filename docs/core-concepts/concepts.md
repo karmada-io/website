@@ -10,7 +10,7 @@ Karmada uses the Kubernetes Native API definition for the federated resource tem
 
 ## Propagation Policy
 
-Karmada offers a standalone Propagation(placement) Policy API to define multi-cluster scheduling and spreading requirements.
+Karmada offers a standalone Propagation (placement) Policy API to define multi-cluster scheduling and spreading requirements.
 
 - Support 1:n mapping of policy: workload. Users don't need to indicate scheduling constraints every time creating federated applications.
 
