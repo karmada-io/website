@@ -42,7 +42,7 @@ Much like k8s scheduling, Karmada support different scheduling policy. The overa
 
 ![overall-relationship.png](../resources/key-features/overall-scheduling.png)
 
-If one cluster does not have enough resource to accommodate their pods, Karamda will reschedule the pods. The overall rescheduling process is shown in the following figure:  
+If one cluster does not have enough resource to accommodate their pods, Karmada will reschedule the pods. The overall rescheduling process is shown in the following figure:  
 
 ![overall-relationship.png](../resources/key-features/overall-rescheduling.png)
 
