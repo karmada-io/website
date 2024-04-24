@@ -1,5 +1,5 @@
 ---
-title: FAQ(Frequently Asked Questions)
+title: FAQ (Frequently Asked Questions)
 ---
 
 ## What is the difference between PropagationPolicy and ClusterPropagationPolicy?
