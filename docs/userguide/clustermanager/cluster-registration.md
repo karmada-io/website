@@ -5,7 +5,7 @@ title: Cluster Registration
 ## Overview of cluster mode
 
 Karmada supports both `Push` and `Pull` modes to manage the member clusters.
-The main difference between `Push` and `Pull` modes is the way access to member clusters when deploying manifests.
+The main difference between `Push` and `Pull` modes is the way they access member clusters when deploying manifests.
 
 ### Push mode
 Karmada control plane will access member cluster's `kube-apiserver` directly to get cluster status and deploy manifests.
@@ -13,14 +13,14 @@ Karmada control plane will access member cluster's `kube-apiserver` directly to 
 ### Pull mode
 Karmada control plane will not access member cluster but delegate it to an extra component named `karmada-agent`.
 
-Each `karmada-agent` serves a cluster and take responsibility for:
-- Register cluster to Karmada(creates the `Cluster` object)
-- Maintains cluster status and reports to Karmada(updates the status of `Cluster` object)
-- Watch manifests from Karmada execution space(namespace, `karmada-es-<cluster name>`) and deploy the watched resources to the cluster the agent serves.
+Each `karmada-agent` serves a cluster and takes responsibility for:
+- Registering cluster to Karmada (creates the `Cluster` object)
+- Maintaining cluster status and reporting to Karmada (updates the status of `Cluster` object)
+- Watching manifests from Karmada execution space (namespace, `karmada-es-<cluster name>`) and deploying the watched resources to the cluster the agent serves.
 
 ## Register cluster with 'Push' mode
 
-You can use the [kubectl-karmada](../../installation/install-cli-tools.md) CLI to `join`(register) and `unjoin`(unregister) clusters.
+You can use the [kubectl-karmada](../../installation/install-cli-tools.md) CLI to `join` (register) and `unjoin` (unregister) clusters.
 
 ### Register cluster by CLI
 
@@ -31,14 +31,14 @@ kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --cluster-kubecon
 Repeat this step to join any additional clusters.
 
 The `--kubeconfig` specifies the Karmada's `kubeconfig` file and the CLI infers `karmada-apiserver` context
-from the `current-context` field of the `kubeconfig`. If there are more than one context is configured in
+from the `current-context` field of the `kubeconfig`. If there are more than one contexts configured in
 the `kubeconfig` file, it is recommended to specify the context by the `--karmada-context` flag. For example:
 ```
 kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --karmada-context=karmada --cluster-kubeconfig=<member1 kubeconfig>
 ```
 
 The `--cluster-kubeconfig` specifies the member cluster's `kubeconfig` and the CLI infers the member cluster's context
-by the cluster name. If there is more than one context is configured in the `kubeconfig` file, or you don't want to use
+by the cluster name. If there are more than one contexts configured in the `kubeconfig` file, or you don't want to use
 the context name to register, it is recommended to specify the context by the `--cluster-context` flag. For example:
 
 ```
@@ -63,7 +63,7 @@ You can unjoin clusters by using the following command.
 kubectl karmada unjoin member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig=<member1 kubeconfig>
 ```
 During unjoin process, the resources propagated to `member1` by Karmada will be cleaned up.
-And the `--cluster-kubeconfig` is used to clean up the secret created at the `join` phase.
+Also, the `--cluster-kubeconfig` is used to clean up the secret created at the `join` phase.
 
 Repeat this step to unjoin any additional clusters.
 
@@ -71,7 +71,7 @@ Repeat this step to unjoin any additional clusters.
 
 ### Register cluster by CLI
 
-`karmadactl register` is used to register member clusters to the Karmada control plane with PULL mode. 
+`karmadactl register` is used to register member clusters to the Karmada control plane with `Pull` mode. 
 Be different from the `karmadactl join` which registers a cluster with `Push` mode, `karmadactl register` registers a cluster to Karmada control plane with `Pull` mode.
 
 > Note: it needs to configure `kube-public/cluster-info` ConfigMap in Karmada control plane to specify a `server` that has been signed by root CA and can be accessed by member clusters.
@@ -89,12 +89,12 @@ $ karmadactl token create --print-register-command --kubeconfig /etc/karmada/kar
 karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
 ```
 
-More details about `bootstrap token` please refer to:
+For more details about `bootstrap token` please refer to:
 - [authenticating with bootstrap tokens](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/)
 
 #### Execute `karmadactl register` in the member clusters
 
-In the Kubernetes control plane of member clusters, we also need the `kubeconfig` file of the member cluster, then directly execute the above output `karmadactl register` command.
+In the Kubernetes control plane of member clusters, we also need the `kubeconfig` file of the member cluster. Right after we execute the output of the `karmadactl register` command provided above.
 
 ```
 $ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
@@ -118,7 +118,7 @@ cluster(member3) is joined successfully
 > Note: if you don't set `--cluster-name` option, it will use the cluster of current-context of the `kubeconfig` file by default.
 
 
-After `karmada-agent` be deployed, it will register cluster automatically at the start-up phase.
+Once deployed, `the karmada-agent` will automatically register the cluster during its startup phase.
 
 ### Check cluster status
 
@@ -137,6 +137,6 @@ kubectl delete cluster member3
 
 ## Cluster Identifier
 
-Each cluster registered in Karmada will be represented as a `Cluster` object whose name(`.metadata.name`) is the registered name. The name will be widely used in the propagating process, such as specifying the location to which a resource should be propagated in a `PropagationPolicy`.
+Each cluster registered in Karmada will be represented as a `Cluster` object whose name (`.metadata.name`) is the registered name. The name will be widely used in the propagating process, such as specifying the location to which a resource should be propagated in a `PropagationPolicy`.
 
-In addition, during the registration, each cluster will be assigned a `unique identifier` marked in the `.spec.id` of the `Cluster` object. For now, this `unique identifier` is used to distinguish each cluster technically to avoid registering the same cluster multiple times with different registered names. The `unique identifier` is collected from the registered cluster's `kube-system` ID(`.metadata.uid`).
+In addition, during the registration, each cluster will be assigned a `unique identifier` marked in the `.spec.id` of the `Cluster` object. For now, this `unique identifier` is used to distinguish each cluster technically to avoid registering the same cluster multiple times with different registered names. The `unique identifier` is collected from the registered cluster's `kube-system` ID (`.metadata.uid`).
