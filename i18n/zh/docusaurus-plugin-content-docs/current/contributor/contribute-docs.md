@@ -12,7 +12,7 @@ title: 如何为社区贡献文档
 - 文档需要为来自不同地区的读者翻译为多语言。
   社区目前支持中文和英语。
   英语是文档的官方语言。
-- 因为我们的文档采用 Markdown 语法，所以如果你对 Markdown 不熟悉，请参阅 https://guides.github.com/features/mastering-markdown/，如果你正在查找更实质性的内容，请参阅 https://www.markdownguide.org/。
+- 因为我们的文档采用 Markdown 语法，所以如果你对 Markdown 不熟悉，请参阅 [MarkDown 基本格式语法](https://guides.github.com/features/mastering-markdown/)，如果你正在查找更实质性的内容，请参阅 [MarkDown 指南](https://www.markdownguide.org/)。
 - 我们通过一个模块化静态网站生成器 [Docusaurus 2](https://docusaurus.io/) 来构建我们的网站。
 
 ## 设置
