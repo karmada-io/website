@@ -1,19 +1,19 @@
 ---
-title: 使用资源指标跨集群自动扩展
+title: 使用资源指标跨集群弹性扩缩容
 ---
 在 Karmada 中，为了自动扩展工作负载以满足需求，FederatedHPA 会跨多个集群扩/缩容工作负载。
 
 当负载增加时，如果 Pod 数量低于配置的最大值，FederatedHPA 会扩容工作负载（Deployment、StatefulSet 或其他类似资源）的副本。当负载减少时，如果 Pod 数量高于配置的最小值，FederatedHPA 会缩容工作负载的副本。
 
-本文档将引导您完成一个启用 FederatedHPA 为跨集群部署的 nginx 自动管理扩展的案例。
+本文档将引导您完成一个启用 FederatedHPA 来自动扩缩容跨集群部署的 nginx 的案例。
 
 演示案例将执行以下操作：
 ![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
 
 * `member1` 集群中存在一个 Deployment 下属的 Pod。
 * Service 部署在 `member1` 和 `member2` 集群。
-* 请求多集群服务并触发 Pod 的 CPU 使用率增加。
-* 副本将在 `member1` 和 `member2` 集群中扩容。
+* 请求多集群 Service 来提高 Pod 的 CPU 使用率。
+* Pod 副本将在 `member1` 和 `member2` 集群中扩容。
 
 ## 前提条件
 
@@ -25,19 +25,19 @@ title: 使用资源指标跨集群自动扩展
 
 确保至少已有两个集群加入 Karmada，并且成员集群之间的容器网络已连通。
 
-- 如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，Karmada 中会有 3 个成员集群，并且 `member1` 和 `member2` 集群的容器网络会被连通。
+- 如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，Karmada 中会有 3 个成员集群，并且集群 `member1` 和 `member2` 间的容器网络已连通。
 - 您可以使用 `Submariner` 或其他相关开源项目来连接成员集群之间的网络。
 
 > 注意：为了防止路由冲突，集群中 Pod 和 Service 的 CIDR 必须互不重叠。
 
 ### ServiceExport 和 ServiceImport 自定义资源已安装 
 
-我们需要在成员集群中安装 `ServiceExport` 和 `ServiceImport` 以启用多集群服务。
+我们需要在成员集群中安装 `ServiceExport` 和 `ServiceImport` 以启用多集群 Service。
 
-在 **Karmada 控制平面** 上安装了 `ServiceExport` 和 `ServiceImport` 后，我们就可以创建 `ClusterPropagationPolicy`，将这两个 CRD 分发到成员集群。
+在 **Karmada 控制平面** 上安装了 `ServiceExport` 和 `ServiceImport` 后，我们就可以创建 `ClusterPropagationPolicy`，将以下两个 CRD 分发到成员集群。
 
 ```yaml
-# 分发 ServiceExport CRD
+# propagate ServiceExport CRD
 apiVersion: policy.karmada.io/v1alpha1
 kind: ClusterPropagationPolicy
 metadata:
@@ -53,7 +53,7 @@ spec:
         - member1
         - member2
 ---        
-# 分发 ServiceImport CRD
+# propagate ServiceImport CRD
 apiVersion: policy.karmada.io/v1alpha1
 kind: ClusterPropagationPolicy
 metadata:
@@ -77,7 +77,7 @@ spec:
 hack/deploy-k8s-metrics-server.sh ${member_cluster_kubeconfig} ${member_cluster_context_name} 
 ```
 
-如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，则可以运行以下命令在所有三个成员集群中部署 `metrics-server`：
+如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，则可以运行以下命令在三个成员集群中部署 `metrics-server`：
 ```sh
 hack/deploy-k8s-metrics-server.sh $HOME/.kube/members.config member1
 hack/deploy-k8s-metrics-server.sh $HOME/.kube/members.config member2
@@ -219,7 +219,7 @@ nginx   Deployment       nginx            1         10        1          9h
 
 ## 将 Service 导出到 `member1` 集群
 
-正如前文所提到的，我们需要一个多集群服务来将请求转发到 `member1` 和 `member2` 集群中的 Pod，因此让我们创建这个多集群服务。
+正如前文所提到的，我们需要一个多集群 Service 来将请求转发到 `member1` 和 `member2` 集群中的 Pod，因此让我们创建这个多集群 Service。
 * 在 Karmada 控制平面创建一个 `ServiceExport` 对象，然后创建一个 `PropagationPolicy` 将 `ServiceExport` 对象分发到 `member1` 和 `member2` 集群。
   ```yaml
   apiVersion: multicluster.x-k8s.io/v1alpha1
@@ -269,7 +269,7 @@ nginx   Deployment       nginx            1         10        1          9h
           - member1
   ```
 
-部署完成后，您可以检查多集群服务：
+部署完成后，您可以检查多集群 Service：
 ```sh
 $ karmadactl get svc
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
@@ -294,14 +294,14 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
-* 检查多集群服务 ip。
+* 检查多集群 Service ip。
   ```sh
   $ karmadactl get svc
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* 使用 hey 请求多集群服务，以提高 nginx Pod 的 CPU 使用率。
+* 使用 hey 请求多集群 Service，以提高 nginx Pod 的 CPU 使用率。
   ```sh
   $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
