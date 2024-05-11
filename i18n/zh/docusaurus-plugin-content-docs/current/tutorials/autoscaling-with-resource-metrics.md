@@ -1,43 +1,43 @@
 ---
-title: Autoscaling across clusters with resource metrics
+title: 使用资源指标跨集群自动扩展
 ---
-In Karmada, a FederatedHPA scales up/down the workload's replicas across multiple clusters, with the aim of automatically scaling the workload to match the demand.
+在 Karmada 中，为了自动扩展工作负载以满足需求，FederatedHPA 会跨多个集群扩/缩容工作负载。
 
-When the load is increase, FederatedHPA scales up the replicas of the workload(the Deployment, StatefulSet, or other similar resource) if the number of Pods is under the configured maximum. When the load is decrease, FederatedHPA scales down the replicas of the workload if the number of Pods is above the configured minimum.
+当负载增加时，如果 Pod 数量低于配置的最大值，FederatedHPA 会扩容工作负载的副本（Deployment、StatefulSet 或其他类似资源）。当负载减少时，如果 Pod 数量高于配置的最小值，FederatedHPA 会缩容工作负载的副本。
 
-This document walk you through an example of enabling FederatedHPA to automatically manage scale for a cross-cluster deployed nginx.
+本文档将引导您完成一个启用 FederatedHPA 为跨集群部署的 nginx 自动管理扩展的案例。
 
-The walkthrough example will do as follows:  
+演示案例将执行以下操作：
 ![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
 
-* One deployment's pod exists in `member1` cluster.
-* The service is deployed in `member1` and `member2` cluster.
-* Request the multi-cluster service and trigger the pod's CPU usage increases.
-* The replicas will be scaled up in `member1` and `member2` cluster.
+* `member1` 集群中存在一个 deployment 下属的 pod。
+* Service 部署在 `member1` 和 `member2` 集群。
+* 请求多集群服务并触发 pod 的 CPU 使用率增加。
+* 副本将在 `member1` 和 `member2` 集群中扩容。
 
-## Prerequisites
+## 前提条件
 
-### Karmada has been installed
+### Karmada 已安装
 
-We can install Karmada by referring to [Quick Start](https://github.com/karmada-io/karmada#quick-start), or directly run `hack/local-up-karmada.sh` script which is also used to run our E2E cases.
+您可以参考 [快速入门](https://github.com/karmada-io/karmada#quick-start) 安装 Karmada，或直接运行 `hack/local-up-karmada.sh` 脚本，该脚本也用于运行 E2E 测试。
 
-### Member Cluster Network
+### 成员集群网络
 
-Ensure that at least two clusters have been added to Karmada, and the container networks between member clusters are connected.
+确保至少已有两个集群加入 Karmada，并且成员集群之间的容器网络已连通。
 
-- If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks of the `member1` and `member2` will be connected.
-- You can use `Submariner` or other related open source projects to connect networks between member clusters.
+- 如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，Karmada 中会有 3 个成员集群，并且 `member1` 和 `member2` 集群的容器网络会被连通。
+- 您可以使用 `Submariner` 或其他相关开源项目来连接成员集群之间的网络。
 
-> Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
+> 注意：为了防止路由冲突，集群中 Pod 和 Service 的 CIDR 必须互不重叠。
 
-### The ServiceExport and ServiceImport CRDs have been installed
+### ServiceExport 和 ServiceImport 自定义资源已安装 
 
-We need to install `ServiceExport` and `ServiceImport` in the member clusters to enable multi-cluster service.
+我们需要在成员集群中安装 `ServiceExport` 和 `ServiceImport` 以启用多集群服务。
 
-After `ServiceExport` and `ServiceImport` have been installed on the **Karmada Control Plane**, we can create `ClusterPropagationPolicy` to propagate those two CRDs to the member clusters.
+在 **Karmada 控制平面** 上安装了 `ServiceExport` 和 `ServiceImport` 后，我们就可以创建 `ClusterPropagationPolicy`，将这两个 CRD 分发到成员集群。
 
 ```yaml
-# propagate ServiceExport CRD
+# 分发 ServiceExport CRD
 apiVersion: policy.karmada.io/v1alpha1
 kind: ClusterPropagationPolicy
 metadata:
@@ -53,7 +53,7 @@ spec:
         - member1
         - member2
 ---        
-# propagate ServiceImport CRD
+# 分发 ServiceImport CRD
 apiVersion: policy.karmada.io/v1alpha1
 kind: ClusterPropagationPolicy
 metadata:
@@ -70,32 +70,32 @@ spec:
         - member2
 ```
 
-### metrics-server has been installed in member clusters
+### 成员集群中已安装 metrics-server
 
-We need to install `metrics-server` for member clusters to provider the metrics API, install it by running:
+我们需要为成员集群安装 `metrics-server` 以提供 metrics API，通过运行以下命令来安装：
 ```sh
 hack/deploy-k8s-metrics-server.sh ${member_cluster_kubeconfig} ${member_cluster_context_name} 
 ```
 
-If you use the `hack/local-up-karmada.sh` script to deploy Karmada, you can run following command to deploy `metrics-server` in all three member clusters:
+如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，则可以运行以下命令在所有三个成员集群中部署 `metrics-server`：
 ```sh
 hack/deploy-k8s-metrics-server.sh $HOME/.kube/members.config member1
 hack/deploy-k8s-metrics-server.sh $HOME/.kube/members.config member2
 hack/deploy-k8s-metrics-server.sh $HOME/.kube/members.config member3
 ```
 
-### karmada-metrics-adapter has been installed in Karmada control plane
+### Karmada 控制平面已安装 karmada-metrics-adapter
 
-We need to install `karmada-metrics-adapter` in Karmada control plane to provide the metrics API, install it by running:
+我们需要在 Karmada 控制平面中安装 `karmada-metrics-adapter` 以提供 metrics API，通过运行以下命令来安装：
 ```sh
 hack/deploy-metrics-adapter.sh ${host_cluster_kubeconfig} ${host_cluster_context} ${karmada_apiserver_kubeconfig} ${karmada_apiserver_context_name}
 ```
 
-If you use the `hack/local-up-karmada.sh` script to deploy Karmada, `karmada-metrics-adapter` will be installed by default.
+如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，`karmada-metrics-adapter` 将默认安装。
 
-## Deploy workload in `member1` and `member2` cluster
+## 在 `member1` 和 `member2` 集群中部署工作负载
 
-We need to deploy deployment(1 replica) and service in `member1` and `member2`.
+我们需要在 `member1` 和 `member2` 集群中部署 deployment（1 个副本）和 service。
 
 ```yaml
 apiVersion: apps/v1
@@ -168,7 +168,7 @@ spec:
             weight: 1
 ```
 
-After deploying, you can check the distribution of the pods and service:
+部署完成后，您可以检查 pod 和 service 的分发情况：
 ```sh
 $ karmadactl get pods
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
@@ -180,9 +180,9 @@ nginx-service           member2   ClusterIP   10.13.46.61     <none>        80/T
 
 ```
 
-## Deploy FederatedHPA in Karmada control plane
+## 在 Karmada 控制平面部署 FederatedHPA
 
-Then let's deploy FederatedHPA in Karmada control plane.
+接下来让我们在 Karmada 控制平面中部署 FederatedHPA。
 
 ```yaml
 apiVersion: autoscaling.karmada.io/v1alpha1
@@ -210,17 +210,17 @@ spec:
           averageUtilization: 10
 ```
 
-After deploying, you can check the FederatedHPA:
+部署完成后，您可以检查 FederatedHPA：
 ```sh
 $ kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver get fhpa
 NAME    REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   AGE
 nginx   Deployment       nginx            1         10        1          9h
 ```
 
-## Export service to `member1` cluster
+## 将 service 导出到 `member1` 集群
 
-As mentioned before, we need a multi-cluster service to route the requests to the pods in `member1` and `member2` cluster, so let create this mult-cluster service.  
-* Create a `ServiceExport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceExport` object to `member1` and `member2` cluster.
+正如前文所提到的，我们需要一个多集群服务来将请求转发到 `member1` 和 `member2` 集群中的 pod，因此让我们创建这个多集群服务。
+* 在 Karmada 控制平面创建一个 `ServiceExport` 对象，然后创建一个 `PropagationPolicy` 将 `ServiceExport` 对象分发到 `member1` 和 `member2` 集群。
   ```yaml
   apiVersion: multicluster.x-k8s.io/v1alpha1
   kind: ServiceExport
@@ -242,7 +242,7 @@ As mentioned before, we need a multi-cluster service to route the requests to th
           - member1
           - member2
   ```
-* Create a `ServiceImport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceImport` object to `member1` cluster.
+* 在 Karmada 控制平面创建一个 `ServiceImport` 对象，然后创建一个 `PropagationPolicy` 将 `ServiceImport` 对象分发到 `member1` 集群。
   ```yaml
   apiVersion: multicluster.x-k8s.io/v1alpha1
   kind: ServiceImport
@@ -269,45 +269,44 @@ As mentioned before, we need a multi-cluster service to route the requests to th
           - member1
   ```
 
-After deploying, you can check the multi-cluster service:
+部署完成后，您可以检查多集群服务：
 ```sh
 $ karmadactl get svc
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
 ```
 
-## Install hey http load testing tool in member1 cluster
+## 在 member1 集群中安装 hey http 负载测试工具
 
-In order to do http requests, here we use `hey`.
-* Download `hey` and copy it to kind cluster container.
+为了发送 http 请求，这里我们使用 `hey`。
+* 下载 `hey` 并复制到 kind 集群容器中。
 ```
 $ wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
 $ chmod +x hey_linux_amd64
 $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 ```
 
-## Test scaling up
+## 测试扩容
 
-* Check the pod distribution firstly.
+* 首先检查 pod 的分发情况。
   ```sh
   $ karmadactl get pods
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
-
-* Check multi-cluster service ip.
+* 检查多集群服务 ip。
   ```sh
   $ karmadactl get svc
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request multi-cluster service with hey to increase the nginx pods' CPU usage.
+* 使用 hey 请求多集群服务，以提高 nginx pod 的 CPU 使用率。
   ```sh
   $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
 
-* Wait 15s, the replicas will be scaled up, then you can check the pod distribution again.
+* 等待 15 秒，副本将扩容，然后您可以再次检查 pod 分发状态。
   ```sh
   $ karmadactl get pods -l app=nginx
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
@@ -324,9 +323,9 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   
   ```
 
-## Test scaling down
+## 测试缩容
 
-After 1 minute, the load testing tool will be stopped, then you can see the workload is scaled down across clusters.
+1 分钟后，负载测试工具将停止运行，然后您可以看到工作负载在多个集群中缩容。
 ```sh
 $ karmadactl get pods -l app=nginx
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
