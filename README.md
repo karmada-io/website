@@ -21,11 +21,11 @@ Check [Open PRs List](https://github.com/karmada-io/website/pulls).
 If you have the Node.js environment, you can run the website locally.
 
 ```bash
-# Clone the repo, or your own fork
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/karmada-website.git
+# Create your own fork of the repository and then run
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/website.git
 
 # Install dependencies
-cd karmada-website
+cd website
 npm install
 
 # Start the site
