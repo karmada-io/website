@@ -74,7 +74,7 @@ spec:
 
 ### prometheus and prometheus-adapter have been installed in member clusters
 
-You need to install `prometheus` and `prometheus-adapter` for member clusters to provider the custom metrics.
+You need to install `prometheus` and `prometheus-adapter` for member clusters to provide the custom metrics.
 You can install it by running the following in member clusters:
 ```sh
 git clone https://github.com/prometheus-operator/kube-prometheus.git
@@ -88,7 +88,7 @@ kubectl apply -f manifests/
 ```
 
 You can verify the installation by the following command:
-```
+```sh
 kubectl --kubeconfig=/root/.kube/members.config --context=member1 get po -nmonitoring
 NAME                                   READY   STATUS    RESTARTS   AGE
 alertmanager-main-0                    2/2     Running   0          30h
@@ -112,10 +112,7 @@ You need to install `karmada-metrics-adapter` in Karmada control plane to provid
 hack/deploy-metrics-adapter.sh ${host_cluster_kubeconfig} ${host_cluster_context} ${karmada_apiserver_kubeconfig} ${karmada_apiserver_context_name}
 ```
 
-If you use the `hack/local-up-karmada.sh` script to deploy Karmada, you can run following command to deploy `karmada-metrics-adapter`:
-```sh
-hack/deploy-metrics-adapter.sh $HOME/.kube/karmada.config karmada-host $HOME/.kube/karmada.config karmada-apiserver
-```
+If you use the `hack/local-up-karmada.sh` script to deploy Karmada, `karmada-metrics-adapter` will be installed by default.
 
 ## Deploy workload in `member1` and `member2` cluster
 
@@ -222,13 +219,14 @@ spec:
   - port: http
 ```
 
-```
+```sh
 kubectl create -f sample-app.monitor.yaml
 ```
 
 Now, you should see your metrics (http_requests_total) appear in your Prometheus instance. Look them up via the dashboard, and make sure they have the namespace and pod labels. If not, check the labels on the service monitor match the ones on the Prometheus CRD.
 
 ## Launch you adapter in `member1` and `member2` cluster
+
 After you deploy `prometheus-adapter`, you need to update to the adapter config which is necessary in order to expose custom metrics.
 
 ```yaml
@@ -255,13 +253,13 @@ data:
         )
 ```
 
-```
+```sh
 $ kubectl apply -f prom-adapter.config.yaml
 # Restart prom-adapter pods
 $ kubectl rollout restart deployment prometheus-adapter -n monitoring
 ```
 
-## Registry metrics API in `member1` and `member2` cluster
+## Register metrics API in `member1` and `member2` cluster
 
 You also need to register the custom metrics API with the API aggregator (part of the main Kubernetes API server). For that you need to create an APIService resource.
 
@@ -281,20 +279,40 @@ spec:
   versionPriority: 100
 ```
 
-```
+```sh
 $ kubectl create -f api-service.yaml
 ```
 
 The API is registered as `custom.metrics.k8s.io/v1beta2`, and you can use the following command to verify:
 
-```
+```sh
 $ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/default/pods/*/http_requests?selector=app%3Dsample-app"
 ```
 
 The output is similar to:
 
-```
-{"kind":"MetricValueList","apiVersion":"custom.metrics.k8s.io/v1beta2","metadata":{},"items":[{"describedObject":{"kind":"Pod","namespace":"default","name":"sample-app-9b7d8c9f5-9lw6b","apiVersion":"/v1"},"metric":{"name":"http_requests","selector":null},"timestamp":"2023-06-14T09:09:54Z","value":"66m"}]}
+```json
+{
+  "kind": "MetricValueList", 
+  "apiVersion": "custom.metrics.k8s.io/v1beta2", 
+  "metadata": {}, 
+  "items": [
+    {
+      "describedObject": {
+        "kind": "Pod", 
+        "namespace": "default", 
+        "name": "sample-app-9b7d8c9f5-9lw6b", 
+        "apiVersion": "/v1"
+      }, 
+      "metric": {
+        "name": "http_requests", 
+        "selector": null
+      }, 
+      "timestamp": "2023-06-14T09:09:54Z", 
+      "value": "66m"
+    }
+  ]
+}
 ```
 
 If `karmada-metrics-adapter` is installed successfully, you can also verify it with the above command in Karmada control plane.
@@ -400,7 +418,7 @@ derived-sample-app      member1   ClusterIP   10.11.59.213    <none>        80/T
 
 In order to do http requests, here you can use `hey`.
 * Download `hey` and copy it to kind cluster container.
-```
+```sh
 $ wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
 $ chmod +x hey_linux_amd64
 $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
@@ -422,7 +440,7 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   derived-sample-app      member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request multi-cluster service with hey to increase the nginx pods' CPU usage.
+* Request multi-cluster service with hey to increase the nginx pods' custom metrics(http_requests_total).
   ```sh
   $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213/metrics
   ```

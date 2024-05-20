@@ -5,12 +5,13 @@ title: 使用资源指标跨集群弹性扩缩容
 
 当负载增加时，如果 Pod 数量低于配置的最大值，FederatedHPA 会扩容工作负载（Deployment、StatefulSet 或其他类似资源）的副本。当负载减少时，如果 Pod 数量高于配置的最小值，FederatedHPA 会缩容工作负载的副本。
 
-本文档将引导您完成一个启用 FederatedHPA 来自动扩缩容跨集群部署的 nginx 的案例。
+本文档将引导您完成这样一个案例：启用 FederatedHPA 来自动扩缩容跨集群部署的 nginx。
 
 演示案例将执行以下操作：
+
 ![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
 
-* `member1` 集群中存在一个 Deployment 下属的 Pod。
+* `member1` 集群中存在一个 Deployment 的 Pod。
 * Service 部署在 `member1` 和 `member2` 集群。
 * 请求多集群 Service 来提高 Pod 的 CPU 使用率。
 * Pod 副本将在 `member1` 和 `member2` 集群中扩容。
@@ -30,7 +31,7 @@ title: 使用资源指标跨集群弹性扩缩容
 
 > 注意：为了防止路由冲突，集群中 Pod 和 Service 的 CIDR 必须互不重叠。
 
-### ServiceExport 和 ServiceImport 自定义资源已安装 
+### ServiceExport 和 ServiceImport 自定义资源已安装
 
 我们需要在成员集群中安装 `ServiceExport` 和 `ServiceImport` 以启用多集群 Service。
 
@@ -170,10 +171,10 @@ spec:
 
 部署完成后，您可以检查 Pod 和 Service 的分发情况：
 ```sh
-$ karmadactl get pods
+karmadactl get pods
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          9h
-$ karmadactl get svc
+karmadactl get svc
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 nginx-service           member1   ClusterIP   10.11.216.215   <none>        80/TCP    9h    Y
 nginx-service           member2   ClusterIP   10.13.46.61     <none>        80/TCP    9h    Y
@@ -212,7 +213,7 @@ spec:
 
 部署完成后，您可以检查 FederatedHPA：
 ```sh
-$ kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver get fhpa
+kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-apiserver get fhpa
 NAME    REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   AGE
 nginx   Deployment       nginx            1         10        1          9h
 ```
@@ -271,7 +272,7 @@ nginx   Deployment       nginx            1         10        1          9h
 
 部署完成后，您可以检查多集群 Service：
 ```sh
-$ karmadactl get svc
+karmadactl get svc
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
 ```
@@ -280,35 +281,35 @@ derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/T
 
 为了发送 http 请求，这里我们使用 `hey`。
 * 下载 `hey` 并复制到 kind 集群容器中。
-```
-$ wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-$ chmod +x hey_linux_amd64
-$ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+```sh
+wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+chmod +x hey_linux_amd64
+docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 ```
 
 ## 测试扩容
 
 * 首先检查 Pod 的分发情况。
   ```sh
-  $ karmadactl get pods
+  karmadactl get pods
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
 * 检查多集群 Service ip。
   ```sh
-  $ karmadactl get svc
+  karmadactl get svc
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
 * 使用 hey 请求多集群 Service，以提高 nginx Pod 的 CPU 使用率。
   ```sh
-  $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
+  docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
 
 * 等待 15 秒，副本将扩容，然后您可以再次检查 Pod 分发状态。
   ```sh
-  $ karmadactl get pods -l app=nginx
+  karmadactl get pods -l app=nginx
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-c2cfv   member1   1/1     Running     0          22s
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          62m
@@ -327,7 +328,7 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 1 分钟后，负载测试工具将停止运行，然后您可以看到工作负载在多个集群中缩容。
 ```sh
-$ karmadactl get pods -l app=nginx
+karmadactl get pods -l app=nginx
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          64m
 ```
