@@ -26,7 +26,7 @@ Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters n
 To enable the MultiClusterService feature in the karmada-controller-manager, run the following command:
 
 ```shell
-$ kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
+kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
 ```
 
 Please note that the MultiClusterService feature is disabled by default and can be enabled using the `--feature-gates=MultiClusterService=true` flag.

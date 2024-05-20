@@ -131,7 +131,7 @@ Velero 由两个部分组成。
    然后你将发现 nginx 应用部署成功。
 
    ```shell
-   # kubectl get deployment.apps
+   $ kubectl get deployment.apps
    NAME    READY   UP-TO-DATE   AVAILABLE   AGE
    nginx   2/2     2            2           17s
    ```
@@ -156,7 +156,7 @@ kubectl config use-context member2
 在 `member2` 中，我们也可以得到我们在 `member1` 中创建的备份：
 
 ```shell
-# velero restore get
+$ velero restore get
 NAME           STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
 nginx-backup   Completed   0        0          2021-12-10 15:16:46 +0800 CST   29d       default            app=nginx
 ```
@@ -164,14 +164,14 @@ nginx-backup   Completed   0        0          2021-12-10 15:16:46 +0800 CST   2
 将 `member1` 的资源恢复到 `member2`：
 
 ```shell
-# velero restore create --from-backup nginx-backup
+$ velero restore create --from-backup nginx-backup
 Restore request "nginx-backup-20211210151807" submitted successfully.
 ```
 
 然后你就可以发现部署 nginx 将被成功恢复。
 
 ```shell
-# velero restore get
+$ velero restore get
 NAME                          BACKUP         STATUS      STARTED                         COMPLETED                       ERRORS   WARNINGS   CREATED                         SELECTOR
 nginx-backup-20211210151807   nginx-backup   Completed   2021-12-10 15:18:07 +0800 CST   2021-12-10 15:18:07 +0800 CST   0        0          2021-12-10 15:18:07 +0800 CST   <none>
 ```
@@ -179,7 +179,7 @@ nginx-backup-20211210151807   nginx-backup   Completed   2021-12-10 15:18:07 +08
 然后你就可以发现部署 nginx 会被成功恢复。
 
 ```shell
-# kubectl get deployment.apps/nginx
+$ kubectl get deployment.apps/nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   2/2     2            2           21s
 ```
@@ -272,7 +272,7 @@ EOF
 然后你可以发现部署的 nginx 将被成功恢复到 member2 上。
 
 ```shell
-# kubectl get deployment.apps/nginx
+$ kubectl get deployment.apps/nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   2/2     2            2           10s
 ```

@@ -359,7 +359,7 @@ By leveraging the spread-by-region constraint, users are able to deploy workload
 To enable multi region deployment, you should use the command below to customize the region of clusters.
 
 ```shell
-kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver edit cluster/member1
+$ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver edit cluster/member1
 
 ...
 spec:

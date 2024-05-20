@@ -29,7 +29,7 @@ Step-by-step installation of binary high-availability `karmada` cluster.
 Execute operations at `karmada-01` `karmada-02` `karmada-03`.
 
 ```bash
-vi /etc/hosts
+$ vi /etc/hosts
 172.31.209.245	karmada-01
 172.31.209.246	karmada-02
 172.31.209.247	karmada-03
@@ -126,9 +126,9 @@ You normally don't need to change `*.sh` files.
 ### Step 3: Run Shell Scripts
 
 ```bash
-$ ./generate_ca.sh
-$ ./generate_leaf.sh ca_cert/
-$ ./generate_etcd.sh
+./generate_ca.sh
+./generate_leaf.sh ca_cert/
+./generate_etcd.sh
 ```
 
 
@@ -312,7 +312,7 @@ systemctl status etcd.service
 ### Verify
 
 ```bash
-etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
+$ etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
 	--cert /etc/karmada/pki/etcd/healthcheck-client.crt \
 	--key /etc/karmada/pki/etcd/healthcheck-client.key \
 	--endpoints "172.31.209.245:2379,172.31.209.246:2379,172.31.209.247:2379" \
@@ -515,7 +515,7 @@ Then, like `karmada-webhook`, use `nginx` for high availability.
 modify the `nginx` configuration and add the following configuration,Execute operations at `karmada-01`.
 
 ```bash
-cat /usr/local/karmada-nginx/conf/nginx.conf
+$ cat /usr/local/karmada-nginx/conf/nginx.conf
 worker_processes 2;
 
 events {
@@ -858,7 +858,7 @@ ok
 modify the `nginx` configuration and add the following configuration,Execute operations at `karmada-01`.
 
 ```bash
-cat /usr/local/karmada-nginx/conf/nginx.conf
+$ cat /usr/local/karmada-nginx/conf/nginx.conf
 worker_processes 2;
 
 events {

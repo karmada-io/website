@@ -38,7 +38,7 @@ spec:
 ```
 
 ```shell
-$ kubectl --context karmada-apiserver apply -f resourceregistry.yaml
+kubectl --context karmada-apiserver apply -f resourceregistry.yaml
 ```
 
 Based on the ResourceRegistry above, you can access pods and nodes with proxy function.
@@ -60,13 +60,13 @@ After processing the above steps, you can access pods and nodes with kubectl.
 Taking getting the pod log as an example, you can use the following command:
 
 ```shell
-$ kubectl  logs <pod-name> -n <namespace-name>
+kubectl  logs <pod-name> -n <namespace-name>
 ```
 
 Specifying `--raw` as following has the same effect:
 
 ```shell
-$ kubectl get --raw /apis/search.karmada.io/v1alpha1/proxying/karmada/proxy/api/v1/namespaces/<ns>/pods/<pod-name>/log
+kubectl get --raw /apis/search.karmada.io/v1alpha1/proxying/karmada/proxy/api/v1/namespaces/<ns>/pods/<pod-name>/log
 ```
 
 Enjoy it!
