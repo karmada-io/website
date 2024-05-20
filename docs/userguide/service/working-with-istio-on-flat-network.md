@@ -114,10 +114,9 @@ Karmada host is not a member cluster, we need create the `cacerts` secret for `i
 
 Export `KUBECONFIG` and switch to `karmada host`:
 
-```
-# export KUBECONFIG=$HOME/.kube/karmada.config
-
-# kubectl config use-context karmada-host
+```bash
+export KUBECONFIG=$HOME/.kube/karmada.config
+kubectl config use-context karmada-host
 ```
 
 Create a secret `cacerts` in `istio-system` namespace:
@@ -219,10 +218,9 @@ istioctl create-remote-secret --name=member2 > istio-remote-secret-member2.yaml
 
 Export `KUBECONFIG` and switch to `karmada apiserver`:
 
-```
-# export KUBECONFIG=$HOME/.kube/karmada.config
-
-# kubectl config use-context karmada-apiserver 
+```bash
+export KUBECONFIG=$HOME/.kube/karmada.config
+kubectl config use-context karmada-apiserver 
 ```
 
 Apply istio remote secret:
@@ -285,10 +283,9 @@ EOF
 
 Export `KUBECONFIG` and switch to `karmada apiserver`:
 
-```
-# export KUBECONFIG=$HOME/.kube/karmada.config
-
-# kubectl config use-context karmada-apiserver 
+```bash
+export KUBECONFIG=$HOME/.kube/karmada.config
+kubectl config use-context karmada-apiserver 
 ```
 
 Create an `istio-demo` namespace:

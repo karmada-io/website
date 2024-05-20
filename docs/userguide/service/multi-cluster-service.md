@@ -192,7 +192,7 @@ kubernetes      ClusterIP   10.13.0.1     <none>        443/TCP   15m
 Start a pod `request` on the `member2` cluster to access the ClusterIP of **derived service**:
 
 ```shell
-$ kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
+kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
 ```
 
 Eg, if we continue to access service for 3s, ClusterIP is `10.13.205.2`:

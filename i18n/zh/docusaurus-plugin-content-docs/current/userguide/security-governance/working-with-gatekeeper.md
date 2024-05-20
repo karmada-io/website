@@ -470,8 +470,8 @@ In this case, you will use Gatekeeper v3.7.2. Related deployment files are from 
 
 ### Create a bad namespace 
 
-   ```console
-   kubectl create ns test
+   ```bash
+   $ kubectl create ns test
    Error from server ([ns-must-have-gk] you must provide labels: {"gatekeepers"}): admission webhook "validation.gatekeeper.sh" denied the request: [ns-must-have-gk] you must provide labels: {"gatekeepers"}
    ```
 

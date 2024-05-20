@@ -154,9 +154,9 @@ spec:
 
 ```shell
 # mark node "member2-control-plane" as unschedulable in cluster member2
-$ kubectl --context member2 cordon member2-control-plane
+kubectl --context member2 cordon member2-control-plane
 # delete the pod in cluster member2
-$ kubectl --context member2 delete pod -l app=nginx
+kubectl --context member2 delete pod -l app=nginx
 ```
 
 你可以立即从 ResourceBinding 中发现应用变成不健康的状态。

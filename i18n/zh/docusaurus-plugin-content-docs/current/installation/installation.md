@@ -71,7 +71,7 @@ Step 2: Show members of karmada
 
 Karmada 的组件默认安装在 `karmada-system` 命名空间中，你可以通过以下命令查看：
 ```bash
-kubectl get deployments -n karmada-system
+$ kubectl get deployments -n karmada-system
 NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
 karmada-aggregated-apiserver   1/1     1            1           102s
 karmada-apiserver              1/1     1            1           2m34s
@@ -82,7 +82,7 @@ kube-controller-manager        1/1     1            1           2m3s
 ```
 `karmada-etcd` 被安装为 `StatefulSet`，通过以下命令查看：
 ```bash
-kubectl get statefulsets -n karmada-system
+$ kubectl get statefulsets -n karmada-system
 NAME   READY   AGE
 etcd   1/1     28m
 ```
@@ -128,7 +128,7 @@ kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/downl
 
 检查已安装的组件：
 ```bash
-kubectl get pods -n karmada-system --kubeconfig=$HOME/.kube/host.config
+$ kubectl get pods -n karmada-system --kubeconfig=$HOME/.kube/host.config
 NAME                                           READY   STATUS    RESTARTS   AGE
 etcd-0                                         1/1     Running   0          2m55s
 karmada-aggregated-apiserver-84b45bf9b-n5gnk   1/1     Running   0          109s

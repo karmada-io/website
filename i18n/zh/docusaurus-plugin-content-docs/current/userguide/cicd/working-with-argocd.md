@@ -15,7 +15,7 @@ In this example, we are using a Karmada environment with at least `3` member clu
 You can set up the environment by `hack/local-up-karmada.sh`, which is also used to run our E2E cases.
 
 ```bash
-# kubectl get clusters
+$ kubectl get clusters
 NAME      VERSION   MODE   READY   AGE
 member1   v1.19.1   Push   True    18h
 member2   v1.19.1   Push   True    18h

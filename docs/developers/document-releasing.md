@@ -54,8 +54,8 @@ go build ./hack/tools/gencomponentdocs/.
 1. Update versions.json
 
 ```shell
-cd website/
-vim versions.json
+$ cd website/
+$ vim versions.json
 
 [
   v1.5  # add a new version tag

@@ -67,7 +67,7 @@ kubectl --kubeconfig PATH_TO_KARMADA_CONFIG apply -f https://raw.githubuserconte
 In the control-plane cluster, you can use the Karmada API server's configuration to view the cluster registration information.
 
 ```shell
-kubectl --kubeconfig PATH_TO_KARMADA_CONFIG get cluster
+$ kubectl --kubeconfig PATH_TO_KARMADA_CONFIG get cluster
 NAME        VERSION        MODE   READY   AGE
 cluster-1   v1.23.8+k3s2   Push   True    154m
 cluster-2   v1.23.8+k3s2   Push   True    154m
@@ -122,7 +122,7 @@ After registration is completed, you can view the registration information of th
 To view the registration information of member clusters, use the following command in the control-plane cluster:
 
 ```shell
-kubectl get cluster
+$ kubectl get cluster
 NAME        REGION    ZONE      GROUP     GATEWAY HOST   GATEWAY PORT   MANAGED   MANAGED AGE   AGE
 local       default   default   default                  80                                     159m
 cluster-1   default   default   default   10.0.2.4       80             True      159m          159m
@@ -158,7 +158,7 @@ fsm install \
 To check the installed service mesh version and other information in the cluster, you can use the following command:
 
 ```shell
-fsm version
+$ fsm version
 CLI Version: version.Info{Version:"v1.0.0", GitCommit:"9966a2b031c862b54b4b007eae35ee16afa31a80", BuildDate:"2023-05-29-12:10"}
 
 MESH NAME   MESH NAMESPACE   VERSION   GIT COMMIT                                 BUILD DATE
@@ -242,7 +242,7 @@ After creating resources in the Karmada control plane, you also need to create a
 Create the `PropagationPolicy` for distributing the resources:
 
 ```shell
-$kmd apply -n httpbin -f - <<EOF
+kmd apply -n httpbin -f - <<EOF
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
@@ -429,8 +429,8 @@ Once you have created the `GlobalTrafficPolicy` and propagation policy, you can 
 Now, you should receive a response from the `httpbin` service deployed in the other clusters.
 
 ```shell
-kubectl -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
+$ kubectl -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
 httpbin-c45b78fd-4v2vq
-kubectl  -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
+$ kubectl  -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
 httpbin-c45b78fd-6822z
 ```

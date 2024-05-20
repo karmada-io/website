@@ -29,7 +29,7 @@ cd karmada
 run the following script:
 
 ```
-# hack/local-up-karmada.sh
+hack/local-up-karmada.sh
 ```
 This script will do the following tasks for you:
 - Start a Kubernetes cluster to run the Karmada control plane, aka. the `host cluster`.
