@@ -40,7 +40,7 @@ The HTTP endpoint will now be available as a local port.
 You can then generate the file for the memory profile with curl and pipe the data to a file:
 
 ```shell
-$ curl http://localhost:6060/debug/pprof/heap  > heap.pprof
+curl http://localhost:6060/debug/pprof/heap  > heap.pprof
 ```
 
 Generate the file for the CPU profile with curl and pipe the data to a file (7200 seconds is two hours):

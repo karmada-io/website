@@ -42,7 +42,7 @@ After all member clusters have been joined and estimators are all ready, please 
 
 ```bash
 # edit the deployment of karmada-scheduler
-$ kubectl --context karmada-host edit -n karmada-system deployments.apps karmada-scheduler
+kubectl --context karmada-host edit -n karmada-system deployments.apps karmada-scheduler
 ```
 
 And then add the option `--enable-scheduler-estimator=true` into the command of container `karmada-scheduler`.

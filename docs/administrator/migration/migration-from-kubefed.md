@@ -50,8 +50,8 @@ object to describe the joined cluster.
 
 Assume you use the `kubefedctl` tool to check the status of the joined clusters as follows:
 
-```
-kubectl -n kube-federation-system get kubefedclusters
+```bash
+$ kubectl -n kube-federation-system get kubefedclusters
 
 NAME       AGE   READY   KUBERNETES-VERSION
 cluster1   1m    True    v1.21.2
@@ -60,8 +60,8 @@ cluster2   1m    True    v1.22.0
 
 Now with Karmada, you can use `karmadactl` tool to do the same thing:
 
-```
-kubectl get clusters
+```bash
+$ kubectl get clusters
 
 NAME      VERSION   MODE   READY   AGE
 member1   v1.20.7   Push   True    66s

@@ -56,7 +56,7 @@ kubectl apply -f fakekubelet.yml
 `kubectl get node` You will find fake nodes.
 
 ```shell
-> kubectl get node -o wide
+$ kubectl get node -o wide
 NAME         STATUS   ROLES   AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE    KERNEL-VERSION   CONTAINER-RUNTIME
 fake-0       Ready    agent   10s   fake      10.88.0.136   <none>        <unknown>   <unknown>        <unknown>
 fake-1       Ready    agent   10s   fake      10.88.0.136   <none>        <unknown>   <unknown>        <unknown>
@@ -68,7 +68,7 @@ fake-4       Ready    agent   10s   fake      10.88.0.136   <none>        <unkno
 Deploy an sample deployment to test:
 
 ```shell
-> kubectl apply -f - <<EOF
+kubectl apply -f - <<EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -107,7 +107,7 @@ EOF
 `kubectl get pod` You will find that it has been started, although the image does not exist.
 
 ```shell
-> kubectl get pod -o wide
+$ kubectl get pod -o wide
 NAME                        READY   STATUS    RESTARTS   AGE   IP          NODE     NOMINATED NODE   READINESS GATES
 fake-pod-78884479b7-52qcx   1/1     Running   0          6s    10.0.0.23   fake-4   <none>           <none>
 fake-pod-78884479b7-bd6nk   1/1     Running   0          6s    10.0.0.13   fake-2   <none>           <none>

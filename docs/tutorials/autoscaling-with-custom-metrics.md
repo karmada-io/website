@@ -89,7 +89,7 @@ kubectl apply -f manifests/
 
 You can verify the installation by the following command:
 ```sh
-kubectl --kubeconfig=/root/.kube/members.config --context=member1 get po -nmonitoring
+$ kubectl --kubeconfig=/root/.kube/members.config --context=member1 get po -nmonitoring
 NAME                                   READY   STATUS    RESTARTS   AGE
 alertmanager-main-0                    2/2     Running   0          30h
 alertmanager-main-1                    2/2     Running   0          30h
@@ -254,9 +254,9 @@ data:
 ```
 
 ```sh
-$ kubectl apply -f prom-adapter.config.yaml
+kubectl apply -f prom-adapter.config.yaml
 # Restart prom-adapter pods
-$ kubectl rollout restart deployment prometheus-adapter -n monitoring
+kubectl rollout restart deployment prometheus-adapter -n monitoring
 ```
 
 ## Register metrics API in `member1` and `member2` cluster
@@ -280,13 +280,13 @@ spec:
 ```
 
 ```sh
-$ kubectl create -f api-service.yaml
+kubectl create -f api-service.yaml
 ```
 
 The API is registered as `custom.metrics.k8s.io/v1beta2`, and you can use the following command to verify:
 
 ```sh
-$ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/default/pods/*/http_requests?selector=app%3Dsample-app"
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta2/namespaces/default/pods/*/http_requests?selector=app%3Dsample-app"
 ```
 
 The output is similar to:
@@ -419,9 +419,9 @@ derived-sample-app      member1   ClusterIP   10.11.59.213    <none>        80/T
 In order to do http requests, here you can use `hey`.
 * Download `hey` and copy it to kind cluster container.
 ```sh
-$ wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-$ chmod +x hey_linux_amd64
-$ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+chmod +x hey_linux_amd64
+docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 ```
 
 ## Test scaling up
@@ -442,7 +442,7 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * Request multi-cluster service with hey to increase the nginx pods' custom metrics(http_requests_total).
   ```sh
-  $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213/metrics
+  docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213/metrics
   ```
 
 * Wait 15s, the replicas will be scaled up, then you can check the pod distribution again.
