@@ -12,9 +12,9 @@ title: 使用CronFederatedHPA自动伸缩跨集群Deployment
 
 您可以参考 [快速入门](https://github.com/karmada-io/karmada#quick-start) 安装 Karmada，或直接运行 `hack/local-up-karmada.sh` 脚本，该脚本也用于运行 E2E 测试。
 
-## 在 `member1` 和 `member2` 集群中部署工作负载
+## 在 `member1` 和 `member2` 集群中部署 Deployment
 
-我们需要在 member1 和 member2 集群中部署 deployment（2 个副本）：
+我们需要在 member1 和 member2 集群中部署 Deployment（2 个副本）：
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
