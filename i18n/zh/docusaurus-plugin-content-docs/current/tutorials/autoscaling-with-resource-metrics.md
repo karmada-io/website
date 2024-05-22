@@ -94,7 +94,7 @@ hack/deploy-metrics-adapter.sh ${host_cluster_kubeconfig} ${host_cluster_context
 
 如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，将默认安装 `karmada-metrics-adapter`。
 
-## 在 `member1` 和 `member2` 集群中部署工作负载
+## 在 `member1` 和 `member2` 集群中部署 Deployment
 
 我们需要在 `member1` 和 `member2` 集群中部署 Deployment（1 个副本）和 Service。
 
