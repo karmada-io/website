@@ -7,6 +7,50 @@ title: Karmada Metrics Reference
 This section details the metrics that different Karmada components export. 
 You can query the metrics endpoint for these components using an HTTP scrape, and fetch the current metrics data in Prometheus format.
 
+### Step 1: Expose Karmada Metrics
+Ensure Karmada components are configured to expose metrics. By default, Karmada components expose metrics at endpoints like /metrics. Verify this in your configuration.
+
+### Step 2: Set Up Prometheus
+Prometheus should be configured to scrape metrics from Karmada components.
+
+#### prometheus.yml:
+```yml
+scrape_configs:
+  - job_name: 'karmada-controller-manager'
+    static_configs:
+      - targets: ['karmada-controller-manager.karmada-system.svc:8080']
+
+  - job_name: 'karmada-scheduler'
+    static_configs:
+      - targets: ['karmada-scheduler.karmada-system.svc:8080']
+
+  - job_name: 'karmada-agent'
+    static_configs:
+      - targets: ['karmada-agent.karmada-system.svc:8080']
+```
+### Step 3: Query Metrics in Prometheus
+After setting up Prometheus, you can query Karmada metrics.
+
+#### Example Queries:
+
+Karmada Controller Manager Reconciliation Loops:
+
+```promql
+karmada_controller_resource_match_policy_duration_seconds
+```
+This metric tracks the duration in seconds to find a matched propagation policy for the resource template.
+
+Karmada Scheduler Scheduling Latency:
+```promql
+karmada_scheduler_schedule_attempts_total
+```
+This metric gives the number of attempts to schedule resourceBinding.
+
+Cluster Health Metrics:
+```promql
+karmada_agent_cluster_node_number
+```
+This metric gives the number of nodes in the cluster.
 
 
 ### List of karmada-scheduler metrics
