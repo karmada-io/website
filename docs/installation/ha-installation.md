@@ -6,7 +6,7 @@ This documentation explains high availability for Karmada.
 The Karmada high availability architecture is very similar to the Kubernetes high
 availability architecture. To deploy Karmada in a HA (High Availability) environment
 we can create multiple Karmada API servers instead of using a single API server.
-So even if a Karmada control plan goes down, you can still manage your clusters
+So even if a Karmada control plane goes down, you can still manage your clusters
 using the other Karmada control planes.
 
 ## Options for highly available topology
