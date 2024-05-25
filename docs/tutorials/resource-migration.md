@@ -180,61 +180,7 @@ which means the existing resources in `member1` cluster has been taken over by K
 
 So far, you have finished the migration, isn't it so easy?
 
-### Apply higher priority PropagationPolicy
 
-#### Step 5: Write the code
-
-Create new file `/tmp/pp-for-nginx-app.yaml` and copy text below to it:
-
-```yaml
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: nginx-pp
-spec:
-  conflictResolution: Overwrite
-  placement:
-    clusterAffinity:
-      clusterNames:
-      - member1
-      - member2                   ## propagate to more clusters other than member1
-  priority: 10                    ## priority greater than above PropagationPolicy (10 > 0)
-  preemption: Always              ## preemption should equal to Always
-  resourceSelectors:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: nginx-deploy
-  - apiVersion: v1
-    kind: Service
-    name: nginx-svc
-  schedulerName: default-scheduler
-```
-
-#### Step 6: Run the command
-
-Apply this higher priority PropagationPolicy to Karmada control plane. 
-
-```shell
-$ kubectl --context karmada-apiserver apply -f /tmp/pp-for-nginx-app.yaml
-propagationpolicy.policy.karmada.io/nginx-pp created
-```
-
-#### Step 7: Verification
-
-```shell
-$ kubectl --context member2 get deploy -o wide 
-NAME           READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES         SELECTOR
-nginx-deploy   2/2     2            2           5m24s   nginx        nginx:latest   app=nginx
-$ kubectl --context member2 get svc -o wide   
-NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE   SELECTOR
-nginx-svc    NodePort    10.13.161.255   <none>        80:30000/TCP   54s   app=nginx
-...
-```
-
-As you see, you shall find `nginx` application related resource are all propagated to `member2` cluster, 
-which means the higher priority `PropagationPolicy` does work.
-
----
 
 ### Apply Higher Priority PropagationPolicy
 
