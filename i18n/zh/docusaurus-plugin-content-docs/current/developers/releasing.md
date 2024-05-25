@@ -39,7 +39,18 @@ Minor版本应该从对于的minor分支发布，发布步骤描述如下。
 ### Instrumentation
 * 可观测性相关更新，例如，增加监控数据/事件记录。此部分内容需要手动整理收集。
 ```
-为了获取如上所有相关内容，需要对比新创建的minor release分支和上一版本的minor release tag，例如，比较`release-1.4`分支和`v1.3.0`tag。然后从这些对比修改中提取为如上不同类型的发布说明。例如，从[此修改](https://github.com/karmada-io/karmada/pull/2675)提取如下发布说明：
+#### 收集发布说明(手动)
+
+为了获取如上所有相关内容，需要对比新创建的 minor release分支和此版本的 minor pre-release tag，例如，比较 `release-1.8`分支和 `v1.8.0-alpha.0`tag。以下是在 GitHub中的操作步骤：
+
+- 进入[Compare](https://github.com/karmada-io/karmada/compare)界面。
+- 选择 minor pre-release tag为基准分支。
+- 选择新创建的 minor release分支做为头分支。
+
+界面就会显示两个分支间的所有相关内容。
+![img](../resources/developers/release-compare.png)
+
+然后从这些对比修改中提取为如上不同类型的发布说明。例如，从[此修改](https://github.com/karmada-io/karmada/pull/2675)提取如下发布说明：
 ```text
 ## Bug Fixes
 * `karmada-controller-manager`: Fixed the panic when cluster ImpersonatorSecretRef is nil.
@@ -66,7 +77,7 @@ Users whose commits are in this release (alphabetically by username)
 安装`Karmada`时，对应镜像需要从DockerHub/SWR拉取，所以我们需要更新描述文件中的镜像tag为最新的minor版本。如下文件需要更新：
 * `charts/karmada/values.yaml`: 更新 `Karmada` 相关的镜像tag为即将发布的版本。
 * `charts/index.yaml`: 增加对应版本的helm仓库索引。
- 
+
 ### 添加升级文档(手动)
 新minor版本发布时，对应升级文档`docs/administrator/upgrading/v{major}.{minor_previous}-v{major}.{minor_new}.md`需要被添加到 [website](https://github.com/karmada-io/website) 仓库。例如，发布minor版本`v1.4.0`时，需要添加升级文档`docs/administrator/upgrading/v1.3-v1.4.md`。
 
