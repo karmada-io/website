@@ -73,6 +73,7 @@ module.exports = {
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
                         "userguide/scheduling/cluster-resources",
+                        "userguide/scheduling/workload-rebalancer",
                     ],
                 },
                 {
