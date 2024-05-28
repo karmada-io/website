@@ -113,7 +113,7 @@ Velero consists of two components:
 
    And then you will find nginx is deployed successfully.
    ```shell
-   # kubectl get deployment.apps
+   $ kubectl get deployment.apps
    NAME    READY   UP-TO-DATE   AVAILABLE   AGE
    nginx   2/2     2            2           17s
    ```
@@ -134,27 +134,27 @@ kubectl config use-context member2
 
 In `member2`, we can also get the backup that we created in `member1`:
 ```shell
-# velero backup get
+$ velero backup get
 NAME           STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
 nginx-backup   Completed   0        0          2021-12-10 15:16:46 +0800 CST   29d       default            app=nginx
 ```
 
 Restore `member1` resources to `member2`:
 ```shell
-# velero restore create --from-backup nginx-backup
+$ velero restore create --from-backup nginx-backup
 Restore request "nginx-backup-20211210151807" submitted successfully.
 ```
 
 Watch restore result, you'll find that the status is Completed.
 ```shell
-# velero restore get
+$ velero restore get
 NAME                          BACKUP         STATUS      STARTED                         COMPLETED                       ERRORS   WARNINGS   CREATED                         SELECTOR
 nginx-backup-20211210151807   nginx-backup   Completed   2021-12-10 15:18:07 +0800 CST   2021-12-10 15:18:07 +0800 CST   0        0          2021-12-10 15:18:07 +0800 CST   <none>
 ```
 
 And then you can find deployment nginx will be restored successfully.
 ```shell
-# kubectl get deployment.apps/nginx
+$ kubectl get deployment.apps/nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   2/2     2            2           21s
 ```
@@ -247,7 +247,7 @@ EOF
 
 And then you can find deployment nginx will be restored on member2 successfully.
 ```shell
-# kubectl get deployment.apps/nginx
+$ kubectl get deployment.apps/nginx
 NAME    READY   UP-TO-DATE   AVAILABLE   AGE
 nginx   2/2     2            2           10s
 ```

@@ -9,7 +9,7 @@ title: 通过 Karmada 分发 CRD
 
 ## 启动 Karmada 集群
 
-想要启动 Karmada，您可以参考 [here](../installation/installation.md).
+想要启动 Karmada，您可以参考[安装概述](../installation/installation.md).
 
 如果您只想尝试 Karmada，请使用 ```hack/local-up-karmada.sh``` 构建开发环境.
 

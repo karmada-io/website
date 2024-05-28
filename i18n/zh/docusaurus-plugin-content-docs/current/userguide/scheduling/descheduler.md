@@ -50,7 +50,7 @@ After all member clusters have joined and estimators are all ready, specify the 
 
 ```bash
 # edit the deployment of karmada-scheduler
-$ kubectl --context karmada-host -n karmada-system edit deployments.apps karmada-scheduler
+kubectl --context karmada-host -n karmada-system edit deployments.apps karmada-scheduler
 ```
 
 Add the option `--enable-scheduler-estimator=true` into the command of container `karmada-scheduler`.
@@ -121,9 +121,9 @@ Now we taint all nodes in member1 and evict the replica.
 
 ```bash
 # mark node "member1-control-plane" as unschedulable in cluster member1
-$ kubectl --context member1 cordon member1-control-plane
+kubectl --context member1 cordon member1-control-plane
 # delete the pod in cluster member1
-$ kubectl --context member1 delete pod -l app=nginx
+kubectl --context member1 delete pod -l app=nginx
 ```
 
 A new pod will be created and cannot be scheduled by `kube-scheduler` due to lack of resources.

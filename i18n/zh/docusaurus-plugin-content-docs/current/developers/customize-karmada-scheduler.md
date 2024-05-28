@@ -138,7 +138,7 @@ make image-karmada-scheduler
 ```
 
 ```shell
-kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
+$ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
 ...
  spec:
       automountServiceAccountToken: false
@@ -173,7 +173,7 @@ I0408 12:57:14.565008       1 registry.go:79] Enable Scheduler plugin "TestFilte
 例如，以下的配置将会关闭`TestFilter`插件。
 
 ```shell
-kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
+$ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
 ...
  spec:
       automountServiceAccountToken: false

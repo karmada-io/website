@@ -279,10 +279,10 @@ derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/T
 
 In order to do http requests, here we use `hey`.
 * Download `hey` and copy it to kind cluster container.
-```
-$ wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-$ chmod +x hey_linux_amd64
-$ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+```sh
+wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+chmod +x hey_linux_amd64
+docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 ```
 
 ## Test scaling up
@@ -303,7 +303,7 @@ $ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * Request multi-cluster service with hey to increase the nginx pods' CPU usage.
   ```sh
-  $ docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
+  docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
 
 * Wait 15s, the replicas will be scaled up, then you can check the pod distribution again.

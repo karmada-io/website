@@ -19,10 +19,10 @@ So, this section will guide you to cover:
 #### Step 1: Run the command
 
 ```shell
-$ git clone https://github.com/karmada-io/karmada
-$ cd karmada
-$ hack/local-up-karmada.sh
-$ export KUBECONFIG=~/.kube/karmada.config:~/.kube/members.config
+git clone https://github.com/karmada-io/karmada
+cd karmada
+hack/local-up-karmada.sh
+export KUBECONFIG=~/.kube/karmada.config:~/.kube/members.config
 ```
 
 > **Note:**
@@ -37,7 +37,7 @@ $ export KUBECONFIG=~/.kube/karmada.config:~/.kube/members.config
 #### Step 2: Run the command
 
 ```shell
-$ kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --failover-eviction-timeout=30s/{n;s/- --v=4/- --feature-gates=PropagationPolicyPreemption=true\n        &/g}' | kubectl --context karmada-host replace -f -
+kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --failover-eviction-timeout=30s/{n;s/- --v=4/- --feature-gates=PropagationPolicyPreemption=true\n        &/g}' | kubectl --context karmada-host replace -f -
 ```
 
 > **Note:**

@@ -36,6 +36,7 @@ module.exports = {
                 "tutorials/autoscaling-workload-with-cronfederatedhpa",
                 "tutorials/resource-migration",
                 "tutorials/access-service-across-clusters",
+                "tutorials/workload-rebalancer",
             ],
         },
         {
@@ -72,6 +73,7 @@ module.exports = {
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
                         "userguide/scheduling/cluster-resources",
+                        "userguide/scheduling/workload-rebalancer",
                     ],
                 },
                 {

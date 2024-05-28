@@ -40,7 +40,17 @@ The highlighted updates, for example, new key features. This part is collected m
 ### Instrumentation
 * Observability-related changes. For example, metric adding/event recording.
 ```
-Compare the newly created minor release branch with the previous minor release tag, for example, compare `release-1.4` branch with `v1.3.0` tag, to get all relevant changes. Then extract the preceding types of release notes from these changes. For example, extract [this](https://github.com/karmada-io/karmada/pull/2675) as:
+#### Collect changes(manually)
+Compare the newly created minor release branch with its pre-release tag, for example, compare `release-1.8` branch with `v1.8.0-alpha.0` tag, to get all relevant changes.  Here's how it works on GitHub:
+
+- Enter the [Compare page](https://github.com/karmada-io/karmada/compare).
+- Choose the pre-release tag as the base ref.
+- Choose the newly created minor release branch as the head ref.
+
+And then you can get all relevant changes between the two branches.
+![img](../resources/developers/release-compare.png)
+
+Then extract the preceding types of release notes from these changes. For example, extract [this](https://github.com/karmada-io/karmada/pull/2675) as:
 ```text
 ## Bug Fixes
 * `karmada-controller-manager`: Fixed the panic when cluster ImpersonatorSecretRef is nil.

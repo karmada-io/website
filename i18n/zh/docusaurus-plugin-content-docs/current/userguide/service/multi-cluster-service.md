@@ -192,7 +192,7 @@ kubernetes      ClusterIP   10.13.0.1     <none>        443/TCP   15m
 ```
 
 ```shell
-$ kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
+kubectl --kubeconfig ~/.kube/members.config --context member2 run -i --rm --restart=Never --image=jeremyot/request:0a40de8 request -- --duration={duration-time} --address={ClusterIP of derived service}
 ```
 
 例如，如果我们使用ClusterIP地址`10.13.205.2`持续访问该服务3s，将会得到如下输出:

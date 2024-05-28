@@ -29,7 +29,7 @@ title: 通过二进制方式安装
 对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。
 
 ```bash
-vi /etc/hosts
+$ vi /etc/hosts
 172.31.209.245	karmada-01
 172.31.209.246	karmada-02
 172.31.209.247	karmada-03
@@ -129,9 +129,9 @@ mv /usr/local/karmada-nginx/sbin/nginx /usr/local/karmada-nginx/sbin/karmada-ngi
 ### 步骤 3：运行 Shell 脚本
 
 ```bash
-$ ./generate_ca.sh
-$ ./generate_leaf.sh ca_cert/
-$ ./generate_etcd.sh
+./generate_ca.sh
+./generate_leaf.sh ca_cert/
+./generate_etcd.sh
 ```
 
 
@@ -317,7 +317,7 @@ systemctl status etcd.service
 ### 验证
 
 ```bash
-etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
+$ etcdctl --cacert /etc/karmada/pki/etcd/ca.crt \
 	--cert /etc/karmada/pki/etcd/healthcheck-client.crt \
 	--key /etc/karmada/pki/etcd/healthcheck-client.key \
 	--endpoints "172.31.209.245:2379,172.31.209.246:2379,172.31.209.247:2379" \
@@ -520,7 +520,7 @@ kubectl create clusterrolebinding cluster-admin:karmada --clusterrole=cluster-ad
 修改 `nginx` 配置并添加以下配置。对 `karmada-01` 执行以下操作。
 
 ```bash
-cat /usr/local/karmada-nginx/conf/nginx.conf
+$ cat /usr/local/karmada-nginx/conf/nginx.conf
 worker_processes 2;
 
 events {
@@ -861,7 +861,7 @@ ok
 修改 `nginx` 配置并添加以下配置。对 `karmada-01` 执行以下操作。
 
 ```bash
-cat /usr/local/karmada-nginx/conf/nginx.conf
+$ cat /usr/local/karmada-nginx/conf/nginx.conf
 worker_processes 2;
 
 events {

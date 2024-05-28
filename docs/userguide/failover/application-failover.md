@@ -152,9 +152,9 @@ Now the application is scheduled into member2 and these two replicas run normall
 
 ```shell
 # mark node "member2-control-plane" as unschedulable in cluster member2
-$ kubectl --context member2 cordon member2-control-plane
+kubectl --context member2 cordon member2-control-plane
 # delete the pod in cluster member2
-$ kubectl --context member2 delete pod -l app=nginx
+kubectl --context member2 delete pod -l app=nginx
 ```
 
 You can immediately find that the deployment is unhealthy now from the ResourceBinding.

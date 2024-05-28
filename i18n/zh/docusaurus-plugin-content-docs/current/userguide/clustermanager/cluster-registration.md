@@ -51,7 +51,7 @@ kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --karmada-context
 
 Check the status of the joined clusters by using the following command.
 ```
-kubectl get clusters
+$ kubectl get clusters
 
 NAME      VERSION   MODE   READY   AGE
 member1   v1.20.7   Push   True    66s
@@ -81,7 +81,7 @@ Be different from the `karmadactl join` which registers a cluster with `Push` mo
 In Karmada control plane, we can use `karmadactl token create` command to create bootstrap tokens whose default ttl is 24h.
 
 ```
-$ karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
+karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
 ```
 
 ```
@@ -97,7 +97,7 @@ More details about `bootstrap token` please refer to:
 In the Kubernetes control plane of member clusters, we also need the `kubeconfig` file of the member cluster, then directly execute the above output `karmadactl register` command.
 
 ```
-$ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
+karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
 ```
 
 ```
@@ -124,7 +124,7 @@ After `karmada-agent` be deployed, it will register cluster automatically at the
 
 Check the status of the registered clusters by using the same command above.
 ```
-kubectl get clusters
+$ kubectl get clusters
 NAME      VERSION   MODE   READY   AGE
 member3   v1.20.7   Pull   True    66s
 ```

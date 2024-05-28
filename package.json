@@ -21,13 +21,13 @@
     "@docusaurus/plugin-content-pages": "^2.4.3",
     "@docusaurus/plugin-sitemap": "^2.4.3",
     "@docusaurus/preset-classic": "2.4.3",
-    "@douyinfe/semi-ui": "^2.55.0",
+    "@douyinfe/semi-ui": "^2.58.0",
     "asciinema-player": "^3.7.1",
-    "clsx": "^2.1.0",
+    "clsx": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-github-btn": "^1.4.0",
-    "yarn": "^1.22.21"
+    "yarn": "^1.22.22"
   },
   "browserslist": {
     "production": [

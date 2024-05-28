@@ -29,7 +29,7 @@ cd karmada
 运行以下脚本：
 
 ```
-# hack/local-up-karmada.sh
+hack/local-up-karmada.sh
 ```
 该脚本将为你执行以下任务：
 - 启动一个 Kubernetes 集群来运行 Karmada 控制面，即 `host cluster`。

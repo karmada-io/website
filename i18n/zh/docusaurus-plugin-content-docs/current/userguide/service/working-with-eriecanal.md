@@ -71,7 +71,7 @@ kubectl --kubeconfig PATH_TO_KARMADA_CONFIG apply -f https://raw.githubuserconte
 在控制面集群 control-plane 使用 Karmada apiserver 的 config 可查看集群的注册信息。
 
 ```shell
-kubectl --kubeconfig PATH_TO_KARMADA_CONFIG get cluster
+$ kubectl --kubeconfig PATH_TO_KARMADA_CONFIG get cluster
 NAME        VERSION        MODE   READY   AGE
 cluster-1   v1.23.8+k3s2   Push   True    154m
 cluster-2   v1.23.8+k3s2   Push   True    154m
@@ -116,7 +116,7 @@ EOF
 注册完成后，可在控制面集群 control-plane 查看成员集群的注册信息：
 
 ```shell
-kubectl get cluster
+$ kubectl get cluster
 NAME        REGION    ZONE      GROUP     GATEWAY HOST   GATEWAY PORT   MANAGED   MANAGED AGE   AGE
 local       default   default   default                  80                                     159m
 cluster-1   default   default   default   10.0.2.4       80             True      159m          159m
@@ -153,7 +153,7 @@ fsm install \
 执行命令可常看集群中安装的服务网格版本等信息。
 
 ```shell
-fsm version
+$ fsm version
 CLI Version: version.Info{Version:"v1.0.0", GitCommit:"9966a2b031c862b54b4b007eae35ee16afa31a80", BuildDate:"2023-05-29-12:10"}
 
 MESH NAME   MESH NAMESPACE   VERSION   GIT COMMIT                                 BUILD DATE
@@ -235,7 +235,7 @@ EOF
 在 Karmada 控制面创建资源后，还需要创建 `PropagationPolicy` 策略来对资源进行分发，我们将 `Deployment` 和 `Service` 分发到成员集群 `cluster-1` 和 `cluster-3`。
 
 ```shell
-$kmd apply -n httpbin -f - <<EOF
+kmd apply -n httpbin -f - <<EOF
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
@@ -416,8 +416,8 @@ EOF
 此时再发送测试请求，就可以收到其他集群 httpbin 的响应了。
 
 ```shell
-kubectl -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
+$ kubectl -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
 httpbin-c45b78fd-4v2vq
-kubectl  -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
+$ kubectl  -n curl -c curl -- curl -s http://httpbin.httpbin:8080/
 httpbin-c45b78fd-6822z
 ```

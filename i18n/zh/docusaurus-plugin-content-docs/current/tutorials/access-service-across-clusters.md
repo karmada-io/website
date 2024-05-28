@@ -1,45 +1,47 @@
 ---
-title: Access service across clusters within native service
+title: 通过原生 Service 跨集群访问服务
 ---
 
-In Karmada, the MultiClusterService can enable users to access services across clusters with the native service domain name, like `foo.svc`, with the aim of providing users with a seamless experience when accessing services across multiple clusters, as if they were operating within a single cluster.
+在 Karmada 中，MultiClusterService 可以让用户通过原生 Service 域名（例如 `foo.svc`）跨集群访问服务，目的是让用户获得如在单个集群中访问服务般访问跨集群服务的流畅体验。
 
-This document provides an example of how to enable MultiClusterService for accessing service across clusters with native service.
+本文档提供了这样一个案例：启用 MultiClusterService 来通过原生 Service 跨集群访问服务。
 
-## Prerequisites
+## 前提条件
 
-### Karmada has been installed
+### Karmada 已安装
 
-We can install Karmada by referring to [Quick Start](https://github.com/karmada-io/karmada#quick-start), or directly run `hack/local-up-karmada.sh` script which is also used to run our E2E cases.
+您可以参考[快速入门](https://github.com/karmada-io/karmada#quick-start)安装 Karmada，或直接运行 `hack/local-up-karmada.sh` 脚本，该脚本也用于运行 E2E 测试。
 
-### Member Cluster Network
+### 成员集群网络
 
-Ensure that at least two clusters have been added to Karmada, and the container networks between member clusters are connected.
+确保至少已有两个集群加入 Karmada，并且成员集群之间的容器网络已连通。
 
-* If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks of the member1 and member2 will be connected.
-* You can use `Submariner` or other related open source projects to connected networks between member clusters.
+* 如果您使用 `hack/local-up-karmada.sh` 脚本部署 Karmada，Karmada 中会有 3 个成员集群，并且集群 `member1` 和 `member2` 间的容器网络已连通。
+* 您可以使用 `Submariner` 或其他相关开源项目来连接成员集群之间的网络。
 
-Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
+:::note 注意
+为了防止路由冲突，集群中 Pod 和 Service 的 CIDR 必须互不重叠。
+:::
 
-### Enable MultiClusterService in karmada-controller-manager
+### 在 karmada-controller-manager 中启用 MultiClusterService
 
-To enable the MultiClusterService feature in the karmada-controller-manager, run the following command:
+要在 karmada-controller-manager 中启用 MultiClusterService 功能，请运行以下命令：
 
 ```shell
-$ kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
+kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
 ```
 
-Please note that the MultiClusterService feature is disabled by default and can be enabled using the `--feature-gates=MultiClusterService=true` flag.
+请注意，MultiClusterService 功能默认是禁用的，可以通过 `--feature-gates=MultiClusterService=true` 参数开启。
 
-If you prefer a more cautious approach, follow these steps:
+如果您倾向于更谨慎的方法，请按照以下步骤操作：
 
-1. Run `kubectl --context karmada-host edit deploy karmada-controller-manager -n karmada-system`
-2. Check if `--feature-gates=MultiClusterService=true` is present in the `spec.template.spec.containers[0].command` field.
-3. If not, add `--feature-gates=MultiClusterService=true` to enable the feature.
+1. 运行 `kubectl --context karmada-host edit deploy karmada-controller-manager -n karmada-system`。
+2. 检查 `spec.template.spec.containers[0].command` 字段中是否存在 `--feature-gates=MultiClusterService=true`。
+3. 如果没有，添加 `--feature-gates=MultiClusterService=true` 来开启功能。
 
-## Deploy deployment in `member1` cluster
+## 在 `member1` 集群中部署 Deployment
 
-We need to deploy deployment in `member1` cluster:
+我们需要在 `member1` 集群中部署 Deployment：
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -83,7 +85,7 @@ spec:
         - member1
 ```
 
-After deploying, you can check the created pods:
+部署完成后，您可以检查创建的 Pod：
 ```sh
 $ karmadactl get po
 NAME                     CLUSTER   READY   STATUS              RESTARTS   AGE
@@ -91,9 +93,9 @@ nginx-5c54b4855f-6sq9s   member1   1/1     Running             0          28s
 nginx-5c54b4855f-vp948   member1   1/1     Running             0          28s
 ```
 
-## Deploy curl pod in `member2` cluster
+## 在 `member2` 集群中部署 curl Pod
 
-Let's deploy a curl pod in `member2` cluster:
+让我们在 `member2` 集群中部署一个 curl Pod：
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -138,21 +140,20 @@ spec:
         - member2
 ```
 
-
-After deploying, you can check the created pods:
+部署完成后，您可以检查创建的 Pod：
 ```sh
 $ karmadactl get po -C member2
 NAME                    CLUSTER   READY   STATUS    RESTARTS   AGE
 curl-6894f46595-c75rc   member2   1/1     Running   0          15s
 ```
 
-Later, we will run the curl command in this pod.
+稍后，我们将在此 Pod 中执行 curl 命令。
 
-## Deploy MultiClusterService and Service in Karmada
+## 在 Karmada 中部署 MultiClusterService 与 Service
 
-Now, instead of using PropagationPolicy/ClusterPropagationPolicy for the service, we utilize MultiClusterService for propagation.
+现在，我们不使用 PropagationPolicy/ClusterPropagationPolicy，而是利用 MultiClusterService 来分发 Service。
 
-To enable multi-cluster service in Karmada, deploy the following yaml:
+要在 Karmada 中启用 MultiClusterService，请部署以下 yaml：
 ```yaml
 apiVersion: v1
 kind: Service
@@ -161,7 +162,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
   selector:
     app: nginx
 ---
@@ -178,9 +179,9 @@ spec:
     - name: member1
 ```
 
-## Access the backend pods from member2 cluster
+## 从 `member2` 集群访问后端 Pod
 
-To access the backend pods in the member1 cluster from the member2 cluster, execute the following command:
+要从 `member2` 集群访问 `member1` 集群中的后端 Pod，请执行以下命令：
 ```sh
 $ karmadactl exec -C member2 curl-6894f46595-c75rc -it -- sh
 ~ $ curl http://nginx.default
@@ -189,4 +190,4 @@ Version: 1.0.0
 Hostname: nginx-0
 ```
 
-Using MultiClusterService, the pods are situated solely in the member1 cluster. However, they can be accessed from the member2 cluster using the native service name.
+在此案例中，Pod 仅位于 `member1` 集群。但是，使用 MultiClusterService，就可以通过原生 Service 域名从 `member2` 集群实现跨集群访问。

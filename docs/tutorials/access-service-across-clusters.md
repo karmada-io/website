@@ -1,10 +1,10 @@
 ---
-title: Access service across clusters within native service
+title: Access service across clusters within native Service
 ---
 
-In Karmada, the MultiClusterService can enable users to access services across clusters with the native service domain name, like `foo.svc`, with the aim of providing users with a seamless experience when accessing services across multiple clusters, as if they were operating within a single cluster.
+In Karmada, the MultiClusterService can enable users to access service across clusters with the native Service domain name, like `foo.svc`, with the aim of providing users with a seamless experience when accessing service across multiple clusters, as if they were operating within a single cluster.
 
-This document provides an example of how to enable MultiClusterService for accessing service across clusters with native service.
+This document provides an example of how to enable MultiClusterService for accessing service across clusters with native Service.
 
 ## Prerequisites
 
@@ -19,14 +19,16 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 * If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks of the member1 and member2 will be connected.
 * You can use `Submariner` or other related open source projects to connected networks between member clusters.
 
-Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
+:::note
+In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
+:::
 
 ### Enable MultiClusterService in karmada-controller-manager
 
 To enable the MultiClusterService feature in the karmada-controller-manager, run the following command:
 
 ```shell
-$ kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
+kubectl --context karmada-host get deploy karmada-controller-manager -n karmada-system -o yaml | sed '/- --v=4/i \        - --feature-gates=MultiClusterService=true' | kubectl --context karmada-host replace -f -
 ```
 
 Please note that the MultiClusterService feature is disabled by default and can be enabled using the `--feature-gates=MultiClusterService=true` flag.
@@ -150,9 +152,9 @@ Later, we will run the curl command in this pod.
 
 ## Deploy MultiClusterService and Service in Karmada
 
-Now, instead of using PropagationPolicy/ClusterPropagationPolicy for the service, we utilize MultiClusterService for propagation.
+Now, instead of using PropagationPolicy/ClusterPropagationPolicy for the Service, we utilize MultiClusterService for propagation.
 
-To enable multi-cluster service in Karmada, deploy the following yaml:
+To enable MultiClusterService in Karmada, deploy the following yaml:
 ```yaml
 apiVersion: v1
 kind: Service
@@ -161,7 +163,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
   selector:
     app: nginx
 ---
@@ -178,9 +180,9 @@ spec:
     - name: member1
 ```
 
-## Access the backend pods from member2 cluster
+## Access the backend pods from `member2` cluster
 
-To access the backend pods in the member1 cluster from the member2 cluster, execute the following command:
+To access the backend pods in the `member1` cluster from the `member2` cluster, execute the following command:
 ```sh
 $ karmadactl exec -C member2 curl-6894f46595-c75rc -it -- sh
 ~ $ curl http://nginx.default
@@ -189,4 +191,4 @@ Version: 1.0.0
 Hostname: nginx-0
 ```
 
-Using MultiClusterService, the pods are situated solely in the member1 cluster. However, they can be accessed from the member2 cluster using the native service name.
+Using MultiClusterService, the pods are situated solely in the `member1` cluster. However, they can be accessed from the `member2` cluster using the native Service name.

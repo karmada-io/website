@@ -46,8 +46,8 @@ karmadactl join cluster1 --cluster-context cluster1 --karmada-context karmada
 
 假设您如下使用 `kubefedctl` 工具来检查接入集群的状态：
 
-```
-kubectl -n kube-federation-system get kubefedclusters
+```bash
+$ kubectl -n kube-federation-system get kubefedclusters
 
 NAME       AGE   READY   KUBERNETES-VERSION
 cluster1   1m    True    v1.21.2
@@ -56,8 +56,8 @@ cluster2   1m    True    v1.22.0
 
 现在通过 Karmada，您可以用 `karmadactl` 工具达到同样的效果：
 
-```
-kubectl get clusters
+```bash
+$ kubectl get clusters
 
 NAME      VERSION   MODE   READY   AGE
 member1   v1.20.7   Push   True    66s
