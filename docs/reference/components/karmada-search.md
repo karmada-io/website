@@ -71,6 +71,7 @@ karmada-search [flags]
       --enable-admission-plugins strings                        admission plugins that should be enabled in addition to default enabled ones (NamespaceLifecycle, MutatingAdmissionWebhook, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook). Comma-delimited list of admission plugins: MutatingAdmissionWebhook, NamespaceLifecycle, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
+      --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
       --encryption-provider-config string                       The file containing configuration for encryption providers to be used for storing secrets in etcd
       --encryption-provider-config-automatic-reload             Determines if the file set by --encryption-provider-config should be automatically reloaded if the disk contents change. Setting this to true disables the ability to uniquely identify distinct KMS plugins via the API server healthz endpoints.
       --etcd-cafile string                                      SSL Certificate Authority file used to secure etcd communication.
@@ -85,8 +86,6 @@ karmada-search [flags]
       --etcd-servers strings                                    List of etcd servers to connect with (scheme://ip:port), comma separated.
       --etcd-servers-overrides strings                          Per-resource etcd servers overrides, comma separated. The individual override format: group/resource#servers, where servers are URLs, semicolon separated. Note that this applies only to resources compiled into this server binary. 
       --feature-gates mapStringBool                             A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
-                                                                APIListChunking=true|false (BETA - default=true)
-                                                                APIPriorityAndFairness=true|false (BETA - default=true)
                                                                 APIResponseCompression=true|false (BETA - default=true)
                                                                 APIServerIdentity=true|false (BETA - default=true)
                                                                 APIServerTracing=true|false (BETA - default=true)
@@ -96,21 +95,22 @@ karmada-search [flags]
                                                                 AllBeta=true|false (BETA - default=false)
                                                                 ComponentSLIs=true|false (BETA - default=true)
                                                                 ConsistentListFromCache=true|false (ALPHA - default=false)
-                                                                CustomResourceValidationExpressions=true|false (BETA - default=true)
                                                                 InPlacePodVerticalScaling=true|false (ALPHA - default=false)
-                                                                KMSv2=true|false (BETA - default=true)
-                                                                KMSv2KDF=true|false (BETA - default=false)
                                                                 OpenAPIEnums=true|false (BETA - default=true)
-                                                                RemainingItemCount=true|false (BETA - default=true)
+                                                                SeparateCacheWatchRPC=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
-                                                                UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=false)
+                                                                StructuredAuthenticationConfiguration=true|false (ALPHA - default=false)
+                                                                StructuredAuthorizationConfiguration=true|false (ALPHA - default=false)
+                                                                UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
                                                                 ValidatingAdmissionPolicy=true|false (BETA - default=false)
+                                                                WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
                                                                 WatchList=true|false (ALPHA - default=false)
+                                                                ZeroLimitedNominalConcurrencyShares=true|false (BETA - default=false)
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default. (default 1000)
-      --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
       --lease-reuse-duration-seconds int                        The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
       --log_backtrace_at traceLocation                          when logging hits line file:N, emit a stack trace (default :0)
@@ -131,7 +131,7 @@ karmada-search [flags]
       --secure-port int                                         The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
       --skip_headers                                            If true, avoid header prefixes in the log messages
       --skip_log_headers                                        If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                                logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                                logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --storage-backend string                                  The storage backend for persistence. Options: 'etcd3' (default).
       --storage-media-type string                               The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. Supported media types: [application/json, application/yaml, application/vnd.kubernetes.protobuf] (default "application/json")
       --tls-cert-file string                                    File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert). If HTTPS serving is enabled, and --tls-cert-file and --tls-private-key-file are not provided, a self-signed certificate and key are generated for the public address and saved to the directory specified by --cert-dir.

@@ -36,8 +36,8 @@ karmada-scheduler [flags]
                                                     PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                     ResourceQuotaEstimate=true|false (ALPHA - default=false)
   -h, --help                                        help for karmada-scheduler
-      --kube-api-burst int                          Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                          Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                           Path to karmada control plane kubeconfig file.
       --leader-elect                                Enable leader election, which must be true when running multi instances. (default true)
       --leader-elect-lease-duration duration        The duration that non-leader candidates will wait after observing a leadership renewal until attempting to acquire leadership of a led but unrenewed leader slot. This is effectively the maximum duration that a leader can be stopped before it is replaced by another candidate. This is only applicable if leader election is enabled. (default 15s)
@@ -66,7 +66,7 @@ karmada-scheduler [flags]
       --secure-port int                             The secure port on which to serve HTTPS. (default 10351)
       --skip_headers                                If true, avoid header prefixes in the log messages
       --skip_log_headers                            If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                    logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                    logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
   -v, --v Level                                     number for the log level verbosity
       --vmodule moduleSpec                          comma-separated list of pattern=N settings for file-filtered logging
 ```

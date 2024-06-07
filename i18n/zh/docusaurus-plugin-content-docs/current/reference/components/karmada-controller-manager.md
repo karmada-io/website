@@ -20,10 +20,10 @@ karmada-controller-manager [flags]
       --add_dir_header                                                 If true, adds the file directory to the header of the log messages
       --alsologtostderr                                                log to standard error as well as files (no effect when -logtostderr=true)
       --bind-address string                                            The IP address on which to listen for the --secure-port port. (default "0.0.0.0")
-      --cluster-api-burst int                                          Burst to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
+      --cluster-api-burst int                                          Burst to use while talking with cluster kube-apiserver. (default 60)
       --cluster-api-context string                                     Name of the cluster context in cluster-api management cluster kubeconfig file.
       --cluster-api-kubeconfig string                                  Path to the cluster-api management cluster kubeconfig file.
-      --cluster-api-qps float32                                        QPS to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --cluster-api-qps float32                                        QPS to use while talking with cluster kube-apiserver. (default 40)
       --cluster-cache-sync-timeout duration                            Timeout period waiting for cluster cache to sync. (default 2m0s)
       --cluster-failure-threshold duration                             The duration of failure for the cluster to be considered unhealthy. (default 30s)
       --cluster-lease-duration duration                                Specifies the expiration period of a cluster lease. (default 40s)
@@ -42,8 +42,8 @@ karmada-controller-manager [flags]
       --concurrent-resourcebinding-syncs int                           The number of ResourceBindings that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. 
-                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaReplicasSyncer, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus.
-                                                                       Disabled-by-default controllers: hpaReplicasSyncer (default [*])
+                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, deploymentReplicasSyncer, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaScaleTargetMarker, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus, workloadRebalancer.
+                                                                       Disabled-by-default controllers: deploymentReplicasSyncer, hpaScaleTargetMarker (default [*])
       --enable-cluster-resource-modeling                               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
                                                                        Disable if it does not fit your cases for better performance. (default true)
@@ -69,8 +69,8 @@ karmada-controller-manager [flags]
       --horizontal-pod-autoscaler-sync-period duration                 The period for syncing the number of pods in horizontal pod autoscaler. (default 15s)
       --horizontal-pod-autoscaler-tolerance float                      The minimum change (from 1.0) in the desired-to-actual metrics ratio for the horizontal pod autoscaler to consider scaling. (default 0.1)
       --horizontal-pod-autoscaler-upscale-delay duration               The period since last upscale, before another upscale can be performed in horizontal pod autoscaler. (default 3m0s)
-      --kube-api-burst int                                             Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                                           QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                                             Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                                           QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                              Path to karmada control plane kubeconfig file.
       --leader-elect                                                   Start a leader election client and gain leadership before executing the main loop. Enable this when running replicated components for high availability. (default true)
       --leader-elect-lease-duration duration                           The duration that non-leader candidates will wait after observing a leadership renewal until attempting to acquire leadership of a led but unrenewed leader slot. This is effectively the maximum duration that a leader can be stopped before it is replaced by another candidate. This is only applicable if leader election is enabled. (default 15s)
@@ -99,7 +99,7 @@ karmada-controller-manager [flags]
                                                                        <group>/<version>/<kind>,<kind> for skip one or more specific resource(e.g. networking.k8s.io/v1beta1/Ingress,IngressClass) where the kinds are case-insensitive.
       --skipped-propagating-namespaces strings                         Comma-separated namespaces that should be skipped from propagating.
                                                                        Note: 'karmada-system', 'karmada-cluster' and 'karmada-es-.*' are Karmada reserved namespaces that will always be skipped. (default [kube-.*])
-      --stderrthreshold severity                                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
   -v, --v Level                                                        number for the log level verbosity
       --vmodule moduleSpec                                             comma-separated list of pattern=N settings for file-filtered logging
 ```

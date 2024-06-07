@@ -32,8 +32,8 @@ karmada-scheduler-estimator [flags]
                                          PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                          ResourceQuotaEstimate=true|false (ALPHA - default=false)
   -h, --help                             help for karmada-scheduler-estimator
-      --kube-api-burst int               Burst to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 30)
-      --kube-api-qps float32             QPS to use while talking with apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 20)
+      --kube-api-burst int               Burst to use while talking with apiserver. (default 30)
+      --kube-api-qps float32             QPS to use while talking with apiserver. (default 20)
       --kubeconfig string                Path to member cluster's kubeconfig file.
       --log_backtrace_at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
@@ -48,7 +48,7 @@ karmada-scheduler-estimator [flags]
       --server-port int                  The secure port on which to serve gRPC. (default 10352)
       --skip_headers                     If true, avoid header prefixes in the log messages
       --skip_log_headers                 If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity         logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity         logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
   -v, --v Level                          number for the log level verbosity
       --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging
 ```

@@ -22,9 +22,9 @@ karmada-agent [flags]
       --bind-address string                            The IP address on which to listen for the --secure-port port. (default "0.0.0.0")
       --cert-rotation-checking-interval duration       The interval of checking if the certificate need to be rotated. This is only applicable if cert rotation is enabled (default 5m0s)
       --cert-rotation-remaining-time-threshold float   The threshold of remaining time of the valid certificate. This is only applicable if cert rotation is enabled. (default 0.2)
-      --cluster-api-burst int                          Burst to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
+      --cluster-api-burst int                          Burst to use while talking with cluster kube-apiserver. (default 60)
       --cluster-api-endpoint string                    APIEndpoint of the cluster.
-      --cluster-api-qps float32                        QPS to use while talking with cluster kube-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --cluster-api-qps float32                        QPS to use while talking with cluster kube-apiserver. (default 40)
       --cluster-cache-sync-timeout duration            Timeout period waiting for cluster cache to sync. (default 2m0s)
       --cluster-failure-threshold duration             The duration of failure for the cluster to be considered unhealthy. (default 30s)
       --cluster-lease-duration duration                Specifies the expiration period of a cluster lease. (default 40s)
@@ -57,8 +57,8 @@ karmada-agent [flags]
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.
       --karmada-kubeconfig string                      Path to karmada control plane kubeconfig file.
       --karmada-kubeconfig-namespace string            Namespace of the secret containing karmada-agent certificate. This is only applicable if cert rotation is enabled. (default "karmada-system")
-      --kube-api-burst int                             Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                           QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                             Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                           QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                              Paths to a kubeconfig. Only required if out-of-cluster.
       --leader-elect                                   Start a leader election client and gain leadership before executing the main loop. Enable this when running replicated components for high availability. (default true)
       --leader-elect-lease-duration duration           The duration that non-leader candidates will wait after observing a leadership renewal until attempting to acquire leadership of a led but unrenewed leader slot. This is effectively the maximum duration that a leader can be stopped before it is replaced by another candidate. This is only applicable if leader election is enabled. (default 15s)
@@ -83,7 +83,7 @@ karmada-agent [flags]
       --secure-port int                                The secure port on which to serve HTTPS. (default 10357)
       --skip_headers                                   If true, avoid header prefixes in the log messages
       --skip_log_headers                               If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
   -v, --v Level                                        number for the log level verbosity
       --vmodule moduleSpec                             comma-separated list of pattern=N settings for file-filtered logging
 ```

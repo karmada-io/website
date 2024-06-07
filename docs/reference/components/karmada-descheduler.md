@@ -23,8 +23,8 @@ karmada-descheduler [flags]
       --descheduling-interval duration              Time interval between two consecutive descheduler executions. Setting this value instructs the descheduler to run in a continuous loop at the interval specified. (default 2m0s)
       --enable-pprof                                Enable profiling via web interface host:port/debug/pprof/.
   -h, --help                                        help for karmada-descheduler
-      --kube-api-burst int                          Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                          Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                        QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                           Path to karmada control plane kubeconfig file.
       --leader-elect                                Enable leader election, which must be true when running multi instances. (default true)
       --leader-elect-resource-namespace string      The namespace of resource object that is used for locking during leader election. (default "karmada-system")
@@ -42,7 +42,7 @@ karmada-descheduler [flags]
       --secure-port int                             The secure port on which to serve HTTPS. (default 10358)
       --skip_headers                                If true, avoid header prefixes in the log messages
       --skip_log_headers                            If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                    logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                    logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --unschedulable-threshold duration            The period of pod unschedulable condition. This value is considered as a classification standard of unschedulable replicas. (default 5m0s)
   -v, --v Level                                     number for the log level verbosity
       --vmodule moduleSpec                          comma-separated list of pattern=N settings for file-filtered logging
