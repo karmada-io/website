@@ -25,8 +25,8 @@ karmada-webhook [flags]
       --enable-pprof                                 Enable profiling via web interface host:port/debug/pprof/.
       --health-probe-bind-address string             The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:8000, :8000) (default ":8000")
   -h, --help                                         help for karmada-webhook
-      --kube-api-burst int                           Burst to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 60)
-      --kube-api-qps float32                         QPS to use while talking with karmada-apiserver. Doesn't cover events and node heartbeat apis which rate limiting is controlled by a different set of flags. (default 40)
+      --kube-api-burst int                           Burst to use while talking with karmada-apiserver. (default 60)
+      --kube-api-qps float32                         QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                            Path to karmada control plane kubeconfig file.
       --log_backtrace_at traceLocation               when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                               If non-empty, write log files in this directory (no effect when -logtostderr=true)
@@ -39,7 +39,7 @@ karmada-webhook [flags]
       --secure-port int                              The secure port on which to serve HTTPS. (default 8443)
       --skip_headers                                 If true, avoid header prefixes in the log messages
       --skip_log_headers                             If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                     logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=false) (default 2)
+      --stderrthreshold severity                     logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --tls-cert-file-name string                    The name of server certificate. (default "tls.crt")
       --tls-min-version string                       Minimum TLS version supported. Possible values: 1.0, 1.1, 1.2, 1.3. (default "1.3")
       --tls-private-key-file-name string             The name of server key. (default "tls.key")
