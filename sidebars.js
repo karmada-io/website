@@ -323,6 +323,16 @@ module.exports = {
                     items: [
                         {
                             type: "category",
+                            label: "App Resources",
+                            link: {
+                                type: 'generated-index',
+                            },
+                            items: [
+                                "reference/karmada-api/app-resources/workload-rebalancer-v1alpha1",
+                            ],
+                        },
+                        {
+                            type: "category",
                             label: "Auto Scaling Resources",
                             link: {
                                 type: 'generated-index',

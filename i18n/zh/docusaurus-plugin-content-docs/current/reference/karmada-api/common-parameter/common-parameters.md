@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: ""
 title: "Common Parameters"
-weight: 9
+weight: 11
 auto_generated: true
 ---
 
@@ -90,7 +90,7 @@ limit 是一个列表调用返回的最大响应数。如果有更多的条目�
 
 ## pretty
 
-如果设置为 true ，那么输出是规范的打印。
+如果设置为 true ，那么输出是规范的打印。默认为 false，除非用户代理指示浏览器或命令行 HTTP 工具（curl 和 wget）。
 
 <hr/>
 

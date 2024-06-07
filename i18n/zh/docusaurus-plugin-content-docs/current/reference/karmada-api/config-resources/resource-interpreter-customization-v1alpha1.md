@@ -59,21 +59,21 @@ ResourceInterpreterCustomizationSpec 是配置的详情。
         - **customizations.dependencyInterpretation.luaScript** (string)，必选
 
           LuaScript 是用于解释特定资源的依赖关系的 Lua 脚本。该脚本应实现以下功能：
-      ```yaml
-            luaScript: &gt;
-                function GetDependencies(desiredObj)
-                    dependencies = []
-                    if desiredObj.spec.serviceAccountName ~= nil and desiredObj.spec.serviceAccountName ~= "default" then
-                        dependency = []
-                        dependency.apiVersion = "v1"
-                        dependency.kind = "ServiceAccount"
-                        dependency.name = desiredObj.spec.serviceAccountName
-                        dependency.namespace = desiredObj.namespace
-                        dependencies[1] = []
-                        dependencies[1] = dependency
-                    end
-                    return dependencies
+      ```
+        luaScript: >
+            function GetDependencies(desiredObj)
+                dependencies = []
+                serviceAccountName = desiredObj.spec.template.spec.serviceAccountName
+                if serviceAccountName ~= nil and serviceAccountName ~= "default" then
+                    dependency = []
+                    dependency.apiVersion = "v1"
+                    dependency.kind = "ServiceAccount"
+                    dependency.name = serviceAccountName
+                    dependency.namespace = desiredObj.metadata.namespace
+                    dependencies[1] = dependency
                 end
+                return dependencies
+            end
       ```
 
       LuaScript 的内容是一个完整的函数，包括声明和定义。

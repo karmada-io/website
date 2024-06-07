@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: ""
 title: "Common Parameters"
-weight: 10
+weight: 11
 auto_generated: true
 ---
 
@@ -86,7 +86,7 @@ object name and auth scope, such as for teams and projects
 
 ## pretty 
 
-If 'true', then the output is pretty printed.
+If 'true', then the output is pretty printed. Defaults to 'false' unless the user-agent indicates a browser or command-line HTTP tool (curl and wget).
 
 <hr/>
 

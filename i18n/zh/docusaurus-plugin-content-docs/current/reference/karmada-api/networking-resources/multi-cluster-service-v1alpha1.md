@@ -106,6 +106,10 @@ MultiClusterService 是多集群软件服务的命名抽象。MultiClusterServic
 
         IP 为基于 IP 的负载均衡器入口点（通常是 GCE 或 OpenStack 负载均衡器）所设置。
 
+      - **status.loadBalancer.ingress.ipMode** (string)
+
+        IPMode 指定负载均衡器 IP 的行为方式，且只有在指定 ip 字段时才能指定。将其设置为 "VIP"，表示将流量传输到节点，并将目的地设置为负载平衡器的 IP 和端口。将此项设置为 "Proxy（代理）"，表示流量将被传送到节点或 pod，目的地设置为节点的 IP 和节点端口或 pod 的 IP 和端口。服务应用可使用此信息调整流量路由。
+
       - **status.loadBalancer.ingress.ports** ([]PortStatus)
 
         *Atomic：将在合并期间被替换*
