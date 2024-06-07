@@ -546,6 +546,16 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
     Namespace represents the namespace of the Binding. It is required for ResourceBinding. If Namespace is not specified, means the referencing is ClusterResourceBinding.
 
+- **rescheduleTriggeredAt** (Time)
+
+  RescheduleTriggeredAt is a timestamp representing when the referenced resource is triggered rescheduling. When this field is updated, it means a rescheduling is manually triggered by user, and the expected behavior of this action is to do a complete recalculation without referring to last scheduling results. It works with the status.lastScheduledTime field, and only when this timestamp is later than timestamp in status.lastScheduledTime will the rescheduling actually execute, otherwise, ignored.
+  
+  It is represented in RFC3339 form (like '2006-01-02T15:04:05Z') and is in UTC.
+
+  <a name="Time"></a>
+
+  *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+
 - **schedulerName** (string)
 
   SchedulerName represents which scheduler to proceed the scheduling. It inherits directly from the associated PropagationPolicy(or ClusterPropagationPolicy).
@@ -660,6 +670,14 @@ ResourceBindingStatus represents the overall status of the strategy as well as t
   - **conditions.observedGeneration** (int64)
 
     observedGeneration represents the .metadata.generation that the condition was set based upon. For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date with respect to the current state of the instance.
+
+- **lastScheduledTime** (Time)
+
+  LastScheduledTime representing the latest timestamp when scheduler successfully finished a scheduling. It is represented in RFC3339 form (like '2006-01-02T15:04:05Z') and is in UTC.
+
+  <a name="Time"></a>
+
+  *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
 
 - **schedulerObservedGeneration** (int64)
 

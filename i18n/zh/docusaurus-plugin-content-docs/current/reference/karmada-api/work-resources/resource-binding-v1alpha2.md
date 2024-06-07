@@ -532,6 +532,16 @@ ResourceBindingSpec 表示预期的 ResourceBinding。
     - **requiredBy.namespace**（string）
 
       Namespace 表示 Binding 的命名空间，是 ResourceBinding 所必需的。如果未指定命名空间，引用为 ClusterResourceBinding。
+  
+  - **rescheduleTriggeredAt**（Time）
+
+    RescheduleTriggeredAt 是一个时间戳，表示引用资源被触发重新调度的时间。此字段更新时，表示用户手动触发了重新调度，此操作的预期行为是在不参考上次调度结果的情况下进行完全的重新计算。它与 status.lastScheduledTime 字段协同工作，只有当该时间戳晚于 status.lastScheduledTime 中的时间戳时，才会实际执行重新调度，否则将忽略。
+
+    时间戳以 RFC3339 形式表示（如 "2006-01-02T15:04:05Z"），单位为 UTC。
+    
+    <a name="Time"></a>
+
+    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
   - **schedulerName**（string）
 
@@ -647,6 +657,14 @@ ResourceBindingStatus 表示策略及所引用资源的整体状态。
   - **conditions.observedGeneration**（int64）
 
     **observedGeneration**表示设置状况时所基于的 .metadata.generation。例如，如果 .metadata.generation 为 12，但 .status.conditions[x].observedGeneration 为 9，则状况相对于实例的当前状态已过期。
+
+- **lastScheduledTime** (Time)
+
+  LastScheduledTime 表示调度器上一次调度完成的时间戳。它以 RFC3339 形式表示（如 "2006-01-02T15:04:05Z"），单位为 UTC。
+
+  <a name="Time"></a>
+
+  *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
 - **schedulerObservedGeneration**（int64）
 
