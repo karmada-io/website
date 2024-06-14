@@ -20,7 +20,7 @@ auto_generated: true
 
 ## WorkloadRebalancer 
 
-WorkloadRebalancer represents the desired behavior and status of a job which can enforces a resource rebalance.
+WorkloadRebalancer 代表可以对某资源执行重平衡操作的 Job 的预期行为和状态。
 
 <hr/>
 
@@ -30,109 +30,109 @@ WorkloadRebalancer represents the desired behavior and status of a job which can
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([WorkloadRebalancerSpec](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerspec)), required
+- **spec** ([WorkloadRebalancerSpec](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerspec)), 必选
 
-  Spec represents the specification of the desired behavior of WorkloadRebalancer.
+  Spec 是 WorkloadRebalancer 的期望行为的规范。
 
 - **status** ([WorkloadRebalancerStatus](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerstatus))
 
-  Status represents the status of WorkloadRebalancer.
+  Status 是 WorkloadRebalancer 的状态。
 
 ## WorkloadRebalancerSpec 
 
-WorkloadRebalancerSpec represents the specification of the desired behavior of Reschedule.
+WorkloadRebalancerSpec 代表了重调度的期望行为的规范。
 
 <hr/>
 
-- **workloads** ([]ObjectReference), required
+- **workloads** ([]ObjectReference), 必选
 
-  Workloads used to specify the list of expected resource. Nil or empty list is not allowed.
+  Workloads 用于指定预期资源列表。不允许使用无或空列表。
 
   <a name="ObjectReference"></a>
 
-  *ObjectReference the expected resource.*
+  *ObjectReference 预期资源。*
 
-  - **workloads.apiVersion** (string), required
+  - **workloads.apiVersion** (string), 必选
 
-    APIVersion represents the API version of the target resource.
+    APIVersion 代表目标资源的 API 版本。
 
-  - **workloads.kind** (string), required
+  - **workloads.kind** (string), 必选
 
-    Kind represents the Kind of the target resource.
+    Kind 代表目标资源的类别。
 
-  - **workloads.name** (string), required
+  - **workloads.name** (string), 必选
 
-    Name of the target resource.
+    Name 是目标资源的名称。
 
   - **workloads.namespace** (string)
 
-    Namespace of the target resource. Default is empty, which means it is a non-namespacescoped resource.
+    目标资源的命名空间。默认为空，表明其是非命名空间作用域的资源。
 
 - **ttlSecondsAfterFinished** (int32)
 
-  TTLSecondsAfterFinished limits the lifetime of a WorkloadRebalancer that has finished execution (means each target workload is finished with result of Successful or Failed). If this field is set, ttlSecondsAfterFinished after the WorkloadRebalancer finishes, it is eligible to be automatically deleted. If this field is unset, the WorkloadRebalancer won't be automatically deleted. If this field is set to zero, the WorkloadRebalancer becomes eligible to be deleted immediately after it finishes.
+  TTLSecondsAfterFinished 限制已执行完成的 WorkloadRebalancer（指每个目标工作负载都以 Successful 或 Failed 的结果执行完成） 的生命周期。如果设置了该字段，WorkloadRebalancer 结束 ttlSecondsAfterFinished 秒后将被自动删除。如果未设置该字段，则不会自动删除 WorkloadRebalancer。如果此字段设置为零，则 WorkloadRebalancer 执行完成后会被立即删除。
 
 ## WorkloadRebalancerStatus 
 
-WorkloadRebalancerStatus contains information about the current status of a WorkloadRebalancer updated periodically by schedule trigger controller.
+WorkloadRebalancerStatus 包含 WorkloadRebalancer 周期性更新的当前状态信息。
 
 <hr/>
 
 - **finishTime** (Time)
 
-  FinishTime represents the finish time of rebalancer.
+  FinishTime 代表了重平衡的结束时间。
 
   <a name="Time"></a>
 
-  *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+  *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
 
 - **observedGeneration** (int64)
 
-  ObservedGeneration is the generation(.metadata.generation) observed by the controller. If ObservedGeneration is less than the generation in metadata means the controller hasn't confirmed the rebalance result or hasn't done the rebalance yet.
+  ObservedGeneration 是控制器观察到的 .metadata.generation。如果 ObservedGeneration 小于元数据中的 generation，则表示控制器尚未确认重平衡结果或尚未进行重平衡。
 
 - **observedWorkloads** ([]ObservedWorkload)
 
-  ObservedWorkloads contains information about the execution states and messages of target resources.
+  ObservedWorkloads 包含目标资源的执行状态和信息。
 
   <a name="ObservedWorkload"></a>
 
-  *ObservedWorkload the observed resource.*
+  *ObservedWorkload 被观测的工作负载。*
 
-  - **observedWorkloads.workload** (ObjectReference), required
+  - **observedWorkloads.workload** (ObjectReference), 必选
 
-    Workload the observed resource.
+    Workload 被观测的资源。
 
     <a name="ObjectReference"></a>
 
-    *ObjectReference the expected resource.*
+    *ObjectReference 预期资源。*
 
-    - **observedWorkloads.workload.apiVersion** (string), required
+    - **observedWorkloads.workload.apiVersion** (string), 必选
 
-      APIVersion represents the API version of the target resource.
+      APIVersion 代表目标资源的 API 版本。
 
-    - **observedWorkloads.workload.kind** (string), required
+    - **observedWorkloads.workload.kind** (string), 必选
 
-      Kind represents the Kind of the target resource.
+      Kind 代表目标资源的类别。
 
-    - **observedWorkloads.workload.name** (string), required
+    - **observedWorkloads.workload.name** (string), 必选
 
-      Name of the target resource.
+      Name 目标资源的名称。
 
     - **observedWorkloads.workload.namespace** (string)
 
-      Namespace of the target resource. Default is empty, which means it is a non-namespacescoped resource.
+      目标资源的命名空间。 默认为空, 表明其是非命名空间作用域的资源。
 
   - **observedWorkloads.reason** (string)
 
-    Reason represents a machine-readable description of why this resource rebalanced failed.
+    Reason 资源重平衡失败的机器可读描述。
 
   - **observedWorkloads.result** (string)
 
-    Result the observed rebalance result of resource.
+    Result 观测到的资源重平衡结果。
 
 ## WorkloadRebalancerList 
 
-WorkloadRebalancerList contains a list of WorkloadRebalancer
+WorkloadRebalancerList 是 WorkloadRebalancer 的集合。
 
 <hr/>
 
@@ -144,137 +144,137 @@ WorkloadRebalancerList contains a list of WorkloadRebalancer
 
 - **items** ([][WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)), required
 
-  Items holds a list of WorkloadRebalancer.
+  Items 是 WorkloadRebalancer 的列表。
 
-## Operations 
+## 操作 
 
 <hr/>
 
-### `get` read the specified WorkloadRebalancer
+### `get` 查询指定的 WorkloadRebalancer
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-### `get` read status of the specified WorkloadRebalancer
+### `get` 查询指定 WorkloadRebalancer 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-### `list` list or watch objects of kind WorkloadRebalancer
+### `list` 查询 WorkloadRebalancer 列表
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks** (**查询参数**): boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue** (**查询参数**): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector** (**查询参数**): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector** (**查询参数**): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit** (**查询参数**): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion** (**查询参数**): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch** (**查询参数**): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents** (**查询参数**): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** (**查询参数**): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch** (**查询参数**): boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancerList](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerlist)): OK
 
-### `create` create a WorkloadRebalancer
+### `create` 创建一个 WorkloadRebalancer
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
-#### Parameters
+#### 参数
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
@@ -282,265 +282,265 @@ POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 202 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Accepted
 
-### `update` replace the specified WorkloadRebalancer
+### `update` 更新指定的 WorkloadRebalancer
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `update` replace status of the specified WorkloadRebalancer
+### `update` 更新指定 WorkloadRebalancer 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `patch` partially update the specified WorkloadRebalancer
+### `patch` 更新指定 WorkloadRebalancer 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force** (**查询参数**): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `patch` partially update status of the specified WorkloadRebalancer
+### `patch` 更新指定 WorkloadRebalancer 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force** (**查询参数**): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `delete` delete a WorkloadRebalancer
+### `delete` 删除一个 WorkloadRebalancer
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the WorkloadRebalancer
+  WorkloadRebalancer 的名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds** (**查询参数**): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy** (**查询参数**): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of WorkloadRebalancer
+### `deletecollection` 删除所有 WorkloadRebalancer
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
   
 
-- **continue** (*in query*): string
+- **continue** (**查询参数**): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector** (**查询参数**): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds** (**查询参数**): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector** (**查询参数**): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit** (**查询参数**): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy** (**查询参数**): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion** (**查询参数**): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch** (**查询参数**): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents** (**查询参数**): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** (**查询参数**): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
