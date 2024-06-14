@@ -20,7 +20,7 @@ auto_generated: true
 
 ## Remedy 
 
-Remedy represents the cluster-level management strategies based on cluster conditions.
+Remedy 表示基于集群状况的集群级管理策略。
 
 <hr/>
 
@@ -32,61 +32,61 @@ Remedy represents the cluster-level management strategies based on cluster condi
 
 - **spec** ([RemedySpec](../remedy-resources/remedy-v1alpha1#remedyspec)), required
 
-  Spec represents the desired behavior of Remedy.
+  Spec 定义了 Remedy 的期望行为。
 
 ## RemedySpec 
 
-RemedySpec represents the desired behavior of Remedy.
+RemedySpec 定义了 Remedy 的期望行为。
 
 <hr/>
 
 - **actions** ([]string)
 
-  Actions specifies the actions that remedy system needs to perform. If empty, no action will be performed.
+  Actions 指定 remedy 系统需要执行的操作。如果为空，则不执行任何操作。
 
 - **clusterAffinity** (ClusterAffinity)
 
-  ClusterAffinity specifies the clusters that Remedy needs to pay attention to. For clusters that meet the DecisionConditions, Actions will be preformed. If empty, all clusters will be selected.
+  ClusterAffinity 指定 Remedy 需要关注的集群。对于满足 DecisionConditions（决策条件）的集群，将执行相应的操作。如果为空，则会选择所有集群。
 
   <a name="ClusterAffinity"></a>
 
-  *ClusterAffinity represents the filter to select clusters.*
+  *ClusterAffinity 用于筛选集群。*
 
   - **clusterAffinity.clusterNames** ([]string)
 
-    ClusterNames is the list of clusters to be selected.
+    ClusterNames 是要选择的集群列表。
 
 - **decisionMatches** ([]DecisionMatch)
 
-  DecisionMatches indicates the decision matches of triggering the remedy system to perform the actions. As long as any one DecisionMatch matches, the Actions will be preformed. If empty, the Actions will be performed immediately.
+  DecisionMatches 表示触发 remedy 系统执行操作的决策匹配。只要有一个决策匹配项匹配，就会执行行动。如果为空，则会立即执行。
 
   <a name="DecisionMatch"></a>
 
-  *DecisionMatch represents the decision match detail of activating the remedy system.*
+  *DecisionMatch 代表激活 remedy 系统的决策条件。*
 
   - **decisionMatches.clusterConditionMatch** (ClusterConditionRequirement)
 
-    ClusterConditionMatch describes the cluster condition requirement.
+    ClusterConditionMatch 描述了集群状况要求。
 
     <a name="ClusterConditionRequirement"></a>
 
-    *ClusterConditionRequirement describes the Cluster condition requirement details.*
+    *ClusterConditionRequirement 描述了集群状况要求。*
 
-    - **decisionMatches.clusterConditionMatch.conditionStatus** (string), required
+    - **decisionMatches.clusterConditionMatch.conditionStatus** (string), 必选
 
-      ConditionStatus specifies the ClusterStatue condition status.
+      ConditionStatus 指定了集群的状况状态。
 
-    - **decisionMatches.clusterConditionMatch.conditionType** (string), required
+    - **decisionMatches.clusterConditionMatch.conditionType** (string), 必选
 
-      ConditionType specifies the ClusterStatus condition type.
+      ConditionType 指定了集群的状况类型。
 
-    - **decisionMatches.clusterConditionMatch.operator** (string), required
+    - **decisionMatches.clusterConditionMatch.operator** (string), 必选
 
-      Operator represents a conditionType's relationship to a conditionStatus. Valid operators are Equal, NotEqual.
+      Operator 表示 conditionType 与 conditionStatus 的关系。有效的操作符有 Equal（相等）、NotEqual（不相等）。
 
 ## RemedyList 
 
-RemedyList contains a list of Remedy.
+RemedyList 是 Remedy 的集合。
 
 <hr/>
 
@@ -96,137 +96,137 @@ RemedyList contains a list of Remedy.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][Remedy](../remedy-resources/remedy-v1alpha1#remedy)), required
+- **items** ([][Remedy](../remedy-resources/remedy-v1alpha1#remedy)), 必选
 
-## Operations 
+## 操作 
 
 <hr/>
 
-### `get` read the specified Remedy
+### `get` 查询指定的 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
-### `get` read status of the specified Remedy
+### `get` 查询指定 Remedy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
-### `list` list or watch objects of kind Remedy
+### `list` 查询所有 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 GET /apis/remedy.karmada.io/v1alpha1/remedies
 
-#### Parameters
+#### 参数
 
-- **allowWatchBookmarks** (*in query*): boolean
+- **allowWatchBookmarks** (**查询参数**): boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue** (*in query*): string
+- **continue** (**查询参数**): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector** (**查询参数**): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector** (*in query*): string
+- **labelSelector** (**查询参数**): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit** (**查询参数**): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion** (**查询参数**): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch** (**查询参数**): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents** (**查询参数**): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** (**查询参数**): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch** (*in query*): boolean
+- **watch** (**查询参数**): boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### Response
+#### 响应
 
 200 ([RemedyList](../remedy-resources/remedy-v1alpha1#remedylist)): OK
 
-### `create` create a Remedy
+### `create` 创建一个 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 POST /apis/remedy.karmada.io/v1alpha1/remedies
 
-#### Parameters
+#### 参数
 
-- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), required
+- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
@@ -234,137 +234,137 @@ POST /apis/remedy.karmada.io/v1alpha1/remedies
 
 202 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): Accepted
 
-### `update` replace the specified Remedy
+### `update` 更新指定的 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), required
+- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
 201 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): Created
 
-### `update` replace status of the specified Remedy
+### `update` 更新指定 Remedy 的状态
 
-#### HTTP Request
+#### HTTP 请求
 
 PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), required
+- **body**: [Remedy](../remedy-resources/remedy-v1alpha1#remedy), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
 201 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): Created
 
-### `patch` partially update the specified Remedy
+### `patch` 更新指定 Remedy 的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch), 必选
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force** (**查询参数**): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
 201 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): Created
 
-### `patch` partially update status of the specified Remedy
+### `patch` 更新指定 Remedy 状态的部分信息
 
-#### HTTP Request
+#### HTTP 请求
 
 PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
-- **body**: [Patch](../common-definitions/patch#patch), required
+- **body**: [Patch](../common-definitions/patch#patch), 必选
 
   
 
@@ -372,127 +372,127 @@ PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager** (*in query*): string
+- **fieldManager** (**查询参数**): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation** (*in query*): string
+- **fieldValidation** (**查询参数**): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force** (*in query*): boolean
+- **force** (**查询参数**): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### Response
+#### 响应
 
 200 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): OK
 
 201 ([Remedy](../remedy-resources/remedy-v1alpha1#remedy)): Created
 
-### `delete` delete a Remedy
+### `delete` 删除一个 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
-#### Parameters
+#### 参数
 
-- **name** (*in path*): string, required
+- **name** (**路径参数**): string, 必选
 
-  name of the Remedy
+  Remedy 的名称
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
   
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds** (**查询参数**): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy** (**查询参数**): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of Remedy
+### `deletecollection` 删除所有 Remedy
 
-#### HTTP Request
+#### HTTP 请求
 
 DELETE /apis/remedy.karmada.io/v1alpha1/remedies
 
-#### Parameters
+#### 参数
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
   
 
-- **continue** (*in query*): string
+- **continue** (**查询参数**): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun** (*in query*): string
+- **dryRun** (**查询参数**): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector** (*in query*): string
+- **fieldSelector** (**查询参数**): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds** (*in query*): integer
+- **gracePeriodSeconds** (**查询参数**): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector** (*in query*): string
+- **labelSelector** (**查询参数**): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit** (*in query*): integer
+- **limit** (**查询参数**): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty** (*in query*): string
+- **pretty** (**查询参数**): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy** (*in query*): string
+- **propagationPolicy** (**查询参数**): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion** (*in query*): string
+- **resourceVersion** (**查询参数**): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch** (*in query*): string
+- **resourceVersionMatch** (**查询参数**): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents** (*in query*): boolean
+- **sendInitialEvents** (**查询参数**): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds** (*in query*): integer
+- **timeoutSeconds** (**查询参数**): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### Response
+#### 响应
 
 200 ([Status](../common-definitions/status#status)): OK
 
