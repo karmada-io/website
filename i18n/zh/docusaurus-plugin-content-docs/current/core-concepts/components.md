@@ -29,7 +29,7 @@ Karmada API 服务器是直接使用 Kubernetes 的 kube-apiserver 实现的，�
 kube-controller-manager 由一组控制器组成，Karmada 只是从 Kubernetes 的官方版本中挑选了一些控制器，以保持与原生控制器一致的用户体验和行为。
 
 值得注意的是，并非所有的原生控制器都是 Karmada 所需要的，
-推荐的控制器请参阅 [Recommended Controllers](../administrator/configuration/configure-controllers#required-controllers)。
+推荐的控制器请参阅 [推荐的控制器](../administrator/configuration/configure-controllers#必需的控制器)。
 
 > 注意：当用户向 Karmada API 服务器提交 Deployment 或其他 Kubernetes 标准资源时，它们只记录在 Karmada 控制平面的 etcd 中。
 > 随后，这些资源会向成员集群同步。然而，这些部署资源不会在 Karmada 控制平面集群中进行 reconcile 过程（例如创建Pod）。
@@ -40,7 +40,7 @@ Karmada 控制器管理器运行了各种自定义控制器进程。
 
 控制器负责监视Karmada对象，并与底层集群的API服务器通信，以创建原生的 Kubernetes 资源。
 
-所有的控制器列举在 [Karmada 控制器](../administrator/configuration/configure-controllers/#karmada-controllers)。
+所有的控制器列举在 [Karmada 控制器](../administrator/configuration/configure-controllers/#karmada-控制器)。
 
 ### karmada-scheduler
 
