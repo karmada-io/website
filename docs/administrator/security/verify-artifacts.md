@@ -4,7 +4,7 @@ title: Verify Artifacts
 
 ## verify images
 
-Karmada has introduced cosign to verify the released images since version v1.7. The specific operation is as follows：
+Karmada has introduced cosign to verify the released images since version v1.7. The specific operation is as follows:
 
 ### Prerequisites
 
@@ -74,3 +74,82 @@ The image verification process can also be implemented using the [sigstore polic
 
 - [Install](https://github.com/sigstore/helm-charts/tree/main/charts/policy-controller)
 - [configuration options](https://github.com/sigstore/policy-controller/tree/main/config)
+
+## SBOM
+
+An SBOM, or Software Bill of Materials, is an inventory of all components within a software resource, such as third-party libraries or modules. It has emerged as a key building block in software security and supply chain risk management.
+
+Starting with release `v1.10.2`, the SBOM for Karmada projects will be available in Karmada's release Assets. Integrated with different tools, we can get the information on:
+
+- List of Components and Dependencies
+- Version Information
+- Licenses
+- Dependency Trees/Graphs
+
+Below are two examples of using tools to parse karmada's SBOM.
+
+### Prerequisites
+
+You need to install the following tools:
+
+- `bom` ([Installation Guide](https://github.com/kubernetes-sigs/bom#installation))
+- `trivy` ([Installation Guide](https://aquasecurity.github.io/trivy/v0.52/getting-started/installation/))
+- `tar` (usually provided by your OS)
+
+And then, unzip `sbom.tar.gz` and get the SBOM in it.
+
+```shell
+$ tar -zxvf sbom.tar.gz
+sbom-karmada.spdx
+```
+
+### View the structure of the information contained in the SBOM
+
+Using `bom document outline`, SBOM contents can be rendered to see how the information they contain is structured.
+
+```shell
+$ bom document outline sbom-karmada.spdx
+               _      
+ ___ _ __   __| |_  __
+/ __| '_ \ / _` \ \/ /
+\__ \ |_) | (_| |>  < 
+|___/ .__/ \__,_/_/\_\
+    |_|               
+
+ 📂 SPDX Document /github/workspace
+  │ 
+  │ 📦 DESCRIBES 1 Packages
+  │ 
+  ├ /github/workspace
+  │  │ 🔗 2 Relationships
+  │  ├ CONTAINS PACKAGE go.mod
+  │  │  │ 🔗 1 Relationships
+  │  │  └ CONTAINS PACKAGE github.com/karmada-io/karmada
+  │  │  │  │ 🔗 186 Relationships
+  │  │  │  ├ DEPENDS_ON PACKAGE github.com/go-task/slim-sprig@0.0.0-20230315185526-52ccab3ef572
+  │  │  │  ├ DEPENDS_ON PACKAGE sigs.k8s.io/structured-merge-diff/v4@4.4.1
+  │  │  │  ├ DEPENDS_ON PACKAGE k8s.io/apimachinery@0.29.4
+  │  │  │  ├ DEPENDS_ON PACKAGE k8s.io/kube-openapi@0.0.0-20231010175941-2dd684a91f00
+......
+```
+### Scan SBOM for vulnerabilities
+
+Trivy can take SBOM as an input and scan for vulnerabilities.
+
+```shell
+$ trivy sbom sbom-karmada.spdx
+2024-07-01T17:00:36+08:00       INFO    Need to update DB
+2024-07-01T17:00:36+08:00       INFO    Downloading DB...       repository="ghcr.io/aquasecurity/trivy-db:2"
+49.28 MiB / 49.28 MiB [-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00% 1.26 MiB p/s 39s
+2024-07-01T17:01:17+08:00       INFO    Vulnerability scanning is enabled
+2024-07-01T17:01:17+08:00       INFO    Detected SBOM format    format="spdx-tv"
+2024-07-01T17:01:17+08:00       INFO    Number of language-specific files       num=3
+2024-07-01T17:01:17+08:00       INFO    [gobinary] Detecting vulnerabilities...
+2024-07-01T17:01:17+08:00       INFO    [gomod] Detecting vulnerabilities...
+2024-07-01T17:01:17+08:00       INFO    [pip] Detecting vulnerabilities...
+```
+If the echo is as above, it shows that software components and dependencies in the Karmada project filesystem have no known security vulnerabilities. If you wish to ignore vulnerabilities that don't have a fixed version, you can add `--ignore-unfixed`, e.g.
+
+```shell
+$ trivy sbom sbom-karmada.spdx --ignore-unfixed
+```
