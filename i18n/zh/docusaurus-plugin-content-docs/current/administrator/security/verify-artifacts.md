@@ -74,3 +74,83 @@ registry-url/image-name@sha256:c6d85e111e1ca4da234e87fb48f8ff170c918a0e6893d9ac9
 
 - [安装](https://github.com/sigstore/helm-charts/tree/main/charts/policy-controller)
 - [配置选项](https://github.com/sigstore/policy-controller/tree/main/config)
+
+## SBOM
+
+SBOM, 也即软件物料清单, 是软件资源中存在的所有组件（如第三方库或模块）的清单，已成为软件安全和软件供应链风险管理的关键组成部分。
+
+从v1.10.2版本开始，Karmada 的发布产物中会提供 Karmada 项目的软件物料清单。通过集成不同的工具，我们可以从中能够获得:
+
+- 组件与依赖列表
+- 版本信息
+- 许可证
+- 依赖关系树/图
+
+以下是使用工具解析 Karmada 的 SBOM 的两个示例。
+
+### 先决条件
+
+你需要安装以下工具：
+
+- `bom` ([安装指南](https://github.com/kubernetes-sigs/bom#installation))
+- `trivy` ([安装指南](https://aquasecurity.github.io/trivy/v0.52/getting-started/installation/))
+- `tar` (通常由你的系统提供)
+
+接下来，解压缩 `sbom.tar.gz` 并获取其中的 SBOM。
+
+```shell
+$ tar -zxvf sbom.tar.gz
+sbom-karmada.spdx
+```
+
+### 查看 SBOM 所含信息的结构
+
+使用命令 `bom document outline` 渲染 SBOM 所包含的内容，获取其信息结构。
+
+```shell
+$ bom document outline sbom-karmada.spdx
+               _      
+ ___ _ __   __| |_  __
+/ __| '_ \ / _` \ \/ /
+\__ \ |_) | (_| |>  < 
+|___/ .__/ \__,_/_/\_\
+    |_|               
+
+ 📂 SPDX Document /github/workspace
+  │ 
+  │ 📦 DESCRIBES 1 Packages
+  │ 
+  ├ /github/workspace
+  │  │ 🔗 2 Relationships
+  │  ├ CONTAINS PACKAGE go.mod
+  │  │  │ 🔗 1 Relationships
+  │  │  └ CONTAINS PACKAGE github.com/karmada-io/karmada
+  │  │  │  │ 🔗 186 Relationships
+  │  │  │  ├ DEPENDS_ON PACKAGE github.com/go-task/slim-sprig@0.0.0-20230315185526-52ccab3ef572
+  │  │  │  ├ DEPENDS_ON PACKAGE sigs.k8s.io/structured-merge-diff/v4@4.4.1
+  │  │  │  ├ DEPENDS_ON PACKAGE k8s.io/apimachinery@0.29.4
+  │  │  │  ├ DEPENDS_ON PACKAGE k8s.io/kube-openapi@0.0.0-20231010175941-2dd684a91f00
+......
+```
+### 扫描 SBOM 以查找漏洞
+
+Trivy 能将 SBOM 作为输入，查找安全漏洞。
+
+```shell
+$ trivy sbom sbom-karmada.spdx
+2024-07-01T17:00:36+08:00       INFO    Need to update DB
+2024-07-01T17:00:36+08:00       INFO    Downloading DB...       repository="ghcr.io/aquasecurity/trivy-db:2"
+49.28 MiB / 49.28 MiB [-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------] 100.00% 1.26 MiB p/s 39s
+2024-07-01T17:01:17+08:00       INFO    Vulnerability scanning is enabled
+2024-07-01T17:01:17+08:00       INFO    Detected SBOM format    format="spdx-tv"
+2024-07-01T17:01:17+08:00       INFO    Number of language-specific files       num=3
+2024-07-01T17:01:17+08:00       INFO    [gobinary] Detecting vulnerabilities...
+2024-07-01T17:01:17+08:00       INFO    [gomod] Detecting vulnerabilities...
+2024-07-01T17:01:17+08:00       INFO    [pip] Detecting vulnerabilities...
+```
+
+如果命令输出如上，说明当前 Karmada 项目文件系统中的软件组件和依赖项没有已知的安全漏洞。如果希望忽略还没有可修复版本的安全漏洞，可以加上参数 `--ignore-unfixed`。
+
+```shell
+$ trivy sbom sbom-karmada.spdx --ignore-unfixed
+```

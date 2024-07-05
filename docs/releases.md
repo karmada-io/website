@@ -92,6 +92,7 @@ Since v1.2.0, the following artifacts are uploaded:
 * kubectl-karmada-linux-amd64.tgz.sha256
 * kubectl-karmada-linux-arm64.tgz
 * kubectl-karmada-linux-arm64.tgz.sha256
+* sbom.tar.gz
 * Source code(zip)
 * Source code(tar.gz)
 
