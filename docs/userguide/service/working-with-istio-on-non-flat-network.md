@@ -11,7 +11,7 @@ not direct connectivity between the pods in all clusters.
 
 ![Istio on Karmada-different-network](../../resources/userguide/service/istio/istio-on-karmada-different-network.png)
 
----
+***
 
 The reason for deploying `istiod` on the `member1` is that `kiali` needs to be deployed on the same cluster as `istiod`
 . If `istiod` and `kiali` are deployed on the `karmada-host`,`kiali` will not find the namespace created by `karmada`. It
