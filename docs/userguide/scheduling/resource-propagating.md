@@ -10,6 +10,8 @@ Here, we use PropagationPolicy as an example to describe how to propagate resour
 
 [Install Karmada](../../installation/installation.md) and prepare the [karmadactl command-line](../../installation/install-cli-tools.md) tool.
 
+> Note: We need to point kubectl to `<karmada-apiserver.config>` instead of the member cluster in advance. 
+
 ## Deploy a simplest multi-cluster Deployment
 
 ### Create a PropagationPolicy object
