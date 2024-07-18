@@ -153,3 +153,78 @@ If the echo is as above, it shows that software components and dependencies in t
 ```shell
 $ trivy sbom sbom-karmada.spdx --ignore-unfixed
 ```
+
+## Verify artifacts with SLSA attestations
+
+### Prerequisites
+
+You need to install the following tools:
+
+- `slsa-verifier` ([Installation Guide](https://github.com/slsa-framework/slsa-verifier?tab=readme-ov-file#installation))
+
+### CLI
+
+A single attestation (`karmada-cli.intoto.jsonl`) from each release is provided since release 1.10.3. This can be used with [slsa-verifier](https://github.com/slsa-framework/slsa-verifier) to verify that a CLI binary was generated using Karmada workflows on GitHub and ensures it was cryptographically signed.
+
+```shell
+slsa-verifier verify-artifact karmadactl-darwin-arm64.tgz \
+  --provenance-path karmada-cli.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3
+```
+
+If you only want to verify up to the major or minor version of the source repository tag (instead of the full tag), use the --source-versioned-tag, with which you can verify the semantic versions:
+
+```shell
+slsa-verifier verify-artifact karmadactl-darwin-arm64.tgz \
+  --provenance-path karmada-cli.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1 # You can use v1.10 for minor version verification
+```
+
+The payload is a non-forgeable provenance which is base64 encoded and can be viewed by passing the --print-provenance option to the commands above:
+
+```shell
+slsa-verifier verify-artifact karmadactl-darwin-arm64.tgz \
+  --provenance-path karmada-cli.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3 \
+  --print-provenance | jq
+```
+
+### SBOM
+
+A single attestation (`karmada-sbom.intoto.jsonl`) from each release is provided along with the sbom (sbom.tar.gz) since release 1.10.3. This can be used with slsa-verifier to verify that the SBOM was generated using Karmada workflows on GitHub and ensures it was cryptographically signed.
+
+```shell
+slsa-verifier verify-artifact sbom.tar.gz \
+  --provenance-path karmada-sbom.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3
+```
+
+### Crds
+
+A single attestation (`karmada-crds.intoto.jsonl`) from each release is provided along with the crds (crds.tar.gz) since release 1.10.3. This can be used with slsa-verifier to verify that the crds were generated using Karmada workflows on GitHub and ensures it was cryptographically signed.
+
+```shell
+slsa-verifier verify-artifact crds.tar.gz \
+  --provenance-path karmada-crds.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3
+```
+
+### Charts
+
+A single attestation (`karmada-charts.intoto.jsonl`) from each release is provided since release 1.10.3. This can be used with slsa-verifier to verify that the charts were generated using Karmada workflows on GitHub and ensures it was cryptographically signed.
+
+```shell
+slsa-verifier verify-artifact karmada-chart-v1.10.3.tgz \
+  --provenance-path karmada-charts.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3
+slsa-verifier verify-artifact karmada-operator-chart-v1.10.3.tgz \
+  --provenance-path karmada-charts.intoto.jsonl \
+  --source-uri github.com/karmada-io/karmada \
+  --source-tag v1.10.3
+```
