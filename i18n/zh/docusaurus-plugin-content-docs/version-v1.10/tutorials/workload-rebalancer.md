@@ -1,5 +1,5 @@
 ---
-title: Workload Rebalancer
+title: 负载重平衡
 ---
 
 ## 目标
