@@ -33,7 +33,8 @@
         "version-v1.10/tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
         "version-v1.10/tutorials/autoscaling-workload-with-cronfederatedhpa",
         "version-v1.10/tutorials/resource-migration",
-        "version-v1.10/tutorials/access-service-across-clusters"
+        "version-v1.10/tutorials/access-service-across-clusters",
+        "version-v1.10/tutorials/workload-rebalancer"
       ]
     },
     {
@@ -69,7 +70,8 @@
             "version-v1.10/userguide/scheduling/propagate-dependencies",
             "version-v1.10/userguide/scheduling/descheduler",
             "version-v1.10/userguide/scheduling/scheduler-estimator",
-            "version-v1.10/userguide/scheduling/cluster-resources"
+            "version-v1.10/userguide/scheduling/cluster-resources",
+            "version-v1.10/userguide/scheduling/workload-rebalancer"
           ]
         },
         {
