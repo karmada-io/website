@@ -114,6 +114,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 120
       purgeMode: Never
+  propagateDeps: true      # application failover is set, propagateDeps must be true
   resourceSelectors:
     - apiVersion: apps/v1
       kind: Deployment
