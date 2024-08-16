@@ -671,3 +671,74 @@ spec:
 ```
 The `nginx` deployment in `default` namespace will be propagated to cluster `member2`.
 
+
+## 暂停与恢复资源分发
+
+`PropagationPolicy` 和 `ClusterPropagationPolicy` 中的 `.spec.suspension` 字段允许对一个或多个集群的资源分发进行暂停和恢复。
+
+### 暂停向所有集群分发资源
+
+为了暂停向所有成员集群分发资源，您可以使用以下配置：
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+ name: nginx-propagation
+spec:
+ #...
+ placement:
+  clusterAffinity:
+   exclude:
+    - member1
+    - member3
+  #...
+  suspension:
+    dispatching: true
+```
+
+在 Karmada 控制平面上对 `nginx` Deployment 的更新将不会被同步到任何成员集群。
+
+### 暂停向特定集群分发资源
+
+为了暂停向个别的成员集群分发资源，您可以在 `.spec.suspension.clusterNames` 字段中指定集群名称：
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+ name: nginx-propagation
+spec:
+ #...
+ placement:
+  clusterAffinity:
+   exclude:
+    - member1
+    - member3
+  #...
+  suspension:
+    clusterNames: ["member3"] # 修改此处的集群名称
+```
+
+在 Karmada 控制平面上对 `nginx` Deployment 的更新将不会被同步到 `member3` 集群，但会被同步到所有其他集群。
+
+### 恢复资源分发
+
+为了恢复资源工作，您只需移除 `.spec.suspension` 配置：
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+ name: nginx-propagation
+spec:
+ #...
+ placement:
+  clusterAffinity:
+   exclude:
+    - member1
+    - member3
+  #...
+```
+
+Karmada 控制平面中的 `nginx` Deployment 状态将被同步到所有成员集群，任何后续的更新也将被同步。

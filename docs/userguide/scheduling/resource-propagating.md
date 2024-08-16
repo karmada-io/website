@@ -671,14 +671,13 @@ spec:
 ```
 The `nginx` deployment in `default` namespace will be propagated to cluster `member2`.
 
-
 ## Suspend and resume of resource propagation
 
 The `.spec.suspension` field in the `PropagationPolicy` and `ClusterPropagationPolicy` allows suspending and resuming resource propagation to one or more clusters.
 
 ### Suspend resource propagation to all clusters
 
-To suspend resource propagfation work to all member clusters, use the following configuration:
+To suspend resource propagation work to all member clusters, use the following configuration:
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -701,7 +700,7 @@ Updates to the `nginx` deployment in the Karmada control plane will not be synch
 
 ### Suspend resource propagation to specific clusters
 
-To suspend resource propgation to individual member clusters, specify the cluster names in the `.spec.suspension.clusterNames` field:
+To suspend resource propagation to individual member clusters, specify the cluster names in the `.spec.suspension.clusterNames` field:
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -717,7 +716,7 @@ spec:
     - member3
   #...
   suspension:
-    clusterNames: ["member3"]
+    clusterNames: ["member3"] # Modify the cluster name here
 ```
 
 Updates to the `nginx` deployment in the Karmada control plane will not be synchronized to the `member3` cluster but will be synchronized to all other clusters.
