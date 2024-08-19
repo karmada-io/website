@@ -112,6 +112,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 120
       purgeMode: Never
+  propagateDeps: true      # application failover is set, propagateDeps must be true
   resourceSelectors:
     - apiVersion: apps/v1
       kind: Deployment
@@ -195,4 +196,3 @@ You can edit `suppressDeletion` to false in `gracefulEvictionTasks` to evict the
 Application failover is still a work in progress. We are in the progress of gathering use cases. If you are interested in this feature, please feel free to start an enhancement issue to let us know.
 
 :::
-
