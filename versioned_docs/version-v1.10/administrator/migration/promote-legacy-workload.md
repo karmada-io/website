@@ -28,7 +28,7 @@ nginx-6799fc88d8-sqjj4     1/1     Running     0          2m12s
 We can promote it to Karmada by executing the command below on the Karmada control plane.
 
 ```
-[root@master1]# karmadactl promote deployment nginx -n default -c member1
+[root@master1]# karmadactl promote deployment nginx -n default -C member1
 Resource "apps/v1, Resource=deployments"(default/nginx) is promoted successfully
 ```
 
@@ -52,7 +52,7 @@ nginx-6799fc88d8-sqjj4     1/1     Running     0          15m
 Most steps are same as those for clusters in `Push` mode. Only the flags of the `karmadactl promote` command are different.
 
 ```
-karmadactl promote deployment nginx -n default -c cluster1 --cluster-kubeconfig=<CLUSTER_KUBECONFIG_PATH>
+karmadactl promote deployment nginx -n default -C cluster1 --cluster-kubeconfig=<CLUSTER_KUBECONFIG_PATH>
 ```
 
 For more flags and example about the command, you can use `karmadactl promote --help`.
