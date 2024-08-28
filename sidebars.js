@@ -211,6 +211,7 @@ module.exports = {
                     type: "category",
                     label: "Security",
                     items: [
+                        "administrator/security/certificate-configuration",
                         "administrator/security/security-considerations",
                         "administrator/security/verify-artifacts"
                     ],
