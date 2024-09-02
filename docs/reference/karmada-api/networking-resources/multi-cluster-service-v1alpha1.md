@@ -92,6 +92,8 @@ MultiClusterService is a named abstraction of multi-cluster software service. Th
 
     - **status.loadBalancer.ingress** ([]LoadBalancerIngress)
 
+      *Atomic: will be replaced during a merge*
+      
       Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
 
       <a name="LoadBalancerIngress"></a>
@@ -158,7 +160,7 @@ MultiClusterServiceSpec is the desired state of the MultiClusterService.
 
   *ClusterSelector specifies the cluster to be selected.*
 
-  - **consumerClusters.name** (string)
+  - **consumerClusters.name** (string), required
 
     Name is the name of the cluster to be selected.
 
@@ -186,7 +188,7 @@ MultiClusterServiceSpec is the desired state of the MultiClusterService.
 
   *ClusterSelector specifies the cluster to be selected.*
 
-  - **providerClusters.name** (string)
+  - **providerClusters.name** (string), required
 
     Name is the name of the cluster to be selected.
 

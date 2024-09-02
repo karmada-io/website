@@ -44,6 +44,10 @@ WorkSpec defines the desired state of Work.
 
 <hr/>
 
+- **suspendDispatching** (boolean)
+
+  SuspendDispatching controls whether dispatching should be suspended, nil means not suspend. Note: true means stop propagating to all clusters.
+
 - **workload** (WorkloadTemplate)
 
   Workload represents the manifest workload to be deployed on managed cluster.

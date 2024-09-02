@@ -68,7 +68,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
           Operator represents the operator which will apply on the workload.
 
-        - **spec.overrideRules.overriders.annotationsOverrider.value** (map[string]string)
+        - **spec.overrideRules.overriders.annotationsOverrider.value** (map[string]string), required
 
           Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
 
@@ -167,7 +167,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
           Operator represents the operator which will apply on the workload.
 
-        - **spec.overrideRules.overriders.labelsOverrider.value** (map[string]string)
+        - **spec.overrideRules.overriders.labelsOverrider.value** (map[string]string), required
 
           Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
 
@@ -251,7 +251,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
         Operator represents the operator which will apply on the workload.
 
-      - **spec.overriders.annotationsOverrider.value** (map[string]string)
+      - **spec.overriders.annotationsOverrider.value** (map[string]string), required
 
         Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
 
@@ -350,7 +350,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
         Operator represents the operator which will apply on the workload.
 
-      - **spec.overriders.labelsOverrider.value** (map[string]string)
+      - **spec.overriders.labelsOverrider.value** (map[string]string), required
 
         Value to be applied to annotations/labels of workload. Items in Value which will be appended after annotations/labels when Operator is 'add'. Items in Value which match in annotations/labels will be deleted when Operator is 'remove'. Items in Value which match in annotations/labels will be replaced when Operator is 'replace'.
 
