@@ -222,6 +222,8 @@ MultiClusterIngressStatus is the current state of the MultiClusterIngress.
 
   - **loadBalancer.ingress** ([]IngressLoadBalancerIngress)
 
+    *Atomic: will be replaced during a merge*
+    
     ingress is a list containing ingress points for the load-balancer.
 
     <a name="IngressLoadBalancerIngress"></a>

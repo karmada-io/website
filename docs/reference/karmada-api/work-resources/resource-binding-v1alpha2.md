@@ -447,6 +447,8 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
       - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms** ([]NodeSelectorTerm), required
 
+        *Atomic: will be replaced during a merge*
+        
         Required. A list of node selector terms. The terms are ORed.
 
         <a name="NodeSelectorTerm"></a>
@@ -455,10 +457,14 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
         - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
+          *Atomic: will be replaced during a merge*
+          
           A list of node selector requirements by node's labels.
 
         - **replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchFields** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
 
+          *Atomic: will be replaced during a merge*
+          
           A list of node selector requirements by node's fields.
 
     - **replicaRequirements.nodeClaim.nodeSelector** (map[string]string)
@@ -559,6 +565,30 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 - **schedulerName** (string)
 
   SchedulerName represents which scheduler to proceed the scheduling. It inherits directly from the associated PropagationPolicy(or ClusterPropagationPolicy).
+
+- **suspension** (Suspension)
+
+  Suspension declares the policy for suspending different aspects of propagation. nil means no suspension. no default values.
+
+  <a name="Suspension"></a>
+
+  *Suspension defines the policy for suspending different aspects of propagation.*
+
+  - **suspension.dispatching** (boolean)
+
+    Dispatching controls whether dispatching should be suspended. nil means not suspend, no default value, only accepts 'true'. Note: true means stop propagating to all clusters. Can not co-exist with DispatchingOnClusters which is used to suspend particular clusters.
+
+  - **suspension.dispatchingOnClusters** (SuspendClusters)
+
+    DispatchingOnClusters declares a list of clusters to which the dispatching should be suspended. Note: Can not co-exist with Dispatching which is used to suspend all.
+
+    <a name="SuspendClusters"></a>
+
+    *SuspendClusters represents a group of clusters that should be suspended from propagating. Note: No plan to introduce the label selector or field selector to select clusters yet, as it would make the system unpredictable.*
+
+    - **suspension.dispatchingOnClusters.clusterNames** ([]string)
+
+      ClusterNames is the list of clusters to be selected.
 
 ## ResourceBindingStatus 
 

@@ -116,7 +116,7 @@ ResourceRegistrySpec defines the desired state of ResourceRegistry.
 
       Addresses is a list of node endpoint(e.g. 'https://localhost:9200') to use. For the 'node' concept, please refer to: https://opensearch.org/docs/latest/opensearch/index/#clusters-and-nodes
 
-    - **backendStore.openSearch.secretRef** (LocalSecretReference)
+    - **backendStore.openSearch.secretRef** (LocalSecretReference), required
 
       SecretRef represents the secret contains mandatory credentials to access the server. The secret should hold credentials as follows: - secret.data.userName - secret.data.password
 

@@ -384,6 +384,30 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
 
     SchedulerName represents which scheduler to proceed the scheduling. If specified, the policy will be dispatched by specified scheduler. If not specified, the policy will be dispatched by default scheduler.
 
+  - **spec.suspension** (Suspension)
+
+    Suspension declares the policy for suspending different aspects of propagation. nil means no suspension. no default values.
+
+    <a name="Suspension"></a>
+
+    *Suspension defines the policy for suspending different aspects of propagation.*
+
+    - **spec.suspension.dispatching** (boolean)
+
+      Dispatching controls whether dispatching should be suspended. nil means not suspend, no default value, only accepts 'true'. Note: true means stop propagating to all clusters. Can not co-exist with DispatchingOnClusters which is used to suspend particular clusters.
+
+    - **spec.suspension.dispatchingOnClusters** (SuspendClusters)
+
+      DispatchingOnClusters declares a list of clusters to which the dispatching should be suspended. Note: Can not co-exist with Dispatching which is used to suspend all.
+
+      <a name="SuspendClusters"></a>
+
+      *SuspendClusters represents a group of clusters that should be suspended from propagating. Note: No plan to introduce the label selector or field selector to select clusters yet, as it would make the system unpredictable.*
+
+      - **spec.suspension.dispatchingOnClusters.clusterNames** ([]string)
+
+        ClusterNames is the list of clusters to be selected.
+
 ## ClusterPropagationPolicyList 
 
 ClusterPropagationPolicyList contains a list of ClusterPropagationPolicy.
