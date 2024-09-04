@@ -19,7 +19,6 @@ karmada-controller-manager [flags]
 ```
       --add_dir_header                                                 If true, adds the file directory to the header of the log messages
       --alsologtostderr                                                log to standard error as well as files (no effect when -logtostderr=true)
-      --bind-address string                                            The IP address on which to listen for the --secure-port port. (default "0.0.0.0")
       --cluster-api-burst int                                          Burst to use while talking with cluster kube-apiserver. (default 60)
       --cluster-api-context string                                     Name of the cluster context in cluster-api management cluster kubeconfig file.
       --cluster-api-kubeconfig string                                  Path to the cluster-api management cluster kubeconfig file.
@@ -61,6 +60,7 @@ karmada-controller-manager [flags]
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
+      --health-probe-bind-address string                               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357.
   -h, --help                                                           help for karmada-controller-manager
       --horizontal-pod-autoscaler-cpu-initialization-period duration   The period after pod start when CPU samples might be skipped. (default 5m0s)
       --horizontal-pod-autoscaler-downscale-delay duration             The period since last downscale, before another downscale can be performed in horizontal pod autoscaler. (default 5m0s)
@@ -90,7 +90,6 @@ karmada-controller-manager [flags]
       --rate-limiter-max-delay duration                                The max delay for rate limiter. (default 16m40s)
       --rate-limiter-qps int                                           The QPS for rate limier. (default 10)
       --resync-period duration                                         Base frequency the informers are resynced.
-      --secure-port int                                                The secure port on which to serve HTTPS. (default 10357)
       --skip_headers                                                   If true, avoid header prefixes in the log messages
       --skip_log_headers                                               If true, avoid headers when opening log files (no effect when -logtostderr=true)
       --skipped-propagating-apis string                                Semicolon separated resources that should be skipped from propagating in addition to the default skip list(cluster.karmada.io;policy.karmada.io;work.karmada.io). Supported formats are:

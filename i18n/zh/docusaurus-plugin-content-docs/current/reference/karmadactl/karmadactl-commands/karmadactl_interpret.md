@@ -8,12 +8,9 @@ Validate, test and edit interpreter customization before applying it to the cont
 
 Validate, test and edit interpreter customization before applying it to the control plane.
         
-        1. Validate the ResourceInterpreterCustomization configuration as per API schema
-        and try to load the scripts for syntax check.
-        
-        2. Run the rules locally and test if the result is expected. Similar to the dry run.
-        
-  1.  Edit customization. Similar to the kubectl edit.
+  1.  Validate the ResourceInterpreterCustomization configuration as per API schema and try to load the scripts for syntax check.
+  2.  Run the rules locally and test if the result is expected. Similar to the dry run.
+  3.  Edit customization. Similar to the kubectl edit.
 
 ```
 karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]... 

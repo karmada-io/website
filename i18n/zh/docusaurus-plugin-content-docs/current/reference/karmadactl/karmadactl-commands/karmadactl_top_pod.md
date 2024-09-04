@@ -22,6 +22,12 @@ karmadactl top pod [NAME | -l label]
   # Show metrics for all pods in the default namespace
   karmadactl top pod
   
+  # Show metrics for all pods in the default namespace in member1 cluster
+  karmadactl top pod --clusters=member1
+  
+  # Show metrics for all pods in the default namespace in member1 and member2 cluster
+  karmadactl top pod --clusters=member1,member2
+  
   # Show metrics for all pods in the given namespace
   karmadactl top pod --namespace=NAMESPACE
   

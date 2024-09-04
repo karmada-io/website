@@ -6,7 +6,7 @@ Execute a command in a container in a cluster
 
 ### Synopsis
 
-Execute a command in a container in a cluster.
+Execute a command in a container.
 
 ```
 karmadactl exec (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER) -- COMMAND [args...]
@@ -15,40 +15,44 @@ karmadactl exec (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER) -- COMMAND [args..
 ### Examples
 
 ```
+  # Get output from running the 'date' command from pod mypod, using the first container by default
+  karmadactl exec mypod -- date
+  
   # Get output from running the 'date' command from pod mypod, using the first container by default in cluster(member1)
-  karmadactl exec mypod -C=member1 -- date
+  karmadactl exec mypod --operation-scope=members --cluster=member1 -- date
   
   # Get output from running the 'date' command in ruby-container from pod mypod in cluster(member1)
-  karmadactl exec mypod -c ruby-container -C=member1 -- date
+  karmadactl exec mypod -c ruby-container --operation-scope=members --cluster=member1 -- date
   
   # Get output from running the 'date' command in ruby-container from pod mypod in cluster(member1)
-  karmadactl exec mypod -c ruby-container -C=member1 -- date
+  karmadactl exec mypod -c ruby-container --operation-scope=members --cluster=member1 -- date
   
-  # Switch to raw terminal mode; sends stdin to 'bash' in ruby-container from pod mypod in cluster(member1)
+  # Switch to raw terminal mode; sends stdin to 'bash' in ruby-container from pod mypod
   # and sends stdout/stderr from 'bash' back to the client
-  karmadactl exec mypod -c ruby-container -C=member1 -i -t -- bash -il
+  karmadactl exec mypod -c ruby-container -i -t -- bash -il
   
   # Get output from running 'date' command from the first pod of the deployment mydeployment, using the first container by default in cluster(member1)
-  karmadactl exec deploy/mydeployment -C=member1 -- date
+  karmadactl exec deploy/mydeployment --operation-scope=members --cluster=member1 -- date
   
   # Get output from running 'date' command from the first pod of the service myservice, using the first container by default in cluster(member1)
-  karmadactl exec svc/myservice -C=member1 -- date
+  karmadactl exec svc/myservice --operation-scope=members --cluster=member1 -- date
 ```
 
 ### Options
 
 ```
-  -C, --cluster string                 Specify a member cluster
-  -c, --container string               Container name. If omitted, use the kubectl.kubernetes.io/default-container annotation for selecting the container to be attached or the first container in the pod will be chosen
-  -f, --filename strings               to use to exec into the resource
-  -h, --help                           help for exec
-      --karmada-context string         The name of the kubeconfig context to use
-      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
-  -n, --namespace string               If present, the namespace scope for this CLI request
-      --pod-running-timeout duration   The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running (default 1m0s)
-  -q, --quiet                          Only print output from the remote session
-  -i, --stdin                          Pass stdin to the container
-  -t, --tty                            Stdin is a TTY
+      --cluster string                   Used to specify a target member cluster and only takes effect when the command's operation scope is members, for example: --operation-scope=members --cluster=member1
+  -c, --container string                 Container name. If omitted, use the kubectl.kubernetes.io/default-container annotation for selecting the container to be attached or the first container in the pod will be chosen
+  -f, --filename strings                 to use to exec into the resource
+  -h, --help                             help for exec
+      --karmada-context string           The name of the kubeconfig context to use
+      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
+  -n, --namespace string                 If present, the namespace scope for this CLI request
+      --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
+      --pod-running-timeout duration     The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running (default 1m0s)
+  -q, --quiet                            Only print output from the remote session
+  -i, --stdin                            Pass stdin to the container
+  -t, --tty                              Stdin is a TTY
 ```
 
 ### Options inherited from parent commands

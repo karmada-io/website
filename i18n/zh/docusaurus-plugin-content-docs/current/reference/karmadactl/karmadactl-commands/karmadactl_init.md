@@ -58,6 +58,8 @@ karmadactl init
 ### Options
 
 ```
+      --ca-cert-file string                              The root CA certificate file which will be used to issue new certificates for Karmada components. If not set, a new self-signed root CA certificate will be generated. This must be used together with --ca-key-file.
+      --ca-key-file string                               The root CA private key file which will be used to issue new certificates for Karmada components. If not set, a new self-signed root CA key will be generated. This must be used together with --ca-cert-file.
       --cert-external-dns string                         the external DNS of Karmada certificate (e.g localhost,localhost.com)
       --cert-external-ip string                          the external IP of Karmada certificate (e.g 192.168.1.2,172.16.1.2)
       --cert-validity-period duration                    the validity period of Karmada certificate (e.g 8760h0m0s, that is 365 days) (default 8760h0m0s)
@@ -96,7 +98,7 @@ karmadactl init
       --karmada-webhook-replicas int32                   Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                 Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                       Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
-      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.27.11")
+      --kube-image-tag string                            Choose a specific Kubernetes version for the control plane. (default "v1.29.6")
       --kubeconfig string                                absolute path to the kubeconfig file
   -n, --namespace string                                 Kubernetes namespace (default "karmada-system")
   -p, --port int32                                       Karmada apiserver service node port (default 32443)
