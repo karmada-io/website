@@ -35,17 +35,27 @@ karmadactl [flags]
 ### SEE ALSO
 
 * [karmadactl addons](karmadactl_addons.md)	 - Enable or disable a Karmada addon
+* [karmadactl annotate](karmadactl_annotate.md)	 - Update the annotations on a resource
+* [karmadactl api-resources](karmadactl_api-resources.md)	 - Print the supported API resources on the server
+* [karmadactl api-versions](karmadactl_api-versions.md)	 - Print the supported API versions on the server, in the form of "group/version"
 * [karmadactl apply](karmadactl_apply.md)	 - Apply a configuration to a resource by file name or stdin and propagate them into member clusters
+* [karmadactl attach](karmadactl_attach.md)	 - Attach to a running container
 * [karmadactl cordon](karmadactl_cordon.md)	 - Mark cluster as unschedulable
+* [karmadactl create](karmadactl_create.md)	 - Create a resource from a file or from stdin
 * [karmadactl deinit](karmadactl_deinit.md)	 - Remove the Karmada control plane from the Kubernetes cluster.
-* [karmadactl describe](karmadactl_describe.md)	 - Show details of a specific resource or group of resources in a cluster
+* [karmadactl delete](karmadactl_delete.md)	 - Delete resources by file names, stdin, resources and names, or by resources and label selector
+* [karmadactl describe](karmadactl_describe.md)	 - Show details of a specific resource or group of resources in Karmada control plane or a member cluster
+* [karmadactl edit](karmadactl_edit.md)	 - Edit a resource on the server
 * [karmadactl exec](karmadactl_exec.md)	 - Execute a command in a container in a cluster
-* [karmadactl get](karmadactl_get.md)	 - Display one or many resources
+* [karmadactl explain](karmadactl_explain.md)	 - Get documentation for a resource
+* [karmadactl get](karmadactl_get.md)	 - Display one or many resources in Karmada control plane and member clusters.
 * [karmadactl init](karmadactl_init.md)	 - Install the Karmada control plane in a Kubernetes cluster
 * [karmadactl interpret](karmadactl_interpret.md)	 - Validate, test and edit interpreter customization before applying it to the control plane
 * [karmadactl join](karmadactl_join.md)	 - Register a cluster to Karmada control plane with Push mode
+* [karmadactl label](karmadactl_label.md)	 - Update the labels on a resource
 * [karmadactl logs](karmadactl_logs.md)	 - Print the logs for a container in a pod in a cluster
 * [karmadactl options](karmadactl_options.md)	 - Print the list of flags inherited by all commands
+* [karmadactl patch](karmadactl_patch.md)	 - Update fields of a resource
 * [karmadactl promote](karmadactl_promote.md)	 - Promote resources from legacy clusters to Karmada control plane
 * [karmadactl register](karmadactl_register.md)	 - Register a cluster to Karmada control plane with Pull mode
 * [karmadactl taint](karmadactl_taint.md)	 - Update the taints on one or more clusters

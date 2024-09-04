@@ -18,7 +18,6 @@ karmada-aggregated-apiserver [flags]
 
 ```
       --add_dir_header                                          If true, adds the file directory to the header of the log messages
-      --admission-control-config-file string                    File with admission control configuration.
       --alsologtostderr                                         log to standard error as well as files (no effect when -logtostderr=true)
       --audit-log-batch-buffer-size int                         The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
       --audit-log-batch-max-size int                            The maximum size of a batch. Only used in batch mode. (default 1)
@@ -65,9 +64,6 @@ karmada-aggregated-apiserver [flags]
       --contention-profiling                                    Enable block profiling, if profiling is enabled
       --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
       --delete-collection-workers int                           Number of workers spawned for DeleteCollection call. These are used to speed up namespace cleanup. (default 1)
-      --disable-admission-plugins strings                       admission plugins that should be disabled although they are in the default enabled plugins list (NamespaceLifecycle, MutatingAdmissionWebhook, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook). Comma-delimited list of admission plugins: MutatingAdmissionWebhook, NamespaceLifecycle, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
-      --egress-selector-config-file string                      File with apiserver egress selector configuration.
-      --enable-admission-plugins strings                        admission plugins that should be enabled in addition to default enabled ones (NamespaceLifecycle, MutatingAdmissionWebhook, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook). Comma-delimited list of admission plugins: MutatingAdmissionWebhook, NamespaceLifecycle, ValidatingAdmissionPolicy, ValidatingAdmissionWebhook. The order of plugins in this flag does not matter.
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
@@ -88,8 +84,7 @@ karmada-aggregated-apiserver [flags]
                                                                 APIResponseCompression=true|false (BETA - default=true)
                                                                 APIServerIdentity=true|false (BETA - default=true)
                                                                 APIServerTracing=true|false (BETA - default=true)
-                                                                AdmissionWebhookMatchConditions=true|false (BETA - default=true)
-                                                                AggregatedDiscoveryEndpoint=true|false (BETA - default=true)
+                                                                APIServingWithRoutine=true|false (BETA - default=true)
                                                                 AllAlpha=true|false (ALPHA - default=false)
                                                                 AllBeta=true|false (BETA - default=false)
                                                                 ComponentSLIs=true|false (BETA - default=true)
@@ -103,18 +98,19 @@ karmada-aggregated-apiserver [flags]
                                                                 PropagateDeps=true|false (BETA - default=true)
                                                                 PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                                RetryGenerateName=true|false (ALPHA - default=false)
                                                                 SeparateCacheWatchRPC=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
-                                                                StructuredAuthenticationConfiguration=true|false (ALPHA - default=false)
-                                                                StructuredAuthorizationConfiguration=true|false (ALPHA - default=false)
+                                                                StrictCostEnforcementForVAP=true|false (BETA - default=false)
+                                                                StrictCostEnforcementForWebhooks=true|false (BETA - default=false)
+                                                                StructuredAuthenticationConfiguration=true|false (BETA - default=true)
+                                                                StructuredAuthorizationConfiguration=true|false (BETA - default=true)
                                                                 UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
-                                                                ValidatingAdmissionPolicy=true|false (BETA - default=false)
                                                                 WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
                                                                 WatchList=true|false (ALPHA - default=false)
-                                                                ZeroLimitedNominalConcurrencyShares=true|false (BETA - default=false)
   -h, --help                                                    help for karmada-aggregated-apiserver
-      --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default. (default 1000)
+      --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
       --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. (default 60)
       --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
@@ -142,12 +138,11 @@ karmada-aggregated-apiserver [flags]
       --storage-media-type string                               The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. Supported media types: [application/json, application/yaml, application/vnd.kubernetes.protobuf] (default "application/json")
       --tls-cert-file string                                    File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert). If HTTPS serving is enabled, and --tls-cert-file and --tls-private-key-file are not provided, a self-signed certificate and key are generated for the public address and saved to the directory specified by --cert-dir.
       --tls-cipher-suites strings                               Comma-separated list of cipher suites for the server. If omitted, the default Go cipher suites will be used. 
-                                                                Preferred values: TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_GCM_SHA384. 
-                                                                Insecure values: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_RC4_128_SHA.
+                                                                Preferred values: TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256. 
+                                                                Insecure values: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_RC4_128_SHA, TLS_RSA_WITH_3DES_EDE_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA, TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_RC4_128_SHA.
       --tls-min-version string                                  Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13
       --tls-private-key-file string                             File containing the default x509 private key matching --tls-cert-file.
       --tls-sni-cert-key namedCertKey                           A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com". (default [])
-      --tracing-config-file string                              File with apiserver tracing configuration.
   -v, --v Level                                                 number for the log level verbosity
       --vmodule moduleSpec                                      comma-separated list of pattern=N settings for file-filtered logging
       --watch-cache                                             Enable watch caching in the apiserver (default true)

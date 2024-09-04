@@ -22,16 +22,19 @@ karmadactl join CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ### Options
 
 ```
-      --cluster-context string      Name of cluster context in kubeconfig. The current context is used by default.
-      --cluster-kubeconfig string   Path of the cluster's kubeconfig.
-      --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
-      --cluster-provider string     Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
-      --cluster-region string       The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
-      --cluster-zones strings       The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
-      --dry-run                     Run the command in dry-run mode, without making any server requests.
-  -h, --help                        help for join
-      --karmada-context string      The name of the kubeconfig context to use
-      --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
+      --cluster-context string         Name of cluster context in kubeconfig. The current context is used by default.
+      --cluster-kubeconfig string      Path of the cluster's kubeconfig.
+      --cluster-namespace string       Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
+      --cluster-provider string        Provider of the joining cluster. The Karmada scheduler can use this information to spread workloads across providers for higher availability.
+      --cluster-region string          The region of the joining cluster. The Karmada scheduler can use this information to spread workloads across regions for higher availability.
+      --cluster-zones strings          The zones of the joining cluster. The Karmada scheduler can use this information to spread workloads across zones for higher availability.
+      --dry-run                        Run the command in dry-run mode, without making any server requests.
+  -h, --help                           help for join
+      --karmada-as string              Username to impersonate for the operation in karmada control plane. User could be a regular user or a service account in a namespace.
+      --karmada-as-group stringArray   Group to impersonate for the operation in karmada control plane, this flag can be repeated to specify multiple groups.
+      --karmada-as-uid string          UID to impersonate for the operation in karmada control plane.
+      --karmada-context string         The name of the kubeconfig context to use
+      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
 ```
 
 ### Options inherited from parent commands

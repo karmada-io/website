@@ -44,6 +44,7 @@ karmadactl top [flags]
 ### SEE ALSO
 
 * [karmadactl](karmadactl.md)	 - karmadactl controls a Kubernetes Cluster Federation.
+* [karmadactl top node](karmadactl_top_node.md)	 - Display resource (CPU/memory) usage of nodes
 * [karmadactl top pod](karmadactl_top_pod.md)	 - Display resource (CPU/memory) usage of pods of member clusters
 
 #### Go Back to [Karmadactl Commands](karmadactl_index.md) Homepage.

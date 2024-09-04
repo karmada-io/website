@@ -19,7 +19,6 @@ karmada-agent [flags]
 ```
       --add_dir_header                                 If true, adds the file directory to the header of the log messages
       --alsologtostderr                                log to standard error as well as files (no effect when -logtostderr=true)
-      --bind-address string                            The IP address on which to listen for the --secure-port port. (default "0.0.0.0")
       --cert-rotation-checking-interval duration       The interval of checking if the certificate need to be rotated. This is only applicable if cert rotation is enabled (default 5m0s)
       --cert-rotation-remaining-time-threshold float   The threshold of remaining time of the valid certificate. This is only applicable if cert rotation is enabled. (default 0.2)
       --cluster-api-burst int                          Burst to use while talking with cluster kube-apiserver. (default 60)
@@ -53,6 +52,7 @@ karmada-agent [flags]
                                                        PropagateDeps=true|false (BETA - default=true)
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
+      --health-probe-bind-address string               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357.
   -h, --help                                           help for karmada-agent
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.
       --karmada-kubeconfig string                      Path to karmada control plane kubeconfig file.
@@ -80,7 +80,6 @@ karmada-agent [flags]
       --rate-limiter-qps int                           The QPS for rate limier. (default 10)
       --report-secrets strings                         The secrets that are allowed to be reported to the Karmada control plane during registering. Valid values are 'KubeCredentials', 'KubeImpersonator' and 'None'. e.g 'KubeCredentials,KubeImpersonator' or 'None'. (default [KubeCredentials,KubeImpersonator])
       --resync-period duration                         Base frequency the informers are resynced.
-      --secure-port int                                The secure port on which to serve HTTPS. (default 10357)
       --skip_headers                                   If true, avoid header prefixes in the log messages
       --skip_log_headers                               If true, avoid headers when opening log files (no effect when -logtostderr=true)
       --stderrthreshold severity                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
