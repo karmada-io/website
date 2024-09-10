@@ -717,7 +717,9 @@ spec:
     - member3
   #...
   suspension:
-    clusterNames: ["member3"] # 修改此处的集群名称
+   dispatchingOnClusters:
+    clusterNames:
+     - member3 # 修改此处的集群名称
 ```
 
 在 Karmada 控制平面上对 `nginx` Deployment 的更新将不会被同步到 `member3` 集群，但会被同步到所有其他集群。

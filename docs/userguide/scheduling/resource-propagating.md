@@ -716,7 +716,9 @@ spec:
     - member3
   #...
   suspension:
-    clusterNames: ["member3"] # Modify the cluster name here
+   dispatchingOnClusters:
+    clusterNames:
+     - member3 # Modify the cluster name here
 ```
 
 Updates to the `nginx` deployment in the Karmada control plane will not be synchronized to the `member3` cluster but will be synchronized to all other clusters.
