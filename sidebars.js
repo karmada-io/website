@@ -121,6 +121,7 @@ module.exports = {
                     items: [
                         "userguide/cicd/working-with-argocd",
                         "userguide/cicd/working-with-flux",
+                        "userguide/cicd/working-with-pipecd",
                     ],
                 },
                 {
