@@ -15,6 +15,7 @@ import SELZJU from "../../static/img/supporters/SEL-ZJU.png"
 import zhejianglab from "../../static/img/supporters/zhejianglab.png"
 import daocloud from "../../static/img/supporters/DaoCloud.png"
 import CECloud from "../../static/img/supporters/CECloud.png"
+import wps from "../../static/img/supporters/wps.png"
 
 const supportersData = [
     {
@@ -84,6 +85,10 @@ const supportersData = [
     {
         logo: CECloud,
         alt: 'CECloud',
+    },
+    {
+        logo: wps,
+        alt: 'WPS',
     },
 ]
 
