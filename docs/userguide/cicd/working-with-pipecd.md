@@ -106,7 +106,7 @@ This directory includes:
 
 Access [localhost:8080/applications?project=quickstart](http://localhost:8080/applications?project=quickstart) to create a new application.
 
-Click the `+App` button as shown below:
+Click the `+ADD` button as shown below:
 
 ![](../../resources/userguide/cicd/pipecd/pipecd-add-new-app.png)
 
@@ -115,7 +115,7 @@ From the `ADD FROM SUGGESTIONS` form, select value from selection box to registe
 
 ![](../../resources/userguide/cicd/pipecd/pipecd-new-app-info.png)
 
-Click `Save` in the form and confirmation box, and your app will be registered successfully and ready to go.
+Click `SAVE` in the form and confirmation box, and your app will be registered successfully and ready to go.
 
 ![](../../resources/userguide/cicd/pipecd/pipecd-add-app-done.png)
 
