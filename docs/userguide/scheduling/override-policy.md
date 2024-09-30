@@ -180,6 +180,7 @@ Karmada offers various alternatives to declare the override rules:
 - `LabelsOverrider`: overrides labels for workloads.
 - `AnnotationsOverrider`: overrides annotations for workloads.
 - `PlaintextOverrider`: a general-purpose tool to override any kind of resources.
+- `FieldOverrider`: partially override values inside JSON and YAML fields.
 
 ### ImageOverrider
 The `ImageOverrider` is a refined tool to override images with format `[registry/]repository[:tag|@digest]`(e.g.`/spec/template/spec/containers/0/image`) for workloads such as `Deployment`.
@@ -425,6 +426,59 @@ spec:
 
 Note: `AnnotationsOverrider` functions the similar way as `LabelsOverrider`. You can refer to the `LabelsOverrider` examples.
 
+
+### FieldOverrider
+The `FieldOverrider` allows users to partially override values inside  JSON and YAML fields. 
+
+The allowed operations are as follows:
+
++ `add`: appends new key-value pairs at the specified sub path.
++ `remove`: removes specific key-value pairs at the specified sub path.
++ `replace`: replaces existing values with new values at the specified sub path.
+
+Suppose we have a ConfigMap named myconfigmap that contains some nested YAML data:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmap
+data:
+  config.yaml: |
+    app:
+      database:
+        port: 5432
+```
+
+Example 1: Replace the database port within the ConfigMap using YAML Patch operations.
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: example
+spec:
+  #...
+  overrideRules:
+    - overriders:
+        fieldOverrider:
+          - fieldPath: /data/config.yaml
+            yaml:
+              - subPath: /app/database/port
+                operator: replace
+                value: "3306"
+```
+After applying this OverridePolicy, the ConfigMap will be updated as follows:
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmap
+data:
+  config.yaml: |
+    app:
+      database:
+        port: 3306
+```
 
 ### PlaintextOverrider
 The `PlaintextOverrider` is a simple overrider that overrides target fields according to path, operator and value, just like `kubectl patch`.
