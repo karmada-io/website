@@ -51,7 +51,7 @@ The karmada-controller-manager runs various custom controller processes.
 
 The controllers watch Karmada objects and then talk to the underlying clusters' API servers to create regular Kubernetes resources.
 
-The controllers are listed at [Karmada Controllers](../administrator/configuration/configure-controllers/#karmada-controllers).
+The controllers are listed at [Karmada Controllers](../administrator/configuration/configure-controllers.md/#karmada-controllers).
 
 ### karmada-scheduler
 
