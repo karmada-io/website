@@ -140,7 +140,7 @@ make image-karmada-scheduler
 ```
 
 ```shell
-$ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -nkarmada-system
+$ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/karmada-scheduler -n karmada-system
 ...
  spec:
       automountServiceAccountToken: false
@@ -197,7 +197,7 @@ $ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy
 ### Run the second scheduler in the cluster
 
 You can run multiple schedulers simultaneously alongside the default scheduler and instruct Karmada what scheduler to use for each of your workloads.
-Here is an sample of the deployment config. You can save it as `my-scheduler.yaml`:
+Here is a sample of the deployment config. You can save it as `my-scheduler.yaml`:
 
 ```yaml
 apiVersion: apps/v1
