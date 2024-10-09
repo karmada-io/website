@@ -35,6 +35,7 @@ module.exports = {
                 "tutorials/autoscaling-federatedhpa-with-cronfederatedhpa",
                 "tutorials/autoscaling-workload-with-cronfederatedhpa",
                 "tutorials/resource-migration",
+                "tutorials/resource-migration-rollback",
                 "tutorials/access-service-across-clusters",
                 "tutorials/workload-rebalancer",
             ],
