@@ -296,9 +296,10 @@ module.exports = {
                         "reference/components/karmada-scheduler-estimator",
                         "reference/components/karmada-search",
                         "reference/components/karmada-webhook",
-			            "reference/components/karmada-metrics-adapter",
+                        "reference/components/karmada-metrics-adapter",
                     ],
                 },
+                "reference/components-privileges",
                 {
                     type: "category",
                     label: "Instrumentation",
