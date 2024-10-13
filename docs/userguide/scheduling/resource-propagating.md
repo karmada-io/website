@@ -12,7 +12,7 @@ Here, we use PropagationPolicy as an example to describe how to propagate resour
 
 > Note: We need to point kubectl to `<karmada-apiserver.config>` instead of the member cluster in advance. 
 
-## Deploy a simplest multi-cluster Deployment
+## Deploy a simple multi-cluster Deployment
 
 ### Create a PropagationPolicy object
 
@@ -36,7 +36,7 @@ spec:
         - member1
 ```
 
-1. Create a propagationPolicy base on the YAML file:
+1. Create a propagationPolicy based on the YAML file:
 ```shell
 kubectl apply -f propagationpolicy.yaml
 ```
@@ -47,6 +47,7 @@ kubectl create deployment nginx --image nginx
 > Note: The resource exists only as a template in karmada. After being propagated to a member cluster, the behavior of the resource is the same as that of a single kubernetes cluster.
 
 > Note: Resources and PropagationPolicy are created in no sequence.
+
 3. Display information of the deployment:
 ```shell
 karmadactl get deployment
@@ -106,7 +107,7 @@ nginx-6799fc88d8-8t8cc   member2   1/1     Running   0          17s
 
 You can update the deployment template. The changes will be automatically synchronized to the member clusters.
 
-1. Update deployment replicas to 2
+1. Update deployment replicas to 2.
 2. Display information of the deployment (the output is similar to this):
 ```shell
 NAME    CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE     ADOPTION
@@ -132,7 +133,7 @@ kubectl delete deployment nginx
 
 ## Deploy deployment into a specified set of target clusters
 
-`.spec.placement.clusterAffinity` field of PropagationPolicy represents scheduling restrictions on a certain set of clusters, without which any cluster can be scheduling candidates.
+`.spec.placement.clusterAffinity` field of PropagationPolicy represents scheduling restrictions on a certain set of clusters, without which any cluster can be scheduling candidate.
 
 It has four fields to set:
 - LabelSelector
@@ -142,7 +143,7 @@ It has four fields to set:
 
 ### LabelSelector
 
-LabelSelector is a filter to select member clusters by labels. It uses `*metav1.LabelSelector` type. If it is non-nil and non-empty, only the clusters match this filter will be selected.
+LabelSelector is a filter to select member clusters by labels. It uses `*metav1.LabelSelector` type. If it is non-nil and non-empty, only the clusters matching this filter will be selected.
 
 PropagationPolicy can be configured as follows:
 
@@ -185,7 +186,7 @@ For a description of `matchLabels` and `matchExpressions`, you can refer to [Res
 
 ### FieldSelector
 
-FieldSelector is a filter to select member clusters by fields. If it is non-nil and non-empty, only the clusters match this filter will be selected.
+FieldSelector is a filter to select member clusters by fields. If it is non-nil and non-empty, only the clusters matching this filter will be selected.
 
 PropagationPolicy can be configured as follows:
 
@@ -261,17 +262,17 @@ spec:
 
 ## Multiple cluster affinity groups
 
-Users can set the ClusterAffinities field and declare multiple cluster groups in PropagationPolicy. The scheduler will evaluate these groups one by one in the order they appear in the spec, the group that does not satisfy scheduling restrictions will be ignored which means all clusters in this group will not be selected unless it also belongs to the next group(a cluster cloud belong to multiple groups).
+Users can set the ClusterAffinities field and declare multiple cluster groups in PropagationPolicy. The scheduler will evaluate these groups one by one in the order they appear in the spec and the group that does not satisfy scheduling restrictions will be ignored, which means that each cluster in this group will not be selected unless it also belongs to the next group (a cluster could belong to multiple groups).
 
 If none of the groups satisfy the scheduling restrictions, the scheduling fails, which means no cluster will be selected.
 
 Note:
 
 1. ClusterAffinities can not co-exist with ClusterAffinity.
-2. If both ClusterAffinity and ClusterAffinities are not set, any cluster can be scheduling candidates.
+2. If both ClusterAffinity and ClusterAffinities are not set, any cluster can be scheduling candidate.
 
 Potential use case 1:
-The private clusters in the local data center could be the main group, and the managed clusters provided by cluster providers could be the secondary group. So that the Karmada scheduler would prefer to schedule workloads to the main group and the second group will only be considered in case of the main group does not satisfy restrictions(like, lack of resources).
+The private clusters in the local data center could be the main group, and the managed clusters provided by cluster providers could be the secondary group. So that the Karmada scheduler would prefer to schedule workloads to the main group and the second group will only be considered in case of the main group not satisfying restrictions (like, lack of resources).
 
 PropagationPolicy can be configured as follows:
 
@@ -295,7 +296,7 @@ spec:
   #...
 ```
 
-Potential use case 2: For the disaster recovery scenario, the clusters could be organized to primary and backup groups, the workloads would be scheduled to primary clusters firstly, and when primary cluster fails(like data center power off), Karmada scheduler could migrate workloads to the backup clusters.
+Potential use case 2: For the disaster recovery scenario, the clusters could be organized to primary and backup groups, the workloads would be scheduled to primary clusters firstly, and when primary clusters fail (like data center power off), Karmada scheduler could migrate workloads to the backup clusters.
 
 PropagationPolicy can be configured as follows:
 
@@ -322,7 +323,7 @@ For more detailed design information, please refer to [Multiple scheduling group
 
 ## Schedule based on Taints and Tolerations
 
-`.spec.placement.clusterTolerations` field of PropagationPolicy represents the tolerations. Like kubernetes, tolerations need to be used in conjunction with taints on the clusters.
+`.spec.placement.clusterTolerations` field of PropagationPolicy represents the tolerations. Like Kubernetes, tolerations need to be used in conjunction with taints on the clusters.
 After setting one or more taints on the cluster, workloads cannot be scheduled or run on these clusters unless the policy explicitly states that these taints are tolerated.
 Karmada currently supports taints whose effects are `NoSchedule` and `NoExecute`.
 
@@ -354,7 +355,7 @@ spec:
 
 ## Multi region HA support
 
-By leveraging the spread-by-region constraint, users are able to deploy workloads aross regions, e.g. people may want their workloads always running on different regions for HA purposes.
+By leveraging the spread-by-region constraint, users are able to deploy workloads across regions, e.g. people may want their workloads always running on different regions for HA purposes.
 
 To enable multi region deployment, you should use the command below to customize the region of clusters.
 
@@ -406,12 +407,12 @@ For example, when using `SpreadByFieldRegion` to specify region groups, at the m
 
 `.spec.placement.replicaScheduling` represents the scheduling policy on dealing with the number of replicas when propagating resources that have replicas in spec (e.g. deployments, statefulsets and CRDs which can be interpreted by [Customizing Resource Interpreter](../globalview/customizing-resource-interpreter.md)) to member clusters.
 
-It has two replicaSchedulingTypes which determines how the replicas is scheduled when Karmada propagating a resource:
+It has two replicaSchedulingTypes which determine how the replicas are scheduled when Karmada propagates a resource:
 
 * `Duplicated`: duplicate the same replicas to each candidate member cluster from resources.
 * `Divided`: divide replicas into parts according to numbers of valid candidate member clusters, and exact replicas for each cluster are determined by `ReplicaDivisionPreference`.
 
-`ReplicaDivisionPreference` determines the replicas is divided when ReplicaSchedulingType is `Divided`.
+`ReplicaDivisionPreference` determines how replicas are divided when ReplicaSchedulingType is `Divided`.
 
 * `Aggregated`: divide replicas into clusters as few as possible, while respecting clusters' resource availabilities during the division. See details in [Schedule based on Cluster Resource Modeling](./cluster-resources.md).
 * `Weighted`: divide replicas by weight according to `WeightPreference`. There are two kinds of `WeightPreference` to set. `StaticWeightList` statically allocates replicas to target clusters based on weight. Target clusters can be selected by `ClusterAffinity`. `DynamicWeight` specifies the factor to generate the dynamic weight list. If specified, `StaticWeightList` will be ignored. Karmada currently supports the factor `AvailableReplicas`.
@@ -458,8 +459,8 @@ spec:
         dynamicWeight: AvailableReplicas 
 ```
 
-It means replicas will be propagated based on available replicas in member clusters. For example, the scheduler selected 3 cluster(A/B/C) and should divide 12 replicas to them.
-Based on cluster resource modeling, we get that the max available replica of A, B, C is 6, 12, 18. 
+It means replicas will be propagated based on available replicas in member clusters. For example, the scheduler selected 3 clusters (A/B/C) and should divide 12 replicas to them.
+Based on cluster resource modeling, we get that the max available replicas of A, B, C is 6, 12, 18. 
 Therefore, the weight of cluster A:B:C will be 6:12:18 (equal to 1:2:3). At last, the assignment would be "A: 2, B: 4, C: 6".
 
 :::note
