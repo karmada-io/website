@@ -45,7 +45,7 @@ TODO: Link to adoption use case once it gets on board.
 
 Kubernetes provides two methods to extend APIs: Custom Resource and Kubernetes API Aggregation Layer. For more detail, you can refer to [Extending the Kubernetes API](https://kubernetes.io/docs/concepts/extend-kubernetes/).
 
-Karmada uses the both extension methods. For example, `PropagationPolicy` and `ResourceBinding` use Custom Resource, and `Cluster` resource uses Kubernetes API Aggregation Layer.
+Karmada uses both extension methods. For example, `PropagationPolicy` and `ResourceBinding` use Custom Resource, and `Cluster` resource uses Kubernetes API Aggregation Layer.
 
 Therefore, `Cluster` resources do not have a CRD YAML file, and they are not visible when you execute the `kubectl get crd` command.
 
