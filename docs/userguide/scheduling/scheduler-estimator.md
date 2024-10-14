@@ -2,7 +2,7 @@
 title: Cluster Accurate Scheduler Estimator For Rescheduling
 ---
 
-Users could divide their replicas of a workload into different clusters in terms of available resources of member clusters. When some clusters are lack of resources, scheduler would not assign excessive replicas into these clusters by calling karmada-scheduler-estimator.
+Users can distribute workload replicas across different clusters based on the available resources in each member cluster. When some clusters lack resources, the scheduler will avoid assigning excessive replicas to them by using the Karmada-scheduler-estimator.
 
 ## Prerequisites
 
@@ -143,7 +143,7 @@ spec:
             memory: 200Gi
 ```
 
-As any node of member clusters does not have so many cpu and memory resources, we will find workload scheduling failed.
+Since none of the nodes in the member clusters have sufficient CPU and memory resources, the workload scheduling will fail.
 
 ```bash
 $ kubectl get deployments.apps 
