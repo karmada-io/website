@@ -9,14 +9,13 @@ This article will focus on how Karmada performs scheduling based on the cluster 
 
 ## Cluster Resource Modeling
 
-In the scheduling progress, the `karmada-scheduler` now makes decisions as per a bunch of factors, one of the factors is the resource details of the cluster.
-Now Karmada has two different scheduling behaviors based on cluster resources. One of them is general cluster modeling, another one is customized cluster modeling.
+During the scheduling process, `karmada-scheduler` makes decisions based on a number of factors, one of which is the state of the cluster's resources. Karmada currently has two different ways of scheduling based on cluster resources, one of which is a generic cluster modeling and the other is a customized cluster modeling.
 
 ### General Cluster Modeling
 
 #### Start to use General Cluster Resource Models
 
-For the purpose above, we introduced `ResourceSummary` to the [Cluster API](https://github.com/karmada-io/karmada/blob/master/pkg/apis/cluster/types.go).
+For that purpose, we introduced `ResourceSummary` to the [Cluster API](https://github.com/karmada-io/karmada/blob/master/pkg/apis/cluster/types.go).
 
 For example:
 
@@ -39,9 +38,9 @@ From the example above, we can know the allocatable and allocated resources of t
 
 #### Schedule based on General Cluster Resource Models
 
-Assume that there is a Pod which will be scheduled to one of the clusters managed by Karmada.
+Assume that there is a Pod which will be scheduled to one of the member clusters managed by Karmada.
 
-Member1 is like:
+Member1:
 
 ```
 resourceSummary:
@@ -58,7 +57,7 @@ resourceSummary:
       pods: "11"
 ```
 
-Member2 is like:
+Member2:
 
 ```
 resourceSummary:
@@ -75,7 +74,7 @@ resourceSummary:
       pods: "11"
 ```
 
-Member3 is like:
+Member3:
 
 ```
 resourceSummary:
@@ -104,10 +103,11 @@ Considering the amount of available resources, the scheduler prefers to schedule
 #### Background
 
 `ResourceSummary` describes the overall available resources of the cluster.
-However, the `ResourceSummary` is not precise enough, it mechanically counts the resources on all nodes, but ignores the fragment resources. For example, a cluster with 2000 nodes, 1 core CPU left on each node.
-From the `ResourceSummary`, we get that there are 2000 core CPU left for the cluster, but actually, this cluster cannot run any pod that requires CPU greater than 1 core.
+However, the `ResourceSummary` is not precise enough, it mechanically counts the resources on all nodes, but ignores the fragmented resources of these nodes. For example, a cluster with 2000 nodes has only 1 core CPU left on each node.
+From the `ResourceSummary`, we get that there are 2000 cores CPU left for the cluster, but actually, this cluster cannot run any pod that requires more than 1 core CPU.
 
-Therefore, we introduce a `CustomizedClusterResourceModeling` for each cluster that records the resource portrait of each node. Karmada will collect node and pod information for each cluster. After calculation, this node will be divided into the appropriate resource model configured by the users.
+Therefore, we introduce a `CustomizedClusterResourceModeling` for each cluster that records the resource profile of each node.
+Karmada collects node and pod information from each cluster and computes the appropriate `user configured` resource model to categorize the node into.
 
 #### Start to use Customized Cluster Resource Models
 
@@ -134,7 +134,7 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-host edit deploy/k
 
 After that, when a cluster is registered to the Karmada control plane, Karmada will automatically sets up a generic model for the cluster. You can see it in `cluster.spec`.
 
-By default, a `resource model` is like:
+By default, a `resource model` is as follows:
 
 ```
 resourceModels:
@@ -214,7 +214,7 @@ resourceModels:
 
 #### Customize your cluster resource models
 
-In some cases, the default cluster resource model may not match your cluster. You can adjust the granularity of the cluster resource model to better deliver resources to the cluster.
+In some cases, the default cluster resource model may not match your cluster. You can adjust the granularity of the cluster resource model to better distribute resources to your cluster.
 
 For example, you can use the command below to customize the cluster resource models of member1.
 
@@ -224,16 +224,16 @@ kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver edit clu
 
 A Customized resource model should meet the following requirements:
 
-* The grade of each models should not be the same.
+* The grade of each model should not be the same.
 * The number of resource types in each model should be the same.
-* Now only support cpu, memory, storage, ephemeral-storage.
+* Currently only four resource types are supported cpu, memory, storage, ephemeral-storage.
 * The max value of each resource must be greater than the min value.
 * The min value of each resource in the first model should be 0.
 * The max value of each resource in the last model should be MaxInt64.
-* The resource types of each models should be the same.
-* Model intervals for resources must be contiguous and non-overlapping.
+* The resource types of each model should be the same.
+* Model intervals for resources must be contiguous and non-overlapping from low-grade to high-grade models.
 
-For example: there is a cluster resource model below:
+For example, a customized cluster resource model is given below:
 
 ```
 resourceModels:
@@ -263,15 +263,15 @@ resourceModels:
       name: memory
 ```
 
-It means that there are three models in the cluster resource models. if there is a node with 0.5C and 2Gi, it will be divided into Grade 0. If there is a node with 1.5C and 10Gi, it will be divided into Grade 1.
+The above is a cluster resource model with three grades, each grade defines the resource ranges for two resources, CPU and memory. At this point if a node has remaining available resources of 0.5 cores CPU and 2Gi memory, it will be classified as a grade 0 resource model, while if it has 1.5 cores CPU and 10Gi memory, it will be classified as grade 1.
 
 #### Schedule based on Customized Cluster Resource Models
 
-`Cluster resource model` divides nodes into levels of different intervals. And when a Pod needs to be scheduled to a specific cluster, they will compare the number of nodes in the model that satisfies the resource request of the Pod in different clusters, and schedule the Pod to the cluster with more node numbers.
+`Cluster resource model` divides the nodes into levels of different intervals. When a Pod needs to be scheduled to a specific cluster, `karmada-scheduler` compares the number of nodes in different clusters that satisfy the requirement based on the resource request of the Pod instance, and it schedules it to a cluster that satisfies the requirement with a larger number of nodes.
 
-Assume that there is a Pod which will be scheduled to one of the clusters managed by Karmada with the same cluster resource models.
+Assume that there is a Pod to be scheduled to one of the member clusters managed by Karmada with the same cluster resource models. The remaining available resources of these member clusters are as follows:
 
-Member1 is like:
+Member1:
 
 ```
 spec:
@@ -301,7 +301,7 @@ status:
     grade: 3   
 ```
 
-Member2 is like:
+Member2:
 
 ```
 spec:
@@ -331,7 +331,7 @@ status:
     grade: 3   
 ```
 
-Member3 is like:
+Member3:
 
 ```
 spec:
@@ -351,14 +351,15 @@ status:
     grade: 6   
 ```
 
-Assume that the Pod's request is 3C 20Gi. All nodes that meet Grade 2 and above meet this requirement. Considering the amount of available resources, the scheduler prefers to schedule the Pod to member3.
+Suppose the Pod's resource request is for a 3-cores CPU and 20Gi of memory. All nodes that meet Grade 2 and above fulfill this request. Considering the number of nodes available in each cluster, the scheduler prefers to schedule the Pod to member3.
 
 
 | Cluster           | member1   | member2   | member3                    |
 | ------------------- | ----------- | ----------- | ---------------------------- |
 | AvailableReplicas | 1 + 6 = 7 | 4 + 4 = 8 | 1 * min(32/3, 256/20) = 10 |
 
-Assume that the Pod's request is 3C 60Gi. Nodes from Grade2 does not satisfy all resource requests. Considering the amount of available resources above Grade 2, the scheduler prefers to schedule the Pod to member1.
+
+Suppose now that the Pod requires 3C and 60Gi. Grade 2 nodes do not satisfy every resource request, so after considering the number of nodes available in each cluster, the scheduler prefers to schedule the Pod to member1.
 
 
 | Cluster           | member1   | member2   | member3                   |
@@ -367,7 +368,7 @@ Assume that the Pod's request is 3C 60Gi. Nodes from Grade2 does not satisfy all
 
 ## Disable Cluster Resource Modeling
 
-The resource modeling is always be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
+The resource modeling is always be used by the scheduler to make scheduling decisions in scenarios of dynamic replica assignment based on cluster free resources.
 In the process of resource modeling, it will collect node and pod information from all clusters managed by Karmada.
 This imposes a considerable performance burden in large-scale scenarios.
 
