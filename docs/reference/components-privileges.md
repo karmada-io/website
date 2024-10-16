@@ -4,78 +4,67 @@ title: Components Privileges
 
 ### karmada-operator
 ```yaml
+rules:
   - apiGroups:
-      - "autoscaling.karmada.io"
+      - coordination.k8s.io
     resources:
-      - cronfederatedhpas
-      - cronfederatedhpas/status
-      - federatedhpas
-      - federatedhpas/status
+      - leases # karmada-operator requires access to the Lease resource for leader election.
+    verbs:
+      - get # to check if a lease exists.
+      - create # to acquire a new lease.
+      - update # to renew an existing lease.
+  - apiGroups:
+      - operator.karmada.io
+    resources:
+      - karmadas # to manage karmada instances
+    verbs:
+      - get # to fetch details of karmada instances.
+      - list # to list all karmada instances.
+      - watch # to watch for changes in karmada instances.
+      - update # to modify karmada instances.
+  - apiGroups:
+      - operator.karmada.io
+    resources:
+      - karmadas/status
+    verbs:
+      - update # to update the status subresource of karmada instances.
+  - apiGroups:
+      - ""
+    resources:
+      - events # allows karmada-operator to record events in the kubernetes api-server.
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - nodes # to list cluster nodes, which is necessary to get node information.
+      - pods # to list pods, potentially for health checks or other operational needs.
+    verbs:
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces # to get information about namespaces, and deploy resources into specific namespaces.
     verbs:
       - get
-      - list
-      - watch
   - apiGroups:
-      - "cluster.karmada.io"
+      - ""
     resources:
-      - clusters
-      - clusters/status
+      - secrets # to manage secrets, which might contain sensitive data like credentials.
+      - services # to manage services, which are used to expose applications within the cluster.
     verbs:
-      - get
-      - list
-      - watch
+      - get # to retrieve secret and service configurations.
+      - create # to create new secrets and services.
+      - update # to modify existing secrets and services.
+      - delete # to remove unused secrets and services.
   - apiGroups:
-      - "certificates.k8s.io"
+      - apps
     resources:
-      - certificatesigningrequests
-      - certificatesigningrequests/status
+      - statefulsets # to manage statefulsets, e.g. etcd.
+      - deployments # to manage deployments, e.g. karmada-operator.
     verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "multicluster.x-k8s.io"
-    resources:
-      - serviceexports
-      - serviceexports/status
-      - serviceimports
-      - serviceimports/status
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "networking.karmada.io"
-    resources:
-      - multiclusteringresses
-      - multiclusteringresses/status
-      - multiclusterservices
-      - multiclusterservices/status
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "policy.karmada.io"
-    resources:
-      - overridepolicies
-      - clusteroverridepolicies
-      - propagationpolicies
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "work.karmada.io"
-    resources:
-      - resourcebindings
-      - resourcebindings/status
-      - clusterresourcebindings
-      - clusterresourcebindings/status
-      - works
-      - works/status
-    verbs:
-      - get
-      - list
-      - watch
+      - get # to retrieve statefulset and deployment configurations.
+      - create # to create new statefulsets and deployments.
+      - update # to modify existing statefulsets and deployments.
+      - delete # to remove unused statefulsets and deployments.
 ```
