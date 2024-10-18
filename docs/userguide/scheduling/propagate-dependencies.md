@@ -14,7 +14,7 @@ We can install Karmada by referring to [quick-start](https://github.com/karmada-
 
 ### Enable PropagateDeps feature
 
-`PropagateDeps` feature gate has evolved to the Beta sine Karmada v1.4 and is enabled by default. If you use the Karmada 1.3 or earlier, you need to enable this feature gate.
+`PropagateDeps` feature gate has evolved to Beta since Karmada v1.4 and is enabled by default. If you use Karmada 1.3 or earlier, you need to enable this feature gate.
 
 ```bash
 kubectl edit deployment karmada-controller-manager -n karmada-system
