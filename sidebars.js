@@ -170,6 +170,7 @@ module.exports = {
                         "administrator/migration/promote-legacy-workload",
                         "administrator/migration/migration-from-kubefed",
                         "administrator/migration/migrate-in-batch",
+                        "administrator/migration/migrate-rollback",
                     ],
                 },
                 {
