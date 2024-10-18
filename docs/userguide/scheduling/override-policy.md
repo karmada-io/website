@@ -2,21 +2,21 @@
 title: Override Policy
 ---
 
-The [OverridePolicy][1] and [ClusterOverridePolicy][2] are used to declare override rules for resources when 
-they are propagating to different clusters.
+The [OverridePolicy][1] and [ClusterOverridePolicy][2] are used to define override rules for resources when 
+they are being propagated to different clusters.
 
 ## Difference between OverridePolicy and ClusterOverridePolicy
-ClusterOverridePolicy represents the cluster-wide policy that overrides a group of resources to one or more clusters while OverridePolicy will apply to resources in the same namespace as the namespace-wide policy. For cluster scoped resources, apply ClusterOverridePolicy by policies name in ascending. For namespaced scoped resources, first apply ClusterOverridePolicy, then apply OverridePolicy.
+ClusterOverridePolicy represents the cluster-wide policy that overrides a group of resources to one or more clusters while OverridePolicy will apply to resources in the same namespace as the namespace-wide policy. For cluster-scoped resources, apply ClusterOverridePolicy by policies name in ascending order. For namespaced scoped resources, ClusterOverridePolicy is applied first, followed by OverridePolicy.
 
 ## Resource Selector
 
-ResourceSelectors restricts resource types that this override policy applies to. If you ignore this field it means matching all resources.
+ResourceSelectors restrict resource types that the override policy applies to. If you ignore this field, it matches all resources.
 
-Resource Selector required `apiVersion` field which represents the API version of the target resources and `kind` which represents the Kind of the target resources. 
+Resource Selector requires the `apiVersion` field which represents the API version of the target resources and `kind` which represents the kind of the target resources. 
 The allowed selectors are as follows:
 - `namespace`: namespace of the target resource.
-- `name`: name of the target resource
-- `labelSelector`: A label query over a set of resources.
+- `name`: name of the target resource.
+- `labelSelector`: a label query over a set of resources.
 
 #### Examples
 ```yaml
@@ -36,11 +36,11 @@ spec:
   overrideRules:
   #...
 ```
-It means override rules above will only be applied to `Deployment` which is named nginx in test namespace and has labels with `app: nginx`.
+Override rules above will only be applied to the `Deployment` named nginx in test namespace and has the `app: nginx` label.
 
 ## Target Cluster
 
-Target Cluster defines restrictions on the override policy that only applies to resources propagated to the matching clusters. If you ignore this field it means matching all clusters.
+Target Cluster defines restrictions on the override policy that only apply to resources propagated to the matching clusters. If you ignore this field it matches all clusters.
 
 The allowed selectors are as follows:
 - `labelSelector`: a filter to select member clusters by labels.
@@ -66,7 +66,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters which has `cluster: member1` label.
+Override rules above will only be applied to resources propagated to clusters which have the `cluster: member1` label.
 
 ### fieldSelector
 
@@ -89,7 +89,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters which has the `spec.region` field with values in [cn-north-1].
+Override rules above will only be applied to resources propagated to clusters which have the `spec.region` field with values in [cn-north-1].
 
 #### Examples
 ```yaml
@@ -110,7 +110,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters which has the `spec.provider` field with values in [aws].
+Override rules above will only be applied to resources propagated to clusters which have the `spec.provider` field with values in [aws].
 
 #### Examples
 ```yaml
@@ -131,7 +131,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters which has the `spec.zone` field with values in [us].
+Override rules above will only be applied to resources propagated to clusters which have the `spec.zone` field with values in [us].
 
 ### clusterNames
 
@@ -150,7 +150,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are member1.
+Override rules above will only be applied to resources propagated to clusters whose clusterNames are member1.
 
 ### exclude
 
@@ -169,7 +169,7 @@ spec:
       overriders:
       #...
 ```
-It means override rules above will only be applied to those resources propagated to clusters whose clusterNames are not member1.
+Override rules above will only be applied to resources propagated to clusters whose clusterNames are not member1.
 
 ## Overriders
 
@@ -206,7 +206,7 @@ spec:
           name: myapp
 ```
 
-**Example 1: Add the registry when workloads are propagating to specific clusters.**
+**Example 1: add the registry when propagating workloads to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -221,7 +221,7 @@ spec:
             operator: add
             value: test-repo
 ```
-It means `add` a registry`test-repo` to the image of `myapp`.
+This will `add` a `test-repo` registry to the image of `myapp`.
 
 After the policy is applied for `myapp`, the image will be:
 ```yaml
@@ -230,7 +230,7 @@ After the policy is applied for `myapp`, the image will be:
           name: myapp
 ```
 
-**Example 2: replace the repository when workloads are propagating to specific clusters.**
+**Example 2: replace the repository when propagating workloads to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -245,7 +245,7 @@ spec:
             operator: replace
             value: myapp2
 ```
-It means `replace` the repository from `myapp` to `myapp2`.
+This will `replace` the `myapp` repo with `myapp2` on the image.
 
 After the policy is applied for `myapp`, the image will be:
 ```yaml
@@ -254,7 +254,7 @@ After the policy is applied for `myapp`, the image will be:
           name: myapp
 ```
 
-**Example 3: remove the tag when workloads are propagating to specific clusters.**
+**Example 3: remove the tag when propagating workloads to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -268,7 +268,7 @@ spec:
           - component: Tag
             operator: remove
 ```
-It means `remove` the tag of the image `myapp`.
+This will `remove` the `myapp` image's tag.
 
 After the policy is applied for `myapp`, the image will be:
 ```yaml
@@ -279,7 +279,7 @@ After the policy is applied for `myapp`, the image will be:
 
 ### CommandOverrider
 The `CommandOverrider` is a refined tool to override commands(e.g.`/spec/template/spec/containers/0/command`) 
-for workloads, such as `Deployment`.
+for workloads, such as `Deployments`.
 
 The allowed operations are as follows:
 - `add`: appends one or more flags to the command list.
@@ -305,7 +305,7 @@ spec:
             - --parameter2=bar
 ```
 
-**Example 1: Add flags when workloads are propagating to specific clusters.**
+**Example 1: add flags when propagating workloads to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -321,7 +321,7 @@ spec:
             value:
               - --cluster=member1
 ```
-It means `add`(appending) a new flag `--cluster=member1` to the `myapp`.
+This will `add` (append) a new flag `--cluster=member1` to `myapp` command.
 
 After the policy is applied for `myapp`, the command list will be:
 ```yaml
@@ -335,7 +335,7 @@ After the policy is applied for `myapp`, the command list will be:
             - --cluster=member1
 ```
 
-**Example 2: Remove flags when workloads are propagating to specific clusters.**
+**Example 2: remove flags when propagating workloads to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -351,9 +351,9 @@ spec:
             value:
               - --parameter1=foo
 ```
-It means `remove` the flag `--parameter1=foo` from the command list.
+This will `remove` the flag `--parameter1=foo` from the command list.
 
-After the policy is applied for `myapp`, the `command` will be:
+After the policy is applied for `myapp`, the `command` list will be:
 ```yaml
       containers:
         - image: myapp
@@ -371,15 +371,15 @@ The allowed operations are as follows:
 - `add`: appends one or more args to the command list.
 - `remove`: removes one or more args from the command list.
 
-Note: `ArgsOverrider` functions the similar way as `CommandOverrider`. You can refer to the `CommandOverrider` examples.
+Note: `ArgsOverrider` functions similarly to `CommandOverrider`. You can refer to the `CommandOverrider` examples.
 
 
 ### LabelsOverrider
 
 The allowed operations are as follows:
-- `add`: The items in `value` will be appended to labels.
-- `remove`: If the item in `value` matches the item in labels, the former will be deleted. If they do not match, nothing will be done.
-- `replace`: If the key in `value` matches the key in the label, the former will be replaced. If they do not match, nothing will be done.
+- `add`: the items in `value` will be appended to labels.
+- `remove`: if the item in `value` matches the item in labels, the former will be deleted. If they do not match, nothing will be done.
+- `replace`: if the key in `value` matches the key in the label, the former will be replaced. If they do not match, nothing will be done.
 
 #### Examples
 Suppose we create a deployment named `myapp`.
@@ -424,7 +424,7 @@ spec:
 
 ### AnnotationsOverrider
 
-Note: `AnnotationsOverrider` functions the similar way as `LabelsOverrider`. You can refer to the `LabelsOverrider` examples.
+Note: `AnnotationsOverrider` functions similarly to `LabelsOverrider`. You can refer to the `LabelsOverrider` examples.
 
 
 ### FieldOverrider
@@ -449,7 +449,7 @@ data:
         port: 5432
 ```
 
-Example 1: Replace the database port within the ConfigMap using YAML Patch operations.
+**Example 1: replace the database port within the ConfigMap using YAML Patch operations.**
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -499,7 +499,7 @@ data:
   example: 1
 ```
 
-**Example 1: replace data of the configmap when resources are propagating to specific clusters.**
+**Example 1: replace configmap data when propagating resources to specific clusters.**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -514,7 +514,7 @@ spec:
             operator: replace
             value: 2
 ```
-It means `replace` data of the configmap from `example: 1` to the `example: 2`.
+This will `replace` data of the configmap from `example: 1` to `example: 2`.
 
 After the policy is applied for `myconfigmap`, the configmap will be:
 ```yaml
