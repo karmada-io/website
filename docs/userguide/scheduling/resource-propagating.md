@@ -417,7 +417,7 @@ It has two replicaSchedulingTypes which determine how the replicas are scheduled
 * `Aggregated`: divide replicas into clusters as few as possible, while respecting clusters' resource availabilities during the division. See details in [Schedule based on Cluster Resource Modeling](./cluster-resources.md).
 * `Weighted`: divide replicas by weight according to `WeightPreference`. There are two kinds of `WeightPreference` to set. `StaticWeightList` statically allocates replicas to target clusters based on weight. Target clusters can be selected by `ClusterAffinity`. `DynamicWeight` specifies the factor to generate the dynamic weight list. If specified, `StaticWeightList` will be ignored. Karmada currently supports the factor `AvailableReplicas`.
 
-The following gives two simple examples:
+Following, we have two simple examples:
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -442,7 +442,7 @@ spec:
             weight: 1
 ```
 
-It means replicas will be evenly propagated to member1 and member2.
+Replicas will be evenly propagated to member1 and member2.
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -459,9 +459,9 @@ spec:
         dynamicWeight: AvailableReplicas 
 ```
 
-It means replicas will be propagated based on available replicas in member clusters. For example, the scheduler selected 3 clusters (A/B/C) and should divide 12 replicas to them.
-Based on cluster resource modeling, we get that the max available replicas of A, B, C is 6, 12, 18. 
-Therefore, the weight of cluster A:B:C will be 6:12:18 (equal to 1:2:3). At last, the assignment would be "A: 2, B: 4, C: 6".
+Replicas will be propagated based on how many replicas can fit in the member clusters. Let's say for example that the scheduler has selected 3 clusters (A/B/C) and must divide 12 replicas to them.
+Based on cluster resource modeling, we get that the max number of replicas on A, B, C is 6, 12, 18 respectively. 
+Therefore, the clusters' weights will be A:B:C -> 6:12:18 (equal to 1:2:3). At last, the assignment would be "A: 2, B: 4, C: 6".
 
 :::note
 
