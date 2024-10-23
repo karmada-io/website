@@ -48,7 +48,7 @@ karmadactl top pod [NAME | -l label]
   -h, --help                     help for pod
       --karmada-context string   The name of the kubeconfig context to use
       --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
-  -n, --namespace string         If present, the namespace scope for this CLI request
+  -n, --namespace string         If present, the namespace scope for this CLI request.
       --no-headers               If present, print output without headers.
   -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       --sort-by string           If non-empty, sort pods list using specified field. The field can be either 'cpu' or 'memory'.

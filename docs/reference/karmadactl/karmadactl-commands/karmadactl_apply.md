@@ -53,7 +53,7 @@ karmadactl apply (-f FILENAME | -k DIRECTORY)
       --karmada-context string          The name of the kubeconfig context to use
       --kubeconfig string               Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string                Process a kustomization directory. This flag can't be used together with -f or -R.
-  -n, --namespace string                If present, the namespace scope for this CLI request
+  -n, --namespace string                If present, the namespace scope for this CLI request.
       --openapi-patch                   If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types. (default true)
   -o, --output string                   Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --overwrite                       Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration (default true)

@@ -59,9 +59,9 @@ karmadactl get [NAME | -l label | -n namespace]
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
   -L, --label-columns strings            Accepts a comma separated list of labels that are going to be presented as columns. Names are case-sensitive. You can also use multiple flag options like -L label1 -L label2...
   -l, --labels string                    -l=label or -l label
-  -n, --namespace string                 If present, the namespace scope for this CLI request
+  -n, --namespace string                 If present, the namespace scope for this CLI request.
       --no-headers                       When using the default or custom-column output format, don't print headers (default print headers).
-      --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada, members, and all. Defaults to karmada. (default karmada)
+  -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada, members, and all. Defaults to karmada. (default karmada)
   -o, --output string                    Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file, custom-columns, custom-columns-file, wide). See custom columns [https://kubernetes.io/docs/reference/kubectl/#custom-columns], golang template [http://golang.org/pkg/text/template/#pkg-overview] and jsonpath template [https://kubernetes.io/docs/reference/kubectl/jsonpath/].
       --output-watch-events              Output watch event objects when --watch or --watch-only is used. Existing objects are output as initial ADDED events.
       --show-kind                        If present, list the resource type for the requested object(s).

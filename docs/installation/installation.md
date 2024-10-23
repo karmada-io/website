@@ -229,3 +229,29 @@ member3   v1.23.4   Pull   True    7m27s
 ```
 
 There are 3 clusters named `member1`, `member2` and `member3` have registered with `Push` or `Pull` mode.
+
+## Required Images for Karmada Deployment
+
+The following table lists the images required for deploying Karmada:
+
+| Component                        | Default Image                                    | Default Tag                 |
+|----------------------------------|--------------------------------------------------|-----------------------------|
+| **karmada-apiserver**            | `registry.k8s.io/kube-apiserver`                 | `v1.29.6` (current release) |
+| **karmada-aggregated-apiserver** | `docker.io/karmada/karmada-aggregated-apiserver` | `v${karmadaGitVersion}`     |
+| **kube-controller-manager**      | `registry.k8s.io/kube-controller-manager`        | `v1.30.4` (current release) |
+| **karmada-controller-manager**   | `docker.io/karmada/karmada-controller-manager`   | `v${karmadaGitVersion}`     |
+| **karmada-scheduler**            | `docker.io/karmada/karmada-scheduler`            | `v${karmadaGitVersion}`     |
+| **karmada-webhook**              | `docker.io/karmada/karmada-webhook`              | `v${karmadaGitVersion}`     |
+| **etcd (Local)**                 | `registry.k8s.io/etcd`                           | `3.5.13-0`(current release) |
+| **etcd-init-image (Local)**      | `docker.io/alpine`                               | `3.19.1`  (current release) |
+| **karmada-agent**                | `docker.io/karmada/karmada-agent`                | `v${karmadaGitVersion}`     |
+
+### Notes
+
+Karmada reuses some Kubernetes images, such as `etcd`, `kube-controller-manager`, and `kube-apiserver`(also known as `karmada-apiserver`). These images are fetched from the Kubernetes official image registry (registry.k8s.io) by default.
+
+Karmada routinely upgrades these involved Kubernetes images and includes them in Karmada's test suite to ensure compatibility and stability.
+
+Karmada-maintained images are fetched from the Karmada official image registry (docker.io/karmada). These images include Karmada's components, such as karmada-controller-manager and karmada-scheduler.
+
+Various installation tools provided by Karmada support customizing image sources. You can configure to fetch images from private registries or trusted third-party registries. This provides flexibility to ensure smooth deployment of Karmada in different network environments.

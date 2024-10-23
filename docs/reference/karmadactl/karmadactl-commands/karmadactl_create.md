@@ -36,7 +36,10 @@ karmadactl create -f FILENAME
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
   -f, --filename strings               Filename, directory, or URL to files to use to create the resource
   -h, --help                           help for create
+      --karmada-context string         The name of the kubeconfig context to use
+      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string               Process the kustomization directory. This flag can't be used together with -f or -R.
+  -n, --namespace string               If present, the namespace scope for this CLI request.
   -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --raw string                     Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
@@ -48,7 +51,7 @@ karmadactl create -f FILENAME
                                        		"true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not.
                                        		"warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise.
                                        		"false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields. (default "strict")
-      --windows-line-endings           Only relevant if --edit=true. Defaults to the line ending native to your platform.
+      --windows-line-endings           Only relevant if --edit=true. Defaults to the line ending native to your platform. (default true)
 ```
 
 ### Options inherited from parent commands
@@ -56,7 +59,6 @@ karmadactl create -f FILENAME
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

@@ -49,6 +49,7 @@ module.exports = {
                 "installation/install-binary",
                 "installation/ha-installation",
                 "installation/ha-installation-with-cli",
+                "installation/install-with-cli"
             ],
         },
         {
@@ -282,6 +283,7 @@ module.exports = {
                         "reference/karmadactl/karmadactl-commands/karmadactl_index",
                         "reference/karmadactl/karmadactl-commands/karmadactl",
                         "reference/karmadactl/karmadactl-usage-conventions",
+                        "reference/karmadactl/karmadactl-config.v1alpha1",
                     ],
                 },
                 {
