@@ -54,7 +54,7 @@ karmadactl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER)
       --kubeconfig string                  Path to the kubeconfig file to use for CLI requests.
       --limit-bytes int                    Maximum bytes of logs to return. Defaults to no limit.
       --max-log-requests int               Specify maximum number of concurrent logs to follow when using by a selector. Defaults to 5. (default 5)
-  -n, --namespace string                   If present, the namespace scope for this CLI request
+  -n, --namespace string                   If present, the namespace scope for this CLI request.
       --pod-running-timeout duration       The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running (default 20s)
       --prefix                             Prefix each log line with the log source (pod name and container name)
   -p, --previous                           If true, print the logs for the previous instance of the container in a pod if it exists.

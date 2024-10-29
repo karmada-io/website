@@ -38,8 +38,8 @@ karmadactl attach (POD | TYPE/NAME) -c CONTAINER
   -h, --help                             help for attach
       --karmada-context string           The name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
-  -n, --namespace string                 If present, the namespace scope for this CLI request
-      --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
+  -n, --namespace string                 If present, the namespace scope for this CLI request.
+  -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
       --pod-running-timeout duration     The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running (default 1m0s)
   -q, --quiet                            Only print output from the remote session
   -i, --stdin                            Pass stdin to the container
