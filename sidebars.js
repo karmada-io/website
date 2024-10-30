@@ -215,7 +215,8 @@ module.exports = {
                     label: "Security",
                     items: [
                         "administrator/security/security-considerations",
-                        "administrator/security/verify-artifacts"
+                        "administrator/security/verify-artifacts",
+                        "administrator/security/rbac-permissions-for-karmada-components"
                     ],
                 },
             ],
@@ -298,7 +299,7 @@ module.exports = {
                         "reference/components/karmada-scheduler-estimator",
                         "reference/components/karmada-search",
                         "reference/components/karmada-webhook",
-			            "reference/components/karmada-metrics-adapter",
+                        "reference/components/karmada-metrics-adapter",
                     ],
                 },
                 {
