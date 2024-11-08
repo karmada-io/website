@@ -1,0 +1,6 @@
+node_modules
+.vscode
+.docusaurus
+.hugo_build.lock
+.idea
+build

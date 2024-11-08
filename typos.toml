@@ -1,0 +1,14 @@
+# This is the custom config file used by `typos` command and `crate-ci/typos@master` action to do source code spelling correction.
+# Sometimes, what looks like a typo is intentional, like with people's names, acronyms, or localized content.
+# To mark a word or an identifier (grouping of words) as valid, add it to this file by declaring itself as the valid spelling.
+# See https://github.com/crate-ci/typos/blob/master/docs/reference.md for more info to configure typos.
+[files]
+extend-exclude = [
+    "*.svg",
+    "*.drawio",
+]
+[default.extend-words]
+BA = "BA"
+Ded = "Ded"
+EDE = "EDE"
+intoto = "intoto"

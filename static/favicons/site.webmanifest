@@ -1,0 +1,14 @@
+{
+    "name": "Open, Multi-Cloud, Multi-Cluster Kubernetes Orchestration",
+    "short_name": "Karmada",
+    "icons": [
+        {
+            "src": "/favicons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#30344e",
+    "background_color": "#30344e",
+    "display": "standalone"
+}
