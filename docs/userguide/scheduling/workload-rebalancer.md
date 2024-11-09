@@ -2,56 +2,48 @@
 title: Workload Rebalance
 ---
 
-In general case, after replicas of workloads is scheduled, it will keep the scheduling result inert
-and the replicas distribution will not change. Even if reschedule is triggered by modifying replicas or placement,
-it will maintain the exist replicas distribution as closely as possible, only making minimal adjustments when necessary,
-which minimizes disruptions and preserves the balance across clusters.
+In general, once workload replicas are scheduled, the scheduling result remains fixed, and the replica propagation does not change. Even if rescheduling is triggered by modifying replicas or placement configuration, the system will try to maintain the existing replica propagation as closely as possible, making only minimal adjustments when necessary. This approach minimizes disruptions and preserves balance across clusters.
 
-However, in some scenarios, users hope to have approach to actively trigger a fresh rescheduling, which disregards the
-previous assignment entirely and seeks to establish an entirely new replica distribution across clusters.
+However, in some scenarios, users may wish to actively trigger a fresh rescheduling, disregarding the previous propagation entirely to establish a new replica propagation across clusters.
 
 ## Applicable Scenarios
 
 ### Scenario 1
 
-In cluster failover scenario, replicas are distributed in member1 + member2 two clusters, however they would all migrate to
-member2 cluster if member1 cluster fails.
+In a cluster failover scenario, replicas are propagated across two clusters, member1 and member2. If the member1 cluster fails, all replicas would migrate to the member2 cluster.
 
-As a cluster administrator, I hope the replicas redistribute to two clusters when member1 cluster recovered, so that
-the resources of the member1 cluster will be re-utilized, also for the sake of high availability.
+As a cluster administrator, I would like the replicas to be repropagated across both clusters when member1 recovers, allowing the resources of the member1 cluster to be re-utilized and enhancing high availability.
 
 ### Scenario 2
 
 In application-level failover, low-priority applications may be preempted, resulting in shrinking from multi clusters
-to single cluster due to cluster resources are in short supply
+to single cluster due to limited cluster resources
 (refer to [Application-level Failover](https://karmada.io/docs/next/userguide/failover/application-failover#why-application-level-failover-is-required)).
 
-As a user, I hope the replicas of low-priority applications can be redistributed to multi clusters when
-cluster resources are sufficient to ensure the high availability of application.
+As a user, I would like the replicas of low-priority applications to be repropagated across multiple clusters when resources are sufficient, ensuring high availability for the application.
 
 ### Scenario 3
 
-In `Aggregated` schedule type, replicas may still distribute across multiple clusters due to resource constraints.
+In the `Aggregated` scheduling type, replicas may still be propagated across multiple clusters due to resource constraints.
 
-As a user, I hope the replicas to be redistributed in an aggregated strategy when any cluster has
+As a user, I would like the replicas to be propagated in an aggregated strategy when any cluster has
 sufficient resource to accommodate all replicas, so that the application better meets actual business requirements.
-
 
 ### Scenario 4
 
-In disaster-recovery scenario, replicas migrated from primary cluster to backup cluster when primary cluster failure.
+In a disaster-recovery scenario, replicas migrate from a primary cluster to a backup cluster in the event of a primary cluster failure.
 
-As a cluster administrator, I hope that replicas can migrate back when cluster restored, so that:
+As a cluster administrator, I would like replicas to migrate back once the primary cluster is restored, so that:
 
-1. restore to the disaster-recovery mode to ensure the reliability and stability of the cluster federation.
-2. save the cost of the backup cluster.
+1. disaster-recovery mode is reestablished, to ensure the reliability and stability of the cluster federation.
+2. backup cluster costs are reduced.
 
 ## Feature of WorkloadRebalancer
 
 ### Reschedule a workload
 
-Assuming here is deployment named `demo-deploy`, and you want to trigger the rescheduling of it. You can just apply
-following WorkloadRebalancer.
+Assume that you want to trigger the rescheduling of a deployment named `demo-deploy`. You can just apply the following
+WorkloadRebalancer.
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -66,10 +58,10 @@ spec:
       namespace: default
 ```
 
-Then, scheduler will do a rescheduling to this deployment, which disregards the previous assignment entirely and seeks 
-to establish an entirely new replica distribution across clusters.
+Then, scheduler will reschedule this deployment, which disregards the previous propagation entirely and seeks 
+to establish an entirely new replica propagation across clusters.
 
-* If it succeeds, you will get following result:
+* If it succeeds, you will get the following result:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -92,7 +84,7 @@ status:
         namespace: default
 ```
 
-* If the resource binding of `deployments/demo-deploy` not exist, you will get following result:
+* If the resource binding of `deployments/demo-deploy` does not exist, you will get the following result:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -116,8 +108,7 @@ status:
         namespace: default
 ```
 
-* If an exception fails during processing, such as a network problem or a throttling problem, the rebalancer will keep retrying,
-and you will get following result:
+* If an abnormal failure occurs during processing, such as a network problem or a throttling issue, the WorkloadRebalancer will continue to retry and you will get the following result:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -167,7 +158,7 @@ spec:
       name: demo-role
 ```
 
-you can get result like this:
+You will get the following result:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -205,13 +196,13 @@ status:
 
 ### Modify WorkloadRebalancer
 
-The rebalancer can also support update, the guideline is:
+The rebalancer also supports updates, the guideline is:
 
-* a new workload added to spec list, just add it into status list too and do the rebalance.
-* a workload deleted from previous spec list, keep it in status list if already success, and remove it if not.
-* a workload is modified, just regard it as deleted an old one and inserted a new one.
+* if a new workload is added to spec list, just add it into the status list too and do the rebalance.
+* if a workload is deleted from the previous spec list, keep it in status list if it had already succeeded, and remove it if not.
+* if a workload is modified, just regard it as a deletion of the old one and an insertion of a new one.
 
-Assuming the current WorkloadRebalancer is as follows:
+Assume the current WorkloadRebalancer is as follows:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -249,7 +240,7 @@ status:
         namespace: default
 ```
 
-Now, if I edit target workloads from `demo-deploy-1` + `demo-deploy-2` to only `demo-deploy-3`, result will be:
+Now, if I edit target workloads from `demo-deploy-1` + `demo-deploy-2` to only `demo-deploy-3`, the result will be:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -284,9 +275,9 @@ status:
 
 You can see in `status.observedWorkloads`:
 
-* `demo-deploy-1` is not specified in latest `spec`, but it is already succeed, so it keep exists in `status`.
+* `demo-deploy-1` is not specified in latest `spec`, but it had already succeeded, so it keep existing in `status`.
 * `demo-deploy-2` is not specified in latest `spec` and it once failed, so it is removed from `status`.
-* `demo-deploy-3` is newly add in latest `spec`, so it is added to `status`.
+* `demo-deploy-3` is newly added in latest `spec`, so it is added to `status`.
 
 ### Auto clean WorkloadRebalancer
 
@@ -319,4 +310,4 @@ Then, it will be deleted 60 seconds after the WorkloadRebalancer finished execut
 
 ## What's next
 
-For detail demo of workload rebalancer you can refer to the tutorial [Workload Rebalancer](../../tutorials/workload-rebalancer.md)
+For a detailed demo of the workload rebalancer you can refer to the tutorial [Workload Rebalancer](../../tutorials/workload-rebalancer.md)
