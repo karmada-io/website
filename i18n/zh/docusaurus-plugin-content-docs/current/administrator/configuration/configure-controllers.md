@@ -15,6 +15,7 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 | cluster                              | 是                               | 否                 |
 | clusterStatus                        | 是                               | 是                 |
 | binding                              | 是                               | 否                 |
+| bindingStatus                        | 是                               | 否                 |
 | execution                            | 是                               | 是                 |
 | workStatus                           | 是                               | 是                 |
 | namespace                            | 是                               | 否                 |
@@ -29,9 +30,13 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 | applicationFailover                  | 是                               | 否                 |
 | federatedHorizontalPodAutoscaler     | 是                               | 否                 |
 | cronFederatedHorizontalPodAutoscaler | 是                               | 否                 |
+| hpaScaleTargetMarker                 | 是（默认禁用）                    | 否                 |
+| deploymentReplicasSyncer             | 是（默认禁用）                    | 否                 |
 | multiclusterservice                  | 是                               | 否                 |
 | endpointsliceCollect                 | 是                               | 是                 |
 | endpointsliceDispatch                | 是                               | 否                 |
+| remedy                               | 是                               | 否                 |
+| workloadRebalancer                   | 是                               | 否                 |
 
 ### 配置 Karmada 控制器
 
