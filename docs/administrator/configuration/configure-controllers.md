@@ -16,6 +16,7 @@ along with components startup. Some controllers may be shared by `karmada-contro
 | cluster                              | Y                             | N                      |
 | clusterStatus                        | Y                             | Y                      |
 | binding                              | Y                             | N                      |
+| bindingStatus                        | Y                             | N                      |
 | execution                            | Y                             | Y                      |
 | workStatus                           | Y                             | Y                      |
 | namespace                            | Y                             | N                      |
@@ -30,9 +31,13 @@ along with components startup. Some controllers may be shared by `karmada-contro
 | applicationFailover                  | Y                             | N                      |
 | federatedHorizontalPodAutoscaler     | Y                             | N                      |
 | cronFederatedHorizontalPodAutoscaler | Y                             | N                      |
+| hpaScaleTargetMarker                 | Y(disabled by default)        | N                      |
+| deploymentReplicasSyncer             | Y(disabled by default)        | N                      |
 | multiclusterservice                  | Y                             | N                      |
 | endpointsliceCollect                 | Y                             | Y                      |
 | endpointsliceDispatch                | Y                             | N                      |
+| remedy                               | Y                             | N                      |
+| workloadRebalancer                   | Y                             | N                      |
 
 ### Configure Karmada Controllers
 
