@@ -4,17 +4,16 @@ title: Workload Rebalancer
 
 ## Objectives
 
-In general case, after replicas of workloads is scheduled, it will keep the scheduling result inert and the replicas 
-distribution will not change. Now, assuming in some special scenario you want to actively trigger a fresh rescheduling,
-you can achieve it by Workload Rebalancer.
+In general, once workload replicas are scheduled, the scheduling result remains fixed, and the replica propagation does not change. Now, assuming
+that you want to actively trigger a fresh rescheduling in a special case, you can achieve it by `WorkloadRebalancer`.
 
-So, this section will guide you to cover how to use Workload Rebalancer to trigger a rescheduling.
+This guide will cover how to trigger a rescheduling using `WorkloadRebalancer`.
 
 ## Prerequisites
 
-### Karmada with multi cluster has been installed
+### Multi-cluster Karmada has been installed
 
-Run the command:
+Run the commands:
 
 ```shell
 git clone https://github.com/karmada-io/karmada
@@ -25,16 +24,16 @@ export KUBECONFIG=~/.kube/karmada.config:~/.kube/members.config
 
 > **Note:**
 >
-> Before guide started, we should install at least three kubernetes clusters, one is for Karmada control plane, the other two for member clusters.
-> For convenience, we use [hack/local-up-karmada.sh](https://karmada.io/docs/installation/#install-karmada-for-development-environment) script to quickly prepare the above clusters.
+> Before following this guide, you should have created at least three kubernetes clusters, one will be used to host Karmada control plane, and the rest will be member clusters.
+> For convenience, we use [hack/local-up-karmada.sh](https://karmada.io/docs/installation/#install-karmada-for-development-environment) script to quickly prepare the clusters mentioned.
 >
-> After the above command executed, you will see Karmada control plane installed with multi member clusters.
+> Once the script is executed, you will see Karmada control plane installed with multi member clusters.
 
 ## Tutorial
 
-### Step 1: create a Deployment
+### Step 1: Create a Deployment
 
-First prepare a Deployment named `foo`, you can create a new file `deployment.yaml` and content with the following:
+First, create a Deployment named `foo`, filling a new file `deployment.yaml` with the following content:
 
 <details>
 <summary>deployment.yaml</summary>
@@ -100,7 +99,7 @@ Then run the following command to create those resources:
 kubectl --context karmada-apiserver apply -f deployment.yaml
 ```
 
-And you can check whether this step succeed like this:
+You can check whether this step succeeded like this:
 
 ```bash
 $ karmadactl --karmada-context karmada-apiserver get deploy foo
@@ -109,9 +108,9 @@ foo    member1   2/2     2            2           20s   Y
 foo    member2   1/1     1            1           20s   Y
 ```
 
-Thus, 2 replicas propagated to member1 cluster and 1 replica propagated to member2 cluster.
+Thus, 2 replicas were propagated to member1 cluster and 1 replica was propagated to member2 cluster.
 
-### Step 2: add `NoExecute` taint to member1 cluster to mock cluster failover
+### Step 2: Add `NoExecute` taint to member1 cluster to mock cluster failover
 
 * Run the following command to add `NoExecute` taint to member1 cluster:
 
@@ -120,8 +119,8 @@ $ karmadactl --karmada-context=karmada-apiserver taint clusters member1 workload
 cluster/member1 tainted
 ```
 
-Then, reschedule will be triggered for the reason of cluster failover, and all replicas will be propagated to member2 cluster,
-you can see:
+Then, rescheduling will be triggered due to cluster failover, and all replicas will be propagated to member2 cluster,
+as you can see:
 
 ```bash
 $ karmadactl --karmada-context karmada-apiserver get deploy foo
@@ -129,20 +128,20 @@ NAME   CLUSTER   READY   UP-TO-DATE   AVAILABLE   AGE   ADOPTION
 foo    member2   3/3     3            3           57s   Y
 ```
 
-* Run the following command to remove the above `NoExecute` taint from member1 cluster:
+* Run the following command to remove the previous `NoExecute` taint from member1 cluster:
 
 ```bash
 $ karmadactl --karmada-context=karmada-apiserver taint clusters member1 workload-rebalancer-test:NoExecute-
 cluster/member1 untainted
 ```
 
-Removing the taint will not lead to replicas propagation changed for the reason of scheduling result inert,
-all replicas will keep in member2 cluster unchanged.
+Removing the taint will not cause replicas to repropagate, because the scheduling result stays fixed, so all
+replicas will keep being in member2 cluster.
 
-### Step 3. apply a WorkloadRebalancer to trigger rescheduling.
+### Step 3. Apply a WorkloadRebalancer to trigger rescheduling
 
 In order to trigger the rescheduling of the above resources, you can create a new file `workload-rebalancer.yaml`
-and content with the following:
+with the following content:
 
 ```yaml
 apiVersion: apps.karmada.io/v1alpha1
@@ -163,9 +162,9 @@ Then run the following command to apply it:
 kubectl --context karmada-apiserver apply -f workload-rebalancer.yaml
 ```
 
-you will get a `workloadrebalancer.apps.karmada.io/demo created` result, which means the API created success.
+You will get a `workloadrebalancer.apps.karmada.io/demo created` result, which means the API was created successfully.
 
-### Step 4: check the status of WorkloadRebalancer.
+### Step 4: Check the status of WorkloadRebalancer.
 
 Run the following command:
 
@@ -196,11 +195,11 @@ status:
 ```
 
 Thus, you can observe the rescheduling result at `status.observedWorkloads` field of `workloadrebalancer/demo`.
-As you can see, `deployment/foo` rescheduled successfully.
+As you can see, `deployment/foo` was rescheduled successfully.
 
 ### Step 5: Observe the real effect of WorkloadRebalancer
 
-You can observe the real replicas propagation status of `deployment/foo`:
+You can observe the propagation status of `deployment/foo` replicas:
 
 ```bash
 $ karmadactl --karmada-context karmada-apiserver get deploy foo
@@ -209,9 +208,9 @@ foo    member1   2/2     2            2           3m14s   Y
 foo    member2   1/1     1            1           4m37s   Y
 ```
 
-As you see, rescheduling happened and 2 replicas migrated back to member1 cluster while 1 replica in member2 cluster keep unchanged.
+As you see, rescheduling was triggered and 2 replicas migrated back to member1 cluster, while 1 replica in member2 cluster remains unchanged.
 
-Besides, you can observe a schedule event emitted by `default-scheduler`, such as:
+Besides, you can observe that a schedule event was emitted by `default-scheduler`:
 
 ```bash
 $ kubectl --context karmada-apiserver describe deployment foo
@@ -225,9 +224,9 @@ Events:
   ...
 ```
 
-### Step 6: Update and Auto-clean WorkloadRebalancer
+### Step 6: Update and auto-clean WorkloadRebalancer
 
-Assuming you want the WorkloadRebalancer resource been auto cleaned in the future, you can just edit it and set
+Assuming you want the WorkloadRebalancer resource to be auto cleaned in the future, you can just edit it and set
 `spec.ttlSecondsAfterFinished` field to `300`, just like:
 
 ```yaml
@@ -244,4 +243,4 @@ spec:
       namespace: default
 ```
 
-After you applied this modification, this WorkloadRebalancer resource will be auto deleted after 300 seconds.
+Once this modification has been applied, this WorkloadRebalancer resource will be auto deleted after 300 seconds.
