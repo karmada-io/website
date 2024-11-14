@@ -3,16 +3,16 @@ title: Autoscaling across clusters with resource metrics
 ---
 In Karmada, a FederatedHPA scales up/down the workload's replicas across multiple clusters, with the aim of automatically scaling the workload to match the demand.
 
-When the load is increase, FederatedHPA scales up the replicas of the workload(the Deployment, StatefulSet, or other similar resource) if the number of Pods is under the configured maximum. When the load is decrease, FederatedHPA scales down the replicas of the workload if the number of Pods is above the configured minimum.
+When the load is increased, FederatedHPA scales up the replicas of the workload (Deployment, StatefulSet, or other similar resource) if the number of Pods is under the configured maximum. When the load is decreased, FederatedHPA scales down the replicas of the workload if the number of Pods is above the configured minimum.
 
-This document walk you through an example of enabling FederatedHPA to automatically manage scale for a cross-cluster deployed nginx.
+This document walks you through an example of enabling FederatedHPA to automatically manage scaling for a cross-cluster  nginx Deployment.
 
 The walkthrough example will do as follows:  
 ![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
-* One deployment's pod exists in `member1` cluster.
-* The service is deployed in `member1` and `member2` cluster.
-* Request the multi-cluster service and trigger the pod's CPU usage increases.
-* The replicas will be scaled up in `member1` and `member2` cluster.
+* One Deployment's Pod exists in `member1` cluster.
+* The Service is deployed in `member1` and `member2` clusters.
+* Request to use the multi-cluster Service to increase Pod's CPU utilization.
+* The replicas will be scaled up in `member1` and `member2` clusters.
 
 ## Prerequisites
 
@@ -27,11 +27,11 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 - If you use the `hack/local-up-karmada.sh` script to deploy Karmada, Karmada will have three member clusters, and the container networks of the `member1` and `member2` will be connected.
 - You can use `Submariner` or other related open source projects to connect networks between member clusters.
 
-> Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
+> Note: To prevent routing conflicts, the Pod and Service CIDRs of clusters must be non-overlapping.
 
 ### The ServiceExport and ServiceImport CRDs have been installed
 
-We need to install `ServiceExport` and `ServiceImport` in the member clusters to enable multi-cluster service.
+We need to install `ServiceExport` and `ServiceImport` in the member clusters to enable multi-cluster Service.
 
 After `ServiceExport` and `ServiceImport` have been installed on the **Karmada Control Plane**, we can create `ClusterPropagationPolicy` to propagate those two CRDs to the member clusters.
 
@@ -92,9 +92,9 @@ hack/deploy-metrics-adapter.sh ${host_cluster_kubeconfig} ${host_cluster_context
 
 If you use the `hack/local-up-karmada.sh` script to deploy Karmada, `karmada-metrics-adapter` will be installed by default.
 
-## Deploy workload in `member1` and `member2` cluster
+## Deploy workloads in `member1` and `member2` clusters
 
-We need to deploy deployment(1 replica) and service in `member1` and `member2`.
+We need to deploy the Deployment (1 replica) and Service in `member1` and `member2`.
 
 ```yaml
 apiVersion: apps/v1
@@ -167,7 +167,7 @@ spec:
             weight: 1
 ```
 
-After deploying, you can check the distribution of the pods and service:
+After deploying, you can check the propagation of the Pods and Service:
 ```sh
 $ karmadactl get pods
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
@@ -216,10 +216,11 @@ NAME    REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   AGE
 nginx   Deployment       nginx            1         10        1          9h
 ```
 
-## Export service to `member1` cluster
+## Export Service to `member1` cluster
 
-As mentioned before, we need a multi-cluster service to route the requests to the pods in `member1` and `member2` cluster, so let create this mult-cluster service.  
-* Create a `ServiceExport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceExport` object to `member1` and `member2` cluster.
+As mentioned before, we need a multi-cluster Service to route the requests to the Pods in `member1` and `member2` clusters, so let create this multi-cluster Service.  
+* Create a `ServiceExport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceExport` object to `member1` and `member2` clusters.
+  
   ```yaml
   apiVersion: multicluster.x-k8s.io/v1alpha1
   kind: ServiceExport
@@ -241,7 +242,8 @@ As mentioned before, we need a multi-cluster service to route the requests to th
           - member1
           - member2
   ```
-* Create a `ServiceImport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceImport` object to `member1` cluster.
+* Create a `ServiceImport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceImport` object to `member1` clusters.
+  
   ```yaml
   apiVersion: multicluster.x-k8s.io/v1alpha1
   kind: ServiceImport
@@ -268,7 +270,7 @@ As mentioned before, we need a multi-cluster service to route the requests to th
           - member1
   ```
 
-After deploying, you can check the multi-cluster service:
+After deploying, you can check the multi-cluster Service:
 ```sh
 $ karmadactl get svc
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
@@ -287,26 +289,26 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 ## Test scaling up
 
-* Check the pod distribution firstly.
+* Check the Pod propagation firstly.
   ```sh
   $ karmadactl get pods
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
 
-* Check multi-cluster service ip.
+* Check multi-cluster Service IP.
   ```sh
   $ karmadactl get svc
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request multi-cluster service with hey to increase the nginx pods' CPU usage.
+* Request multi-cluster Service to increase the nginx Pods' CPU usage using hey.
   ```sh
   docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
 
-* Wait 15s, the replicas will be scaled up, then you can check the pod distribution again.
+* Wait 15s, the replicas will be scaled up, then you can check the Pod propagation again.
   ```sh
   $ karmadactl get pods -l app=nginx
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
