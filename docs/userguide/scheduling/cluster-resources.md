@@ -267,7 +267,7 @@ The above is a cluster resource model with three grades, each grade defines the 
 
 #### Schedule based on Customized Cluster Resource Models
 
-`Cluster resource model` divides the nodes into levels of different intervals. When a Pod needs to be scheduled to a specific cluster, `karmada-scheduler` compares the number of nodes in different clusters that satisfy the requirement based on the resource request of the Pod instance, and it schedules it to a cluster that satisfies the requirement with a larger number of nodes.
+`Cluster Resource Model` classifies a cluster's nodes into different grades based on their available resources. This classification helps the scheduler determine the number of replicas that can fit into each cluster. By categorizing nodes based on their available resources, the Cluster Resource Model enables the scheduler to make decisions about where to propagate the application replicas using various scheduling policies.
 
 Assume that there is a Pod to be scheduled to one of the member clusters managed by Karmada with the same cluster resource models. The remaining available resources of these member clusters are as follows:
 
@@ -351,24 +351,24 @@ status:
     grade: 6   
 ```
 
-Suppose the Pod's resource request is for a 3-cores CPU and 20Gi of memory. All nodes that meet Grade 2 and above fulfill this request. Considering the number of nodes available in each cluster, the scheduler prefers to schedule the Pod to member3.
+Suppose the Pod's resource request is for a 3-core CPU and 20Gi of memory. All nodes that are classified as grade 3 and above fulfill this request, since we need grade's resource `min` value to be at least as big as the requested value. For example, nodes in grade 2 with less than 3C and 20Gi don't fulfill our requirements, so we eliminate the entire grade due to that. Cluster resource model then proceeds to calculate how many replicas can fit in each cluster based on that information:
 
 
 | Cluster           | member1   | member2   | member3                    |
 | ------------------- | ----------- | ----------- | ---------------------------- |
-| AvailableReplicas | 1 + 6 = 7 | 4 + 4 = 8 | 1 * min(32/3, 256/20) = 10 |
+| AvailableReplicas | 1 * min(2/3, 16/20) + 6 * min(4/3, 32/20) = 6 | 4 * min(2/3, 16/20) + 4 * min(4/3, 32/20) = 4 | 1 * min(32/3, 256/20) = 10 |
 
 
-Suppose now that the Pod requires 3C and 60Gi. Grade 2 nodes do not satisfy every resource request, so after considering the number of nodes available in each cluster, the scheduler prefers to schedule the Pod to member1.
+Suppose now that the Pod requires 5C and 60Gi. In this case, not even grade 3 nodes satisfy the resource request (some may do, but since we can't know for sure, the entire grade has to be eliminated) since 5C > 4C and 60Gi > 32Gi. The amount of replicas able to fit in each cluster is calculated below:
 
 
 | Cluster           | member1   | member2   | member3                   |
 | ------------------- | ----------- | ----------- | --------------------------- |
-| AvailableReplicas | 6 * 1 = 6 | 4 * 1 = 4 | 1 * min(32/3, 256/60) = 4 |
+| AvailableReplicas |  0 | 0 | 1 * min(32/5, 256/60) = 4 |
 
 ## Disable Cluster Resource Modeling
 
-The resource modeling is always be used by the scheduler to make scheduling decisions in scenarios of dynamic replica assignment based on cluster free resources.
+The resource modeling is always used by the scheduler to make scheduling decisions in scenarios of dynamic replica assignment based on cluster free resources.
 In the process of resource modeling, it will collect node and pod information from all clusters managed by Karmada.
 This imposes a considerable performance burden in large-scale scenarios.
 
