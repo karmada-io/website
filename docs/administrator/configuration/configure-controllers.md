@@ -12,7 +12,7 @@ The controllers are embedded into components of `karmada-controller-manager` or 
 along with components startup. Some controllers may be shared by `karmada-controller-manager` and `karmada-agent`.
 
 | Controller                           | In karmada-controller-manager | In karmada-agent       |
-|--------------------------------------|-------------------------------|------------------------|
+| ------------------------------------ | ----------------------------- | ---------------------- |
 | cluster                              | Y                             | N                      |
 | clusterStatus                        | Y                             | Y                      |
 | binding                              | Y                             | N                      |
@@ -38,6 +38,7 @@ along with components startup. Some controllers may be shared by `karmada-contro
 | endpointsliceDispatch                | Y                             | N                      |
 | remedy                               | Y                             | N                      |
 | workloadRebalancer                   | Y                             | N                      |
+| agentcsrapproving                    | Y                             | N                      |
 
 ### Configure Karmada Controllers
 
@@ -166,17 +167,15 @@ More details please refer to:
 - [bootstrap tokens overview](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#bootstrap-tokens-overview)
 - [enabling bootstrap token authentication](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/#enabling-bootstrap-token-authentication)
 
-#### csrapproving, csrcleaner, csrsigning
+#### csrcleaner, csrsigning
 
 The controllers runs as part of `kube-controller-manager`.
-
-The `csrapproving` controller uses the [SubjectAccessReview API](https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access) to determine if a given user is authorized to request a CSR, then approves based on the authorization outcome.
 
 The `csrcleaner` controller clears expired csr periodically.
 
 The `csrsigning` controller signs the certificate using Karmada root CA.
 
-> Note: these controllers currently are used to register member clusters with PULL mode by `karmadactl register`.
+> Note: the `csrcleaner` and `csrsigning` controllers collaborate with the `agentcsrapproving` controller, which runs in the karmada-controller-manager, to facilitate the registration of member clusters in Pull mode using `karmadactl register`.
 
 More details please refer to:
 - [csr approval](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/#approval)

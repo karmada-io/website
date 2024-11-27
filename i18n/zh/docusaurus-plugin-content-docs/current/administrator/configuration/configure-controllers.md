@@ -37,6 +37,7 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 | endpointsliceDispatch                | 是                               | 否                 |
 | remedy                               | 是                               | 否                 |
 | workloadRebalancer                   | 是                               | 否                 |
+| agentcsrapproving                    | 是                               | 否                 |
 
 ### 配置 Karmada 控制器
 
@@ -167,13 +168,11 @@ TTL 计时器在 Job 完成时启动，并且在 TTL 到期后将清理已完成
 
 这些控制器作为 `kube-controller-manager` 的一部分运行。
 
-`csrapproving` 控制器使用 [SubjectAccessReview API](https://kubernetes.io/docs/reference/access-authn-authz/authorization/#checking-api-access) 确定给定用户是否被授权请求 CSR，并根据授权结果批准。
-
 `csrcleaner` 控制器定期清除过期的 csr。
 
 `csrsigning` 控制器使用 Karmada 根证书签署证书。
 
-> 注意：此控制器目前用于由 `karmadactl register` 注册成员集群的 PULL 模式。
+> 注意：`csrcleaner` 和 `csrsigning` 控制器与在 karmada-controller-manager 中运行的 `agentcsrapproving` 控制器协作，协助 `karmadactl register` 来完成 PULL 模式集群的注册。
 
 有关详细信息，请参考：
 - [csr approval](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/#approval)
