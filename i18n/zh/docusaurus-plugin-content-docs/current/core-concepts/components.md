@@ -7,22 +7,22 @@ title: 关键组件
 
 ## 控制平面组件（Control Plane Components）
 
-一个完整且可工作的 Karmada 控制平面由以下组件组成。karmada-agent 可以是可选的，
+一个完整且可工作的 Karmada 控制平面由以下组件组成。`karmada-agent` 可以是可选的，
 这取决于[集群注册模式](../userguide/clustermanager/cluster-registration)。
 
 ### karmada-apiserver
 
 API 服务器是 Karmada 控制平面的一个组件，对外暴露 Karmada API 以及 Kubernetes 原生API，API 服务器是 Karmada 控制平面的前端。
 
-Karmada API 服务器是直接使用 Kubernetes 的 kube-apiserver 实现的，因此 Karmada 与 Kubernetes API 自然兼容。
-这也使得 Karmada 更容易实现与 Kubernetes 生态系统的集成，例如允许用户使用 kubectl 来操作 Karmada、
+Karmada API 服务器是直接使用 Kubernetes 的 `kube-apiserver` 实现的，因此 Karmada 与 Kubernetes API 自然兼容。
+这也使得 Karmada 更容易实现与 Kubernetes 生态系统的集成，例如允许用户使用 `kubectl` 来操作 Karmada、
 [与 ArgoCD 集成](../userguide/cicd/working-with-argocd)、[与 Flux 集成](../userguide/cicd/working-with-flux)等等。
 
 ### karmada-aggregated-apiserver
 
 聚合 API 服务器是使用 [Kubernetes API 聚合层](https://kubernetes.io/zh-cn/docs/concepts/extend-kubernetes/api-extension/apiserver-aggregation/)技术实现的扩展 API 服务器。
 它提供了[集群 API](https://github.com/karmada-io/karmada/blob/master/pkg/apis/cluster/types.go) 以及相应的子资源，
-例如 cluster/status 和 cluster/proxy，实现了[聚合 Kubernetes API Endpoint](../userguide/globalview/aggregated-api-endpoint) 等可以通过 karmada-apiserver 访问成员集群的高级功能。
+例如 `cluster/status` 和 `cluster/proxy`，实现了[聚合 Kubernetes API Endpoint](../userguide/globalview/aggregated-api-endpoint) 等可以通过 karmada-apiserver 访问成员集群的高级功能。
 
 ### kube-controller-manager
 
@@ -91,18 +91,19 @@ Karmada 重调度组件负责定时检测所有副本（默认为两分钟），
 
 Karmada 搜索组件以聚合服务的形式，提供了在多云环境中进行全局搜索和资源代理等功能。
 
-其中，[全局搜索](../tutorials/karmada-search/)能力是用来跨多个集群缓存资源对象和事件，以及通过搜索 API 对外提供图形化的检索服务；
+其中，[全局搜索](../tutorials/karmada-search/)能力是用来跨多个集群缓存资源对象和事件，以及通过搜索 API 对外提供图形化的检索服务。
+
 [资源代理](../userguide/globalview/proxy-global-resource/)能力使用户既可以访问 Karmada 控制平面所有资源，又可以访问成员集群中的所有资源。
 
 ## CLI 工具
 
 ### karmadactl
 
-Karmada 提供了一个命令行工具 karmadactl，用于使用 Karmada API 与 Karmada 的控制平面进行通信。
+Karmada 提供了一个命令行工具 `karmadactl`，用于使用 Karmada API 与 Karmada 的控制平面进行通信。
 
-你可以使用 karmadactl 执行成员集群的添加/剔除，将成员集群标记/取消标记为不可调度，等等。
-有关包括 karmadactl 操作完整列表在内的更多信息，请参阅 [karmadactl](../reference/karmadactl/karmadactl-commands/karmadactl)。
+你可以使用 `karmadactl` 执行成员集群的添加/剔除，将成员集群标记/取消标记为不可调度，等等。
+有关包括 `karmadactl` 操作完整列表在内的更多信息，请参阅 [karmadactl](../reference/karmadactl/karmadactl-commands/karmadactl)。
 
 ### kubectl karmada
 
-kubectl karmada 以 kubectl 插件的形式提供功能，但它的实现与 karmadactl 完全相同。
+kubectl karmada 以 kubectl 插件的形式提供功能，但它的实现与 `karmadactl` 完全相同。
