@@ -42,7 +42,7 @@ karmada-controller-manager [flags]
       --concurrent-resourcebinding-syncs int                           The number of ResourceBindings that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. 
-                                                                       All controllers: applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, deploymentReplicasSyncer, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaScaleTargetMarker, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus, workloadRebalancer.
+                                                                       All controllers: agentcsrapproving, applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, deploymentReplicasSyncer, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaScaleTargetMarker, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus, workloadRebalancer.
                                                                        Disabled-by-default controllers: deploymentReplicasSyncer, hpaScaleTargetMarker (default [*])
       --enable-cluster-resource-modeling                               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
@@ -54,12 +54,13 @@ karmada-controller-manager [flags]
                                                                        AllAlpha=true|false (ALPHA - default=false)
                                                                        AllBeta=true|false (BETA - default=false)
                                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
-                                                                       Failover=true|false (BETA - default=true)
+                                                                       Failover=true|false (BETA - default=false)
                                                                        GracefulEviction=true|false (BETA - default=true)
                                                                        MultiClusterService=true|false (ALPHA - default=false)
                                                                        PropagateDeps=true|false (BETA - default=true)
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                                       StatefulFailoverInjection=true|false (ALPHA - default=false)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
       --health-probe-bind-address string                               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357. (default ":10357")
   -h, --help                                                           help for karmada-controller-manager

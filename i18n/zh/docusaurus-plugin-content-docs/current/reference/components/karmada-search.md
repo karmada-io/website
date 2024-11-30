@@ -17,6 +17,7 @@ karmada-search [flags]
 
 ```
       --add_dir_header                                          If true, adds the file directory to the header of the log messages
+      --advertise-address ip                                    The IP address on which to advertise the apiserver to members of the cluster. This address must be reachable by the rest of the cluster. If blank, the --bind-address will be used. If --bind-address is unspecified, the host's default interface will be used.
       --alsologtostderr                                         log to standard error as well as files (no effect when -logtostderr=true)
       --audit-log-batch-buffer-size int                         The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
       --audit-log-batch-max-size int                            The maximum size of a batch. Only used in batch mode. (default 1)
@@ -61,11 +62,16 @@ karmada-search [flags]
       --cert-dir string                                         The directory where the TLS certs are located. If --tls-cert-file and --tls-private-key-file are provided, this flag will be ignored. (default "apiserver.local.config/certificates")
       --client-ca-file string                                   If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate.
       --contention-profiling                                    Enable block profiling, if profiling is enabled
+      --cors-allowed-origins strings                            List of allowed origins for CORS, comma separated. An allowed origin can be a regular expression to support subdomain matching. If this list is empty CORS will not be enabled. Please ensure each expression matches the entire hostname by anchoring to the start with '^' or including the '//' prefix, and by anchoring to the end with '$' or including the ':' port separator suffix. Examples of valid expressions are '//example\.com(:|$)' and '^https://example\.com(:|$)'
       --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
       --delete-collection-workers int                           Number of workers spawned for DeleteCollection call. These are used to speed up namespace cleanup. (default 1)
       --disable-http2-serving                                   If true, HTTP2 serving will be disabled [default=false]
       --disable-proxy                                           Disable proxy feature that would save memory usage significantly.
       --disable-search                                          Disable search feature that would save memory usage significantly.
+      --emulated-version strings                                The versions different components emulate their capabilities (APIs, features, ...) of.
+                                                                If set, the component will emulate the behavior of this version instead of the underlying binary version.
+                                                                Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'. Options are:
+                                                                kube=1.31..1.31 (default=1.31)If the component is not specified, defaults to "kube"
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
@@ -82,61 +88,74 @@ karmada-search [flags]
       --etcd-readycheck-timeout duration                        The timeout to use when checking etcd readiness (default 2s)
       --etcd-servers strings                                    List of etcd servers to connect with (scheme://ip:port), comma separated.
       --etcd-servers-overrides strings                          Per-resource etcd servers overrides, comma separated. The individual override format: group/resource#servers, where servers are URLs, semicolon separated. Note that this applies only to resources compiled into this server binary. 
-      --feature-gates mapStringBool                             A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
-                                                                APIResponseCompression=true|false (BETA - default=true)
-                                                                APIServerIdentity=true|false (BETA - default=true)
-                                                                APIServerTracing=true|false (BETA - default=true)
-                                                                APIServingWithRoutine=true|false (ALPHA - default=false)
-                                                                AllAlpha=true|false (ALPHA - default=false)
-                                                                AllBeta=true|false (BETA - default=false)
-                                                                AnonymousAuthConfigurableEndpoints=true|false (ALPHA - default=false)
-                                                                AuthorizeWithSelectors=true|false (ALPHA - default=false)
-                                                                ComponentSLIs=true|false (BETA - default=true)
-                                                                ConcurrentWatchObjectDecode=true|false (BETA - default=false)
-                                                                ConsistentListFromCache=true|false (BETA - default=true)
-                                                                CoordinatedLeaderElection=true|false (ALPHA - default=false)
-                                                                InPlacePodVerticalScaling=true|false (ALPHA - default=false)
-                                                                OpenAPIEnums=true|false (BETA - default=true)
-                                                                ResilientWatchCacheInitialization=true|false (BETA - default=true)
-                                                                RetryGenerateName=true|false (BETA - default=true)
-                                                                SeparateCacheWatchRPC=true|false (BETA - default=true)
-                                                                StorageVersionAPI=true|false (ALPHA - default=false)
-                                                                StorageVersionHash=true|false (BETA - default=true)
-                                                                StrictCostEnforcementForVAP=true|false (BETA - default=false)
-                                                                StrictCostEnforcementForWebhooks=true|false (BETA - default=false)
-                                                                StructuredAuthenticationConfiguration=true|false (BETA - default=true)
-                                                                StructuredAuthorizationConfiguration=true|false (BETA - default=true)
-                                                                UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
-                                                                WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
-                                                                WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
-                                                                WatchList=true|false (ALPHA - default=false)
+      --external-hostname string                                The hostname to use when generating externalized URLs for this master (e.g. Swagger API Docs or OpenID Discovery).
+      --feature-gates colonSeparatedMultimapStringString        Comma-separated list of component:key=value pairs that describe feature gates for alpha/experimental features of different components.
+                                                                If the component is not specified, defaults to "kube". This flag can be repeatedly invoked. For example: --feature-gates 'wardle:featureA=true,wardle:featureB=false' --feature-gates 'kube:featureC=true'Options are:
+                                                                kube:APIResponseCompression=true|false (BETA - default=true)
+                                                                kube:APIServerIdentity=true|false (BETA - default=true)
+                                                                kube:APIServerTracing=true|false (BETA - default=true)
+                                                                kube:APIServingWithRoutine=true|false (ALPHA - default=false)
+                                                                kube:AllAlpha=true|false (ALPHA - default=false)
+                                                                kube:AllBeta=true|false (BETA - default=false)
+                                                                kube:AnonymousAuthConfigurableEndpoints=true|false (ALPHA - default=false)
+                                                                kube:AuthorizeWithSelectors=true|false (ALPHA - default=false)
+                                                                kube:ComponentSLIs=true|false (BETA - default=true)
+                                                                kube:ConcurrentWatchObjectDecode=true|false (BETA - default=false)
+                                                                kube:ConsistentListFromCache=true|false (BETA - default=true)
+                                                                kube:CoordinatedLeaderElection=true|false (ALPHA - default=false)
+                                                                kube:InPlacePodVerticalScaling=true|false (ALPHA - default=false)
+                                                                kube:OpenAPIEnums=true|false (BETA - default=true)
+                                                                kube:ResilientWatchCacheInitialization=true|false (BETA - default=true)
+                                                                kube:RetryGenerateName=true|false (BETA - default=true)
+                                                                kube:SeparateCacheWatchRPC=true|false (BETA - default=true)
+                                                                kube:StorageVersionAPI=true|false (ALPHA - default=false)
+                                                                kube:StorageVersionHash=true|false (BETA - default=true)
+                                                                kube:StrictCostEnforcementForVAP=true|false (BETA - default=false)
+                                                                kube:StrictCostEnforcementForWebhooks=true|false (BETA - default=false)
+                                                                kube:StructuredAuthenticationConfiguration=true|false (BETA - default=true)
+                                                                kube:StructuredAuthorizationConfiguration=true|false (BETA - default=true)
+                                                                kube:UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
+                                                                kube:WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
+                                                                kube:WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
+                                                                kube:WatchList=true|false (ALPHA - default=false)
+      --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
       --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. (default 60)
       --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
       --lease-reuse-duration-seconds int                        The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
+      --livez-grace-period duration                             This option represents the maximum amount of time it should take for apiserver to complete its startup sequence and become live. From apiserver's start time to when this amount of time has elapsed, /livez will assume that unfinished post-start hooks will complete successfully and therefore return true.
       --log_backtrace_at traceLocation                          when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                                          If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log_file string                                         If non-empty, use this log file (no effect when -logtostderr=true)
       --log_file_max_size uint                                  Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                                             log to standard error instead of files (default true)
+      --max-mutating-requests-inflight int                      This and --max-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of mutating requests in flight, or a zero value disables the limit completely. (default 200)
+      --max-requests-inflight int                               This and --max-mutating-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of non-mutating requests in flight, or a zero value disables the limit completely. (default 400)
+      --min-request-timeout int                                 An optional field indicating the minimum number of seconds a handler must keep a request open before timing it out. Currently only honored by the watch request handler, which picks a randomized value above this number as the connection timeout, to spread out load. (default 1800)
       --one_output                                              If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --permit-address-sharing                                  If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]
       --permit-port-sharing                                     If true, SO_REUSEPORT will be used when binding the port, which allows more than one instance to bind on the same address and port. [default=false]
       --profiling                                               Enable profiling via web interface host:port/debug/pprof/ (default true)
       --profiling-bind-address string                           The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
+      --request-timeout duration                                An optional field indicating the duration a handler must keep a request open before timing it out. This is the default request timeout for requests but may be overridden by flags such as --min-request-timeout for specific types of requests. (default 1m0s)
       --requestheader-allowed-names strings                     List of client certificate common names to allow to provide usernames in headers specified by --requestheader-username-headers. If empty, any client certificate validated by the authorities in --requestheader-client-ca-file is allowed.
       --requestheader-client-ca-file string                     Root certificate bundle to use to verify client certificates on incoming requests before trusting usernames in headers specified by --requestheader-username-headers. WARNING: generally do not depend on authorization being already done for incoming requests.
       --requestheader-extra-headers-prefix strings              List of request header prefixes to inspect. X-Remote-Extra- is suggested. (default [x-remote-extra-])
       --requestheader-group-headers strings                     List of request headers to inspect for groups. X-Remote-Group is suggested. (default [x-remote-group])
       --requestheader-username-headers strings                  List of request headers to inspect for usernames. X-Remote-User is common. (default [x-remote-user])
       --secure-port int                                         The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
+      --shutdown-delay-duration duration                        Time to delay the termination. During that time the server keeps serving requests normally. The endpoints /healthz and /livez will return success, but /readyz immediately returns failure. Graceful termination starts after this delay has elapsed. This can be used to allow load balancer to stop sending traffic to this server.
+      --shutdown-send-retry-after                               If true the HTTP Server will continue listening until all non long running request(s) in flight have been drained, during this window all incoming requests will be rejected with a status code 429 and a 'Retry-After' response header, in addition 'Connection: close' response header is set in order to tear down the TCP connection when idle.
+      --shutdown-watch-termination-grace-period duration        This option, if set, represents the maximum amount of grace period the apiserver will wait for active watch request(s) to drain during the graceful server shutdown window.
       --skip_headers                                            If true, avoid header prefixes in the log messages
       --skip_log_headers                                        If true, avoid headers when opening log files (no effect when -logtostderr=true)
       --stderrthreshold severity                                logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --storage-backend string                                  The storage backend for persistence. Options: 'etcd3' (default).
+      --storage-initialization-timeout duration                 Maximum amount of time to wait for storage initialization before declaring apiserver ready. Defaults to 1m. (default 1m0s)
       --storage-media-type string                               The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. Supported media types: [application/json, application/yaml, application/vnd.kubernetes.protobuf] (default "application/json")
+      --strict-transport-security-directives strings            List of directives for HSTS, comma separated. If this list is empty, then HSTS directives will not be added. Example: 'max-age=31536000,includeSubDomains,preload'
       --tls-cert-file string                                    File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert). If HTTPS serving is enabled, and --tls-cert-file and --tls-private-key-file are not provided, a self-signed certificate and key are generated for the public address and saved to the directory specified by --cert-dir.
       --tls-cipher-suites strings                               Comma-separated list of cipher suites for the server. If omitted, the default Go cipher suites will be used. 
                                                                 Preferred values: TLS_AES_128_GCM_SHA256, TLS_AES_256_GCM_SHA384, TLS_CHACHA20_POLY1305_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305, TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256. 
