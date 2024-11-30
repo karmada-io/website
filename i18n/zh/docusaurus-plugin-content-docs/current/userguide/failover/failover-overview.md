@@ -25,13 +25,15 @@ taint-manager检测到集群故障之后，会从这些故障集群中驱逐工�
 
 ## 用户如何开启特性
 
-用户可以通过启用`karmada-controller`的`Failover`特性开关来开启故障迁移特性。`Failover`特性开关从Karmada v1.4后处于Beta阶段，并且默认开启。用户如果使用Karmada v1.3或是更早的版本，需要手动开启`Failover`特性开关：
+用户可以通过启用 `Failover` 特性开关来开启故障迁移特性。`Failover` 特性开关目前默认关闭，用户应明确启用以避免意外事件。您可以按照如下配置在 `karmada-controller-manager` 组件中启用 `Failover` 特性开关：
 
 ```
 --feature-gates=Failover=true
 ```
 
-此外，如果用户启用了GracefulEvction特性，故障迁移过程将变得十分平滑且优雅，也就是说，工作负载的驱逐将被推迟到工作负载在新群集上启动或达到最大宽限期之后才被执行。`GracefulEviction`特性开关从Karmada v1.4后处于Beta阶段，并且默认开启。用户如果使用Karmada v1.3，需要通过启用`karmada-controller`的如下特性开关：
+此外，如果用户启用了 `GracefulEvction` 特性，故障迁移过程将变得十分平滑且优雅，也就是说，工作负载的驱逐将被推迟到工作负载在新群集上启动或达到最大宽限期之后才被执行。
+
+优雅驱逐功能由 `Failover` 和 `GracefulEviction` 特性开关控制。`GracefulEviction` 特性开关目前默认启用。你可以按照如下配置启用 `karmada-controller-manager` 组件的 `Failover` 和 `GracefulEviction` 特性门控：
 
 ```
 --feature-gates=Failover=true,GracefulEviction=true
