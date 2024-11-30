@@ -126,7 +126,7 @@ ResourceRegistrySpec defines the desired state of ResourceRegistry.
 
       - **backendStore.openSearch.secretRef.name** (string), required
 
-        Name is the name of resource being referenced.
+        Name is the name of the resource being referenced.
 
       - **backendStore.openSearch.secretRef.namespace** (string), required
 

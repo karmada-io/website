@@ -4,7 +4,7 @@ api_metadata:
   import: "github.com/karmada-io/karmada/pkg/apis/cluster/v1alpha1"
   kind: "Cluster"
 content_type: "api_reference"
-description: "Cluster represents the desire state and status of a member cluster."
+description: "Cluster represents the desired state and status of a member cluster."
 title: "Cluster v1alpha1"
 weight: 1
 auto_generated: true
@@ -20,7 +20,7 @@ auto_generated: true
 
 ## Cluster 
 
-Cluster represents the desire state and status of a member cluster.
+Cluster represents the desired state and status of a member cluster.
 
 <hr/>
 
@@ -46,7 +46,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **syncMode** (string), required
 
-  SyncMode describes how a cluster sync resources from karmada control plane.
+  SyncMode describes how a cluster syncs resources from karmada control plane.
 
 - **apiEndpoint** (string)
 
@@ -54,7 +54,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **id** (string)
 
-  ID is the unique identifier for the cluster. It is different from the object uid(.metadata.uid) and typically collected automatically from member cluster during the progress of registration.
+  ID is the unique identifier for the cluster. It is different from the object uid(.metadata.uid) and is typically collected automatically from each member cluster during the process of registration.
   
   The value is collected in order: 1. If the registering cluster enabled ClusterProperty API and defined the cluster ID by
     creating a ClusterProperty object with name 'cluster.clusterset.k8s.io', Karmada would
@@ -66,7 +66,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **impersonatorSecretRef** (LocalSecretReference)
 
-  ImpersonatorSecretRef represents the secret contains the token of impersonator. The secret should hold credentials as follows: - secret.data.token
+  ImpersonatorSecretRef represents the secret that contains the token of impersonator. The secret should hold credentials as follows: - secret.data.token
 
   <a name="LocalSecretReference"></a>
 
@@ -74,7 +74,7 @@ ClusterSpec defines the desired state of a member cluster.
 
   - **impersonatorSecretRef.name** (string), required
 
-    Name is the name of resource being referenced.
+    Name is the name of the resource being referenced.
 
   - **impersonatorSecretRef.namespace** (string), required
 
@@ -90,15 +90,15 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **proxyHeader** (map[string]string)
 
-  ProxyHeader is the HTTP header required by proxy server. The key in the key-value pair is HTTP header key and value is the associated header payloads. For the header with multiple values, the values should be separated by comma(e.g. 'k1': 'v1,v2,v3').
+  ProxyHeader is the HTTP header required by proxy server. The key in the key-value pair is HTTP header key and the value is the associated header payloads. For the header with multiple values, the values should be separated by comma(e.g. 'k1': 'v1,v2,v3').
 
 - **proxyURL** (string)
 
-  ProxyURL is the proxy URL for the cluster. If not empty, the karmada control plane will use this proxy to talk to the cluster. More details please refer to: https://github.com/kubernetes/client-go/issues/351
+  ProxyURL is the proxy URL for the cluster. If not empty, the karmada control plane will use this proxy to talk to the cluster. For more details please refer to: https://github.com/kubernetes/client-go/issues/351
 
 - **region** (string)
 
-  Region represents the region of the member cluster locate in.
+  Region represents the region in which the member cluster is located.
 
 - **resourceModels** ([]ResourceModel)
 
@@ -161,7 +161,7 @@ ClusterSpec defines the desired state of a member cluster.
 
     <a name="ResourceModelRange"></a>
 
-    *ResourceModelRange describes the detail of each modeling quota that ranges from min to max. Please pay attention, by default, the value of min can be inclusive, and the value of max cannot be inclusive. E.g. in an interval, min = 2, max =10 is set, which means the interval [2,10). This rule ensure that all intervals have the same meaning. If the last interval is infinite, it is definitely unreachable. Therefore, we define the right interval as the open interval. For a valid interval, the value on the right is greater than the value on the left, in other words, max must be greater than min. It is strongly recommended that the [Min, Max) of all ResourceModelRanges can make a continuous interval.*
+    *ResourceModelRange describes the detail of each modeling quota that ranges from min to max. Please pay attention, by default, the value of min can be inclusive, and the value of max cannot be inclusive. E.g. in an interval, min = 2, max = 10 is set, which means the interval [2,10). This rule ensures that all intervals have the same meaning. If the last interval is infinite, it is definitely unreachable. Therefore, we define the right interval as the open interval. For a valid interval, the value on the right is greater than the value on the left, in other words, max must be greater than min. It is strongly recommended that the [Min, Max) of all ResourceModelRanges can make a continuous interval.*
 
     - **resourceModels.ranges.max** ([Quantity](../common-definitions/quantity#quantity)), required
 
@@ -177,7 +177,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **secretRef** (LocalSecretReference)
 
-  SecretRef represents the secret contains mandatory credentials to access the member cluster. The secret should hold credentials as follows: - secret.data.token - secret.data.caBundle
+  SecretRef represents the secret that contains mandatory credentials to access the member cluster. The secret should hold credentials as follows: - secret.data.token - secret.data.caBundle
 
   <a name="LocalSecretReference"></a>
 
@@ -185,7 +185,7 @@ ClusterSpec defines the desired state of a member cluster.
 
   - **secretRef.name** (string), required
 
-    Name is the name of resource being referenced.
+    Name is the name of the resource being referenced.
 
   - **secretRef.namespace** (string), required
 
@@ -193,7 +193,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **taints** ([]Taint)
 
-  Taints attached to the member cluster. Taints on the cluster have the "effect" on any resource that does not tolerate the Taint.
+  Taints are attached to the member cluster. Taints on the cluster have the "effect" on any resource that does not tolerate the Taint.
 
   <a name="Taint"></a>
 
@@ -226,7 +226,7 @@ ClusterSpec defines the desired state of a member cluster.
 
 - **zone** (string)
 
-  Zone represents the zone of the member cluster locate in. Deprecated: This filed was never been used by Karmada, and it will not be removed from v1alpha1 for backward compatibility, use Zones instead.
+  Zone represents the zone in which the member cluster is located. Deprecated: This field was never been used by Karmada, and it will not be removed from v1alpha1 for backward compatibility, use Zones instead.
 
 - **zones** ([]string)
 
@@ -240,7 +240,7 @@ ClusterStatus contains information about the current status of a cluster updated
 
 - **apiEnablements** ([]APIEnablement)
 
-  APIEnablements represents the list of APIs installed in the member cluster.
+  APIEnablements represents the list of APIs installed on the member cluster.
 
   <a name="APIEnablement"></a>
 
@@ -364,7 +364,7 @@ ClusterStatus contains information about the current status of a cluster updated
 
 ## ClusterList 
 
-ClusterList contains a list of member cluster
+ClusterList contains a list of member clusters
 
 <hr/>
 

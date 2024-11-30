@@ -128,6 +128,36 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
 
         PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never". Defaults to "Graciously".
 
+      - **spec.failover.application.statePreservation** (StatePreservation)
+
+        StatePreservation defines the policy for preserving and restoring state data during failover events for stateful applications.
+        
+        When an application fails over from one cluster to another, this policy enables the extraction of critical data from the original resource configuration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact. This is particularly useful for stateful applications where maintaining data consistency across failover events is crucial. If not specified, means no state data will be preserved.
+        
+        Note: This requires the StatefulFailoverInjection feature gate to be enabled, which is alpha.
+
+        <a name="StatePreservation"></a>
+
+        *StatePreservation defines the policy for preserving state during failover events.*
+
+        - **spec.failover.application.statePreservation.rules** ([]StatePreservationRule), required
+
+          Rules contains a list of StatePreservationRule configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An AliasLabelName is associated with each rule, serving as a label key when the preserved data is passed to the new cluster.
+
+          <a name="StatePreservationRule"></a>
+
+          *StatePreservationRule defines a single rule for state preservation. It includes a JSONPath expression and an alias name that will be used as a label key when passing state information to the new cluster.*
+
+          - **spec.failover.application.statePreservation.rules.aliasLabelName** (string), required
+
+            AliasLabelName is the name that will be used as a label key when the preserved data is passed to the new cluster. This facilitates the injection of the preserved state back into the application resources during recovery.
+
+          - **spec.failover.application.statePreservation.rules.jsonPath** (string), required
+
+            JSONPath is the JSONPath template used to identify the state data to be preserved from the original resource configuration. The JSONPath syntax follows the Kubernetes specification: https://kubernetes.io/docs/reference/kubectl/jsonpath/
+            
+            Note: The JSONPath expression will start searching from the "status" field of the API resource object by default. For example, to extract the "availableReplicas" from a Deployment, the JSONPath expression should be "[.availableReplicas]", not "[.status.availableReplicas]".
+
   - **spec.placement** (Placement)
 
     Placement represents the rule for select clusters to propagate resources.
@@ -361,6 +391,16 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
     Possible enum values:
      - `"Always"` means that preemption is allowed. If it is applied to a PropagationPolicy, it can preempt any resource as per Priority, regardless of whether it has been claimed by a PropagationPolicy or a ClusterPropagationPolicy, as long as it can match the rules defined in ResourceSelector. In addition, if a resource has already been claimed by a ClusterPropagationPolicy, the PropagationPolicy can still preempt it without considering Priority. If it is applied to a ClusterPropagationPolicy, it can only preempt from ClusterPropagationPolicy, and from PropagationPolicy is not allowed.
      - `"Never"` means that a PropagationPolicy(ClusterPropagationPolicy) never preempts resources.
+
+  - **spec.preserveResourcesOnDeletion** (boolean)
+
+    PreserveResourcesOnDeletion controls whether resources should be preserved on the member clusters when the resource template is deleted. If set to true, resources will be preserved on the member clusters. Default is false, which means resources will be deleted along with the resource template.
+    
+    This setting is particularly useful during workload migration scenarios to ensure that rollback can occur quickly without affecting the workloads running on the member clusters.
+    
+    Additionally, this setting applies uniformly across all member clusters and will not selectively control preservation on only some clusters.
+    
+    Note: This setting does not apply to the deletion of the policy itself. When the policy is deleted, the resource templates and their corresponding propagated resources in member clusters will remain unchanged unless explicitly deleted.
 
   - **spec.priority** (int32)
 
