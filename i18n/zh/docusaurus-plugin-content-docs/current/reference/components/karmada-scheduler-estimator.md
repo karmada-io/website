@@ -24,12 +24,13 @@ karmada-scheduler-estimator [flags]
                                            AllAlpha=true|false (ALPHA - default=false)
                                            AllBeta=true|false (BETA - default=false)
                                            CustomizedClusterResourceModeling=true|false (BETA - default=true)
-                                           Failover=true|false (BETA - default=true)
+                                           Failover=true|false (BETA - default=false)
                                            GracefulEviction=true|false (BETA - default=true)
                                            MultiClusterService=true|false (ALPHA - default=false)
                                            PropagateDeps=true|false (BETA - default=true)
                                            PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                            ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                           StatefulFailoverInjection=true|false (ALPHA - default=false)
       --grpc-auth-cert-file string         SSL certification file used for grpc SSL/TLS connections.
       --grpc-auth-key-file string          SSL key file used for grpc SSL/TLS connections.
       --grpc-client-ca-file string         SSL Certificate Authority file used to verify grpc client certificates on incoming requests.
