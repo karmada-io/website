@@ -67,7 +67,10 @@ karmadactl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --a
   -h, --help                            help for delete
       --ignore-not-found                Treat "resource not found" as a successful delete. Defaults to "true" when --all is specified.
   -i, --interactive                     If true, delete resource only when user confirms.
+      --karmada-context string          The name of the kubeconfig context to use
+      --kubeconfig string               Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string                Process a kustomization directory. This flag can't be used together with -f or -R.
+  -n, --namespace string                If present, the namespace scope for this CLI request.
       --now                             If true, resources are signaled for immediate shutdown (same as --grace-period=1).
   -o, --output string                   Output mode. Use "-o name" for shorter output (resource/name).
       --raw string                      Raw URI to DELETE to the server.  Uses the transport specified by the kubeconfig file.
@@ -82,7 +85,6 @@ karmadactl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --a
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

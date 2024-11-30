@@ -1,41 +1,42 @@
 ---
-title: karmadactl unjoin
+title: karmadactl unregister
 ---
 
-Remove a cluster from Karmada control plane
+Remove a pull mode cluster from Karmada control plane
 
 ### Synopsis
 
-Remove a cluster from Karmada control plane.
+Unregister removes a member cluster from Karmada, it will clean up the cluster object in the control plane and Karmada resources in the member cluster.
 
 ```
-karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
+karmadactl unregister CLUSTER_NAME
 ```
 
 ### Examples
 
 ```
-  # Unjoin cluster from karmada control plane, but not to remove resources created by karmada in the unjoining cluster
-  karmadactl unjoin CLUSTER_NAME
+  # Unregister cluster from karmada control plane
+  karmadactl unregister CLUSTER_NAME --cluster-kubeconfig=<CLUSTER_KUBECONFIG> [--cluster-context=<CLUSTER_CONTEXT>]
   
-  # Unjoin cluster from karmada control plane and attempt to remove resources created by karmada in the unjoining cluster
-  karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
+  # Unregister cluster from karmada control plane with timeout
+  karmadactl unregister CLUSTER_NAME --cluster-kubeconfig=<CLUSTER_KUBECONFIG> --wait 2m
   
-  # Unjoin cluster from karmada control plane with timeout
-  karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG> --wait 2m
+  # Unregister cluster from karmada control plane, manually specify the location of the karmada config
+  karmadactl unregister CLUSTER_NAME --karmada-config=<KARMADA_CONFIG> [--karmada-context=<KARMADA_CONTEXT>] --cluster-kubeconfig=<CLUSTER_KUBECONFIG> [--cluster-context=<CLUSTER_CONTEXT>]
 ```
 
 ### Options
 
 ```
-      --cluster-context string      Context name of cluster in kubeconfig. Only works when there are multiple contexts in the kubeconfig.
-      --cluster-kubeconfig string   Path of the cluster's kubeconfig.
+      --agent-name string           Deployment name of the karmada-agent component deployed. (default "karmada-agent")
+      --cluster-context string      Context in cluster-kubeconfig to access unregistering member cluster, optional, defaults to current context.
+      --cluster-kubeconfig string   KUBECONFIG file path to access unregistering member cluster, required.
       --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
       --dry-run                     Run the command in dry-run mode, without making any server requests.
-      --force                       When set, the unjoin command will attempt to clean up resources in the member cluster before deleting the Cluster object. If the cleanup fails within the timeout period, the Cluster object will still be deleted, potentially leaving some resources behind in the member cluster.
-  -h, --help                        help for unjoin
-      --karmada-context string      The name of the kubeconfig context to use
-      --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
+  -h, --help                        help for unregister
+      --karmada-config string       Path of config to access karmada-apiserver, optional, defaults to fetch automatically from member cluster.
+      --karmada-context string      Context in karmada-config to access karmada-apiserver, optional, defaults to current context.
+  -n, --namespace string            Namespace of the karmada-agent component deployed. (default "karmada-system")
       --wait duration               wait for the unjoin command execution process(default 60s), if there is no success after this time, timeout will be returned. (default 1m0s)
 ```
 
@@ -44,6 +45,7 @@ karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
+      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

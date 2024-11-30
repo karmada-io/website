@@ -32,8 +32,8 @@ karmada-scheduler-estimator [flags]
                                            ResourceQuotaEstimate=true|false (ALPHA - default=false)
       --grpc-auth-cert-file string         SSL certification file used for grpc SSL/TLS connections.
       --grpc-auth-key-file string          SSL key file used for grpc SSL/TLS connections.
-      --grpc-client-ca-file string         SSL Certificate Authority file used to verify grpc client certificates on incoming requests if --client-cert-auth flag is set.
-      --health-probe-bind-address string   The TCP address that the server should bind to for serving health probes(e.g. 127.0.0.1:10351, :10351). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10351.
+      --grpc-client-ca-file string         SSL Certificate Authority file used to verify grpc client certificates on incoming requests.
+      --health-probe-bind-address string   The TCP address that the server should bind to for serving health probes(e.g. 127.0.0.1:10351, :10351). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10351. (default ":10351")
   -h, --help                               help for karmada-scheduler-estimator
       --insecure-skip-grpc-client-verify   If set to true, the estimator will not verify the grpc client's certificate chain and host name. When the relevant certificates are not configured, it will not take effect.
       --kube-api-burst int                 Burst to use while talking with apiserver. (default 30)
@@ -45,7 +45,7 @@ karmada-scheduler-estimator [flags]
       --log_file_max_size uint             Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                        log to standard error instead of files (default true)
       --master string                      The address of the member Kubernetes API server. Overrides any value in KubeConfig. Only required if out-of-cluster.
-      --metrics-bind-address string        The TCP address that the server should bind to for serving prometheus metrics(e.g. 127.0.0.1:10351, :10351). It can be set to "0" to disable the metrics serving. Defaults to 0.0.0.0:10351.
+      --metrics-bind-address string        The TCP address that the server should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. Defaults to 0.0.0.0:8080. (default ":8080")
       --one_output                         If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --parallelism int                    Parallelism defines the amount of parallelism in algorithms for estimating. Must be greater than 0. Defaults to 16.
       --profiling-bind-address string      The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")

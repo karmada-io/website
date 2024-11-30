@@ -51,7 +51,7 @@ karmadactl create -f FILENAME
                                        		"true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not.
                                        		"warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise.
                                        		"false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields. (default "strict")
-      --windows-line-endings           Only relevant if --edit=true. Defaults to the line ending native to your platform. (default true)
+      --windows-line-endings           Only relevant if --edit=true. Defaults to the line ending native to your platform.
 ```
 
 ### Options inherited from parent commands

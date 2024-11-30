@@ -1,35 +1,43 @@
 ---
-title: karmadactl api-versions
+title: karmadactl completion
 ---
 
-Print the supported API versions on the server, in the form of "group/version"
+Output shell completion code for the specified shell (bash, zsh)
 
 ### Synopsis
 
-Print the supported API versions on the server, in the form of "group/version".
+Output shell completion code for the specified shell (bash, zsh). The shell code must be evaluated to provide interactive completion of kubectl commands.  This can be done by sourcing it from the .bash_profile.
+
+ Note for zsh users: zsh completions are only supported in versions of zsh >= 5.2.
 
 ```
-karmadactl api-versions
+karmadactl completion SHELL
 ```
 
 ### Examples
 
 ```
-  # Print the supported API versions
-  karmadactl api-versions
+  # Installing bash completion on Linux
+  ## If bash-completion is not installed on Linux, install the 'bash-completion' package
+  1. apt-get install bash-completion
+  2. source /usr/share/bash-completion/bash_completion
+  ## Load the karmadactl completion code for bash into the current shell
+  source <(karmadactl completion bash)
+  ## Or, write bash completion code to a file and source it from .bash_profile
+  1. karmadactl completion bash > ~/.kube/completion.bash.inc
+  2. echo "source '$HOME/.kube/completion.bash.inc'" >> $HOME/.bash_profile
+  3. source $HOME/.bash_profile
   
-  # Print the supported API versions in cluster(member1)
-  karmadactl api-versions --operation-scope=members --cluster=member1
+  # Load the karmadactl completion code for zsh into the current shell
+  source <(karmadactl completion zsh)
+  # Set the karmadactl completion code for zsh to autoload on startup
+  karmadactl completion zsh > "${fpath[1]}/karmadactl"
 ```
 
 ### Options
 
 ```
-      --cluster string                   Used to specify a target member cluster and only takes effect when the command's operation scope is members, for example: --operation-scope=members --cluster=member1
-  -h, --help                             help for api-versions
-      --karmada-context string           The name of the kubeconfig context to use
-      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
-  -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
+  -h, --help   help for completion
 ```
 
 ### Options inherited from parent commands
@@ -37,6 +45,7 @@ karmadactl api-versions
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
+      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

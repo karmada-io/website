@@ -35,6 +35,7 @@ karmada-controller-manager [flags]
       --concurrent-cluster-propagation-policy-syncs int                The number of ClusterPropagationPolicy that are allowed to sync concurrently. (default 1)
       --concurrent-cluster-syncs int                                   The number of Clusters that are allowed to sync concurrently. (default 5)
       --concurrent-clusterresourcebinding-syncs int                    The number of ClusterResourceBindings that are allowed to sync concurrently. (default 5)
+      --concurrent-dependent-resource-syncs int                        The number of dependent resource that are allowed to sync concurrently. (default 2)
       --concurrent-namespace-syncs int                                 The number of Namespaces that are allowed to sync concurrently. (default 1)
       --concurrent-propagation-policy-syncs int                        The number of PropagationPolicy that are allowed to sync concurrently. (default 1)
       --concurrent-resource-template-syncs int                         The number of resource templates that are allowed to sync concurrently. (default 5)
@@ -60,7 +61,7 @@ karmada-controller-manager [flags]
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
-      --health-probe-bind-address string                               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357.
+      --health-probe-bind-address string                               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357. (default ":10357")
   -h, --help                                                           help for karmada-controller-manager
       --horizontal-pod-autoscaler-cpu-initialization-period duration   The period after pod start when CPU samples might be skipped. (default 5m0s)
       --horizontal-pod-autoscaler-downscale-delay duration             The period since last downscale, before another downscale can be performed in horizontal pod autoscaler. (default 5m0s)

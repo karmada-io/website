@@ -63,6 +63,7 @@ karmada-metrics-adapter [flags]
       --cluster-api-qps float32                                 QPS to use while talking with cluster kube-apiserver. (default 40)
       --contention-profiling                                    Enable block profiling, if profiling is enabled
       --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
+      --disable-http2-serving                                   If true, HTTP2 serving will be disabled [default=false]
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness
   -h, --help                                                    help for karmada-metrics-adapter

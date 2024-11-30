@@ -44,6 +44,7 @@ karmadactl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER] (-C CLUSTER)
 
 ```
       --all-containers                     Get all containers' logs in the pod(s).
+      --all-pods                           Get logs from all pod(s). Sets prefix to true.
   -C, --cluster string                     Specify a member cluster
   -c, --container string                   Print the logs of this container
   -f, --follow                             Specify if the logs should be streamed.

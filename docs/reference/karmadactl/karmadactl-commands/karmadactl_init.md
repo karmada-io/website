@@ -8,7 +8,7 @@ Install the Karmada control plane in a Kubernetes cluster
 
 Install the Karmada control plane in a Kubernetes cluster.
 
-By default, the images and CRD tarball are downloaded remotely. For offline installation, you can set '--private-image-registry' and '--crds'.
+ By default, the images and CRD tarball are downloaded remotely. For offline installation, you can set '--private-image-registry' and '--crds'.
 
 ```
 karmadactl init

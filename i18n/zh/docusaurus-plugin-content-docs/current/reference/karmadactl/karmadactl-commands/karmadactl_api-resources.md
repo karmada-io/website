@@ -42,9 +42,11 @@ karmadactl api-resources [flags]
       --categories strings               Limit to resources that belong to the specified categories.
       --cluster string                   Used to specify a target member cluster and only takes effect when the command's operation scope is members, for example: --operation-scope=members --cluster=member1
   -h, --help                             help for api-resources
+      --karmada-context string           The name of the kubeconfig context to use
+      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
       --namespaced                       If false, non-namespaced resources will be returned, otherwise returning namespaced resources by default. (default true)
       --no-headers                       When using the default or custom-column output format, don't print headers (default print headers).
-      --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
+  -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
   -o, --output string                    Output format. One of: (wide, name).
       --sort-by string                   If non-empty, sort list of resources using specified field. The field can be either 'name' or 'kind'.
       --verbs strings                    Limit to resources that support the specified verbs.
@@ -55,7 +57,6 @@ karmadactl api-resources [flags]
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

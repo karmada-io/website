@@ -69,6 +69,7 @@ title: Karmadactl Commands
 
  This command is same as 'kubeadm token', but it will create tokens that are used by member clusters.
 * [karmadactl unjoin](karmadactl_unjoin.md)	 - Remove a cluster from Karmada control plane.
+* [karmadactl unregister](karmadactl_unregister.md)	 - Unregister removes a member cluster from Karmada, it will clean up the cluster object in the control plane and Karmada resources in the member cluster.
 
 ## Cluster Management Commands
 

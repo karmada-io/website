@@ -52,8 +52,8 @@ karmadactl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) (-
       --karmada-context string           The name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string                 Process the kustomization directory. This flag can't be used together with -f or -R.
-  -n, --namespace string                 If present, the namespace scope for this CLI request
-      --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
+  -n, --namespace string                 If present, the namespace scope for this CLI request.
+  -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
   -R, --recursive                        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
   -l, --selector string                  Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       --show-events                      If true, display events related to the described object. (default true)
