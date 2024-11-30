@@ -216,7 +216,7 @@ module.exports = {
                     items: [
                         "administrator/security/security-considerations",
                         "administrator/security/verify-artifacts",
-                        "administrator/security/rbac-permissions-for-karmada-components"
+                        "administrator/security/component-permission"
                     ],
                 },
             ],
