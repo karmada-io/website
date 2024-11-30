@@ -25,7 +25,7 @@ When cluster `member1` fails, pod instances on the cluster are evicted and migra
 
 ## How Do I Enable the Feature?
 
-The failover feature is controlled by the `Failover` feature gate. `Failover` feature gate has evolved to Beta since Karmada v1.4 and is enabled by default. If users use Karmada 1.3 or earlier, they need to enable the `Failover` feature gate of `karmada-controller`:
+The failover feature is controlled by the `Failover` feature gate. `Failover` feature gate is disabled by default for now, which should be explicitly enabled to avoid unexpected incidents. You can enable it in the `karmada-controller-manager`:
 
 ```
 --feature-gates=Failover=true
@@ -33,7 +33,7 @@ The failover feature is controlled by the `Failover` feature gate. `Failover` fe
 
 In addition, if the feature `GracefulEviction` is enabled, the eviction will be very smooth, that is, the removal of evicted workloads will be delayed until the workloads are available on new clusters or reach the maximum grace period.
 
-The graceful eviction feature is controlled by the `Failover` and `GracefulEviction` feature gates. `GracefulEviction` feature gate has also evolved to Beta since Karmada v1.4 and is enabled by default. If users use Karmada 1.3 or earlier, they need to enable the `Failover` and `GracefulEviction` feature gates of `karmada-controller`:
+The graceful eviction feature is controlled by the `Failover` and `GracefulEviction` feature gates. `GracefulEviction` feature gate is enabled by default for now. You can enable the `Failover` and `GracefulEviction` feature gates of `karmada-controller-manager`:
 
 ```
 --feature-gates=Failover=true,GracefulEviction=true

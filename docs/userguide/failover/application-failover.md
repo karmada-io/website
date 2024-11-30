@@ -23,8 +23,7 @@ Therefore, you need to ensure that `PropagateDeps` feature gate is enabled and `
 Also, whether the application needs to be migrated depends on the health status of the application. Karmada's `Resource Interpreter Framework` is designed for interpreting resource structure. It provides users with
 a interpreter operation to tell Karmada how to figure out the health status of a specific object. It's up to users to decide when to reschedule. Before you use the feature, you need to ensure that the `interpretHealth` rules for the application is configured.
 
-The application-level failover is controlled by the `Failover` feature gate. `Failover` feature gate has evolved to Beta since Karmada v1.4 and is enabled by default.
-In addition, if you use the purge mode with graceful eviction, `GracefulEviction` feature gate should be enabled. `GracefulEviction` feature gate has also evolved to Beta since Karmada v1.4 and is enabled by default.
+If you use the purge mode with graceful eviction, `GracefulEviction` feature gate should be enabled. `GracefulEviction` feature gate has also evolved to Beta since Karmada v1.4 and is enabled by default.
 
 ## Configure Application Failover
 
