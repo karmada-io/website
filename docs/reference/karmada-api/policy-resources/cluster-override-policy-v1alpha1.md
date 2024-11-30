@@ -54,7 +54,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
       *Overriders offers various alternatives to represent the override rules.
       
-      If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - Plaintext*
+      If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - FieldOverrider - Plaintext*
 
       - **spec.overrideRules.overriders.annotationsOverrider** ([]LabelAnnotationOverrider)
 
@@ -111,6 +111,66 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
         - **spec.overrideRules.overriders.commandOverrider.value** ([]string)
 
           Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+
+      - **spec.overrideRules.overriders.fieldOverrider** ([]FieldOverrider)
+
+        FieldOverrider represents the rules dedicated to modifying a specific field in any Kubernetes resource. This allows changing a single field within the resource with multiple operations. It is designed to handle structured field values such as those found in ConfigMaps or Secrets. The current implementation supports JSON and YAML formats, but can easily be extended to support XML in the future.
+
+        <a name="FieldOverrider"></a>
+
+        *FieldOverrider represents the rules dedicated to modifying a specific field in any Kubernetes resource. This allows changing a single field within the resource with multiple operations. It is designed to handle structured field values such as those found in ConfigMaps or Secrets. The current implementation supports JSON and YAML formats, but can easily be extended to support XML in the future. Note: In any given instance, FieldOverrider processes either JSON or YAML fields, but not both simultaneously.*
+
+        - **spec.overrideRules.overriders.fieldOverrider.fieldPath** (string), required
+
+          FieldPath specifies the initial location in the instance document where the operation should take place. The path uses RFC 6901 for navigating into nested structures. For example, the path "/data/db-config.yaml" specifies the configuration data key named "db-config.yaml" in a ConfigMap: "/data/db-config.yaml".
+
+        - **spec.overrideRules.overriders.fieldOverrider.json** ([]JSONPatchOperation)
+
+          JSON represents the operations performed on the JSON document specified by the FieldPath.
+
+          <a name="JSONPatchOperation"></a>
+
+          *JSONPatchOperation represents a single field modification operation for JSON format.*
+
+          - **spec.overrideRules.overriders.fieldOverrider.json.operator** (string), required
+
+            Operator indicates the operation on target field. Available operators are: "add", "remove", and "replace".
+
+          - **spec.overrideRules.overriders.fieldOverrider.json.subPath** (string), required
+
+            SubPath specifies the relative location within the initial FieldPath where the operation should take place. The path uses RFC 6901 for navigating into nested structures.
+
+          - **spec.overrideRules.overriders.fieldOverrider.json.value** (JSON)
+
+            Value is the new value to set for the specified field if the operation is "add" or "replace". For "remove" operation, this field is ignored.
+
+            <a name="JSON"></a>
+
+            *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
+
+        - **spec.overrideRules.overriders.fieldOverrider.yaml** ([]YAMLPatchOperation)
+
+          YAML represents the operations performed on the YAML document specified by the FieldPath.
+
+          <a name="YAMLPatchOperation"></a>
+
+          *YAMLPatchOperation represents a single field modification operation for YAML format.*
+
+          - **spec.overrideRules.overriders.fieldOverrider.yaml.operator** (string), required
+
+            Operator indicates the operation on target field. Available operators are: "add", "remove", and "replace".
+
+          - **spec.overrideRules.overriders.fieldOverrider.yaml.subPath** (string), required
+
+            SubPath specifies the relative location within the initial FieldPath where the operation should take place. The path uses RFC 6901 for navigating into nested structures.
+
+          - **spec.overrideRules.overriders.fieldOverrider.yaml.value** (JSON)
+
+            Value is the new value to set for the specified field if the operation is "add" or "replace". For "remove" operation, this field is ignored.
+
+            <a name="JSON"></a>
+
+            *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
 
       - **spec.overrideRules.overriders.imageOverrider** ([]ImageOverrider)
 
@@ -237,7 +297,7 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
 
     *Overriders offers various alternatives to represent the override rules.
     
-    If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - Plaintext*
+    If more than one alternative exists, they will be applied with following order: - ImageOverrider - CommandOverrider - ArgsOverrider - LabelsOverrider - AnnotationsOverrider - FieldOverrider - Plaintext*
 
     - **spec.overriders.annotationsOverrider** ([]LabelAnnotationOverrider)
 
@@ -294,6 +354,66 @@ ClusterOverridePolicy represents the cluster-wide policy that overrides a group 
       - **spec.overriders.commandOverrider.value** ([]string)
 
         Value to be applied to command/args. Items in Value which will be appended after command/args when Operator is 'add'. Items in Value which match in command/args will be deleted when Operator is 'remove'. If Value is empty, then the command/args will remain the same.
+
+    - **spec.overriders.fieldOverrider** ([]FieldOverrider)
+
+      FieldOverrider represents the rules dedicated to modifying a specific field in any Kubernetes resource. This allows changing a single field within the resource with multiple operations. It is designed to handle structured field values such as those found in ConfigMaps or Secrets. The current implementation supports JSON and YAML formats, but can easily be extended to support XML in the future.
+
+      <a name="FieldOverrider"></a>
+
+      *FieldOverrider represents the rules dedicated to modifying a specific field in any Kubernetes resource. This allows changing a single field within the resource with multiple operations. It is designed to handle structured field values such as those found in ConfigMaps or Secrets. The current implementation supports JSON and YAML formats, but can easily be extended to support XML in the future. Note: In any given instance, FieldOverrider processes either JSON or YAML fields, but not both simultaneously.*
+
+      - **spec.overriders.fieldOverrider.fieldPath** (string), required
+
+        FieldPath specifies the initial location in the instance document where the operation should take place. The path uses RFC 6901 for navigating into nested structures. For example, the path "/data/db-config.yaml" specifies the configuration data key named "db-config.yaml" in a ConfigMap: "/data/db-config.yaml".
+
+      - **spec.overriders.fieldOverrider.json** ([]JSONPatchOperation)
+
+        JSON represents the operations performed on the JSON document specified by the FieldPath.
+
+        <a name="JSONPatchOperation"></a>
+
+        *JSONPatchOperation represents a single field modification operation for JSON format.*
+
+        - **spec.overriders.fieldOverrider.json.operator** (string), required
+
+          Operator indicates the operation on target field. Available operators are: "add", "remove", and "replace".
+
+        - **spec.overriders.fieldOverrider.json.subPath** (string), required
+
+          SubPath specifies the relative location within the initial FieldPath where the operation should take place. The path uses RFC 6901 for navigating into nested structures.
+
+        - **spec.overriders.fieldOverrider.json.value** (JSON)
+
+          Value is the new value to set for the specified field if the operation is "add" or "replace". For "remove" operation, this field is ignored.
+
+          <a name="JSON"></a>
+
+          *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
+
+      - **spec.overriders.fieldOverrider.yaml** ([]YAMLPatchOperation)
+
+        YAML represents the operations performed on the YAML document specified by the FieldPath.
+
+        <a name="YAMLPatchOperation"></a>
+
+        *YAMLPatchOperation represents a single field modification operation for YAML format.*
+
+        - **spec.overriders.fieldOverrider.yaml.operator** (string), required
+
+          Operator indicates the operation on target field. Available operators are: "add", "remove", and "replace".
+
+        - **spec.overriders.fieldOverrider.yaml.subPath** (string), required
+
+          SubPath specifies the relative location within the initial FieldPath where the operation should take place. The path uses RFC 6901 for navigating into nested structures.
+
+        - **spec.overriders.fieldOverrider.yaml.value** (JSON)
+
+          Value is the new value to set for the specified field if the operation is "add" or "replace". For "remove" operation, this field is ignored.
+
+          <a name="JSON"></a>
+
+          *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface[], map[string]interface[] and nil.*
 
     - **spec.overriders.imageOverrider** ([]ImageOverrider)
 
