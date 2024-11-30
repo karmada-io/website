@@ -192,6 +192,55 @@ spec:
 
 您可以在 gracefulEvictionTasks 中将 suppressDeletion 修改为 false，确认故障后驱逐故障集群中的应用。
 
+## 无状态应用 Failover 支持
+
+Starting from v1.12, the application-level failover feature adds support for stateful application failover, it provides a generalized way for users to define application state preservation in the context of cluster-to-cluster failovers.
+
+In releases prior to v1.12, Karmada’s scheduling logic runs on the assumption that resources that are scheduled and rescheduled are stateless. In some cases, users may desire to conserve a certain state so that applications can resume from where they left off in the previous cluster.
+
+For CRDs dealing with data-processing (such as Flink or Spark), it can be particularly useful to restart applications from a previous checkpoint. That way applications can seamlessly resume processing data while avoiding double processing.
+
+从 v1.12 开始，应用故障转移特性增加了对有状态应用故障转移的支持，它为用户提供了一种通用的方式来定义在集群间故障转移情境下的应用状态保留。
+
+在 v1.12 之前的版本中，Karmada 的调度逻辑基于这样的假设运行：被调度和重新调度的资源是无状态的。在某些情况下，用户可能希望保留某种状态，以便应用可以从之前集群中停止的地方恢复。对于处理数据加工的 CRD（例如 Flink 或 Spark），从之前的检查点重新启动应用可能特别有用。这样应用可以无缝地恢复数据处理，同时避免重复处理。
+
+### 定义 StatePreservation
+
+`StatePreservation` 是 `.spec.failover.application` 下的一个字段, 它定义了在有状态应用的故障转移事件期间保留和恢复状态数据的策略。当应用从一个集群故障转移到另一个集群时，此策略使得能够从原始资源配置中提取关键数据。
+
+它包含了一系列 `StatePreservationRule` 配置。每条规则指定了一个 JSONPath 表达式，针对特定的状态数据片段，在故障转移事件中需要保留。每条规则都关联了一个 `AliasLabelName`，当保留的数据传递到新集群时，它作为标签键使用。你可以定义状态保留策略：
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: example-propagation
+spec:
+  #...
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Immediately
+      statePreservation:
+        rules:
+          - aliasLabelName: pre-updated-replicas
+            jsonPath: "{ .updatedReplicas }"
+```
+
+The above configuration will parse the `updatedReplicas` field from the application `.status` before migration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact.
+
+This capability requires enabling the `StatefulFailoverInjection` feature gate. `StatefulFailoverInjection` is currently in `Alpha` and is turned off by default.
+
+上述配置将在迁移前解析应用 `.status` 中的 `updatedReplicas` 字段。成功迁移后，提取的数据将重新注入到新资源中，确保应用程序能够以其之前的状态恢复操作。
+
+此功能需要启用 `StatefulFailoverInjection` 特性门控。`StatefulFailoverInjection` 目前处于 `Alpha` 阶段，默认情况下是关闭的。
+
+> 目前该功能的使用尚有些限制，使用时请注意：
+> 1. 仅考虑应用程序在一个集群中部署并迁移到另一个集群的场景。
+> 2. 如果发生连续故障转移，例如，应用程序从 clusterA 迁移到 clusterB，然后再到 clusterC，最后一次故障转移前的 PreservedLabelState 用于注入。如果 PreservedLabelState 为空，则跳过注入。
+> 3. 仅当 PurgeMode 设置为 Immediately 时，才执行注入操作。
+
 :::note
 
 应用故障迁移的开发仍在进行中。我们正在收集用户案例。如果您对此功能感兴趣，请随时开启一个 Enhancement Issue 让我们知道。

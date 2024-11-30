@@ -191,6 +191,45 @@ spec:
 
 You can edit `suppressDeletion` to false in `gracefulEvictionTasks` to evict the application in the failed cluster after you confirm the failure.
 
+## Stateful Application Failover Support
+
+Starting from v1.12, the application-level failover feature adds support for stateful application failover, it provides a generalized way for users to define application state preservation in the context of cluster-to-cluster failovers.
+
+In releases prior to v1.12, Karmada’s scheduling logic runs on the assumption that resources that are scheduled and rescheduled are stateless. In some cases, users may desire to conserve a certain state so that applications can resume from where they left off in the previous cluster. For CRDs dealing with data-processing (such as Flink or Spark), it can be particularly useful to restart applications from a previous checkpoint. That way applications can seamlessly resume processing data while avoiding double processing.
+
+### Defining StatePreservation
+
+`StatePreservation` is a field under `.spec.failover.application`, it defines the policy for preserving and restoring state data during failover events for stateful applications. When an application fails over from one cluster to another, this policy enables the extraction of critical data from the original resource configuration.
+
+It contains a list of `StatePreservationRule` configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An `AliasLabelName` is associated with each rule, serving as a label key when the preserved data is passed to the new cluster. You can define the state preservation policy:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: example-propagation
+spec:
+  #...
+  failover:
+    application:
+      decisionConditions:
+        tolerationSeconds: 60
+      purgeMode: Immediately
+      statePreservation:
+        rules:
+          - aliasLabelName: pre-updated-replicas
+            jsonPath: "{ .updatedReplicas }"
+```
+
+The above configuration will parse the `updatedReplicas` field from the application `.status` before migration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact.
+
+This capability requires enabling the `StatefulFailoverInjection` feature gate. `StatefulFailoverInjection` is currently in `Alpha` and is turned off by default.
+
+> There are currently some restrictions on the use of this function, please pay attention when using it:
+> 1. Only the scenario where an application is deployed in one cluster and migrated to another cluster is considered.
+> 2. If consecutive failovers occur, for example, an application is migrated form clusterA to clusterB and then to clusterC, the PreservedLabelState before the last failover is used for injection. If the PreservedLabelState is empty, the injection is skipped.
+> 3. The injection operation is performed only when PurgeMode is set to Immediately.
+
 :::note
 
 Application failover is still a work in progress. We are in the progress of gathering use cases. If you are interested in this feature, please feel free to start an enhancement issue to let us know.
