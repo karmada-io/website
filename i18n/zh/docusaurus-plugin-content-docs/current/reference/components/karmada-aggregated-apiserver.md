@@ -64,6 +64,7 @@ karmada-aggregated-apiserver [flags]
       --contention-profiling                                    Enable block profiling, if profiling is enabled
       --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
       --delete-collection-workers int                           Number of workers spawned for DeleteCollection call. These are used to speed up namespace cleanup. (default 1)
+      --disable-http2-serving                                   If true, HTTP2 serving will be disabled [default=false]
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
@@ -84,11 +85,15 @@ karmada-aggregated-apiserver [flags]
                                                                 APIResponseCompression=true|false (BETA - default=true)
                                                                 APIServerIdentity=true|false (BETA - default=true)
                                                                 APIServerTracing=true|false (BETA - default=true)
-                                                                APIServingWithRoutine=true|false (BETA - default=true)
+                                                                APIServingWithRoutine=true|false (ALPHA - default=false)
                                                                 AllAlpha=true|false (ALPHA - default=false)
                                                                 AllBeta=true|false (BETA - default=false)
+                                                                AnonymousAuthConfigurableEndpoints=true|false (ALPHA - default=false)
+                                                                AuthorizeWithSelectors=true|false (ALPHA - default=false)
                                                                 ComponentSLIs=true|false (BETA - default=true)
-                                                                ConsistentListFromCache=true|false (ALPHA - default=false)
+                                                                ConcurrentWatchObjectDecode=true|false (BETA - default=false)
+                                                                ConsistentListFromCache=true|false (BETA - default=true)
+                                                                CoordinatedLeaderElection=true|false (ALPHA - default=false)
                                                                 CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                 Failover=true|false (BETA - default=true)
                                                                 GracefulEviction=true|false (BETA - default=true)
@@ -97,8 +102,9 @@ karmada-aggregated-apiserver [flags]
                                                                 OpenAPIEnums=true|false (BETA - default=true)
                                                                 PropagateDeps=true|false (BETA - default=true)
                                                                 PropagationPolicyPreemption=true|false (ALPHA - default=false)
+                                                                ResilientWatchCacheInitialization=true|false (BETA - default=true)
                                                                 ResourceQuotaEstimate=true|false (ALPHA - default=false)
-                                                                RetryGenerateName=true|false (ALPHA - default=false)
+                                                                RetryGenerateName=true|false (BETA - default=true)
                                                                 SeparateCacheWatchRPC=true|false (BETA - default=true)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 StorageVersionHash=true|false (BETA - default=true)
@@ -107,6 +113,7 @@ karmada-aggregated-apiserver [flags]
                                                                 StructuredAuthenticationConfiguration=true|false (BETA - default=true)
                                                                 StructuredAuthorizationConfiguration=true|false (BETA - default=true)
                                                                 UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
+                                                                WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
                                                                 WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
                                                                 WatchList=true|false (ALPHA - default=false)
   -h, --help                                                    help for karmada-aggregated-apiserver

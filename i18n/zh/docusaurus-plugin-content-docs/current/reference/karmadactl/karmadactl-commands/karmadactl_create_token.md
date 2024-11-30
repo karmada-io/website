@@ -39,7 +39,7 @@ karmadactl create token SERVICE_ACCOUNT_NAME
 ```
       --allow-missing-template-keys   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats. (default true)
       --audience stringArray          Audience of the requested token. If unset, defaults to requesting a token for use with the Kubernetes API server. May be repeated to request a token valid for multiple audiences.
-      --bound-object-kind string      Kind of an object to bind the token to. Supported kinds are Pod, Secret. If set, --bound-object-name must be provided.
+      --bound-object-kind string      Kind of an object to bind the token to. Supported kinds are Node, Pod, Secret. If set, --bound-object-name must be provided.
       --bound-object-name string      Name of an object to bind the token to. The token will expire when the object is deleted. Requires --bound-object-kind.
       --bound-object-uid string       UID of an object to bind the token to. Requires --bound-object-kind and --bound-object-name. If unset, the UID of the existing object is used.
       --duration duration             Requested lifetime of the issued token. If not set or if set to 0, the lifetime will be determined by the server automatically. The server may return a token with a longer or shorter lifetime.
@@ -54,12 +54,14 @@ karmadactl create token SERVICE_ACCOUNT_NAME
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
+      --karmada-context string           The name of the kubeconfig context to use
+      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
       --log-file-max-size uint           Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                      log to standard error instead of files (default true)
+  -n, --namespace string                 If present, the namespace scope for this CLI request.
       --one-output                       If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --skip-headers                     If true, avoid header prefixes in the log messages
       --skip-log-headers                 If true, avoid headers when opening log files (no effect when -logtostderr=true)

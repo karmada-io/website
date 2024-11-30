@@ -53,9 +53,12 @@ karmadactl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_
       --field-selector string          Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.
   -f, --filename strings               Filename, directory, or URL to files identifying the resource to update the annotation
   -h, --help                           help for annotate
+      --karmada-context string         The name of the kubeconfig context to use
+      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string               Process the kustomization directory. This flag can't be used together with -f or -R.
       --list                           If true, display the annotations for a given resource.
       --local                          If true, annotation will NOT contact api-server but run locally.
+  -n, --namespace string               If present, the namespace scope for this CLI request.
   -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --overwrite                      If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
@@ -70,7 +73,6 @@ karmadactl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

@@ -43,8 +43,11 @@ karmadactl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE]
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-patch")
   -f, --filename strings               Filename, directory, or URL to files identifying the resource to update
   -h, --help                           help for patch
+      --karmada-context string         The name of the kubeconfig context to use
+      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string               Process the kustomization directory. This flag can't be used together with -f or -R.
       --local                          If true, patch will operate on the content of the file, not the server-side resource.
+  -n, --namespace string               If present, the namespace scope for this CLI request.
   -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
   -p, --patch string                   The patch to be applied to the resource JSON file.
       --patch-file string              A file containing a patch to be applied to the resource.
@@ -60,7 +63,6 @@ karmadactl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE]
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)

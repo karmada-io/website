@@ -32,7 +32,7 @@ karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
       --cluster-kubeconfig string   Path of the cluster's kubeconfig.
       --cluster-namespace string    Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")
       --dry-run                     Run the command in dry-run mode, without making any server requests.
-      --force                       Delete cluster and secret resources even if resources in the cluster targeted for unjoin are not removed successfully.
+      --force                       When set, the unjoin command will attempt to clean up resources in the member cluster before deleting the Cluster object. If the cleanup fails within the timeout period, the Cluster object will still be deleted, potentially leaving some resources behind in the member cluster.
   -h, --help                        help for unjoin
       --karmada-context string      The name of the kubeconfig context to use
       --kubeconfig string           Path to the kubeconfig file to use for CLI requests.

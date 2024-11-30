@@ -40,6 +40,7 @@ karmadactl [flags]
 * [karmadactl api-versions](karmadactl_api-versions.md)	 - Print the supported API versions on the server, in the form of "group/version"
 * [karmadactl apply](karmadactl_apply.md)	 - Apply a configuration to a resource by file name or stdin and propagate them into member clusters
 * [karmadactl attach](karmadactl_attach.md)	 - Attach to a running container
+* [karmadactl completion](karmadactl_completion.md)	 - Output shell completion code for the specified shell (bash, zsh)
 * [karmadactl cordon](karmadactl_cordon.md)	 - Mark cluster as unschedulable
 * [karmadactl create](karmadactl_create.md)	 - Create a resource from a file or from stdin
 * [karmadactl deinit](karmadactl_deinit.md)	 - Remove the Karmada control plane from the Kubernetes cluster.
@@ -63,6 +64,7 @@ karmadactl [flags]
 * [karmadactl top](karmadactl_top.md)	 - Display resource (CPU/memory) usage of member clusters
 * [karmadactl uncordon](karmadactl_uncordon.md)	 - Mark cluster as schedulable
 * [karmadactl unjoin](karmadactl_unjoin.md)	 - Remove a cluster from Karmada control plane
+* [karmadactl unregister](karmadactl_unregister.md)	 - Remove a pull mode cluster from Karmada control plane
 * [karmadactl version](karmadactl_version.md)	 - Print the version information
 
 #### Go Back to [Karmadactl Commands](karmadactl_index.md) Homepage.

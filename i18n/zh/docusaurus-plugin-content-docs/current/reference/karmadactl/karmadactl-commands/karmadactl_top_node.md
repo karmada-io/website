@@ -36,13 +36,15 @@ karmadactl top node [NAME | -l label]
 ### Options
 
 ```
-      --clusters strings       Used to specify target member clusters, for example: --clusters=member1,member2
-  -h, --help                   help for node
-      --no-headers             If present, print output without headers
-  -l, --selector string        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
-      --show-capacity          Print node resources based on Capacity instead of Allocatable(default) of the nodes.
-      --sort-by string         If non-empty, sort nodes list using specified field. The field can be either 'cpu' or 'memory'.
-      --use-protocol-buffers   Enables using protocol-buffers to access Metrics API. (default true)
+      --clusters strings         Used to specify target member clusters, for example: --clusters=member1,member2
+  -h, --help                     help for node
+      --karmada-context string   The name of the kubeconfig context to use
+      --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
+      --no-headers               If present, print output without headers
+  -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+      --show-capacity            Print node resources based on Capacity instead of Allocatable(default) of the nodes.
+      --sort-by string           If non-empty, sort nodes list using specified field. The field can be either 'cpu' or 'memory'.
+      --use-protocol-buffers     Enables using protocol-buffers to access Metrics API. (default true)
 ```
 
 ### Options inherited from parent commands
@@ -50,7 +52,6 @@ karmadactl top node [NAME | -l label]
 ```
       --add-dir-header                   If true, adds the file directory to the header of the log messages
       --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --kubeconfig string                Paths to a kubeconfig. Only required if out-of-cluster.
       --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
       --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
