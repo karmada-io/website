@@ -38,13 +38,17 @@ go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/docs/ref
 go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/karmadactl/karmadactl-commands/
 ```
 
-3. 逐一生成每个组件的参考文档。这里我们以 `karmada-apiserver` 为例
+3. 生成每个组件的参考文档。
 
 ```shell
 cd karmada/
 go build ./hack/tools/gencomponentdocs/.
-./gencomponentdocs ../website/docs/reference/components/ karmada-apiserver
-./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ karmada-apiserver
+
+components=(karmada-controller-manager karmada-scheduler karmada-agent karmada-aggregated-apiserver karmada-descheduler karmada-search karmada-scheduler-estimator karmada-webhook karmada-metrics-adapter)
+for component in ${components};do 
+  ./gencomponentdocs ../website/docs/reference/components/ $component
+  ./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ $component
+done
 ```
 
 ## 建立 release-1.x(手动)
@@ -74,8 +78,9 @@ cp docs/* versioned_docs/version-v1.5 -r
 ```shell
 cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5-sidebars.json
 sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-sidebars.json
-# update version-v1.5-sidebars.json based on sidebars.js
 ```
+
+然后，对照 `sidebars.js` 更新 `version-v1.5-sidebars.json`
 
 4. 更新中文的 versioned_docs
 
