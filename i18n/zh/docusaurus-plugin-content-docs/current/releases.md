@@ -64,7 +64,7 @@ A minor release will contain a mix of features, enhancements, and bug fixes.
 Major features follow the Karmada Design Proposal process. You can refer to [here](https://github.com/karmada-io/karmada/tree/master/docs/proposals/resource-interpreter-webhook) as a proposal example.
 
 During the start of a release, there may be many issues assigned to the release milestone. The priorities for the release are discussed in the bi-weekly community meetings.
-As the release progresses several issues may be moved to the next milestone. Hence, if an issue is important it is important to advocate its priority early in the release cycle.
+As the release progresses several issues may be moved to the next milestone. Hence, if an issue is important it is important to advocate its priority early in [the release cycle](#The Release Cycle).
 
 ### Release Artifacts
 
@@ -102,3 +102,32 @@ For example:
 ```shell
 wget https://github.com/karmada-io/karmada/releases/download/v1.3.0/karmadactl-darwin-amd64.tgz
 ```
+
+## The Release Cycle
+
+![release-cycle](resources/releases/release-cycle.png)
+
+Currently, each karmada release cycle takes about 3 months. The release process can be thought of as having three main phases:
+
+- Enhancement Definition
+- Implementation
+- Stabilization
+
+But in reality, this is an open source and agile project, with feature planning and implementation happening at all times. 
+
+### Release Timeline
+
+Karmada's releases follow a certain time specification, which facilitates release management and improves version predictability. The detailed release time line is as follows:
+
+![release-time-lines](resources/releases/release-time-lines.png)
+
+In each minor release cycle of Karmada, the tags include `alpha.1`, `alpha.2`, `beta.0`, and `rc.0`. These tags represent important milestones as the release matures. Each phase indicates different levels of stability and feature completeness, ranging from the initial alpha test versions to the near-final release candidate (rc). This structured progression ensures a consistent improvement in software quality. Furthermore, Karmada maintains the three most recent minor releases, meaning that each minor release receives approximately nine months of patch maintenance following its release.
+
+Notes: 
+
+- All time points are projected and actual releases may vary due to factors such as development progress.
+- Important decisions, such as whether to delay a release, will be made by the release team.
+
+Each release is part of a broader Karmada lifecycle:
+
+![lifecycle](resources/releases/release-life-cycle.png)
