@@ -36,14 +36,14 @@ In the Karmada Control Plane, you need to install Flux CRDs but do not need cont
 Based on the work API [here](https://github.com/kubernetes-sigs/work-api), they will be encapsulated as a work object delivered to member clusters and reconciled by Flux controllers in member clusters, finally.
 
 ```sh
-kubectl apply -k github.com/fluxcd/flux2/manifests/crds?ref=main --kubeconfig ~/.kube/karmada.config
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver apply -k https://github.com/fluxcd/flux2/manifests/crds?ref=v2.4.0 
 ```
 
 For testing purposes, we'll install Flux on member clusters without storing its manifests in a Git repository:
 
 ```sh
-flux install --kubeconfig ~/.kube/members.config --context member1
-flux install --kubeconfig ~/.kube/members.config --context member2
+kubectl --kubeconfig ~/.kube/members.config --context member1 apply -f https://github.com/fluxcd/flux2/releases/download/v2.4.0/install.yaml
+kubectl --kubeconfig ~/.kube/members.config --context member2 apply -f https://github.com/fluxcd/flux2/releases/download/v2.4.0/install.yaml
 ```
 
 Tips:
@@ -53,12 +53,14 @@ Tips:
  2. If the Flux toolkit controllers are successfully installed, you should see the following Pods:
 
 ```
-$ kubectl get pod -n flux-system
-NAME                                       READY   STATUS    RESTARTS   AGE
-helm-controller-55896d6ccf-dlf8b           1/1     Running   0          15d
-kustomize-controller-76795877c9-mbrsk      1/1     Running   0          15d
-notification-controller-7ccfbfbb98-lpgjl   1/1     Running   0          15d
-source-controller-6b8d9cb5cc-7dbcb         1/1     Running   0          15d
+$ kubectl --kubeconfig ~/.kube/members.config --context member1 get pods -n flux-system 
+NAME                                          READY   STATUS    RESTARTS   AGE
+helm-controller-79bb868f5d-7cxnx              1/1     Running   0          13m
+image-automation-controller-cb5ff5bf9-5vbhg   1/1     Running   0          13m
+image-reflector-controller-568fc784cb-t99r7   1/1     Running   0          13m
+kustomize-controller-866fbd5855-zrn85         1/1     Running   0          13m
+notification-controller-75846575bf-c42m9      1/1     Running   0          13m
+source-controller-cc7bd674d-mntb6             1/1     Running   0          13m
 ```
 
 ## Helm release propagation
@@ -68,7 +70,7 @@ If you want to propagate Helm releases for your apps to member clusters, you can
 1. Define a Flux `HelmRepository` and a `HelmRelease` manifest in the Karmada Control Plane. They will serve as resource templates.
 
 ```yaml
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: podinfo
@@ -76,7 +78,7 @@ spec:
   interval: 1m
   url: https://stefanprodan.github.io/podinfo  
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: podinfo
@@ -100,7 +102,7 @@ metadata:
   name: helm-repo
 spec:
   resourceSelectors:
-    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+    - apiVersion: source.toolkit.fluxcd.io/v1
       kind: HelmRepository
       name: podinfo
   placement:
@@ -115,7 +117,7 @@ metadata:
   name: helm-release
 spec:
   resourceSelectors:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: podinfo
   placement:
@@ -130,16 +132,16 @@ The above configuration is for propagating the Flux objects to member1 and membe
 3. Apply those manifests to the Karmada-apiserver:
 
 ```sh
-kubectl apply -f ../helm/ --kubeconfig ~/.kube/karmada.config
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver apply -f <file-contains-configuration-above> 
 ```
 
 The output is similar to:
 
 ```
-helmrelease.helm.toolkit.fluxcd.io/podinfo created
 helmrepository.source.toolkit.fluxcd.io/podinfo created
-propagationpolicy.policy.karmada.io/helm-release created
+helmrelease.helm.toolkit.fluxcd.io/podinfo created
 propagationpolicy.policy.karmada.io/helm-repo created
+propagationpolicy.policy.karmada.io/helm-release created
 ```
 
 4. Switch to the distributed cluster and verify:
@@ -151,8 +153,8 @@ helm --kubeconfig ~/.kube/members.config --kube-context member1 list
 The output is similar to:
 
 ```
-NAME   	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART        	APP VERSION
-podinfo	default  	1       	2022-05-27 01:44:35.24229175 +0000 UTC	deployed	podinfo-5.0.3	5.0.3
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART        	APP VERSION
+podinfo	default  	1       	2024-12-11 09:38:55.3331234 +0000 UTC	deployed	podinfo-5.0.3	5.0.3
 ```
 
 Based on Karmada's propagation policy, you can schedule Helm releases to your desired cluster flexibly, just like Kubernetes schedules Pods to the desired node.
@@ -172,7 +174,7 @@ metadata:
   namespace: default
 spec:
   resourceSelectors:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+    - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: podinfo
   overrideRules:
@@ -190,27 +192,27 @@ spec:
 2. Apply the manifest to the Karmada-apiserver:
 
 ```sh
-kubectl apply -f example-override.yaml --kubeconfig ~/.kube/karmada.config
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver apply -f <file-contains-configuration-above>
 ```
 
 The output is similar to:
 
 ```
-overridepolicy.policy.karmada.io/example-override configured
+overridepolicy.policy.karmada.io/example-override created
 ```
 
 3. After applying the above policy in the Karmada Control Plane, you will find that replicas in member1 have changed to 2, but those in member2 keep the same.
 
 ```sh
-kubectl --kubeconfig ~/.kube/members.config --context member1 get po
+kubectl --kubeconfig ~/.kube/members.config --context member1 get pods
 ```
 
 The output is similar to:
 
 ```
 NAME                       READY   STATUS    RESTARTS   AGE
-podinfo-68979685bc-6wz6s   1/1     Running   0          6m28s
-podinfo-68979685bc-dz9f6   1/1     Running   0          7m42s
+podinfo-77b795cc54-hk9pg   1/1     Running   0          5m39s
+podinfo-77b795cc54-mk75j   1/1     Running   0          16s
 ```
 
 ## Kustomize propagation
@@ -220,7 +222,7 @@ Kustomize propagation is basically the same as helm chart propagation above. You
 1. Define a Flux `GitRepository` and a `Kustomization` manifest in the Karmada Control Plane:
 
 ```yaml
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: podinfo
@@ -230,7 +232,7 @@ spec:
   ref:
     branch: master
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: podinfo-dev
@@ -241,7 +243,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: podinfo
-  validation: client
   timeout: 80s
 ```
 
@@ -254,7 +255,7 @@ metadata:
   name: kust-release
 spec:
   resourceSelectors:
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
       name: podinfo-dev
   placement:
@@ -269,7 +270,7 @@ metadata:
   name: kust-git
 spec:
   resourceSelectors:
-    - apiVersion: source.toolkit.fluxcd.io/v1beta2
+    - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       name: podinfo
   placement:
@@ -282,7 +283,7 @@ spec:
 3. Apply those YAMLs to the karmada-apiserver:
 
 ```sh
-kubectl apply -f kust/ --kubeconfig ~/.kube/karmada.config
+kubectl --kubeconfig ~/.kube/karmada.config --context karmada-apiserver apply -f <file-contains-configuration-above>
 ```
 
 The output is similar to:
@@ -290,14 +291,14 @@ The output is similar to:
 ```
 gitrepository.source.toolkit.fluxcd.io/podinfo created
 kustomization.kustomize.toolkit.fluxcd.io/podinfo-dev created
-propagationpolicy.policy.karmada.io/kust-git created
 propagationpolicy.policy.karmada.io/kust-release created
+propagationpolicy.policy.karmada.io/kust-git created
 ```
 
 4. Switch to the distributed cluster and verify:
 
 ```sh
-kubectl --kubeconfig ~/.kube/members.config --context member1 get pod -n dev 
+kubectl --kubeconfig ~/.kube/members.config --context member1 get pods -n dev 
 ```
 
 The output is similar to:
