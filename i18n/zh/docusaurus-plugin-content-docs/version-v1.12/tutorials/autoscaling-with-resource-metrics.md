@@ -171,10 +171,10 @@ spec:
 
 部署完成后，您可以检查 Pod 和 Service 的分发情况：
 ```sh
-$ karmadactl get pods
+$ karmadactl get pods --operation-scope members
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          9h
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 nginx-service           member1   ClusterIP   10.11.216.215   <none>        80/TCP    9h    Y
 nginx-service           member2   ClusterIP   10.13.46.61     <none>        80/TCP    9h    Y
@@ -272,7 +272,7 @@ nginx   Deployment       nginx            1         10        1          9h
 
 部署完成后，您可以检查多集群 Service：
 ```sh
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
 ```
@@ -291,13 +291,13 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * 首先检查 Pod 的分发情况。
   ```sh
-  $ karmadactl get pods
+  $ karmadactl get pods --operation-scope members
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
 * 检查多集群 Service ip。
   ```sh
-  $ karmadactl get svc
+  $ karmadactl get svc --operation-scope members
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
@@ -309,7 +309,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * 等待 15 秒，副本将扩容，然后您可以再次检查 Pod 分发状态。
   ```sh
-  $ karmadactl get pods -l app=nginx
+  $ karmadactl get pods --operation-scope members -l app=nginx
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-c2cfv   member1   1/1     Running     0          22s
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          62m
@@ -328,7 +328,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 1 分钟后，负载测试工具将停止运行，然后您可以看到工作负载在多个集群中缩容。
 ```sh
-$ karmadactl get pods -l app=nginx
+$ karmadactl get pods --operation-scope members -l app=nginx
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          64m
 ```

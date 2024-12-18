@@ -169,10 +169,10 @@ spec:
 
 After deploying, you can check the propagation of the Pods and Service:
 ```sh
-$ karmadactl get pods
+$ karmadactl get pods --operation-scope members
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          9h
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 nginx-service           member1   ClusterIP   10.11.216.215   <none>        80/TCP    9h    Y
 nginx-service           member2   ClusterIP   10.13.46.61     <none>        80/TCP    9h    Y
@@ -272,7 +272,7 @@ As mentioned before, we need a multi-cluster Service to route the requests to th
 
 After deploying, you can check the multi-cluster Service:
 ```sh
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
 ```
@@ -291,14 +291,14 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * Check the Pod propagation firstly.
   ```sh
-  $ karmadactl get pods
+  $ karmadactl get pods --operation-scope members
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
 
 * Check multi-cluster Service IP.
   ```sh
-  $ karmadactl get svc
+  $ karmadactl get svc --operation-scope members
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
@@ -310,7 +310,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * Wait 15s, the replicas will be scaled up, then you can check the Pod propagation again.
   ```sh
-  $ karmadactl get pods -l app=nginx
+  $ karmadactl get pods --operation-scope members -l app=nginx
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-c2cfv   member1   1/1     Running     0          22s
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          62m
@@ -329,7 +329,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 After 1 minute, the load testing tool will be stopped, then you can see the workload is scaled down across clusters.
 ```sh
-$ karmadactl get pods -l app=nginx
+$ karmadactl get pods --operation-scope members -l app=nginx
 NAME                     CLUSTER   READY   STATUS    RESTARTS   AGE
 nginx-777bc7b6d7-mbdn8   member1   1/1     Running   0          64m
 ```

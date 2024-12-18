@@ -191,10 +191,10 @@ spec:
 
 部署完成后，您可以检查 Pod 和 Service 的分发情况：
 ```sh
-$ karmadactl get pods
+$ karmadactl get pods --operation-scope members
 NAME                                  CLUSTER   READY   STATUS    RESTARTS   AGE
 sample-app-9b7d8c9f5-xrnfx            member1   1/1     Running   0          111s
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                 CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE     ADOPTION
 sample-app           member1   ClusterIP   10.11.29.250    <none>        80/TCP    3m53s   Y
 ```
@@ -407,7 +407,7 @@ sample-app    Deployment       sample-app       1         10        1          1
 
 部署完成后，您可以检查多集群 Service：
 ```sh
-$ karmadactl get svc
+$ karmadactl get svc --operation-scope members
 NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
 derived-sample-app      member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
 ```
@@ -426,14 +426,14 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * 首先检查 Pod 的分发情况。
   ```sh
-  $ karmadactl get pods
+  $ karmadactl get pods --operation-scope members
   NAME                                  CLUSTER   READY   STATUS    RESTARTS   AGE
   sample-app-9b7d8c9f5-xrnfx            member1   1/1     Running   0          111s
   ```
 
 * 检查多集群 Service ip。
   ```sh
-  $ karmadactl get svc
+  $ karmadactl get svc --operation-scope members
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
   derived-sample-app      member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
@@ -445,7 +445,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 * 等待 15 秒，副本将扩容，然后您可以再次检查 Pod 分发状态。
   ```sh
-  $ karmadactl get po -l app=sample-app
+  $ karmadactl get po --operation-scope members -l app=sample-app
   NAME                         CLUSTER   READY   STATUS    RESTARTS   AGE
   sample-app-9b7d8c9f5-454vz   member2   1/1     Running   0          84s
   sample-app-9b7d8c9f5-7fjhn   member2   1/1     Running   0          69s
@@ -463,7 +463,7 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
 
 1 分钟后，负载测试工具将停止运行，然后您可以看到工作负载在多个集群中缩容。
 ```sh
-$ karmadactl get pods -l app=sample-app
+$ karmadactl get pods --operation-scope members -l app=sample-app
 NAME                         CLUSTER   READY   STATUS    RESTARTS   AGE
 sample-app-9b7d8c9f5-xrnfx   member1   1/1     Running   0          91m
 ```
