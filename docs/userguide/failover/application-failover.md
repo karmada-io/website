@@ -190,11 +190,13 @@ spec:
 
 You can edit `suppressDeletion` to false in `gracefulEvictionTasks` to evict the application in the failed cluster after you confirm the failure.
 
-## Stateful Application Failover Support
+## Application State Preservation
 
 Starting from v1.12, the application-level failover feature adds support for stateful application failover, it provides a generalized way for users to define application state preservation in the context of cluster-to-cluster failovers.
 
 In releases prior to v1.12, Karmada’s scheduling logic runs on the assumption that resources that are scheduled and rescheduled are stateless. In some cases, users may desire to conserve a certain state so that applications can resume from where they left off in the previous cluster. For CRDs dealing with data-processing (such as Flink or Spark), it can be particularly useful to restart applications from a previous checkpoint. That way applications can seamlessly resume processing data while avoiding double processing.
+
+To meet the aforementioned requirements, starting from v1.12, the application-level failover has introduced a mechanism for preserving application state, providing users with a general way to define application state preservation in the context of of cluster-to-cluster failovers.
 
 ### Defining StatePreservation
 
