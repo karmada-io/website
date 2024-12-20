@@ -42,6 +42,7 @@ module.exports = {
                     label: "Karmadactl Operations",
                     items: [
                         "tutorials/karmadactl/operation-scope",
+                        "tutorials/karmadactl/auto-completion",
                     ],
                 },
             ],
