@@ -190,7 +190,7 @@ spec:
 
 You can edit `suppressDeletion` to false in `gracefulEvictionTasks` to evict the application in the failed cluster after you confirm the failure.
 
-## Stateful Application Failover Support
+## Application State Preservation
 
 Starting from v1.12, the application-level failover feature adds support for stateful application failover, it provides a generalized way for users to define application state preservation in the context of cluster-to-cluster failovers.
 
@@ -200,15 +200,20 @@ In releases prior to v1.12, Karmada’s scheduling logic runs on the assumption 
 
 `StatePreservation` is a field under `.spec.failover.application`, it defines the policy for preserving and restoring state data during failover events for stateful applications. When an application fails over from one cluster to another, this policy enables the extraction of critical data from the original resource configuration.
 
-It contains a list of `StatePreservationRule` configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An `AliasLabelName` is associated with each rule, serving as a label key when the preserved data is passed to the new cluster. You can define the state preservation policy:
+It contains a list of `StatePreservationRule` configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An `AliasLabelName` is associated with each rule, serving as a label key when the preserved data is passed to the new cluster.
+
+As an example, in a Flink application, `jobID` is a unique identifier used to distinguish and manage different Flink jobs. Each Flink job is assigned a `jobID` when it is submitted to the Flink cluster. When a job fails, the Flink application can use the `jobID` to recover the state of the pre-failure job and continue execution from the point of failure. The configuration and steps are as follows:
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
-  name: example-propagation
+  name: foo
 spec:
-  #...
+  resourceSelectors:
+    - apiVersion: flink.apache.org/v1beta1
+      kind: FlinkDeployment
+      name: foo
   failover:
     application:
       decisionConditions:
@@ -216,11 +221,24 @@ spec:
       purgeMode: Immediately
       statePreservation:
         rules:
-          - aliasLabelName: pre-updated-replicas
-            jsonPath: "{ .updatedReplicas }"
+          - aliasLabelName: application.karmada.io/failover-jobid
+            jsonPath: "{ .jobStatus.jobID }"
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+        spreadByField: cluster
 ```
 
-The above configuration will parse the `updatedReplicas` field from the application `.status` before migration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact.
+1. Before migration, the Karmada controller will grab the job IDs from the status of FlinkDeployment according to the `jsonPath` configured by the user.
+2. During migration, the Karmada controller injects the extracted job ID into the Flink application configuration as a label, e.g. `application.karmada.io/failover-jobid : <jobID>`.
+3. Kyverno running on a member cluster intercepts the FlinkDeployment creation request and gets the checkpoint data storage path for the job based on the `jobID`, e.g. `/<shared-path>/<job-namespace>/<jobId>/checkpoints/xxx`, then configures the `initialSavepointPath` to indicate that it will start from the save point.
+4. The FlinkDeployment starts based on the checkpoint data under `initialSavepointPath`, thus inheriting the final state saved before the migration.
 
 This capability requires enabling the `StatefulFailoverInjection` feature gate. `StatefulFailoverInjection` is currently in `Alpha` and is turned off by default.
 

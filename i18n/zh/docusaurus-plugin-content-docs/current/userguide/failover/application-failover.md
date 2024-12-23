@@ -192,7 +192,7 @@ spec:
 
 您可以在 gracefulEvictionTasks 中将 suppressDeletion 修改为 false，确认故障后驱逐故障集群中的应用。
 
-## 无状态应用 Failover 支持
+## 应用状态中继
 
 从 v1.12 开始，应用故障转移特性增加了对有状态应用故障转移的支持，它为用户提供了一种通用的方式来定义在集群间故障转移情境下的应用状态保留。
 
@@ -202,15 +202,20 @@ spec:
 
 `StatePreservation` 是 `.spec.failover.application` 下的一个字段, 它定义了在有状态应用的故障转移事件期间保留和恢复状态数据的策略。当应用从一个集群故障转移到另一个集群时，此策略使得能够从原始资源配置中提取关键数据。
 
-它包含了一系列 `StatePreservationRule` 配置。每条规则指定了一个 JSONPath 表达式，针对特定的状态数据片段，在故障转移事件中需要保留。每条规则都关联了一个 `AliasLabelName`，当保留的数据传递到新集群时，它作为标签键使用。你可以定义状态保留策略：
+它包含了一系列 `StatePreservationRule` 配置。每条规则指定了一个 JSONPath 表达式，针对特定的状态数据片段，在故障转移事件中需要保留。每条规则都关联了一个 `AliasLabelName`，当保留的数据传递到新集群时，它作为标签键使用。
+
+以 Flink 应用为例，在 Flink 应用中，`jobID` 是一个唯一的标识符，用于区分和管理不同的 Flink 作业（jobs）。每个 Flink 作业在提交到 Flink 集群时都会被分配一个 `jobID`。当作业发生故障时，Flink 应用可以利用 `jobID` 来恢复故障前作业的状态，从故障点处继续执行。具体的配置和步骤如下：
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
 metadata:
-  name: example-propagation
+  name: foo
 spec:
-  #...
+  resourceSelectors:
+    - apiVersion: flink.apache.org/v1beta1
+      kind: FlinkDeployment
+      name: foo
   failover:
     application:
       decisionConditions:
@@ -218,11 +223,24 @@ spec:
       purgeMode: Immediately
       statePreservation:
         rules:
-          - aliasLabelName: pre-updated-replicas
-            jsonPath: "{ .updatedReplicas }"
+          - aliasLabelName: application.karmada.io/failover-jobid
+            jsonPath: "{ .jobStatus.jobID }"
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    spreadConstraints:
+      - maxGroups: 1
+        minGroups: 1
+        spreadByField: cluster
 ```
 
-上述配置将在迁移前解析应用 `.status` 中的 `updatedReplicas` 字段。成功迁移后，提取的数据将重新注入到新资源中，确保应用程序能够以其之前的状态恢复操作。
+1. 迁移前，Karmada 控制器将按照用户配置的路径提取 job ID。  
+2. 迁移时，Karmada 控制器将提取的 job ID 以 label 的形式注入到 Flink 应用配置中，比如 `application.karmada.io/failover-jobid : <jobID>`。  
+3. 运行在成员集群的 Kyverno 拦截 Flink 应用创建请求，并根据 `jobID`  获取该 job 的 checkpoint 数据存储路径，比如  `/<shared-path>/<job-namespace>/<jobId>/checkpoints/xxx`，然后配置 `initialSavepointPath` 指示从save point 启动。  
+4. Flink 应用根据 `initialSavepointPath` 下的 checkpoint 数据启动，从而继承迁移前保存的最终状态。
 
 此功能需要启用 `StatefulFailoverInjection` 特性门控。`StatefulFailoverInjection` 目前处于 `Alpha` 阶段，默认情况下是关闭的。
 
