@@ -941,7 +941,7 @@ systemctl start karmada-webhook.service
 systemctl status karmada-webhook.service
 ```
 
-### Configurate karmada-webhook
+### Configure karmada-webhook
 
 Download the `webhook-configuration.yaml` file: [https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/webhook-configuration.yaml)
 
