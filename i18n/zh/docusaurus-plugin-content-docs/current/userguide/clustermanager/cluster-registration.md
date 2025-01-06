@@ -20,24 +20,24 @@ Karmada 控制平面不会直接访问成员集群，而是将其请求下放给
 
 ## 使用 'Push' 模式注册集群
 
-您可以使用 [kubectl-karmada](../../installation/install-cli-tools.md) 命令行工具来实现集群的 `join`（注册）和 `unjoin`（注销）操作。
+您可以使用 [karmadactl](../../installation/install-cli-tools.md) 命令行工具来实现集群的 `join`（注册）和 `unjoin`（注销）操作。
 
 ### 通过命令行工具注册集群
 
 使用以下命令将名为 `member1` 的集群注册到 Karmada 中。
 ```bash
-kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig=<member1 kubeconfig>
+karmadactl join member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig=<member1 kubeconfig>
 ```
 重复此步骤以注册任何其他集群。
 
 `--kubeconfig` 参数用于指定 Karmada 的 `kubeconfig` 文件，命令行工具可以从 `kubeconfig` 的 `current-context` 字段中推断出 `karmada-apiserver` 的上下文。如果 `kubeconfig` 文件中配置了多个上下文，建议通过 `--karmada-context` 参数明确指定上下文。例如：
 ```bash
-kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --karmada-context=karmada --cluster-kubeconfig=<member1 kubeconfig>
+karmadactl join member1 --kubeconfig=<karmada kubeconfig> --karmada-context=karmada --cluster-kubeconfig=<member1 kubeconfig>
 ```
 
 `--cluster-kubeconfig` 参数用于指定成员集群的 `kubeconfig` 文件，命令行工具可以根据集群名称推断出成员集群的上下文。如果 `kubeconfig` 文件中配置了多个上下文，或者您不想使用上下文名称进行注册时，建议通过 `--cluster-context` 参数明确指定上下文。例如：
 ```bash
-kubectl karmada join member1 --kubeconfig=<karmada kubeconfig> --karmada-context=karmada \
+karmadactl join member1 --kubeconfig=<karmada kubeconfig> --karmada-context=<karmada context> \
 --cluster-kubeconfig=<member1 kubeconfig> --cluster-context=member1
 ```
 > 注意: 指定 `--cluster-context` 时，注册的集群名称可以与上下文名称不同。
@@ -56,7 +56,7 @@ member1   v1.20.7   Push   True    66s
 
 您可以使用以下命令注销集群。
 ```bash
-kubectl karmada unjoin member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig=<member1 kubeconfig>
+karmadactl unjoin member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig=<member1 kubeconfig>
 ```
 在注销过程中，Karmada 分发到 `member1` 的资源会被清理。
 并且，`--cluster-kubeconfig` 参数用于清理在 `join` 阶段创建的密钥。
@@ -70,7 +70,7 @@ kubectl karmada unjoin member1 --kubeconfig=<karmada kubeconfig> --cluster-kubec
 `karmadactl register` 命令用于以 PULL 模式将成员集群注册到 Karmada 控制平面。
 与采用 `Push` 模式注册集群的 `karmadactl join` 命令不同，`karmadactl register` 以 `Pull` 模式将集群注册到 Karmada 控制平面。
 
-> 注意：目前该功能仅支持通过 `karmadactl init` 安装的 Karmada 控制平面。
+> 注意: 使用此功能需要在 Karmada 控制面部署 ConfigMap `kube-public/cluster-info` 来暴露成员集群可访问的 Karmada Apiserver Server 以及根 CA。
 
 #### 在 Karmada 控制平面中创建引导令牌
 
@@ -126,9 +126,9 @@ member3   v1.20.7   Pull   True    66s
 
 ### 注销集群
 
-卸载 `karmada-agent`，然后手动从 Karmada 中移除 `cluster`。
+您可以使用以下命令注销集群。
 ```bash
-kubectl delete cluster member3
+karmadactl unregister member3 --cluster-kubeconfig=<member3 kubeconfig> --cluster-context=<member3 context> --karmada-config=<karmada kubeconfig> --karmada-context=<karmada context>
 ```
 
 ## 集群标识符
