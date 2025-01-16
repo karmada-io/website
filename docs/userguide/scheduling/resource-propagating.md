@@ -409,7 +409,7 @@ For example, when using `SpreadByFieldRegion` to specify region groups, at the m
 
 It has two replicaSchedulingTypes which determine how the replicas are scheduled when Karmada propagates a resource:
 
-* `Duplicated`: duplicate the same replicas to each candidate member cluster from resources.
+* `Duplicated`: duplicate the same replicas to each candidate member cluster from resources. This is the <b> default </b> `replicaSchedulingType`.
 * `Divided`: divide replicas into parts according to numbers of valid candidate member clusters, and exact replicas for each cluster are determined by `ReplicaDivisionPreference`.
 
 `ReplicaDivisionPreference` determines how replicas are divided when ReplicaSchedulingType is `Divided`.
