@@ -111,7 +111,7 @@ Karmada collects node and pod information from each cluster and computes the app
 
 #### Start to use Customized Cluster Resource Models
 
-`CustomizedClusterResourceModeling` feature gate has evolved to Beta sine Karmada v1.4 and is enabled by default. 
+`CustomizedClusterResourceModeling` feature gate has evolved to Beta since Karmada v1.4 and is enabled by default. 
 If you use Karmada v1.3, you need to enable this feature gate in `karmada-scheduler`, `karmada-aggregated-server` and `karmada-controller-manager`.
 
 For example, you can use the command below to turn on the feature gate in the `karmada-controller-manager`.
