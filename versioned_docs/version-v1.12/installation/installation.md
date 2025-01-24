@@ -135,8 +135,13 @@ hack/create-cluster.sh host $HOME/.kube/host.config
 
 Install Karmada v1.2.0 by command `kubectl karmada init`:
 ```bash
-kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
+kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz \
+--kubeconfig=$HOME/.kube/host.config \
+--karmada-data=$HOME/karmada \
+--karmada-pki=$HOME/karmada/pki
 ```
+
+> The above command initializes Karmada and customizes the directories for storing certificates and configuration files, avoiding issues related to insufficient permissions in system directories like `/etc/karmada`.
 
 Check installed components:
 ```bash
