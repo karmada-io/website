@@ -3,14 +3,11 @@ FROM node:18-alpine
 # Set working directory
 WORKDIR /app/docs
 
-# Copy package.json and package-lock.json to the container
-COPY package.json package-lock.json ./
+# Copy current directory to the container
+COPY . .
 
 # Install dependencies
 RUN npm install
-
-# Copy current directory to the container
-COPY . .
 
 # Set environment variable
 ENV NODE_ENV=development
