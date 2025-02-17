@@ -61,7 +61,7 @@ metadata:
   namespace: test
 spec:
   components:
-    KarmadaSearch: {}
+    karmadaSearch: {}
 EOF
 ```
 
