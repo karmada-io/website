@@ -162,6 +162,7 @@ module.exports = {
                     items: [
                         "administrator/configuration/configure-controllers",
                         "administrator/configuration/resource-deletion-protection",
+                        "administrator/configuration/priority-class-configuration",
                     ],
                 },
                 {
