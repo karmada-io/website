@@ -1,25 +1,35 @@
-FROM node:18-alpine
+# Stage 1: Build Stage.
+FROM node:18-alpine AS build
 
-# Set working directory
-WORKDIR /app/docs
+# Set working directory.
+WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
+# Copy package.json and package-lock.json to the container.
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies and browser-sync globally.
+RUN npm install && npm install -g browser-sync
 
-# Copy current directory to the container
+# Copy the rest of the application files.
 COPY . .
 
-# Set environment variable
+# Stage 2: Development Stage.
+FROM alpine:3.21.3
+
+# Install yarn in the final image required to run the application.
+RUN apk add --no-cache yarn
+
+# Set working directory.
+WORKDIR /app
+
+# Copy only necessary files from the build stage (node_modules and app files).
+COPY --from=build /app /app
+
+# Set environment variable.
 ENV NODE_ENV=development
 
-# Install browser-sync globally
-RUN npm install -g browser-sync
-
-# Expose port 3000
+# Expose port 3000.
 EXPOSE 3000
 
-# Start the application
+# Start the application using yarn.
 CMD ["yarn", "run", "start:watch"]
