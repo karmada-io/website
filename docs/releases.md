@@ -72,10 +72,30 @@ The Karmada container images are available at `dockerHub`.
 You can visit `https://hub.docker.com/r/karmada/<component_name>` to see the details of images.
 For example, [here](https://hub.docker.com/r/karmada/karmada-controller-manager) for karmada-controller-manager.
 
-Since v1.2.0, the following artifacts are uploaded:
+#### Platform Support
+**Operating System:**
+
+- Linux
+- Darwin
+
+**Architecture:**
+
+- AMD64
+- ARM64
+
+#### Artifacts
+
+The following artifacts are uploaded:
 
 * crds.tar.gz
 * karmada-chart-v\<version_number\>.tgz
+* karmada-chart-v\<version_number\>.tgz.sha256
+* karmada-charts.intoto.jsonl
+* karmada-cli.intoto.jsonl
+* karmada-crds.intoto.jsonl
+* karmada-operator-chart-v\<version_number\>.tgz
+* karmada-operator-chart-v\<version_number\>.tgz.sha256
+* karmada-sbom.intoto.jsonl
 * karmadactl-darwin-amd64.tgz
 * karmadactl-darwin-amd64.tgz.sha256
 * karmadactl-darwin-arm64.tgz
@@ -122,13 +142,14 @@ Karmada's releases follow a certain time specification, which facilitates releas
 
 ![release-time-lines](resources/releases/release-time-lines.png)
 
-In each minor release cycle of Karmada, the tags include `alpha.1`, `alpha.2`, `beta.0`, and `rc.0`. These tags represent important milestones as the release matures. Each phase indicates different levels of stability and feature completeness, ranging from the initial alpha test versions to the near-final release candidate (rc). This structured progression ensures a consistent improvement in software quality. Furthermore, Karmada maintains the three most recent minor releases, meaning that each minor release receives approximately nine months of patch maintenance following its release.
+In each minor release cycle of Karmada, the tags include `alpha.1`, `alpha.2`, `beta.0`, and `rc.0`. These tags represent important milestones as the release matures. Each phase indicates different levels of stability and feature completeness, ranging from the initial alpha test versions to the near-final release candidate (rc). This structured progression ensures a consistent improvement in software quality.
 
 Notes: 
 
 - All time points are projected and actual releases may vary due to factors such as development progress.
 - Important decisions, such as whether to delay a release, will be made by the release team.
 
-Each release is part of a broader Karmada lifecycle:
+### Support Versions
+Karmada maintains the three most recent minor releases, meaning that each minor release receives approximately nine months of patch maintenance following its release. However, in exceptional cases where severe issues arise, we may consider releasing patches for earlier versions as well, based on the specific circumstances.
 
 ![lifecycle](resources/releases/release-life-cycle.png)
