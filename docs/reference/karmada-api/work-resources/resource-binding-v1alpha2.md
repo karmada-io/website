@@ -608,6 +608,18 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
 
+- **schedulePriority** (SchedulePriority)
+
+  SchedulePriority represents the scheduling priority assigned to workloads.
+
+  <a name="SchedulePriority"></a>
+
+  *SchedulePriority represents the scheduling priority assigned to workloads.*
+
+  - **schedulePriority.priority** (int32)
+
+    Priority specifies the scheduling priority for the binding. Higher values indicate a higher priority. If not explicitly set, the default value is 0.
+
 - **schedulerName** (string)
 
   SchedulerName represents which scheduler to proceed the scheduling. It inherits directly from the associated PropagationPolicy(or ClusterPropagationPolicy).
@@ -618,7 +630,7 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   <a name="Suspension"></a>
 
-  *Suspension defines the policy for suspending different aspects of propagation.*
+  *Suspension defines the policy for suspending dispatching and scheduling.*
 
   - **suspension.dispatching** (boolean)
 
@@ -635,6 +647,10 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
     - **suspension.dispatchingOnClusters.clusterNames** ([]string)
 
       ClusterNames is the list of clusters to be selected.
+
+  - **suspension.scheduling** (boolean)
+
+    Scheduling controls whether scheduling should be suspended, the scheduler will pause scheduling and not process resource binding when the value is true and resume scheduling when it's false or nil. This is designed for third-party systems to temporarily pause the scheduling of applications, which enabling manage resource allocation, prioritize critical workloads, etc. It is expected that third-party systems use an admission webhook to suspend scheduling at the time of ResourceBinding creation. Once a ResourceBinding has been scheduled, it cannot be paused afterward, as it may lead to ineffective suspension.
 
 ## ResourceBindingStatus 
 

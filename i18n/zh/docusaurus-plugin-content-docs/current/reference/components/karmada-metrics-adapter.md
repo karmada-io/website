@@ -76,6 +76,7 @@ karmada-metrics-adapter [flags]
       --log_file string                                         If non-empty, use this log file (no effect when -logtostderr=true)
       --log_file_max_size uint                                  Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                                             log to standard error instead of files (default true)
+      --metrics-bind-address string                             The TCP address that the server should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. Defaults to 0.0.0.0:8080. (default ":8080")
       --one_output                                              If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --permit-address-sharing                                  If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]
       --permit-port-sharing                                     If true, SO_REUSEPORT will be used when binding the port, which allows more than one instance to bind on the same address and port. [default=false]

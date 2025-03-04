@@ -40,7 +40,24 @@ ResourceInterpreterWebhookConfiguration describes the configuration of webhooks 
 
   - **webhooks.clientConfig** (WebhookClientConfig), required
 
-    ClientConfig defines how to communicate with the hook.
+    ClientConfig defines how to communicate with the hook. It supports two mutually exclusive configuration modes:
+    
+    1. URL - Directly specify the webhook URL with format `scheme://host:port/path`.
+       Example: https://webhook.example.com:8443/my-interpreter
+    
+    2. Service - Reference a Kubernetes Service that exposes the webhook.
+       When using Service reference, Karmada resolves the endpoint through following steps:
+       a) First attempts to locate the Service in karmada-apiserver
+       b) If found, constructs URL based on Service type:
+          - ClusterIP/LoadBalancer/NodePort: Uses ClusterIP with port from Service spec
+            (Note: Services with ClusterIP "None" are rejected), Example:
+            `https://&lt;cluster ip&gt;:&lt;port&gt;`
+          - ExternalName: Uses external DNS name format: `https://&lt;external name&gt;:&lt;port&gt;`
+       c) If NOT found in karmada-apiserver, falls back to standard Kubernetes
+          service DNS name format: `https://&lt;service&gt;.&lt;namespace&gt;.svc:&lt;port&gt;`
+    
+    Note: When both URL and Service are specified, the Service reference takes precedence
+          and the URL configuration will be ignored.
 
     <a name="WebhookClientConfig"></a>
 

@@ -49,6 +49,7 @@ karmada-agent [flags]
                                                        Failover=true|false (BETA - default=false)
                                                        GracefulEviction=true|false (BETA - default=true)
                                                        MultiClusterService=true|false (ALPHA - default=false)
+                                                       PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                        PropagateDeps=true|false (BETA - default=true)
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
