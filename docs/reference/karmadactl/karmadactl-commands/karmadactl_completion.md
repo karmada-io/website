@@ -2,11 +2,11 @@
 title: karmadactl completion
 ---
 
-Output shell completion code for the specified shell (bash, zsh)
+Output shell completion code for the specified shell (bash, zsh, fish)
 
 ### Synopsis
 
-Output shell completion code for the specified shell (bash, zsh). The shell code must be evaluated to provide interactive completion of kubectl commands.  This can be done by sourcing it from the .bash_profile.
+Output shell completion code for the specified shell (bash, zsh, fish). The shell code must be evaluated to provide interactive completion of karmadactl commands. This can be done by sourcing it from the .bash_profile.
 
  Note for zsh users: zsh completions are only supported in versions of zsh >= 5.2.
 
@@ -32,6 +32,11 @@ karmadactl completion SHELL
   source <(karmadactl completion zsh)
   # Set the karmadactl completion code for zsh to autoload on startup
   karmadactl completion zsh > "${fpath[1]}/karmadactl"
+  
+  # Load the karmadactl completion code for fish into the current shell
+  karmadactl completion fish | source
+  # To load completions for each session, execute once:
+  karmadactl completion fish > ~/.config/fish/completions/karmadactl.fish
 ```
 
 ### Options

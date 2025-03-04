@@ -46,6 +46,8 @@ karmadactl addons enable
       --apiservice-timeout int                     Wait apiservice ready timeout. (default 30)
   -C, --cluster string                             Name of the member cluster that enables or disables the scheduler estimator.
       --context string                             The name of the kubeconfig context to use.
+      --descheduler-priority-class string          The priority class name for the component karmada-descheduler. (default "system-node-critical")
+      --estimator-priority-class string            The priority class name for the component karmada-scheduler-estimator. (default "system-node-critical")
   -h, --help                                       help for enable
       --host-cluster-domain string                 The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --karmada-context string                     The name of the karmada control plane kubeconfig context to use.
@@ -61,9 +63,11 @@ karmadactl addons enable
       --kubeconfig string                          Path to the host cluster kubeconfig file.
       --member-context string                      Member cluster's context which to deploy scheduler estimator
       --member-kubeconfig string                   Member cluster's kubeconfig which to deploy scheduler estimator
+      --metrics-adapter-priority-class string      The priority class name for the component karmada-metrics-adaptor. (default "system-node-critical")
   -n, --namespace string                           namespace where Karmada components are installed. (default "karmada-system")
       --pod-timeout int                            Wait pod ready timeout. (default 120)
       --private-image-registry string              Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.
+      --search-priority-class string               The priority class name for the component karmada-search. (default "system-node-critical")
 ```
 
 ### Options inherited from parent commands

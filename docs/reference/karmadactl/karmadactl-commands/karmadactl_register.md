@@ -27,7 +27,6 @@ karmadactl register [karmada-apiserver-endpoint]
 ### Options
 
 ```
-      --ca-cert-path string                           The path to the SSL certificate authority used to secure communications between member cluster and karmada-control-plane. (default "/etc/karmada/pki/ca.crt")
       --cert-expiration-seconds int32                 The expiration time of certificate. (default 31536000)
       --cluster-name string                           The name of member cluster in the control plane, if not specified, the cluster of current-context is used by default.
       --cluster-namespace string                      Namespace in the control plane where member cluster secrets are stored. (default "karmada-cluster")

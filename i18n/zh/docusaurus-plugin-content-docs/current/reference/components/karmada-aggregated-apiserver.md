@@ -100,6 +100,7 @@ karmada-aggregated-apiserver [flags]
                                                                 InPlacePodVerticalScaling=true|false (ALPHA - default=false)
                                                                 MultiClusterService=true|false (ALPHA - default=false)
                                                                 OpenAPIEnums=true|false (BETA - default=true)
+                                                                PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                                 PropagateDeps=true|false (BETA - default=true)
                                                                 PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 ResilientWatchCacheInitialization=true|false (BETA - default=true)

@@ -420,6 +420,36 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
     
     Defaults to false.
 
+  - **spec.schedulePriority** (SchedulePriority)
+
+    SchedulePriority defines how Karmada should resolve the priority and preemption policy for workload scheduling.
+    
+    This setting is useful for controlling the scheduling behavior of offline workloads. By setting a higher or lower priority, users can control which workloads are scheduled first. Additionally, it allows specifying a preemption policy where higher-priority workloads can preempt lower-priority ones in scenarios of resource contention.
+    
+    Note: This feature is currently in the alpha stage. The priority-based scheduling functionality is controlled by the PriorityBasedScheduling feature gate, and preemption is controlled by the PriorityBasedPreemptiveScheduling feature gate. Currently, only priority-based scheduling is supported. Preemption functionality is not yet available and will be introduced in future releases as the feature matures.
+
+    <a name="SchedulePriority"></a>
+
+    *SchedulePriority defines how Karmada should resolve the priority and preemption policy for workload scheduling.*
+
+    - **spec.schedulePriority.priorityClassName** (string), required
+
+      PriorityClassName specifies which PriorityClass to use. Its behavior depends on PriorityClassSource:
+      
+      Behavior of PriorityClassName:
+      
+      For KubePriorityClass: - When specified: Uses the named Kubernetes PriorityClass. - When empty: Uses the cluster's default PriorityClass (i.e., the PriorityClass marked as the global default in the cluster). - If neither exists: Sets priority=0 and preemptionPolicy=Never.
+      
+      For PodPriorityClass: - Uses PriorityClassName from the PodTemplate. - If the specified PriorityClass is not found, falls back to the cluster's default PriorityClass
+        (i.e., the PriorityClass marked as the global default in the cluster).
+      - If no valid PriorityClass is found: Sets priority=0 and preemptionPolicy=Never. - Not yet implemented.
+      
+      For FederatedPriorityClass: - Not yet implemented.
+
+    - **spec.schedulePriority.priorityClassSource** (string), required
+
+      PriorityClassSource specifies where Karmada should look for the PriorityClass definition. Available options: - KubePriorityClass: Uses Kubernetes PriorityClass (scheduling.k8s.io/v1) - PodPriorityClass: Uses PriorityClassName from PodTemplate: PodSpec.PriorityClassName (not yet implemented) - FederatedPriorityClass: Uses Karmada FederatedPriorityClass (not yet implemented)
+
   - **spec.schedulerName** (string)
 
     SchedulerName represents which scheduler to proceed the scheduling. If specified, the policy will be dispatched by specified scheduler. If not specified, the policy will be dispatched by default scheduler.
