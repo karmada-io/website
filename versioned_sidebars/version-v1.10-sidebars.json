@@ -194,7 +194,8 @@
             "version-v1.10/administrator/upgrading/v1.5-v1.6",
             "version-v1.10/administrator/upgrading/v1.6-v1.7",
             "version-v1.10/administrator/upgrading/v1.7-v1.8",
-            "version-v1.10/administrator/upgrading/v1.8-v1.9"
+            "version-v1.10/administrator/upgrading/v1.8-v1.9",
+            "version-v1.10/administrator/upgrading/v1.9-v1.10"
           ]
         },
         {
@@ -290,7 +291,7 @@
             "version-v1.10/reference/components/karmada-scheduler-estimator",
             "version-v1.10/reference/components/karmada-search",
             "version-v1.10/reference/components/karmada-webhook",
-	          "version-v1.10/reference/components/karmada-metrics-adapter"
+            "version-v1.10/reference/components/karmada-metrics-adapter"
           ]
         },
         {
