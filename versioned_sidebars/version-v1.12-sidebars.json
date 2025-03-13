@@ -298,7 +298,7 @@
             "version-v1.12/reference/components/karmada-scheduler-estimator",
             "version-v1.12/reference/components/karmada-search",
             "version-v1.12/reference/components/karmada-webhook",
-	          "version-v1.12/reference/components/karmada-metrics-adapter"
+            "version-v1.12/reference/components/karmada-metrics-adapter"
           ]
         },
         {
