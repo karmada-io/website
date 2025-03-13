@@ -438,11 +438,9 @@ PropagationPolicy represents the policy that propagates a group of resources to 
       
       Behavior of PriorityClassName:
       
-      For KubePriorityClass: - When specified: Uses the named Kubernetes PriorityClass. - When empty: Uses the cluster's default PriorityClass (i.e., the PriorityClass marked as the global default in the cluster). - If neither exists: Sets priority=0 and preemptionPolicy=Never.
+      For KubePriorityClass: - When specified: Uses the named Kubernetes PriorityClass.
       
-      For PodPriorityClass: - Uses PriorityClassName from the PodTemplate. - If the specified PriorityClass is not found, falls back to the cluster's default PriorityClass
-        (i.e., the PriorityClass marked as the global default in the cluster).
-      - If no valid PriorityClass is found: Sets priority=0 and preemptionPolicy=Never. - Not yet implemented.
+      For PodPriorityClass: - Uses PriorityClassName from the PodTemplate. - Not yet implemented.
       
       For FederatedPriorityClass: - Not yet implemented.
 
