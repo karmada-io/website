@@ -4,19 +4,28 @@ title: 集群注册
 
 ## 集群模式概述
 
-Karmada 支持通过 `Push` 和 `Pull` 两种模式来管理成员集群。
-`Push` 和 `Pull` 模式的主要区别在于部署资源清单时，访问成员集群的方式。
+Karmada 支持通过 `Push` 和 `Pull` 两种模式来管理成员集群。 二者的核心区别在于 Karmada 控制面访问成员集群的方式，包括部署资源、
+获取资源状态和集群健康状态等操作。两种模式适用于不同的网络环境和运维需求，在简单性、扩展性和灵活性之间实现平衡。
 
 ### Push 模式
-Karmada 控制平面将直接访问成员集群的 `kube-apiserver`，以获取集群状态并部署资源清单。
+在 Push 模式下，Karmada 控制面通过直接连接成员集群的 kube-apiserver 以进行推送资源至成员集群、监控成员集群状态、获取资源状态等。
+此模式适用于 Karmada 控制面可直接访问成员集群（或通过代理间接访问）且网络延迟较低的场景，例如同一数据中心内的集群管理。
 
 ### Pull 模式
-Karmada 控制平面不会直接访问成员集群，而是将其请求下放给名为 `karmada-agent` 的额外组件处理。
+在 Pull 模式下，成员集群通过部署的 [karmada-agent](https://karmada.io/docs/core-concepts/components#karmada-agent) 组件
+从 Karmada 控制面拉取清单，并向控制面报告清单状态和集群状态。
 
-每个 `karmada-agent` 服务于一个集群，并承担以下职责：
-- 将集群注册到 Karmada 中（创建 `Cluster` 对象）
-- 维护集群状态并向 Karmada 报告（更新 `Cluster` 对象的状态）
-- 监听来自 Karmada 执行空间（命名空间，格式为 `karmada-es-<cluster name>`）的资源清单，并将监听到的资源部署到其所服务的集群中。
+每个 `karmada-agent` 对应一个集群，其职责包括：
+- 向 Karmada 控制面注册集群（创建 Cluster 对象）
+- 维护集群状态并上报给 Karmada 控制面（更新 Cluster 对象状态）
+- 监控 Karmada 执行空间（命名空间 karmada-es-<集群名称>）中的清单，并将这些资源部署到其所服务的集群。
+此模式需要为每个成员集群部署一个 `karmada-agent` 组件（部署位置需能同时访问成员集群和 Karmada 控制面）。相比 Push 模式，Pull 模式
+引入了额外的运维开销，但因为 `karmada-agent` 分担了控制面的压力，性能更优。它特别适用于特殊的网络环境，比如成员集群位于 NAT 或网关后方，
+Karmada 控制面无法直接访问，或者需要管理超大规模集群。
+
+需要说明的是，该模式大多数情况下，Karmada 无需直接访问成员集群。但某些高级功能，比如 [Aggregated Kubernetes API Endpoint](https://karmada.io/docs/userguide/globalview/aggregated-api-endpoint/)
+和 [Proxy Global Resources](https://karmada.io/docs/userguide/globalview/proxy-global-resource/)，仍需要控制面直接访问
+成员集群。此时，用户需要通过 `karmada-agent` 在注册集群时提供成员集群的访问入口，否则这些功能将受限。
 
 ## 使用 'Push' 模式注册集群
 
@@ -67,14 +76,14 @@ karmadactl unjoin member1 --kubeconfig=<karmada kubeconfig> --cluster-kubeconfig
 
 ### 通过命令行工具注册集群
 
-`karmadactl register` 命令用于以 PULL 模式将成员集群注册到 Karmada 控制平面。
-与采用 `Push` 模式注册集群的 `karmadactl join` 命令不同，`karmadactl register` 以 `Pull` 模式将集群注册到 Karmada 控制平面。
+`karmadactl register` 命令用于以 PULL 模式将成员集群注册到 Karmada 控制面。
+与采用 `Push` 模式注册集群的 `karmadactl join` 命令不同，`karmadactl register` 以 `Pull` 模式将集群注册到 Karmada 控制面。
 
 > 注意: 使用此功能需要在 Karmada 控制面部署 ConfigMap `kube-public/cluster-info` 来暴露成员集群可访问的 Karmada Apiserver Server 以及根 CA。
 
-#### 在 Karmada 控制平面中创建引导令牌
+#### 在 Karmada 控制面中创建引导令牌
 
-在 Karmada 控制平面中，我们可以使用 `karmadactl token create` 命令来创建引导令牌（bootstrap tokens），这些令牌的默认有效期（TTL）为24小时。
+在 Karmada 控制面中，我们可以使用 `karmadactl token create` 命令来创建引导令牌（bootstrap tokens），这些令牌的默认有效期（TTL）为24小时。
 
 ```bash
 karmadactl token create --print-register-command --kubeconfig /etc/karmada/karmada-apiserver.config
@@ -90,7 +99,7 @@ karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-
 
 #### 在成员集群中执行 `karmadactl register`
 
-在成员集群的 Kubernetes 控制平面中，我们同样需要成员集群的 `kubeconfig` 文件。紧接着，我们需要执行上述提供的 `karmadactl register` 命令的输出内容。
+在成员集群的 Kubernetes 控制面中，我们同样需要成员集群的 `kubeconfig` 文件。紧接着，我们需要执行上述提供的 `karmadactl register` 命令的输出内容。
 
 ```bash
 karmadactl register 10.10.x.x:32443 --token t2jgtm.9nybj0526mjw1jbf --discovery-token-ca-cert-hash sha256:f5a5a43869bb44577dba582e794c3e3750f2050d62f1b1dc80fd3d6a371b6ed4
