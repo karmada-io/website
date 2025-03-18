@@ -1,0 +1,99 @@
+parts:
+  - name: App Resources
+    chapters:
+      - name: WorkloadRebalancer
+        group: "apps.karmada.io"
+        version: v1alpha1
+  - name: AutoScaling Resources
+    chapters:
+      - name: FederatedHPA
+        group: "autoscaling.karmada.io"
+        version: v1alpha1
+      - name: CronFederatedHPA
+        group: "autoscaling.karmada.io"
+        version: v1alpha1
+  - name: Cluster Resources
+    chapters:
+      - name: Cluster
+        group: "cluster.karmada.io"
+        version: v1alpha1
+  - name: Config Resources
+    chapters:
+      - name: ResourceInterpreterCustomization
+        group: "config.karmada.io"
+        version: v1alpha1
+      - name: ResourceInterpreterWebhookConfiguration
+        group: "config.karmada.io"
+        version: v1alpha1
+  - name: Networking Resources
+    chapters:
+      - name: MultiClusterIngress
+        group: "networking.karmada.io"
+        version: v1alpha1
+      - name: MultiClusterService
+        group: "networking.karmada.io"
+        version: v1alpha1
+  - name: Policy Resources
+    chapters:
+      - name: FederatedResourceQuota
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: OverridePolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: ClusterOverridePolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: PropagationPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: ClusterPropagationPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+  - name: Remedy Resources
+    chapters:
+      - name: Remedy
+        group: "remedy.karmada.io"
+        version: v1alpha1
+  - name: Search Resources
+    chapters:
+      - name: ResourceRegistry
+        group: "search.karmada.io"
+        version: v1alpha1
+  - name: Work Resources
+    chapters:
+      - name: Work
+        group: "work.karmada.io"
+        version: v1alpha1
+      - name: ResourceBinding
+        group: "work.karmada.io"
+        version: v1alpha2
+      - name: ClusterResourceBinding
+        group: "work.karmada.io"
+        version: v1alpha2
+  - name: Common Definitions
+    chapters:
+      - name: DeleteOptions
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions
+      - name: LabelSelector
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.LabelSelector
+      - name: ListMeta
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.ListMeta
+      - name: NodeSelectorRequirement
+        key: io.k8s.api.core.v1.NodeSelectorRequirement
+      - name: ObjectMeta
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta
+      - name: Patch
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.Patch
+      - name: Quantity
+        key: io.k8s.apimachinery.pkg.api.resource.Quantity
+      - name: Status
+        key: io.k8s.apimachinery.pkg.apis.meta.v1.Status
+      - name: TypedLocalObjectReference
+        key: io.k8s.api.core.v1.TypedLocalObjectReference
+skippedResources:
+  - APIGroup
+  - APIGroupList
+  - APIResourceList
+  - APIVersions
+  - Status

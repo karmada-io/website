@@ -1,0 +1,3 @@
+# used to order the fields, by default, the fields of a Definition are rendered in alphabetic order.
+# do not remove this file, otherwise the resource docs generation will fail.
+# for details see https://github.com/kubernetes-sigs/reference-docs/tree/master/gen-resourcesdocs#ordering-and-categorization-of-fields
