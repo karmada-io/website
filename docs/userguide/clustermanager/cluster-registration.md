@@ -4,19 +4,44 @@ title: Cluster Registration
 
 ## Overview of cluster mode
 
-Karmada supports both `Push` and `Pull` modes to manage the member clusters.
-The main difference between `Push` and `Pull` modes is the way they access member clusters when deploying manifests.
+Karmada supports both `Push` and `Pull` modes to manage the member clusters. The main difference between the
+two modes is the way the Karmada control plane accesses member clusters when deploying manifests, fetching manifests
+status and cluster status. The two modes fit different network and operational requirements, balancing simplicity, 
+scalability, and flexibility. 
 
 ### Push mode
-Karmada control plane will access member cluster's `kube-apiserver` directly to get cluster status and deploy manifests.
+
+In Push Mode, the Karmada control plane directly manages member clusters by establishing connections to their
+kube-apiservers, pushing resources to member clusters, monitoring member cluster status, fetching resources
+status, and so on.
+
+This mode is suitable for scenarios where the Karmada control plane can access member clusters directly (or 
+indirectly via a proxy) with low network latency, such as managing clusters within the same data center.
 
 ### Pull mode
-Karmada control plane will not access member cluster but delegate it to an extra component named `karmada-agent`.
+
+In Pull mode, member clusters use the [karmada-agent](https://karmada.io/docs/core-concepts/components#karmada-agent) 
+component to pull manifests from the Karmada control plane and report the status of manifests and member 
+cluster status.
 
 Each `karmada-agent` serves a cluster and takes responsibility for:
 - Registering cluster to Karmada (creates the `Cluster` object)
 - Maintaining cluster status and reporting to Karmada (updates the status of `Cluster` object)
-- Watching manifests from Karmada execution space (namespace, `karmada-es-<cluster name>`) and deploying the watched resources to the cluster the agent serves.
+- Watching manifests from Karmada execution space (namespace, `karmada-es-<cluster name>`) and deploying the 
+  watched resources to the cluster the agent serves.
+
+This mode requires deploying a `karmada-agent` component for each member cluster (it can be deployed anywhere
+as long as it can access both the member cluster and the Karmada control plane). Compared to Push mode, it 
+introduces additional operational overhead but offers better performance because the `karmada-agent` offloads
+part of the pressure from the Karmada control plane. It is particularly suited for special network environments,
+such as when member clusters are behind NAT or gateways and the Karmada control plane cannot directly access 
+them or want to manage large-scale clusters.
+
+Note that in most cases, Karmada does not require direct access to member clusters. However, certain advanced
+features, such as [Aggregated Kubernetes API Endpoint](https://karmada.io/docs/userguide/globalview/aggregated-api-endpoint/)
+, [Proxy Global Resources](https://karmada.io/docs/userguide/globalview/proxy-global-resource/), the Karmada
+control plane still needs to access member clusters. In such a case, users can configure `karmada-agent` by
+providing the access endpoints of the member clusters when registering them, otherwise these functions will be restricted.
 
 ## Register cluster with 'Push' mode
 
