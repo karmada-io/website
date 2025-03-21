@@ -15,7 +15,7 @@ This issue is to track documents which needs to sync zh for release 1.x:
 
 ## 更新参考文档(手动)
 
-在发布之前，我们需要更新网站中的参考文档，包括 CLI 引用和组件引用。整个过程由脚本自动完成。按照以下步骤更新参考文档。
+在发布之前，我们需要更新网站中的参考文档，包括 CLI 引用，组件引用和 API 文档。整个过程由脚本自动完成。按照以下步骤更新参考文档。
 
 1. 将 `karmada-io/karmada` 和 `karmada-io/website` 克隆到本地环境。建议将这两个项目放在同一个文件夹中。
 
@@ -30,7 +30,7 @@ $ tree -L 1
 #├── website
 ```
 
-2. 在 karmada 根目录下执行 generate 命令。
+2. 在 karmada 根目录下执行 generate 命令来生成 CLI 引用。
 
 ```shell
 cd karmada/
@@ -44,11 +44,20 @@ go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/
 cd karmada/
 go build ./hack/tools/gencomponentdocs/.
 
-components=(karmada-controller-manager karmada-scheduler karmada-agent karmada-aggregated-apiserver karmada-descheduler karmada-search karmada-scheduler-estimator karmada-webhook karmada-metrics-adapter)
-for component in ${components};do 
-  ./gencomponentdocs ../website/docs/reference/components/ $component
-  ./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ $component
-done
+./gencomponentdocs ../website/docs/reference/components/ all
+./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ all
+```
+
+4. 生成 API 文档。
+
+进入 website/infra/gen-resourcesdocs 目录。
+```shell
+cd website/infra/gen-resourcesdocs
+```
+按照 `README.md` 中的指导修改文件 `config/current/toc.yaml`。
+执行脚本 `hack/reference-api.sh`。
+```shell
+hack/reference-api.sh
 ```
 
 ## 建立 release-1.x(手动)
@@ -80,7 +89,7 @@ cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5
 sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-sidebars.json
 ```
 
-然后，对照 `sidebars.js` 更新 `version-v1.5-sidebars.json`
+**注意：完成后需对照 `sidebars.js` 更新 `version-v1.5-sidebars.json`。**
 
 4. 更新中文的 versioned_docs
 

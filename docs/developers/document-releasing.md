@@ -16,7 +16,7 @@ This issue is to track documents which needs to sync zh for release 1.x:
 
 ## Update Reference Documents(manually)
 
-Before releasing, we need to update reference docs in the website, which includes CLI references and component references. The whole process is done by scripts automatically.
+Before releasing, we need to update reference docs in the website, which includes CLI references, component references and API documentation. The whole process is done by scripts automatically.
 Follow these steps to update reference docs.
 
 1. Clone `karmada-io/karmada` and `karmada-io/website` to the local environment. It's recommended to step up these two projects in the same folder.
@@ -32,7 +32,7 @@ $ tree -L 1
 #├── website
 ```
 
-2. Run generate command in karmada root dir.
+2. Run generate command in karmada root dir to generate CLI references.
 
 ```shell
 cd karmada/
@@ -46,11 +46,20 @@ go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/
 cd karmada/
 go build ./hack/tools/gencomponentdocs/.
 
-components=(karmada-controller-manager karmada-scheduler karmada-agent karmada-aggregated-apiserver karmada-descheduler karmada-search karmada-scheduler-estimator karmada-webhook karmada-metrics-adapter)
-for component in ${components};do 
-  ./gencomponentdocs ../website/docs/reference/components/ $component
-  ./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ $component
-done
+./gencomponentdocs ../website/docs/reference/components/ all
+./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ all
+```
+
+4. Generate API docs.
+
+Enter the website/infra/gen-resourcesdocs directory.
+```shell
+cd website/infra/gen-resourcesdocs
+```
+Modify the file `config/current/toc.yaml` according to the guidance in `README.md`.
+Run the script `hack/reference-api.sh`.
+```shell
+hack/reference-api.sh
 ```
 
 ## Setup release-1.x(manually)
@@ -82,7 +91,7 @@ cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5
 sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-sidebars.json
 ```
 
-Then, update `version-v1.5-sidebars.json` based on `sidebars.js`.
+**Note: update `version-v1.5-sidebars.json` based on `sidebars.js`.**
 
 4. Update versioned_docs for zh
 
