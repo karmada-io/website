@@ -30,3 +30,69 @@ To avoid the use of insecure algorithms such as 3DES during the communication pr
 
 Set Golang's secure cipher suite to etcd's cipher suite. They are obtained through the return value of the function "CipherSuites()" under the "go/src/crypto/tls/cipher_suites.go" package. Consistent with the "preferred value" of the k8s default cipher suite.
 
+#### Binding Address Configuration
+
+Karmada components provide configurable parameters for users to configure listening addresses and ports. When a user deploys a Karmada component, the Karmada component will use the default listening address and port if the listening-related parameters are not configured. The default listening address of the Karmada component is `0.0.0.0`, which means that the component will listen to all network interfaces on the server (for a container, this is a virtual network interface that is managed by the container runtime, such as Docker).
+
+The following are the configurable parameters provided by the Karmada component:
+
+- karmada-controller-manager
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:10357`.
+- karmada-scheduler
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:10351`.
+- karmada-scheduler-estimator
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:10351`.
+- karmada-descheduler
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:10358`.
+- karmada-aggregated-apiserver
+    - `--bind-address`: default is `0.0.0.0`.
+    - `--secure-port`: default is `443`.
+- karmada-metrics-adapter
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--bind-address`: default is `0.0.0.0`.
+    - `--secure-port`: default is `443`.
+- karmada-webhook
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:8000`.
+    - `--bind-address`: default is `0.0.0.0`.
+    - `--secure-port`: default is `8443`.
+- karmada-search
+    - `--bind-address`: default is `0.0.0.0`.
+    - `--secure-port`: default is `443`.
+- karmada-agent
+    - `--metrics-bind-address`: default is `:8080`.
+    - `--health-probe-bind-address`: default is `:10357`.
+
+Users can configure the listening address as a Pod IP value. For example, you can configure the metrics interface of the `karmada-controller-manager` component as follows:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karmada-controller-manager
+  namespace: karmada-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karmada-controller-manager
+  template:
+    metadata:
+      labels:
+        app: karmada-controller-manager
+    spec:
+      containers:
+      - name: my-container
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        command:
+        - /bin/karmada-controller-manager
+        - --metrics-bind-address=${POD_IP}:8080
+```
