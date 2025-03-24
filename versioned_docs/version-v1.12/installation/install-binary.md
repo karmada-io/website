@@ -673,6 +673,29 @@ livez check passed
 ###### karmada-aggregated-apiserver check success
 ```
 
+## Prepare Karmada CRDs Resources
+
+Execute operations at `karmada-01`.
+
+```bash
+git clone https://github.com/karmada-io/karmada
+cd karmada/charts/karmada/_crds/bases
+
+kubectl apply -f .
+
+cd ../patches/
+ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
+sed -i "s/{{caBundle}}/${ca_string}/g" webhook_in_resourcebindings.yaml
+sed -i "s/{{caBundle}}/${ca_string}/g"  webhook_in_clusterresourcebindings.yaml
+# You need to change 172.31.209.245:4443 to your Load Balancer host:port.
+sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_resourcebindings.yaml
+sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_clusterresourcebindings.yaml
+
+kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-file webhook_in_resourcebindings.yaml
+kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
+cd ../../../../..
+```
+
 ## Install kube-controller-manager
 
 Execute operations at `karmada-01` `karmada-02` `karmada-03`.  Take `karmada-01` as an example.
@@ -964,26 +987,6 @@ ok
 ```
 
 ## Initialize Karmada
-
-Execute operations at `karmada-01`.
-
-```bash
-git clone https://github.com/karmada-io/karmada
-cd karmada/charts/karmada/_crds/bases
-
-kubectl apply -f .
-
-cd ../patches/
-ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
-sed -i "s/{{caBundle}}/${ca_string}/g" webhook_in_resourcebindings.yaml
-sed -i "s/{{caBundle}}/${ca_string}/g"  webhook_in_clusterresourcebindings.yaml
-# You need to change 172.31.209.245:4443 to your Load Balancer host:port.
-sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_resourcebindings.yaml
-sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_clusterresourcebindings.yaml
-
-kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-file webhook_in_resourcebindings.yaml
-kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
-```
 
 Now, all the required components have been installed, and the member clusters could join Karmada control plane.
 If you want to use `karmadactl` to query, please run following command:
