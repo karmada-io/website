@@ -676,6 +676,29 @@ livez check passed
 ###### karmada-aggregated-apiserver 检查成功
 ```
 
+## 准备 Karmada CRDs 资源
+
+对 `karmada-01` 执行以下操作。
+
+```bash
+git clone https://github.com/karmada-io/karmada
+cd karmada/charts/karmada/_crds/bases
+
+kubectl apply -f .
+
+cd ../patches/
+ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
+sed -i "s/{{caBundle}}/${ca_string}/g" webhook_in_resourcebindings.yaml
+sed -i "s/{{caBundle}}/${ca_string}/g"  webhook_in_clusterresourcebindings.yaml
+# You need to change 172.31.209.245:4443 to your Load Balancer host:port.
+sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_resourcebindings.yaml
+sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_clusterresourcebindings.yaml
+
+kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-file webhook_in_resourcebindings.yaml
+kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
+cd ../../../../..
+```
+
 ## 安装 kube-controller-manager
 
 对 `karmada-01`、`karmada-02`、`karmada-03` 执行操作。以 `karmada-01` 为例。
@@ -967,26 +990,6 @@ ok
 ```
 
 ## 初始化 Karmada
-
-对 `karmada-01` 执行以下操作。
-
-```bash
-git clone https://github.com/karmada-io/karmada
-cd karmada/charts/karmada/_crds/bases
-
-kubectl apply -f .
-
-cd ../patches/
-ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
-sed -i "s/{{caBundle}}/${ca_string}/g" webhook_in_resourcebindings.yaml
-sed -i "s/{{caBundle}}/${ca_string}/g"  webhook_in_clusterresourcebindings.yaml
-# 你需要将 172.31.209.245:4443 更改为你的负载均衡器 host:port。
-sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_resourcebindings.yaml
-sed -i 's/karmada-webhook.karmada-system.svc:443/172.31.209.245:4443/g' webhook_in_clusterresourcebindings.yaml
-
-kubectl patch CustomResourceDefinition resourcebindings.work.karmada.io --patch-file webhook_in_resourcebindings.yaml
-kubectl patch CustomResourceDefinition clusterresourcebindings.work.karmada.io --patch-file webhook_in_clusterresourcebindings.yaml
-```
 
 此时，Karmada基础组件已经安装完毕，此时，你可以接入集群；如果想使用karmadactl聚合查询，需要运行如下命令：
 ```sh
