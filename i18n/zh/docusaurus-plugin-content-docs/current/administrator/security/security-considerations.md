@@ -30,3 +30,69 @@ Karmada 各组件通过启动参数`--tls-min-version`和`--cipher-suites`来设
 
 其中，将 Golang 的`secure cipher suites`设置为 etcd 的`cipher suites`。与 k8s 默认`cipher suites`的首选值一致。
 
+#### 绑定地址配置
+
+Karmada 各组件为用户配置监听地址和端口提供了可配置的参数。当用户部署 Karmada 组件时，若未配置监听相关参数时，Karmada 组件会使用默认的监听地址和端口。Karmada 组件默认监听地址为 `0.0.0.0` ，这意味着该组件将监听服务器上的所有网络接口（对于容器来说，这是一个虚拟网络接口，由容器运行时管理，如 Docker）。
+
+以下是 Karmada 组件提供的可配置参数：
+
+- karmada-controller-manager
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:10357`。
+- karmada-scheduler
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:10351`。
+- karmada-scheduler-estimator
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:10351`。
+- karmada-descheduler
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:10358`。
+- karmada-aggregated-apiserver
+    - `--bind-address`：默认值为 `0.0.0.0`。
+    - `--secure-port`：默认值为 `443`。
+- karmada-metrics-adapter
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--bind-address`：默认值为 `0.0.0.0`。
+    - `--secure-port`：默认值为 `443`。
+- karmada-webhook
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:8000`。
+    - `--bind-address`：默认值为 `0.0.0.0`。
+    - `--secure-port`：默认值为 `8443`。
+- karmada-search
+    - `--bind-address`：默认值为 `0.0.0.0`。
+    - `--secure-port`：默认值为 `443`。
+- karmada-agent
+    - `--metrics-bind-address`：默认值为 `:8080`。
+    - `--health-probe-bind-address`：默认值为 `:10357`。
+
+用户可以将监听地址配置为 Pod IP 值。 例如，您可以按照以下方式配置 `karmada-controller-manager` 组件的 `metrics` 接口：
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karmada-controller-manager
+  namespace: karmada-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karmada-controller-manager
+  template:
+    metadata:
+      labels:
+        app: karmada-controller-manager
+    spec:
+      containers:
+      - name: my-container
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        command:
+        - /bin/karmada-controller-manager
+        - --metrics-bind-address=${POD_IP}:8080
+```
