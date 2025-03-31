@@ -14,21 +14,23 @@ ResourceSelectors restrict resource types that the override policy applies to. I
 
 Resource Selector requires the `apiVersion` field which represents the API version of the target resources and `kind` which represents the kind of the target resources. 
 The allowed selectors are as follows:
-- `namespace`: namespace of the target resource.
-- `name`: name of the target resource.
-- `labelSelector`: a label query over a set of resources.
+- `namespace`: namespace of the target resource. Default is empty, which means inherit from the parent object scope.
+- `name`: name of the target resource. Default is empty, which means selecting all resources.
+- `labelSelector`: a label query over a set of resources. If name is not empty, labelSelector will be ignored.
 
 #### Examples
+
+**Example 1: select deployment kind resources**
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
 metadata:
   name: example
+  namespace: test
 spec:
   resourceSelectors:
     - apiVersion: apps/v1
       kind: Deployment
-      name: nginx
       namespace: test
       labelSelector:
         matchLabels:
@@ -36,7 +38,28 @@ spec:
   overrideRules:
   #...
 ```
-Override rules above will only be applied to the `Deployment` named nginx in test namespace and has the `app: nginx` label.
+Override rules above will be applied to the `Deployment` which has the `app: nginx` label in test namespace.
+
+**Example 2: select more than one kind resource**
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: example
+  namespace: test
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+      name: nginx
+    - apiVersion: v1
+      kind: Service
+      name: nginx-svc
+  overrideRules:
+  #...
+```
+
+Override rules above will be applied to the `Deployment` named nginx and the `Service` named nginx-svc in test namespace. This indicates that all resources hit by resourceSelectors will be applied.
 
 ## Target Cluster
 
