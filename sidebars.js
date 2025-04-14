@@ -233,7 +233,8 @@ module.exports = {
                 "developers/releasing",
                 "developers/customize-karmada-scheduler",
                 "developers/document-releasing",
-                "developers/add-new-api"
+                "developers/add-new-api",
+                "developers/secure-coding-specifications"
             ],
         },
         {
