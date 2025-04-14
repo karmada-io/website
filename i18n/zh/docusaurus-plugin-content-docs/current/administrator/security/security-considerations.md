@@ -94,5 +94,5 @@ spec:
               fieldPath: status.podIP
         command:
         - /bin/karmada-controller-manager
-        - --metrics-bind-address=${POD_IP}:8080
+        - --metrics-bind-address=$(POD_IP):8080
 ```
