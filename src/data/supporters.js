@@ -16,6 +16,11 @@ import zhejianglab from "../../static/img/supporters/zhejianglab.png"
 import daocloud from "../../static/img/supporters/DaoCloud.png"
 import CECloud from "../../static/img/supporters/CECloud.png"
 import wps from "../../static/img/supporters/wps.png"
+import coozila from "../../static/img/supporters/coozila.png"
+import dewu from "../../static/img/supporters/dewu.png"
+import iflytek from "../../static/img/supporters/iflytek.png"
+import tongchengtravel from "../../static/img/supporters/tongchengtravel.png"
+import trip from "../../static/img/supporters/trip.png"
 
 const supportersData = [
     {
@@ -89,6 +94,26 @@ const supportersData = [
     {
         logo: wps,
         alt: 'WPS',
+    },
+    {
+        logo: coozila,
+        alt: 'coozila',
+    },
+    {
+        logo: dewu,
+        alt: 'dewu',
+    },
+    {
+        logo: iflytek,
+        alt: 'iflytek',
+    },
+    {
+        logo: tongchengtravel,
+        alt: 'tongchengtravel',
+    },
+    {
+        logo: trip,
+        alt: 'trip',
     },
 ]
 
