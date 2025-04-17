@@ -16,7 +16,6 @@ import zhejianglab from "../../static/img/supporters/zhejianglab.png"
 import daocloud from "../../static/img/supporters/DaoCloud.png"
 import CECloud from "../../static/img/supporters/CECloud.png"
 import wps from "../../static/img/supporters/wps.png"
-import coozila from "../../static/img/supporters/coozila.png"
 
 const supportersData = [
     {
@@ -90,10 +89,6 @@ const supportersData = [
     {
         logo: wps,
         alt: 'WPS',
-    },
-    {
-        logo: coozila,
-        alt: 'coozila',
     },
 ]
 
