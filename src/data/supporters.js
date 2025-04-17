@@ -17,6 +17,8 @@ import daocloud from "../../static/img/supporters/DaoCloud.png"
 import CECloud from "../../static/img/supporters/CECloud.png"
 import wps from "../../static/img/supporters/wps.png"
 
+// OK
+
 const supportersData = [
     {
         logo: huawei,
