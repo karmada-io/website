@@ -223,6 +223,13 @@ module.exports = {
                         "administrator/security/component-permission"
                     ],
                 },
+                {
+                    type: "category",
+                    label: "Compatibility",
+                    items: [
+                        "administrator/compatibility/compatibility"
+                    ],
+                },
             ],
         },
         {
