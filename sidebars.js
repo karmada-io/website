@@ -220,7 +220,8 @@ module.exports = {
                     items: [
                         "administrator/security/security-considerations",
                         "administrator/security/verify-artifacts",
-                        "administrator/security/component-permission"
+                        "administrator/security/component-permission",
+                        "administrator/security/cert-framework"
                     ],
                 },
             ],
