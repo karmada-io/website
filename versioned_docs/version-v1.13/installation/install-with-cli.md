@@ -71,4 +71,4 @@ You need to use sudo for elevated permissions because `karmadactl` creates a
 - karmadaDataPath: Defines the data path for Karmada.
 -  ...
 
-If you need more information about the configuration file, please refer to the [karmadactl init API reference](/docs/reference/karmadactl/karmadactl-config.v1alpha1.md).
+If you need more information about the configuration file, please refer to the [karmadactl init API reference](../reference/karmadactl/karmadactl-config.v1alpha1.md).
