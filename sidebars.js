@@ -83,6 +83,7 @@ module.exports = {
                     label: "Multi-cluster Failover",
                     items: [
                         "userguide/failover/failover-overview",
+                        "userguide/failover/cluster-taint-management",
                         "userguide/failover/determine-cluster-failures",
                         "userguide/failover/failover-analysis",
                         "userguide/failover/application-failover",
