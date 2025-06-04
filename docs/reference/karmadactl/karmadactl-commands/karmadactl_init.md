@@ -71,7 +71,7 @@ karmadactl init
       --crds string                                             Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz")
       --etcd-data string                                        etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
       --etcd-image string                                       etcd image
-      --etcd-init-image string                                  etcd init container image (default "docker.io/alpine:3.21.0")
+      --etcd-init-image string                                  etcd init container image (default "docker.io/alpine:3.21.3")
       --etcd-node-selector-labels string                        the labels used for etcd pod to select nodes, valid in hostPath mode, and with each label separated by a comma. ( e.g. --etcd-node-selector-labels karmada.io/etcd=true,kubernetes.io/os=linux)
       --etcd-priority-class string                              The priority class name for the component etcd. (default "system-node-critical")
       --etcd-pvc-size string                                    etcd data path,valid in pvc mode. (default "5Gi")

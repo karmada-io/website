@@ -42,19 +42,21 @@ karmada-controller-manager [flags]
       --concurrent-resourcebinding-syncs int                           The number of ResourceBindings that are allowed to sync concurrently. (default 5)
       --concurrent-work-syncs int                                      The number of Works that are allowed to sync concurrently. (default 5)
       --controllers strings                                            A list of controllers to enable. '*' enables all on-by-default controllers, 'foo' enables the controller named 'foo', '-foo' disables the controller named 'foo'. 
-                                                                       All controllers: agentcsrapproving, applicationFailover, binding, bindingStatus, cluster, clusterStatus, cronFederatedHorizontalPodAutoscaler, deploymentReplicasSyncer, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaScaleTargetMarker, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus, workloadRebalancer.
+                                                                       All controllers: agentcsrapproving, applicationFailover, binding, bindingStatus, cluster, clusterStatus, clustertaintpolicy, cronFederatedHorizontalPodAutoscaler, deploymentReplicasSyncer, endpointSlice, endpointsliceCollect, endpointsliceDispatch, execution, federatedHorizontalPodAutoscaler, federatedResourceQuotaEnforcement, federatedResourceQuotaStatus, federatedResourceQuotaSync, gracefulEviction, hpaScaleTargetMarker, multiclusterservice, namespace, remedy, serviceExport, serviceImport, unifiedAuth, workStatus, workloadRebalancer.
                                                                        Disabled-by-default controllers: deploymentReplicasSyncer, hpaScaleTargetMarker (default [*])
       --enable-cluster-resource-modeling                               Enable means controller would build resource modeling for each cluster by syncing Nodes and Pods resources.
                                                                        The resource modeling might be used by the scheduler to make scheduling decisions in scenario of dynamic replica assignment based on cluster free resources.
                                                                        Disable if it does not fit your cases for better performance. (default true)
+      --enable-no-execute-taint-eviction                               Enables controller response to NoExecute taints on clusters, which triggers eviction of workloads without explicit tolerations. Given the impact of eviction caused by NoExecute Taint, this parameter is designed to remain disabled by default and requires careful evaluation by administrators before being enabled.
+                                                                       
       --enable-pprof                                                   Enable profiling via web interface host:port/debug/pprof/.
       --enable-taint-manager                                           If set to true enables NoExecute Taints and will evict all not-tolerating objects propagating on Clusters tainted with this kind of Taints. (default true)
-      --failover-eviction-timeout duration                             Specifies the grace period for deleting scheduling result on failed clusters. (default 5m0s)
       --feature-gates mapStringBool                                    A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
                                                                        AllAlpha=true|false (ALPHA - default=false)
                                                                        AllBeta=true|false (BETA - default=false)
                                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                        Failover=true|false (BETA - default=false)
+                                                                       FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                                        GracefulEviction=true|false (BETA - default=true)
                                                                        MultiClusterService=true|false (ALPHA - default=false)
                                                                        PriorityBasedScheduling=true|false (ALPHA - default=false)
@@ -62,6 +64,7 @@ karmada-controller-manager [flags]
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
                                                                        StatefulFailoverInjection=true|false (ALPHA - default=false)
+      --federated-resource-quota-sync-period duration                  The interval for periodic full resynchronization of FederatedResourceQuota resources. This ensures quota recalculations occur at regular intervals to correct potential inaccuracies, particularly when webhook validation side effects. (default 5m0s)
       --graceful-eviction-timeout duration                             Specifies the timeout period waiting for the graceful-eviction-controller performs the final removal since the workload(resource) has been moved to the graceful eviction tasks. (default 10m0s)
       --health-probe-bind-address string                               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357. (default ":10357")
   -h, --help                                                           help for karmada-controller-manager
@@ -86,6 +89,7 @@ karmada-controller-manager [flags]
       --log_file_max_size uint                                         Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
       --logtostderr                                                    log to standard error instead of files (default true)
       --metrics-bind-address string                                    The TCP address that the controller should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. (default ":8080")
+      --no-execute-taint-eviction-purge-mode string                    Controls resource cleanup behavior for NoExecute-triggered evictions (only active when --enable-no-execute-taint-eviction=true). Supported values are "Directly", and "Gracefully". "Directly" mode directly evicts workloads first (risking temporary service interruption) and then triggers rescheduling to other clusters, while "Gracefully" mode first schedules workloads to new clusters and then cleans up original workloads after successful startup elsewhere to ensure service continuity. (default "Gracefully")
       --one_output                                                     If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --profiling-bind-address string                                  The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
       --rate-limiter-base-delay duration                               The base delay for rate limiter. (default 5ms)

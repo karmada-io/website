@@ -63,12 +63,10 @@ karmadactl apply (-f FILENAME | -k DIRECTORY)
   -l, --selector string                 Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
       --server-side                     If true, apply runs in the server instead of the client.
       --show-managed-fields             If true, keep the managedFields when printing objects in JSON or YAML format.
+      --subresource string              If specified, apply will operate on the subresource of the requested object.  Only allowed when using --server-side. This flag is beta and may change in the future.
       --template string                 Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       --timeout duration                The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object
-      --validate string[="strict"]      Must be one of: strict (or true), warn, ignore (or false).
-                                        		"true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not.
-                                        		"warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise.
-                                        		"false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields. (default "strict")
+      --validate string[="strict"]      Must be one of: strict (or true), warn, ignore (or false). "true" or "strict" will use a schema to validate the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation is enabled on the api-server, but will fall back to less reliable client-side validation if not. "warn" will warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled on the API server, and behave as "ignore" otherwise. "false" or "ignore" will not perform any schema validation, silently dropping any unknown or duplicate fields. (default "strict")
       --wait                            If true, wait for resources to be gone before returning. This waits for finalizers.
 ```
 

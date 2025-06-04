@@ -120,7 +120,7 @@ MultiClusterService is a named abstraction of multi-cluster software service. Th
 
         <a name="PortStatus"></a>
 
-        **
+        *PortStatus represents the error condition of a service port*
 
         - **status.loadBalancer.ingress.ports.port** (int32), required
 
@@ -640,6 +640,10 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusters
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
 - **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
@@ -685,6 +689,10 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusters
 - **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
 
 - **labelSelector** (*in query*): string
 

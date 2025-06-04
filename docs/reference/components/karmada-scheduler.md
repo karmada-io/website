@@ -29,6 +29,7 @@ karmada-scheduler [flags]
                                                        AllBeta=true|false (BETA - default=false)
                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                        Failover=true|false (BETA - default=false)
+                                                       FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                        GracefulEviction=true|false (BETA - default=true)
                                                        MultiClusterService=true|false (ALPHA - default=false)
                                                        PriorityBasedScheduling=true|false (ALPHA - default=false)
