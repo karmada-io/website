@@ -71,7 +71,7 @@ karmada-search [flags]
       --emulated-version strings                                The versions different components emulate their capabilities (APIs, features, ...) of.
                                                                 If set, the component will emulate the behavior of this version instead of the underlying binary version.
                                                                 Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'. Options are:
-                                                                kube=1.31..1.31 (default=1.31)If the component is not specified, defaults to "kube"
+                                                                kube=1.32..1.32 (default=1.32)If the component is not specified, defaults to "kube"
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
@@ -97,36 +97,36 @@ karmada-search [flags]
                                                                 kube:APIServingWithRoutine=true|false (ALPHA - default=false)
                                                                 kube:AllAlpha=true|false (ALPHA - default=false)
                                                                 kube:AllBeta=true|false (BETA - default=false)
-                                                                kube:AnonymousAuthConfigurableEndpoints=true|false (ALPHA - default=false)
-                                                                kube:AuthorizeWithSelectors=true|false (ALPHA - default=false)
-                                                                kube:ComponentSLIs=true|false (BETA - default=true)
+                                                                kube:AllowUnsafeMalformedObjectDeletion=true|false (ALPHA - default=false)
+                                                                kube:AnonymousAuthConfigurableEndpoints=true|false (BETA - default=true)
+                                                                kube:AuthorizeWithSelectors=true|false (BETA - default=true)
+                                                                kube:BtreeWatchCache=true|false (BETA - default=true)
+                                                                kube:CBORServingAndStorage=true|false (ALPHA - default=false)
                                                                 kube:ConcurrentWatchObjectDecode=true|false (BETA - default=false)
                                                                 kube:ConsistentListFromCache=true|false (BETA - default=true)
                                                                 kube:CoordinatedLeaderElection=true|false (ALPHA - default=false)
                                                                 kube:CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                 kube:Failover=true|false (BETA - default=false)
+                                                                kube:FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                                 kube:GracefulEviction=true|false (BETA - default=true)
-                                                                kube:InPlacePodVerticalScaling=true|false (ALPHA - default=false)
                                                                 kube:MultiClusterService=true|false (ALPHA - default=false)
+                                                                kube:MutatingAdmissionPolicy=true|false (ALPHA - default=false)
                                                                 kube:OpenAPIEnums=true|false (BETA - default=true)
                                                                 kube:PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                                 kube:PropagateDeps=true|false (BETA - default=true)
                                                                 kube:PropagationPolicyPreemption=true|false (ALPHA - default=false)
+                                                                kube:RemoteRequestHeaderUID=true|false (ALPHA - default=false)
                                                                 kube:ResilientWatchCacheInitialization=true|false (BETA - default=true)
                                                                 kube:ResourceQuotaEstimate=true|false (ALPHA - default=false)
-                                                                kube:RetryGenerateName=true|false (BETA - default=true)
                                                                 kube:SeparateCacheWatchRPC=true|false (BETA - default=true)
                                                                 kube:StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionHash=true|false (BETA - default=true)
-                                                                kube:StrictCostEnforcementForVAP=true|false (BETA - default=false)
-                                                                kube:StrictCostEnforcementForWebhooks=true|false (BETA - default=false)
                                                                 kube:StructuredAuthenticationConfiguration=true|false (BETA - default=true)
-                                                                kube:StructuredAuthorizationConfiguration=true|false (BETA - default=true)
                                                                 kube:UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
                                                                 kube:WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
                                                                 kube:WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
-                                                                kube:WatchList=true|false (ALPHA - default=false)
+                                                                kube:WatchList=true|false (BETA - default=true)
       --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
@@ -153,6 +153,7 @@ karmada-search [flags]
       --requestheader-client-ca-file string                     Root certificate bundle to use to verify client certificates on incoming requests before trusting usernames in headers specified by --requestheader-username-headers. WARNING: generally do not depend on authorization being already done for incoming requests.
       --requestheader-extra-headers-prefix strings              List of request header prefixes to inspect. X-Remote-Extra- is suggested. (default [x-remote-extra-])
       --requestheader-group-headers strings                     List of request headers to inspect for groups. X-Remote-Group is suggested. (default [x-remote-group])
+      --requestheader-uid-headers strings                       List of request headers to inspect for UIDs. X-Remote-Uid is suggested. Requires the RemoteRequestHeaderUID feature to be enabled.
       --requestheader-username-headers strings                  List of request headers to inspect for usernames. X-Remote-User is common. (default [x-remote-user])
       --secure-port int                                         The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
       --shutdown-delay-duration duration                        Time to delay the termination. During that time the server keeps serving requests normally. The endpoints /healthz and /livez will return success, but /readyz immediately returns failure. Graceful termination starts after this delay has elapsed. This can be used to allow load balancer to stop sending traffic to this server.

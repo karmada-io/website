@@ -902,6 +902,10 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolici
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
 - **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
@@ -947,6 +951,10 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolici
 - **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
 
 - **labelSelector** (*in query*): string
 

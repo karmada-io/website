@@ -94,7 +94,7 @@ FederatedHPA is centralized HPA that can aggregate the metrics in multiple clust
 
     - **status.currentMetrics.type** (string), required
 
-      type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
+      type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object.
 
     - **status.currentMetrics.containerResource** (ContainerResourceMetricStatus)
 
@@ -459,11 +459,11 @@ FederatedHPASpec describes the desired functionality of the FederatedHPA.
 
   - **metrics.type** (string), required
 
-    type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
+    type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object.
 
   - **metrics.containerResource** (ContainerResourceMetricSource)
 
-    containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.
+    containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 
     <a name="ContainerResourceMetricSource"></a>
 
@@ -1131,6 +1131,10 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpa
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
 - **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
@@ -1176,6 +1180,10 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpa
 - **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
+
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
 
 - **labelSelector** (*in query*): string
 
