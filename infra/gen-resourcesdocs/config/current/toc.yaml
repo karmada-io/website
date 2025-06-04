@@ -50,6 +50,9 @@ parts:
       - name: ClusterPropagationPolicy
         group: "policy.karmada.io"
         version: v1alpha1
+      - name: ClusterTaintPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
   - name: Remedy Resources
     chapters:
       - name: Remedy
