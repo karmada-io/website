@@ -192,10 +192,8 @@ status:
 
 ## 使用控制面级别的配额管理
 
-:::注意
-
+:::note 注意
 控制面级别的配额管理是一项新功能。此功能需要启用`FederatedQuotaEnforcement`特性门控。目前处于Alpha阶段，默认情况下是关闭的。
-
 :::
 
 FederatedResourceQuota 的基本功能允许用户使用 `staticAssignment` 控制跨多个集群的总体资源限制的资源配额。但是，您也可以使用 FederatedResourceQuota 直接对 Karmada 控制平面施加和执行资源限制。
@@ -232,8 +230,6 @@ status:
 
 如果您应用的资源超过 100 个CPU的限制，该资源将不会被调度到您的成员集群。
 
-:::注意
-
+:::note 注意
 联邦资源配额仍在开发中。我们正在收集用例。如果您对此功能感兴趣，请随时发起 enhancement issue 让我们知道。
-
 :::
