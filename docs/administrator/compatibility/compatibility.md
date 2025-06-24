@@ -2,8 +2,6 @@
 title: Kubernetes Compatibility
 ---
 
-# Overview
-
 This document provides a comprehensive guide to Karmada's compatibility with Kubernetes versions, focusing on two 
 primary dimensions: 
 - Karmada control plane APIs support: How many APIs are supported? 
@@ -13,7 +11,7 @@ This document helps administrators understand how Karmada manages resources acro
 It ensures safe propagation by respecting each cluster’s API capabilities and provides guidelines for maintaining 
 compatibility during upgrades or migrations.
 
-# Karmada control plane APIs support
+## Karmada control plane APIs support
 
 Karmada supports all Kubernetes APIs available in the version of kube-apiserver it uses. For example, if Karmada APIServer 
 uses kube-apiserver@v1.32, it inherits support for every API (e.g., Deployment, Service, Ingress) and API version 
@@ -42,7 +40,7 @@ propagationpolicies                        pp           policy.karmada.io/v1alph
 ...
 ```
 
-# Kubernetes versions support
+## Kubernetes versions support
 
 Karmada manages Kubernetes clusters using a minimal set of stable APIs and endpoints, ensuring broad compatibility 
 across Kubernetes versions. Each Karmada release integrates the latest Kubernetes client libraries and tests 
@@ -53,9 +51,9 @@ A resource can be propagated to member clusters only if both Karmada and the tar
 - If Karmada does not recognize the API (e.g., unsupported CRDs or deprecated APIs), the resource cannot be created in Karmada.
 - If a member cluster lacks the API (e.g., an older cluster missing networking.k8s.io/v1/Ingress), Karmada skips propagation to that cluster.
 
-# FAQ
+## FAQ
 
-## How to choose the version of Karmada APIServer?
+### How to choose the version of Karmada APIServer?
 
 The Karmada project automatically updates the default kube-apiserver version in its installation tools (e.g., Karmada Operator) 
 to support the latest Kubernetes APIs. In most cases, users do not need to change it, even in case of upgrading Karmada.
@@ -71,7 +69,7 @@ Note that upgrading should be taken very carefully:
 Avoid skipping versions (e.g., v1.32 → v1.34), as Kubernetes relies on incremental API deprecation and automatic 
 conversion mechanisms to safely migrate deprecated APIs to newer versions.
 
-## How to handle member clusters with large version gaps?
+### How to handle member clusters with large version gaps?
 
 For scenarios where member clusters span incompatible API versions (e.g., some support networking.k8s.io/v1, others only v1beta1),
 Currently, Karmada does not automatically convert API versions according to the capacity of member clusters, instead, it is
