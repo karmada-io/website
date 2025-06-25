@@ -74,7 +74,7 @@ reliability by allowing automatic rescheduling to healthy clusters.
 
 `TargetClusters` field specifies the clusters that `ClusterTaintPolicy` needs to pay attention to. It uses the `ClusterAffinity`
 structure from the `PropagationPolicy` API to select target clusters. The usage is identical, so you can directly refer to
-[its documentation](https://karmada.io/docs/userguide/scheduling/resource-propagating#deploy-deployment-into-a-specified-set-of-target-clusters)
+[its documentation](../scheduling/resource-propagating#deploy-deployment-into-a-specified-set-of-target-clusters)
 for user-guide.
 
 > Note: If you modify the `TargetClusters` field or change the label of the clusters such that no longer match the ClusterTaintPolicy's
@@ -190,19 +190,21 @@ accidental widespread disruptions. To enable this capability, you must explicitl
 to allow `NoExecute` taint configurations:
 
 - karmada-webhook
-```
---allow-no-execute-taint-policy bool: Allows configuring taints with NoExecute effect in ClusterTaintPolicy. Given the impact of NoExecute, applying such a taint to a cluster may trigger the eviction of workloads that do not explicitly tolerate it, potentially causing unexpected service disruptions.
-  This parameter is designed to remain disabled by default and requires careful evaluation by administrators before being enabled.
-```
+
+  ```
+  --allow-no-execute-taint-policy bool: Allows configuring taints with NoExecute effect in ClusterTaintPolicy. Given the impact of NoExecute, applying such a taint to a cluster may trigger the eviction of workloads that do not explicitly tolerate it, potentially causing unexpected service disruptions.
+   This parameter is designed to remain disabled by default and requires careful evaluation by administrators before being enabled.
+  ```
 
 In order to let `NoExecute` effect, after configuring `--allow-no-execute-taint-policy=true` in the `karmada-webhook`, you
 also need to configure the following parameter in the `karmada-controller-manager` component:
 
 - karmada-controller-manager:
-```
---enable-no-execute-taint-eviction bool: Enables controller response to NoExecute taints on clusters, which triggers eviction of workloads without explicit tolerations. Given the impact of eviction caused by NoExecute Taint.
- This parameter is designed to remain disabled by default and requires careful evaluation by administrators before being enabled.
-```
+
+  ```
+  --enable-no-execute-taint-eviction bool: Enables controller response to NoExecute taints on clusters, which triggers eviction of workloads without explicit tolerations. Given the impact of eviction caused by NoExecute Taint.
+  This parameter is designed to remain disabled by default and requires careful evaluation by administrators before being enabled.
+  ```
 
 ### Failover FeatureGate
 
@@ -229,7 +231,7 @@ Karmada no longer performs automatic `NoExecute` effect taint management.
 
 ## Configuring Application Tolerations
 
-Taints on the cluster object can be tolerated by workloads, which is defined in the [`.spec.placement.clusterTolerations` field of PropagationPolicy/ClusterPropagationPolicy](https://karmada.io/docs/userguide/scheduling/resource-propagating#schedule-based-on-taints-and-tolerations).
+Taints on the cluster object can be tolerated by workloads, which is defined in the [`.spec.placement.clusterTolerations` field of PropagationPolicy/ClusterPropagationPolicy](../scheduling/resource-propagating#schedule-based-on-taints-and-tolerations).
 
 When a workload tolerates a **NoSchedule** taint, the workload will be able to schedule to the cluster even if the cluster
 has the **NoSchedule** taint.
