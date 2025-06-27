@@ -432,6 +432,7 @@ module.exports = {
                             items: [
                                 "reference/karmada-api/policy-resources/cluster-override-policy-v1alpha1",
                                 "reference/karmada-api/policy-resources/cluster-propagation-policy-v1alpha1",
+                                "reference/karmada-api/policy-resources/cluster-taint-policy-v1alpha1",
                                 "reference/karmada-api/policy-resources/federated-resource-quota-v1alpha1",
                                 "reference/karmada-api/policy-resources/override-policy-v1alpha1",
                                 "reference/karmada-api/policy-resources/propagation-policy-v1alpha1",
