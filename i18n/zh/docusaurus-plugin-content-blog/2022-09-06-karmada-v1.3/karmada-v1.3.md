@@ -42,16 +42,16 @@ apiVersion: search.karmada.io/v1alpha1
 kind: ResourceRegistry
 metadata:
   name: proxy-sample
-  spec:
-    targetCluster:
-      clusterNames:
-      - member1
-      - member2
-      resourceSelectors:
-      - apiVersion: v1
-        kind: Pod
-      - apiVersion: v1
-        kind: Node
+spec:
+  targetCluster:
+    clusterNames:
+    - member1
+    - member2
+  resourceSelectors:
+  - apiVersion: v1
+    kind: Pod
+  - apiVersion: v1
+    kind: Node
 ```
 
 将该配置提交给karmada-apiserver之后，便可使用URL：`/apis/search.karmada.io/v1alpha1/proxying/karmada/proxy/api/v1/namespaces/default/pods`来进行集群资源访问。该URL中`/apis/search.karmada.io/v1alpha1/proxying/karmada/proxy`为固定前缀，后面部分与Kubernetes原生API路径完全一致。
