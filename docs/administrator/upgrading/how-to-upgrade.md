@@ -184,7 +184,7 @@ kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/tags/
 3. Update the Karmada CR:
 - Upgrade Karmada components by updating the `imageTag` in the CR.
 - Upgrade the APIs by updating the `crdTarball` in the CR.
-- Refer to [Details Upgrading Instruction](./README.md#details-upgrading-instruction) to remove deprecated parameters in the new version.
+- Refer to [Details Upgrading Instruction](https://karmada.io/docs/administrator/upgrading/#details-upgrading-instruction) to remove deprecated parameters in the new version.
 
 ```bash
 kubectl patch karmada karmada-demo -n test --type merge -p '
