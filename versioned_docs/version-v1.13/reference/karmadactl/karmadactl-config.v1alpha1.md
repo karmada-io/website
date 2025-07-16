@@ -73,6 +73,7 @@ Defines settings for deploying a local Etcd cluster as part of the Karmada contr
 - **`pvcSize`**: The size of the PersistentVolumeClaim used by Etcd when `storageMode` is set to `PVC`.
 - **`replicas`**: Number of Etcd replicas to deploy. For high availability, an odd number of replicas is recommended (e.g., 3, 5).
 - **`storageMode`**: Storage mode for Etcd data. Options are `emptyDir`, `hostPath`, or `PVC`.
+- **`storageClassesName`**: StorageClasses for PVC of Etcd data. If `storageMode` is set to `PVC`, you have to set `storageClassesName`.
 
 ```yaml
 spec:
