@@ -19,6 +19,7 @@ hide_table_of_contents: true
 |------------|-------------------------------|-------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
 | 哔哩哔哩       | https://www.bilibili.com/     | 使用 Karmada 构建多集群平台。                                                                             |                                                                                                   |
 | 京东方        | https://www.boe.com/          | 在工业智能检测平台 I3Plat 建设中使用 Karmada。                                                                 |                                                                                                   |
+| 中科类脑 | http://www.leinao.ai/ | 使用 Karmada 构建一个基于多云和多集群的统一平台。 | |
 | 兴业数金       | https://www.cibfintech.com/   | 使用 Karmada 构建更灵活、更有弹性的混合多云平台。                                                                   |                                                                                                   |
 | 中国电子云      | https://cecloud.com/          | 使用 Karmada 构建多集群平台。                                                                             |                                                                                                   |
 | 道客网络科技     | https://www.daocloud.io/      | 使用 Karmada 构建更灵活、更有弹性的混合多云平台。                                                                   | [DaoCloud结合Karmada打造新一代企业级多云平台](https://karmada.io/zh/docs/casestudies/daocloud)                  |
