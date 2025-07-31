@@ -190,6 +190,7 @@ module.exports = {
                     label: "Upgrading",
                     items: [
                         "administrator/upgrading/README",
+                        "administrator/upgrading/how-to-upgrade",
                         "administrator/upgrading/v0.8-v0.9",
                         "administrator/upgrading/v0.9-v0.10",
                         "administrator/upgrading/v0.10-v1.0",

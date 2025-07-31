@@ -8,50 +8,9 @@ Karmada uses the [semver versioning](https://semver.org/) and each version in th
 - The `MINOR` release might introduce minor breaking changes with a workaround.
 - The `Major` release might introduce backward-incompatible behavior changes.
 
-## Regular Upgrading Process
-### Upgrading APIs
-For releases that introduce API changes, the Karmada API(CRD) that Karmada components rely on must upgrade to keep consistent.
+## How to Upgrade
 
-Karmada CRD is composed of two parts:
-- bases: The CRD definition generated via API structs.
-- patches: conversion settings for the CRD.
-
-In order to support multiple versions of custom resources, the `patches` should be injected into `bases`.
-To achieve this we introduced a `kustomization.yaml` configuration then use `kubectl kustomize` to build the final CRD.
-
-The `bases`,`patches`and `kustomization.yaml` now located at `charts/_crds` directory of the repo.
-
-#### Manual Upgrade API
-
-**Step 1: Get the Webhook CA certificate**
-
-The CA certificate will be injected into `patches` before building the final CRD.
-We can retrieve it from the `MutatingWebhookConfiguration` or `ValidatingWebhookConfiguration` configurations, e.g:
-```bash
-kubectl get mutatingwebhookconfigurations.admissionregistration.k8s.io mutating-config
-```
-Copy the `ca_string` from the yaml path `webhooks.name[x].clientConfig.caBundle`, then replace the `{{caBundle}}` from
-the yaml files in `patches`. e.g:
-```bash
-sed -i'' -e "s/{{caBundle}}/${ca_string}/g" ./"charts/karmada/_crds/patches/webhook_in_resourcebindings.yaml"
-sed -i'' -e "s/{{caBundle}}/${ca_string}/g" ./"charts/karmada/_crds/patches/webhook_in_clusterresourcebindings.yaml"
-```
-
-**Step2: Build final CRD**
-
-Generate the final CRD by `kubectl kustomize` command, e.g:
-```bash
-kubectl kustomize ./charts/karmada/_crds 
-```
-Or, you can apply to `karmada-apiserver` by:
-```bash
-kubectl kustomize ./charts/karmada/_crds | kubectl apply -f -
-```
-
-### Upgrading Components
-Components upgrading is composed of image version update and possible command args changes.
-
-> For the argument changes please refer to `Details Upgrading Instruction` below.
+To upgrade Karmada, you can follow the [Upgrade Guide](./how-to-upgrade.md).
 
 ## Details Upgrading Instruction
 
