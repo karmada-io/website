@@ -9,6 +9,12 @@ It's built by [Docusaurus](https://docusaurus.io/), a modern static website gene
 
 Welcome to join us and you are more than appreciated to contribute!
 
+## Release Branch Versioning
+
+Each release branch maintains documentation for the 6 most recent versions of Karmada. For example, the `release-1.14` branch maintains documentation for Karmada versions v1.9 through v1.14. This versioning strategy ensures that users can access documentation for recent versions while keeping the repository manageable.
+
+When a new minor version is released, the documentation for the oldest version is removed from maintenance, and the branch is updated to include documentation for the new version.
+
 ## Website Preview
 
 If you only update the docs, you do not need to preview the website locally.
