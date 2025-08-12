@@ -20,7 +20,7 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
 
 ```
   # Check the customizations in file, both YAML and JSON formats are supported
-  karmadactl interpret -f customization.yml --check
+  karmadactl interpret -f customization.json --check
   
   # Execute the retention rule
   karmadactl interpret -f customization.yml --operation retain --desired-file desired.yml --observed-file observed.yml
