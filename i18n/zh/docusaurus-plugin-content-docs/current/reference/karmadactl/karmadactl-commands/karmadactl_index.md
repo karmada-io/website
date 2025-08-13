@@ -7,7 +7,7 @@ title: Karmadactl Commands
 
 * [karmadactl create](karmadactl_create.md)	 - Create a resource from a file or from stdin.
 
- JSON and YAML formats are accepted.%!(EXTRA string=karmadactl)
+ JSON and YAML formats are accepted.
 * [karmadactl delete](karmadactl_delete.md)	 - Delete resources by file names, stdin, resources and names, or by resources and label selector.
 
  JSON and YAML formats are accepted. Only one type of argument may be specified: file names, resources and names, or resources and label selector.
@@ -38,7 +38,7 @@ title: Karmadactl Commands
 
         <type>.<fieldName>[.<fieldName>]
         
- Information about each field is retrieved from the server in OpenAPI format.%!(EXTRA string=karmadactl)
+ Information about each field is retrieved from the server in OpenAPI format.
 * [karmadactl get](karmadactl_get.md)	 - Display one or many resources in Karmada control plane and member clusters.
 
  Prints a table of the most important information about the specified resources. You can filter the list using a label selector and the --selector flag. If the desired resource type is namespaced you will only see results in your current namespace unless you pass --all-namespaces.

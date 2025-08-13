@@ -12,7 +12,7 @@ Describe fields and structure of various resources in Karmada control plane or a
 
         <type>.<fieldName>[.<fieldName>]
         
- Information about each field is retrieved from the server in OpenAPI format.%!(EXTRA string=karmadactl)
+ Information about each field is retrieved from the server in OpenAPI format.
 
 ```
 karmadactl explain TYPE [--recursive=FALSE|TRUE] [--api-version=api-version-group] [--output=plaintext|plaintext-openapiv2] 
