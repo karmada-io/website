@@ -21,6 +21,7 @@ import dewu from "../../static/img/supporters/dewu.png"
 import iflytek from "../../static/img/supporters/iflytek.png"
 import tongchengtravel from "../../static/img/supporters/tongchengtravel.png"
 import trip from "../../static/img/supporters/trip.png"
+import leinao from "../../static/img/supporters/leinao.png"
 
 const supportersData = [
     {
@@ -114,6 +115,10 @@ const supportersData = [
     {
         logo: trip,
         alt: 'trip',
+    },
+    {
+        logo: leinao,
+        alt: 'leinao',
     },
 ]
 
