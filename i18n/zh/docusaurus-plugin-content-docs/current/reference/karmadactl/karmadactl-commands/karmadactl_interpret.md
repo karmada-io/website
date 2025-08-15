@@ -19,7 +19,7 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
 ### Examples
 
 ```
-  # Check the customizations in file
+  # Check the customizations in file (only YAML and JSON formats are supported)
   karmadactl interpret -f customization.json --check
   
   # Execute the retention rule
@@ -58,7 +58,7 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
       --desired-file string           Filename, directory, or URL to files identifying the resource to use as desiredObj argument in rule script.
       --desired-replica int32         The desiredReplica argument in rule script.
       --edit                          Edit customizations
-  -f, --filename strings              Filename, directory, or URL to files containing the customizations
+  -f, --filename strings              Filename, directory, or URL to files containing the customizations. Files need to be in either YAML or JSON format.
   -h, --help                          help for interpret
       --karmada-context string        The name of the kubeconfig context to use
       --kubeconfig string             Path to the kubeconfig file to use for CLI requests.

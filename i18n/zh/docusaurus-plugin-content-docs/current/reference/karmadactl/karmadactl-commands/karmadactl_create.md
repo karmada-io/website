@@ -8,7 +8,7 @@ Create a resource from a file or from stdin
 
 Create a resource from a file or from stdin.
 
- JSON and YAML formats are accepted.%!(EXTRA string=karmadactl)
+ JSON and YAML formats are accepted.
 
 ```
 karmadactl create -f FILENAME
