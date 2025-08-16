@@ -1,4 +1,0 @@
----
-title: readme
-slug: /readme
----
