@@ -11,12 +11,14 @@ not direct connectivity between the pods in all clusters.
 
 ![Istio on Karmada-different-network](../../resources/userguide/service/istio/istio-on-karmada-different-network.png)
 
-***
+---
+
 The reason for deploying `istiod` on the `member1` is that `kiali` needs to be deployed on the same cluster as `istiod`
 . If `istiod` and `kiali` are deployed on the `karmada-host`,`kiali` will not find the namespace created by `karmada`. It
 cannot implement the function of service topology for application deployed by `karmada`. I will continue to provide a new
 solution later that deploys `istiod` on the `karmada-host`.
-***
+
+---
 
 ## Install Karmada
 
@@ -27,9 +29,11 @@ in Quick Start, you can get a Karmada.
 
 ## Deploy Istio
 
-***
+---
+
 If you are testing multicluster setup on `kind` you can use [MetalLB](https://metallb.universe.tf/installation/) to make use of `EXTERNAL-IP` for `LoadBalancer` services.
-***
+
+---
 
 ### Install istioctl
 
@@ -155,7 +159,7 @@ EOF
 Run the following command to install istio CRDs on karmada apiserver:
 
 ```bash
-istioctl manifest generate --set profile=external \
+istioctl manifest generate --set profile=remote \
   --set values.global.configCluster=true \
   --set values.global.externalIstiod=false \
   --set values.global.defaultPodDisruptionBudget.enabled=false \
