@@ -301,6 +301,7 @@ module.exports = {
                         "reference/karmadactl/karmadactl-usage-conventions",
                         "reference/karmadactl/karmadactl-config.v1alpha1",
                         "reference/karmadactl/operation-scope",
+                        "reference/karmadactl/karmadactl-init-component-extra-args"
                     ],
                 },
                 {

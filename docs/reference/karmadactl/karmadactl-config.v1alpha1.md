@@ -6,7 +6,7 @@ title: Karmadactl init configuration v1alpha1 document
 
 ## Overview
 
-The `karmadactl init` command supports loading configuration parameters from a YAML file to simplify the deployment process for Karmada's control plane. This feature allows users to define all the necessary settings in a configuration file, reducing the complexity of managing numerous command-line flags and improving consistency across different environments.
+The `karmadactl init` command supports loading configuration parameters from a YAML file to simplify the deployment process for Karmada's control plane. This feature allows users to define all the necessary settings in a configuration file, reducing the complexity of managing numerous command line flags and improving consistency across different environments.
 
 This document explains the structure of the YAML configuration file used with `karmadactl init --config`, based on the `v1alpha1` version of the configuration schema.
 
@@ -73,6 +73,7 @@ Defines settings for deploying a local Etcd cluster as part of the Karmada contr
 - **`pvcSize`**: The size of the PersistentVolumeClaim used by Etcd when `storageMode` is set to `PVC`.
 - **`replicas`**: Number of Etcd replicas to deploy. For high availability, an odd number of replicas is recommended (e.g., 3, 5).
 - **`storageMode`**: Storage mode for Etcd data. Options are `emptyDir`, `hostPath`, or `PVC`.
+- **`extraArgs`**: Additional command line arguments to pass to the etcd component.
 
 ```yaml
 spec:
@@ -89,6 +90,11 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - name: snapshot-count
+          value: "5000"
+        - name: heartbeat-interval
+          value: "100"
 ```
 
 ##### `external`
@@ -170,6 +176,7 @@ Defines configurations for individual Karmada components.
 - **`networking`**:
     - **`namespace`**: Kubernetes namespace where the API Server will be deployed.
     - **`port`**: The port number on which the API Server will listen.
+- **`extraArgs`**: Additional command line arguments to pass to the karmada-apiserver component.
 
 ```yaml
 spec:
@@ -182,6 +189,11 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - name: tls-min-version
+          value: VersionTLS12
+        - name: audit-log-path
+          value: "-"
 ```
 
 ##### `karmadaAggregatedAPIServer`
@@ -189,6 +201,7 @@ spec:
 - **`repository`**: Docker image repository for the Aggregated API Server.
 - **`tag`**: Image tag for the Aggregated API Server.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line arguments to pass to the karmada-aggregated-apiserver component.
 
 ```yaml
 spec:
@@ -197,6 +210,14 @@ spec:
       repository: "karmada/karmada-aggregated-apiserver"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - name: tls-min-version
+          value: VersionTLS12
+        - name: audit-log-maxbackup
+          value: "10"
+        - name: v
+          value: "4"
+        - name: enable-pprof
 ```
 
 ##### `kubeControllerManager`
@@ -204,6 +225,7 @@ spec:
 - **`repository`**: Docker image repository for the Kube Controller Manager.
 - **`tag`**: Image tag for the Kube Controller Manager.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line arguments to pass to the kube-controller-manager component.
 
 ```yaml
 spec:
@@ -212,6 +234,13 @@ spec:
       repository: "karmada/kube-controller-manager"
       tag: "v1.29.6"
       replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: node-monitor-grace-period
+          value: "50s"
+        - name: node-monitor-period
+          value: "5s"
 ```
 
 ##### `karmadaControllerManager`
@@ -219,6 +248,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Controller Manager.
 - **`tag`**: Image tag for the Karmada Controller Manager.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line arguments to pass to the karmada-controller-manager component.
 
 ```yaml
 spec:
@@ -227,6 +257,14 @@ spec:
       repository: "karmada/karmada-controller-manager"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: skipped-propagating-namespaces
+          value: kube-system,default,my-ns
+        - name: vmodule
+          value: scheduler*=3,controller*=2
+        - name: enable-pprof
 ```
 
 ##### `karmadaScheduler`
@@ -234,6 +272,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Scheduler.
 - **`tag`**: Image tag for the Karmada Scheduler.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line arguments to pass to the karmada-scheduler component.
 
 ```yaml
 spec:
@@ -242,6 +281,12 @@ spec:
       repository: "karmada/karmada-scheduler"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: scheduler-name
+          value: "test-scheduler"
+        - name: enable-pprof
 ```
 
 ##### `karmadaWebhook`
@@ -249,6 +294,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Webhook.
 - **`tag`**: Image tag for the Karmada Webhook.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line arguments to pass to the karmada-webhook component.
 
 ```yaml
 spec:
@@ -257,6 +303,10 @@ spec:
       repository: "karmada/karmada-webhook"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: enable-pprof
 ```
 
 #### `karmadaDataPath`
@@ -326,6 +376,11 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - name: snapshot-count
+          value: "5000"
+        - name: heartbeat-interval
+          value: "100"
 #    external:
 #      endpoints:
 #        - "https://example.com:8443"
@@ -357,26 +412,64 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - name: tls-min-version
+          value: VersionTLS12
+        - name: audit-log-path
+          value: "-"
     karmadaAggregatedAPIServer:
       repository: "docker.io/karmada/karmada-aggregated-apiserver"
       tag: "v1.10.3"
-      replica: 1
+      replicas: 1
+      extraArgs:
+        - name: tls-min-version
+          value: VersionTLS12
+        - name: audit-log-maxbackup
+          value: "10"
+        - name: v
+          value: "4"
+        - name: enable-pprof
     kubeControllerManager:
       repository: "registry.k8s.io/kube-controller-manager"
       tag: "v1.30.0"
-      replica: 1
+      replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: node-monitor-grace-period
+          value: "50s"
+        - name: node-monitor-period
+          value: "5s"
     karmadaControllerManager:
       repository: "docker.io/karmada/karmada-controller-manager"
       tag: "v1.10.3"
-      replica: 1
+      replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: skipped-propagating-namespaces
+          value: kube-system,default,my-ns
+        - name: vmodule
+          value: scheduler*=3,controller*=2
+        - name: enable-pprof
     karmadaScheduler:
       repository: "docker.io/karmada/karmada-scheduler"
       tag: "v1.10.3"
-      replica: 1
+      replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: scheduler-name
+          value: "test-scheduler"
+        - name: enable-pprof
     karmadaWebhook:
       repository: "docker.io/karmada/karmada-webhook"
       tag: "v1.10.3"
-      replica: 1
+      replicas: 1
+      extraArgs:
+        - name: v
+          value: "2"
+        - name: enable-pprof
   karmadaDataPath: "/etc/karmada"
   karmadaPKIPath: "/etc/karmada/pki"
   karmadaCRDs: "https://github.com/karmada-io/karmada/releases/download/test/crds.tar.gz"
@@ -393,7 +486,7 @@ karmadactl init --config /path/to/karmada-init.yaml
 
 ### Overriding Configuration File Values
 
-If necessary, command-line flags can still be used in conjunction with the configuration file. The parameters specified via the command line will override those in the configuration file. For example, to override the number of API server replicas, you could use:
+If necessary, command line flags can still be used in conjunction with the configuration file. The parameters specified via the command line will override those in the configuration file. For example, to override the number of API server replicas, you could use:
 
 ```bash
 karmadactl init --config /path/to/karmada-init.yaml --karmada-apiserver-replicas 5
