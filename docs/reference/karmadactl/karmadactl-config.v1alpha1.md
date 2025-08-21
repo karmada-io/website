@@ -73,6 +73,7 @@ Defines settings for deploying a local Etcd cluster as part of the Karmada contr
 - **`pvcSize`**: The size of the PersistentVolumeClaim used by Etcd when `storageMode` is set to `PVC`.
 - **`replicas`**: Number of Etcd replicas to deploy. For high availability, an odd number of replicas is recommended (e.g., 3, 5).
 - **`storageMode`**: Storage mode for Etcd data. Options are `emptyDir`, `hostPath`, or `PVC`.
+- **`extraArgs`**: Additional command line parameters for the Etcd container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -89,6 +90,9 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - "--snapshot-count=5000"
+        - "--heartbeat-interval=100"
 ```
 
 ##### `external`
@@ -170,6 +174,7 @@ Defines configurations for individual Karmada components.
 - **`networking`**:
     - **`namespace`**: Kubernetes namespace where the API Server will be deployed.
     - **`port`**: The port number on which the API Server will listen.
+- **`extraArgs`**: Additional command line parameters for the karmadaAPIServer container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -182,6 +187,9 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-path=-"
 ```
 
 ##### `karmadaAggregatedAPIServer`
@@ -189,6 +197,7 @@ spec:
 - **`repository`**: Docker image repository for the Aggregated API Server.
 - **`tag`**: Image tag for the Aggregated API Server.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line parameters for the karmadaAggregatedAPIServer container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -197,6 +206,11 @@ spec:
       repository: "karmada/karmada-aggregated-apiserver"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-maxbackup=10"
+        - "--v=4"
+        - "--enable-pprof"
 ```
 
 ##### `kubeControllerManager`
@@ -204,6 +218,7 @@ spec:
 - **`repository`**: Docker image repository for the Kube Controller Manager.
 - **`tag`**: Image tag for the Kube Controller Manager.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line parameters for the kubeControllerManager container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -212,6 +227,10 @@ spec:
       repository: "karmada/kube-controller-manager"
       tag: "v1.29.6"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--node-monitor-grace-period=50s"
+        - "--node-monitor-period=5s"
 ```
 
 ##### `karmadaControllerManager`
@@ -219,6 +238,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Controller Manager.
 - **`tag`**: Image tag for the Karmada Controller Manager.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line parameters for the karmadaControllerManager container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -227,6 +247,11 @@ spec:
       repository: "karmada/karmada-controller-manager"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--skipped-propagating-namespaces=kube-system,default,my-ns"
+        - "--vmodule=scheduler*=3,controller*=2"
+        - "--enable-pprof"
 ```
 
 ##### `karmadaScheduler`
@@ -234,6 +259,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Scheduler.
 - **`tag`**: Image tag for the Karmada Scheduler.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line parameters for the karmadaScheduler container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -242,6 +268,10 @@ spec:
       repository: "karmada/karmada-scheduler"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--scheduler-name=test-scheduler"
+        - "--enable-pprof"
 ```
 
 ##### `karmadaWebhook`
@@ -249,6 +279,7 @@ spec:
 - **`repository`**: Docker image repository for the Karmada Webhook.
 - **`tag`**: Image tag for the Karmada Webhook.
 - **`replicas`**: Number of replicas.
+- **`extraArgs`**: Additional command line parameters for the karmadaWebhook container - suitable for custom control planes.
 
 ```yaml
 spec:
@@ -257,6 +288,9 @@ spec:
       repository: "karmada/karmada-webhook"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--enable-pprof"
 ```
 
 #### `karmadaDataPath`
@@ -326,6 +360,9 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - "--snapshot-count=5000"
+        - "--heartbeat-interval=100"      
 #    external:
 #      endpoints:
 #        - "https://example.com:8443"
@@ -357,26 +394,50 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-path=-"        
     karmadaAggregatedAPIServer:
       repository: "docker.io/karmada/karmada-aggregated-apiserver"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-maxbackup=10"
+        - "--v=4"
+        - "--enable-pprof"      
     kubeControllerManager:
       repository: "registry.k8s.io/kube-controller-manager"
       tag: "v1.30.0"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--node-monitor-grace-period=50s"
+        - "--node-monitor-period=5s"
     karmadaControllerManager:
       repository: "docker.io/karmada/karmada-controller-manager"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--skipped-propagating-namespaces=kube-system,default,my-ns"
+        - "--vmodule=scheduler*=3,controller*=2"
+        - "--enable-pprof" 
     karmadaScheduler:
       repository: "docker.io/karmada/karmada-scheduler"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--scheduler-name=test-scheduler"
+        - "--enable-pprof"
     karmadaWebhook:
       repository: "docker.io/karmada/karmada-webhook"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--enable-pprof"
   karmadaDataPath: "/etc/karmada"
   karmadaPKIPath: "/etc/karmada/pki"
   karmadaCRDs: "https://github.com/karmada-io/karmada/releases/download/test/crds.tar.gz"
