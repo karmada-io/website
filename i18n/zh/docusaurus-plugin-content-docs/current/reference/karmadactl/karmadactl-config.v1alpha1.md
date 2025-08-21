@@ -73,6 +73,7 @@ spec:
 - **`pvcSize`**: 当 `storageMode` 设置为 `PVC` 时，Etcd 使用的 PersistentVolumeClaim 的大小。
 - **`replicas`**: 要部署的 Etcd 副本数。为了实现高可用性，建议使用奇数个副本（例如，3、5）。
 - **`storageMode`**: Etcd 数据的存储模式。选项为 `emptyDir`、`hostPath` 或 `PVC`。
+- **`extraArgs`**: 用于 Etcd 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -89,6 +90,9 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - "--snapshot-count=5000"
+        - "--heartbeat-interval=100"
 ```
 
 ##### `external`
@@ -170,6 +174,7 @@ spec:
 - **`networking`**:
     - **`namespace`**: 将部署 API 服务器的 Kubernetes 命名空间。
     - **`port`**: API 服务器将监听的端口号。
+- **`extraArgs`**: 用于 karmadaAPIServer 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -182,6 +187,9 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-path=-"
 ```
 
 ##### `karmadaAggregatedAPIServer`
@@ -189,6 +197,7 @@ spec:
 - **`repository`**: 聚合 API 服务器的 Docker 镜像仓库。
 - **`tag`**: 聚合 API 服务器的镜像标签。
 - **`replicas`**: 副本数。
+- **`extraArgs`**: 用于 karmadaAggregatedAPIServer 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -197,6 +206,11 @@ spec:
       repository: "karmada/karmada-aggregated-apiserver"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-maxbackup=10"
+        - "--v=4"
+        - "--enable-pprof"
 ```
 
 ##### `kubeControllerManager`
@@ -204,6 +218,7 @@ spec:
 - **`repository`**: Kube Controller Manager 的 Docker 镜像仓库。
 - **`tag`**: Kube Controller Manager 的镜像标签。
 - **`replicas`**: 副本数。
+- **`extraArgs`**: 用于 kubeControllerManager 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -212,6 +227,10 @@ spec:
       repository: "karmada/kube-controller-manager"
       tag: "v1.29.6"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--node-monitor-grace-period=50s"
+        - "--node-monitor-period=5s"
 ```
 
 ##### `karmadaControllerManager`
@@ -219,6 +238,7 @@ spec:
 - **`repository`**: Karmada Controller Manager 的 Docker 镜像仓库。
 - **`tag`**: Karmada Controller Manager 的镜像标签。
 - **`replicas`**: 副本数。
+- **`extraArgs`**: 用于 karmadaControllerManager 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -227,6 +247,11 @@ spec:
       repository: "karmada/karmada-controller-manager"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--skipped-propagating-namespaces=kube-system,default,my-ns"
+        - "--vmodule=scheduler*=3,controller*=2"
+        - "--enable-pprof"
 ```
 
 ##### `karmadaScheduler`
@@ -234,6 +259,7 @@ spec:
 - **`repository`**: Karmada Scheduler 的 Docker 镜像仓库。
 - **`tag`**: Karmada Scheduler 的镜像标签。
 - **`replicas`**: 副本数。
+- **`extraArgs`**: 用于 karmadaScheduler 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -242,6 +268,10 @@ spec:
       repository: "karmada/karmada-scheduler"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--scheduler-name=test-scheduler"
+        - "--enable-pprof"
 ```
 
 ##### `karmadaWebhook`
@@ -249,6 +279,7 @@ spec:
 - **`repository`**: Karmada Webhook 的 Docker 镜像仓库。
 - **`tag`**: Karmada Webhook 的镜像标签。
 - **`replicas`**: 副本数。
+- **`extraArgs`**: 用于 karmadaWebhook 容器的额外命令行参数——适用于自定义控制平面。
 
 ```yaml
 spec:
@@ -257,6 +288,9 @@ spec:
       repository: "karmada/karmada-webhook"
       tag: "v0.0.0-master"
       replicas: 1
+      extraArgs:
+        - "--v=2"
+        - "--enable-pprof"
 ```
 
 #### `karmadaDataPath`
@@ -326,6 +360,9 @@ spec:
       pvcSize: "5Gi"
       replicas: 3
       storageMode: "PVC"
+      extraArgs:
+        - "--snapshot-count=5000"
+        - "--heartbeat-interval=100"
 #    external:
 #      endpoints:
 #        - "https://example.com:8443"
@@ -357,26 +394,50 @@ spec:
       networking:
         namespace: "karmada-system"
         port: 32443
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-path=-"
     karmadaAggregatedAPIServer:
       repository: "docker.io/karmada/karmada-aggregated-apiserver"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--tls-min-version=VersionTLS12"
+        - "--audit-log-maxbackup=10"
+        - "--v=4"
+        - "--enable-pprof"
     kubeControllerManager:
       repository: "registry.k8s.io/kube-controller-manager"
       tag: "v1.30.0"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--node-monitor-grace-period=50s"
+        - "--node-monitor-period=5s"
     karmadaControllerManager:
       repository: "docker.io/karmada/karmada-controller-manager"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--skipped-propagating-namespaces=kube-system,default,my-ns"
+        - "--vmodule=scheduler*=3,controller*=2"
+        - "--enable-pprof"
     karmadaScheduler:
       repository: "docker.io/karmada/karmada-scheduler"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--scheduler-name=test-scheduler"
+        - "--enable-pprof"
     karmadaWebhook:
       repository: "docker.io/karmada/karmada-webhook"
       tag: "v1.10.3"
       replica: 1
+      extraArgs:
+        - "--v=2"
+        - "--enable-pprof"
   karmadaDataPath: "/etc/karmada"
   karmadaPKIPath: "/etc/karmada/pki"
   karmadaCRDs: "https://github.com/karmada-io/karmada/releases/download/test/crds.tar.gz"
