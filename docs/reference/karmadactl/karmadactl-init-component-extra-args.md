@@ -1,8 +1,8 @@
 ---
-title: Karmadactl init component startup parameter extension guide.
+title: Karmadactl init component startup parameter extension guide
 ---
 
-# Karmadactl init command component startup parameter extension guide.
+# Karmadactl init command component startup parameter extension guide
 
 ## Overview
 
@@ -253,13 +253,13 @@ Supports two transfer formats:
 1. **Comma-separated format**: Multiple parameters are separated by commas.
 2. **Multiple flag format**: Use the same flag multiple times.
 
-### Component flag mapping.
+### Component flag mapping
 
 | **Component**                | **Command-line flags**                      | **Official documentation link**                                                                                                              |
 |------------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| `Etcd`                       | `--etcd-extra-args`                         | [Etcd Configuration parameters](https://etcd.io/docs/v3.4/op-guide/configuration/)                                                           | 
+| `Etcd`                       | `--etcd-extra-args`                         | [Etcd Configuration parameters](https://etcd.io/docs/v3.4/op-guide/configuration/)                                                           |
 | `karmadaAPIServer`           | `--karmada-apiserver-extra-args`            | [karmadaAPIServer Configuration parameters](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/)               |
-| `karmadaAggregatedAPIServer` | `--karmada-aggregated-apiserver-extra-args` | [karmadaAggregatedAPIServer Configuration parameters](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/)     |
+| `karmadaAggregatedAPIServer` | `--karmada-aggregated-apiserver-extra-args` | [karmadaAggregatedAPIServer Configuration parameters](https://karmada.io/docs/reference/components/karmada-aggregated-apiserver/)            |
 | `kubeControllerManager`      | `--kube-controller-manager-extra-args`      | [kubeControllerManager Configuration parameters](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/) |
 | `karmadaControllerManager`   | `--karmada-controller-manager-extra-args`   | [karmadaControllerManager Configuration parameters](https://karmada.io/docs/reference/components/karmada-controller-manager/)                |
 | `karmadaScheduler`           | `--karmada-scheduler-extra-args`            | [karmadaScheduler Configuration parameters](https://karmada.io/docs/reference/components/karmada-scheduler)                                  |
@@ -269,7 +269,7 @@ Supports two transfer formats:
 
 ### Usage example:
 
-#### Etcd component parameter customization.
+#### Etcd component parameter customization
 
 **Comma-separated format:**
 
@@ -283,18 +283,18 @@ karmadactl init --etcd-extra-args="--snapshot-count=5000,--heartbeat-interval=10
 karmadactl init --etcd-extra-args="--snapshot-count=5000" --etcd-extra-args="--heartbeat-interval=100"
 ```
 
-## Configuration file method.
+## Configuration file method
 
-### Configuration file structure.
+### Configuration file structure
 
 Using a YAML configuration file allows for clearer management of all component configurations. The configuration file is based on the `config.karmada.io/v1alpha1` API version. 
 For detailed configuration file structure and parameter descriptions, please refer to: [karmadactl-config.v1alpha1](https://karmada.io/docs/reference/karmadactl/karmadactl-config.v1alpha1/).
 
-### Add the extraArgs field.
+### Add the extraArgs field
 
 Add the `extraArgs` field in the corresponding component section of the configuration file to pass additional parameters:
 
-### Etcd 配置示例
+### Etcd Configuration example
 
 ```yaml
 spec:
@@ -326,11 +326,11 @@ Save the configuration as a YAML file (e.g., `karmada-init.yaml`), and then use 
 karmadactl init --config /path/to/karmada-init.yaml
 ```
 
-### Parameter overriding mechanism.
+### Parameter overriding mechanism
 
 Command line parameters have a higher priority and can override settings in the configuration file.
 
-## Troubleshooting.
+## Troubleshooting
 
 ### Frequently Asked Questions
 

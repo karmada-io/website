@@ -56,7 +56,8 @@ karmadactl init
   
   # Install Karmada using a configuration file
   karmadactl init --config /path/to/your/config/file.yaml
-    # Pass extra arguments to Local Etcd. (Parameters are separated by commas)
+    
+  # Pass extra arguments to Local Etcd. (Parameters are separated by commas)
   karmadactl init --etcd-extra-args="--snapshot-count=5000,--heartbeat-interval=100"
   # Or write them separately.
   karmadactl init --etcd-extra-args="--snapshot-count=5000" --etcd-extra-args="--heartbeat-interval=100"
@@ -147,7 +148,7 @@ karmadactl init
       --karmada-webhook-image string                            Karmada webhook image (default "docker.io/karmada/karmada-webhook:v0.0.0-master")
       --karmada-webhook-priority-class string                   The priority class name for the component karmada-webhook. (default "system-node-critical")
       --karmada-webhook-replicas int32                          Karmada webhook replica set (default 1)
-      --kube-controller-manager-extra-args strings              Extra arguments for kube-controller-manager 
+      --kube-controller-manager-extra-args strings              Extra arguments for kube-controller-manager
       --kube-image-mirror-country string                        Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                              Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
       --kube-image-tag string                                   Choose a specific Kubernetes version for the control plane. (default "v1.31.3")

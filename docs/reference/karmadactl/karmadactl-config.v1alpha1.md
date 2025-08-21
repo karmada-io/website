@@ -362,7 +362,7 @@ spec:
       storageMode: "PVC"
       extraArgs:
         - "--snapshot-count=5000"
-        - "--heartbeat-interval=100"      
+        - "--heartbeat-interval=100"
 #    external:
 #      endpoints:
 #        - "https://example.com:8443"
@@ -396,7 +396,7 @@ spec:
         port: 32443
       extraArgs:
         - "--tls-min-version=VersionTLS12"
-        - "--audit-log-path=-"        
+        - "--audit-log-path=-"
     karmadaAggregatedAPIServer:
       repository: "docker.io/karmada/karmada-aggregated-apiserver"
       tag: "v1.10.3"
@@ -405,7 +405,7 @@ spec:
         - "--tls-min-version=VersionTLS12"
         - "--audit-log-maxbackup=10"
         - "--v=4"
-        - "--enable-pprof"      
+        - "--enable-pprof"
     kubeControllerManager:
       repository: "registry.k8s.io/kube-controller-manager"
       tag: "v1.30.0"
@@ -422,7 +422,7 @@ spec:
         - "--v=2"
         - "--skipped-propagating-namespaces=kube-system,default,my-ns"
         - "--vmodule=scheduler*=3,controller*=2"
-        - "--enable-pprof" 
+        - "--enable-pprof"
     karmadaScheduler:
       repository: "docker.io/karmada/karmada-scheduler"
       tag: "v1.10.3"
