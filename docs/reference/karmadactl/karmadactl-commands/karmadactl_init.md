@@ -56,7 +56,7 @@ karmadactl init
   
   # Install Karmada using a configuration file
   karmadactl init --config /path/to/your/config/file.yaml
-    
+  
   # Pass extra arguments to Local Etcd. (Parameters are separated by commas)
   karmadactl init --etcd-extra-args="--snapshot-count=5000,--heartbeat-interval=100"
   # Or write them separately.
