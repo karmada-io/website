@@ -2,145 +2,187 @@
 title: karmadactl init
 ---
 
-Install the Karmada control plane in a Kubernetes cluster
+在 Kubernetes 集群中安装 Karmada 控制平面
 
-### Synopsis
+### 简介
 
-Install the Karmada control plane in a Kubernetes cluster.
+在 Kubernetes 集群中安装 Karmada 控制平面
 
- By default, the images and CRD tarball are downloaded remotely. For offline installation, you can set '--private-image-registry' and '--crds'.
+默认情况下，镜像和 CRD 压缩包是从远程下载的。对于离线安装，您可以设置 '--private-image-registry' 和 '--crds'
 
 ```
 karmadactl init
 ```
 
-### Examples
+### 示例
 
 ```
-  # Install Karmada in Kubernetes cluster
-  # The karmada-apiserver binds the master node's IP by default
+  # 在 Kubernetes 集群中安装 Karmada
+  # 默认情况下，karmada-apiserver 绑定主节点的 IP
   karmadactl init
   
-  # China mainland registry mirror can be specified by using kube-image-mirror-country
+  # 可以通过使用 kube-image-mirror-country 指定中国大陆的注册镜像
   karmadactl init --kube-image-mirror-country=cn
   
-  # Kube registry can be specified by using kube-image-registry
+  # 可以通过使用 kube-image-registry 指定 Kube 注册中心
   karmadactl init --kube-image-registry=registry.cn-hangzhou.aliyuncs.com/google_containers
   
-  # Specify the URL to download CRD tarball
+  # 指定下载 CRD 压缩包的 URL
   karmadactl init --crds https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz
   
-  # Specify the local CRD tarball
+  # 指定本地 CRD 压缩包
   karmadactl init --crds /root/crds.tar.gz
   
-  # Use PVC to persistent storage etcd data
+  # 使用 PVC 来持久化存储 Etcd 数据
   karmadactl init --etcd-storage-mode PVC --storage-classes-name {StorageClassesName}
   
-  # Use hostPath to persistent storage etcd data. For data security, only 1 etcd pod can run in hostPath mode
+  # 使用 hostPath 来持久化存储 Etcd 数据。为了数据安全，hostPath 模式下只能运行一个 Etcd pod
   karmadactl init --etcd-storage-mode hostPath  --etcd-replicas 1
   
-  # Use hostPath to persistent storage etcd data but select nodes by labels
+  # 使用 hostPath 来持久化存储 Etcd 数据，但通过标签选择节点
   karmadactl init --etcd-storage-mode hostPath --etcd-node-selector-labels karmada.io/etcd=true
   
-  # Private registry can be specified for all images
+  # 可以为所有镜像指定私有注册中心
   karmadactl init --etcd-image local.registry.com/library/etcd:3.5.16-0
   
-  # Specify Karmada API Server IP address. If not set, the address on the master node will be used.
+  # 指定 Karmada API Server 的 IP 地址。如果未设置，将使用主节点上的地址
   karmadactl init --karmada-apiserver-advertise-address 192.168.1.2
   
-  # Deploy highly available(HA) karmada
+  # 部署高可用（HA）Karmada
   karmadactl init --karmada-apiserver-replicas 3 --etcd-replicas 3 --etcd-storage-mode PVC --storage-classes-name {StorageClassesName}
   
-  # Specify external IPs(load balancer or HA IP) which used to sign the certificate
+  # 指定用于签署证书的外部 IP（负载均衡器或 HA IP）
   karmadactl init --cert-external-ip 10.235.1.2 --cert-external-dns www.karmada.io
   
-  # Install Karmada using a configuration file
+  # 使用配置文件安装 Karmada
   karmadactl init --config /path/to/your/config/file.yaml
+    
+  # 传递额外参数给本地 Etcd（参数用逗号分隔）
+  karmadactl init --etcd-extra-args="--snapshot-count=5000,--heartbeat-interval=100"
+  # 或者分开写
+  karmadactl init --etcd-extra-args="--snapshot-count=5000" --etcd-extra-args="--heartbeat-interval=100"
+  
+  # 传递额外参数给 Karmada API Server（参数用逗号分隔）
+  karmadactl init --karmada-apiserver-extra-args="--tls-min-version=VersionTLS12,--audit-log-path=-"
+  # 或者分开写
+  karmadactl init --karmada-apiserver-extra-args="--tls-min-version=VersionTLS12" --karmada-apiserver-extra-args="--audit-log-path=-"
+  
+  # 传递额外参数给 Karmada Scheduler（参数用逗号分隔）
+  karmadactl init --karmada-scheduler-extra-args="--scheduler-name=test-scheduler,--enable-pprof"
+  # 或者分开写
+  karmadactl init --karmada-scheduler-extra-args="--scheduler-name=test-scheduler" --karmada-scheduler-extra-args="--enable-pprof"
+  
+  # 传递额外参数给 Kube Controller Manager（参数用逗号分隔）
+  karmadactl init --kube-controller-manager-extra-args="--node-monitor-grace-period=50s,--node-monitor-period=5s"
+  # 或者分开写
+  karmadactl init --kube-controller-manager-extra-args="--node-monitor-grace-period=50s" --kube-controller-manager-extra-args="--node-monitor-period=5s"
+  
+  # 传递额外参数给 Karmada Controller Manager（参数用逗号分隔）
+  karmadactl init --karmada-controller-manager-extra-args="--v=2,--enable-pprof"
+  # 或者分开写
+  karmadactl init --karmada-controller-manager-extra-args="--v=2" --karmada-controller-manager-extra-args="--enable-pprof"
+  
+  # 传递额外参数给 Karmada Webhook（参数用逗号分隔）
+  karmadactl init --karmada-webhook-extra-args="--v=2,--enable-pprof"
+  # 或者分开写
+  karmadactl init --karmada-webhook-extra-args="--v=2" --karmada-webhook-extra-args="--enable-pprof"
+  
+  # 传递额外参数给 Karmada Aggregated API Server（参数用逗号分隔）
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4,--enable-pprof"
+  # 或者分开写
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4" --karmada-aggregated-apiserver-extra-args="--enable-pprof"
 ```
 
-### Options
+### 选项
 
 ```
-      --ca-cert-file string                                     The root CA certificate file which will be used to issue new certificates for Karmada components. If not set, a new self-signed root CA certificate will be generated. This must be used together with --ca-key-file.
-      --ca-key-file string                                      The root CA private key file which will be used to issue new certificates for Karmada components. If not set, a new self-signed root CA key will be generated. This must be used together with --ca-cert-file.
-      --cert-external-dns string                                the external DNS of Karmada certificate (e.g localhost,localhost.com)
-      --cert-external-ip string                                 the external IP of Karmada certificate (e.g 192.168.1.2,172.16.1.2)
-      --cert-validity-period duration                           the validity period of Karmada certificate (e.g 8760h0m0s, that is 365 days) (default 8760h0m0s)
-      --config string                                           Karmada init file path
-      --context string                                          The name of the kubeconfig context to use
-      --crds string                                             Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz")
-      --etcd-data string                                        etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
-      --etcd-image string                                       etcd image
-      --etcd-init-image string                                  etcd init container image (default "docker.io/alpine:3.21.3")
-      --etcd-node-selector-labels string                        the labels used for etcd pod to select nodes, valid in hostPath mode, and with each label separated by a comma. ( e.g. --etcd-node-selector-labels karmada.io/etcd=true,kubernetes.io/os=linux)
-      --etcd-priority-class string                              The priority class name for the component etcd. (default "system-node-critical")
-      --etcd-pvc-size string                                    etcd data path,valid in pvc mode. (default "5Gi")
-      --etcd-replicas int32                                     etcd replica set, cluster 3,5...singular (default 1)
-      --etcd-storage-mode string                                etcd data storage mode(emptyDir,hostPath,PVC). value is PVC, specify --storage-classes-name (default "hostPath")
-      --external-etcd-ca-cert-path string                       The path of CA certificate of the external etcd cluster in pem format.
-      --external-etcd-client-cert-path string                   The path of client side certificate to the external etcd cluster in pem format.
-      --external-etcd-client-key-path string                    The path of client side private key to the external etcd cluster in pem format.
-      --external-etcd-key-prefix string                         The key prefix to be configured to kube-apiserver through --etcd-prefix.
-      --external-etcd-servers string                            The server urls of external etcd cluster, to be used by kube-apiserver through --etcd-servers.
-  -h, --help                                                    help for init
-      --host-cluster-domain string                              The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
-      --image-pull-policy string                                The image pull policy for all Karmada components container. One of Always, Never, IfNotPresent. Defaults to IfNotPresent. (default "IfNotPresent")
-      --image-pull-secrets strings                              Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
-      --karmada-aggregated-apiserver-image string               Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0-master")
-      --karmada-aggregated-apiserver-priority-class string      The priority class name for the component karmada-aggregated-apiserver. (default "system-node-critical")
-      --karmada-aggregated-apiserver-replicas int32             Karmada aggregated apiserver replica set (default 1)
-      --karmada-apiserver-advertise-address string              The IP address the Karmada API Server will advertise it's listening on. If not set, the address on the master node will be used.
-      --karmada-apiserver-image string                          Kubernetes apiserver image
-      --karmada-apiserver-priority-class string                 The priority class name for the component karmada-apiserver. (default "system-node-critical")
-      --karmada-apiserver-replicas int32                        Karmada apiserver replica set (default 1)
-      --karmada-controller-manager-image string                 Karmada controller manager image (default "docker.io/karmada/karmada-controller-manager:v0.0.0-master")
-      --karmada-controller-manager-priority-class string        The priority class name for the component karmada-controller-manager. (default "system-node-critical")
-      --karmada-controller-manager-replicas int32               Karmada controller manager replica set (default 1)
-  -d, --karmada-data string                                     Karmada data path. kubeconfig cert and crds files (default "/etc/karmada")
-      --karmada-kube-controller-manager-image string            Kubernetes controller manager image
-      --karmada-kube-controller-manager-priority-class string   The priority class name for the component karmada-kube-controller-manager. (default "system-node-critical")
-      --karmada-kube-controller-manager-replicas int32          Karmada kube controller manager replica set (default 1)
-      --karmada-pki string                                      Karmada pki path. Karmada cert files (default "/etc/karmada/pki")
-      --karmada-scheduler-image string                          Karmada scheduler image (default "docker.io/karmada/karmada-scheduler:v0.0.0-master")
-      --karmada-scheduler-priority-class string                 The priority class name for the component karmada-scheduler. (default "system-node-critical")
-      --karmada-scheduler-replicas int32                        Karmada scheduler replica set (default 1)
-      --karmada-webhook-image string                            Karmada webhook image (default "docker.io/karmada/karmada-webhook:v0.0.0-master")
-      --karmada-webhook-priority-class string                   The priority class name for the component karmada-webhook. (default "system-node-critical")
-      --karmada-webhook-replicas int32                          Karmada webhook replica set (default 1)
-      --kube-image-mirror-country string                        Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
-      --kube-image-registry string                              Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
-      --kube-image-tag string                                   Choose a specific Kubernetes version for the control plane. (default "v1.31.3")
-      --kubeconfig string                                       absolute path to the kubeconfig file
-  -n, --namespace string                                        Kubernetes namespace (default "karmada-system")
-  -p, --port int32                                              Karmada apiserver service node port (default 32443)
-      --private-image-registry string                           Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.  In addition, you still can use --kube-image-registry to specify the registry for Kubernetes's images.
-      --storage-classes-name string                             Kubernetes StorageClasses Name
-      --wait-component-ready-timeout int                        Wait for karmada component ready timeout. 0 means wait forever (default 120)
+      --ca-cert-file string                                     将用于为 Karmada 组件颁发新证书的根 CA 证书文件。如果未设置，将生成一个新的自签名根 CA 证书。此文件必须与 --ca-key-file 一起使用
+      --ca-key-file string                                      将用于为 Karmada 组件颁发新证书的根 CA 私钥文件。如果未设置，将生成一个新的自签名根 CA 密钥。此文件必须与 --ca-cert-file 一起使用
+      --cert-external-dns string                                Karmada 证书的外部 DNS（例如 localhost, localhost.com）
+      --cert-external-ip string                                 Karmada 证书的外部 IP（例如 192.168.1.2, 172.16.1.2）
+      --cert-validity-period duration                           Karmada 证书的有效期（例如 8760h0m0s，即 365 天）（默认值为 8760h0m0s）
+      --config string                                           Karmada init 文件路径
+      --context string                                          要使用的 kubeconfig 上下文名称
+      --crds string                                             Karmada CRDs 资源（本地文件，例如 --crds /root/crds.tar.gz）（默认值为 "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz"）
+      --etcd-data string                                        Etcd 数据路径，仅在 hostPath 模式下有效（默认值为 "/var/lib/karmada-etcd"）
+      --etcd-extra-args strings                                 Etcd 的额外参数
+      --etcd-image string                                       Etcd 镜像
+      --etcd-init-image string                                  Etcd 初始化容器镜像（默认值为 "docker.io/alpine:3.21.3"）
+      --etcd-node-selector-labels string                        用于 Etcd pod 选择节点的标签，仅在 hostPath 模式下有效，每个标签用逗号分隔（例如 --etcd-node-selector-labels karmada.io/etcd=true,kubernetes.io/os=linux）
+      --etcd-priority-class string                              组件 Etcd 的优先级类名称（默认值为 "system-node-critical"）
+      --etcd-pvc-size string                                    Etcd 数据路径，仅在 PVC 模式下有效（默认值为 "5Gi"）
+      --etcd-replicas int32                                     Etcd 副本集，集群数量 3、5...单个（默认值为 1）
+      --etcd-storage-mode string                                Etcd 数据存储模式（emptyDir、hostPath、PVC）。值为 PVC 时，请指定 --storage-classes-name（默认值为 "hostPath"）
+      --external-etcd-ca-cert-path string                       外部 Etcd 集群的CA证书路径，格式为 pem
+      --external-etcd-client-cert-path string                   客户端证书的路径，用于连接外部 Etcd 集群，格式为 pem
+      --external-etcd-client-key-path string                    客户端私钥的路径，指向外部 Etcd 集群，格式为 pem
+      --external-etcd-key-prefix string                         通过 --etcd-prefix 配置到 kube-apiserver 的键前缀
+      --external-etcd-servers string                            外部 Etcd 集群的服务器 URL，通过 --etcd-servers 供 kube-apiserver 使用
+  -h, --help                                                    init 帮助文档
+      --host-cluster-domain string                              Karmada 主集群的集群域名（例如 --host-cluster-domain=host.karmada）（默认值为 "cluster.local"）
+      --image-pull-policy string                                所有 Karmada 组件容器的镜像拉取策略。可选值为 Always、Never、IfNotPresent（默认值为 IfNotPresent）
+      --image-pull-secrets strings                              镜像拉取凭证用于从私有注册中心拉取镜像，可以是用逗号分隔的凭证列表（例如 '--image-pull-secrets PullSecret1,PullSecret2'，这些凭证应在 '--namespace' 声明的命名空间中预先设置）
+      --karmada-aggregated-apiserver-extra-args strings         karmada-aggregated-apiserver 的额外参数
+      --karmada-aggregated-apiserver-image string               Karmada aggregated apiserver 镜像（默认值 "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0-master"）
+      --karmada-aggregated-apiserver-priority-class string      组件 karmada-aggregated-apiserver 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-aggregated-apiserver-replicas int32             Karmada aggregated apiserver 副本集（默认值 1）
+      --karmada-apiserver-advertise-address string              Karmada API 服务器将通告其监听的 IP 地址。如果未设置，将使用主节点上的地址
+      --karmada-apiserver-extra-args strings                    karmada-apiserver 的额外参数
+      --karmada-apiserver-image string                          Kubernetes apiserver 镜像
+      --karmada-apiserver-priority-class string                 组件 karmada-apiserver 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-apiserver-replicas int32                        Karmada apiserver 副本集（默认值 1）
+      --karmada-controller-manager-extra-args strings           karmada-controller-manager 的额外参数
+      --karmada-controller-manager-image string                 Karmada controller manager 镜像（默认值 "docker.io/karmada/karmada-controller-manager:v0.0.0-master"）
+      --karmada-controller-manager-priority-class string        组件 karmada-controller-manager 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-controller-manager-replicas int32               Karmada controller manager 副本集（默认值 1）
+  -d, --karmada-data string                                     Karmada 数据路径。kubeconfig 证书和 crds 文件（默认值 "/etc/karmada"）
+      --karmada-kube-controller-manager-image string            Kubernetes controller manager 镜像
+      --karmada-kube-controller-manager-priority-class string   组件 karmada-kube-controller-manager 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-kube-controller-manager-replicas int32          Karmada kube controller manager 副本集（默认值 1）
+      --karmada-pki string                                      Karmada pki 路径。Karmada 证书文件（默认值 "/etc/karmada/pki"）
+      --karmada-scheduler-extra-args strings                    karmada-scheduler 的额外参数
+      --karmada-scheduler-image string                          Karmada scheduler 镜像（默认值 "docker.io/karmada/karmada-scheduler:v0.0.0-master"）
+      --karmada-scheduler-priority-class string                 组件 karmada-scheduler 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-scheduler-replicas int32                        Karmada scheduler 副本集（默认值 1）
+      --karmada-webhook-extra-args strings                      karmada-webhook 的额外参数
+      --karmada-webhook-image string                            Karmada webhook 镜像（默认值 "docker.io/karmada/karmada-webhook:v0.0.0-master"）
+      --karmada-webhook-priority-class string                   组件 karmada-webhook 的优先级类名称（默认值 "system-node-critical"）
+      --karmada-webhook-replicas int32                          Karmada webhook 副本集（默认值 1）
+      --kube-controller-manager-extra-args strings              kube-controller-manager 的额外参数
+      --kube-image-mirror-country string                        要使用的 kube 镜像注册中心的国家代码。对于中国大陆用户，请设置为 cn
+      --kube-image-registry string                              Kube 镜像注册中心。对于中国大陆用户，您可以使用本地 gcr.io 镜像，例如 registry.cn-hangzhou.aliyuncs.com/google_containers，来覆盖默认的 kube 镜像注册中心
+      --kube-image-tag string                                   为控制平面选择特定的 Kubernetes 版本（默认值 "v1.31.3"）
+      --kubeconfig string                                       kubeconfig 文件的绝对路径
+  -n, --namespace string                                        Kubernetes 命名空间（默认值 "karmada-system"）
+  -p, --port int32                                              Karmada apiserver service 节点端口（默认值 32443）
+      --private-image-registry string                           拉取镜像的私有镜像注册中心。如果设置，所有所需的镜像将从中下载，这在离线安装场景中非常有用。此外，您仍然可以使用 --kube-image-registry 指定 Kubernetes 镜像的注册中心
+      --storage-classes-name string                             Kubernetes StorageClasses 名称
+      --wait-component-ready-timeout int                        等待 Karmada 组件就绪的超时时间。0 表示永远等待（默认值 120）
 ```
 
-### Options inherited from parent commands
+### 从父命令继承的选项
 
 ```
-      --add-dir-header                   If true, adds the file directory to the header of the log messages
-      --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
-      --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
-      --log-file-max-size uint           Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logtostderr                      log to standard error instead of files (default true)
-      --one-output                       If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
-      --skip-headers                     If true, avoid header prefixes in the log messages
-      --skip-log-headers                 If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity         logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
-  -v, --v Level                          number for the log level verbosity
-      --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging
+      --add-dir-header                   如果为真，将文件目录添加到日志消息的头部
+      --alsologtostderr                  同时记录到 standard error 和文件（当 -logtostderr=true 时无效）
+      --log-backtrace-at traceLocation   当日志记录到达行文件:N 时，输出堆栈跟踪（默认值：0）
+      --log-dir string                   如果非空，在此目录中写入日志文件（当 -logtostderr=true 时无效）
+      --log-file string                  如果非空，使用此日志文件（当 -logtostderr=true 时无效）
+      --log-file-max-size uint           定义日志文件可以增长到的最大大小（当 -logtostderr=true 时无效）。单位为兆字节。如果值为 0，则最大文件大小无限制（默认值 1800）
+      --logtostderr                      记录到 standard error 而不是文件（默认值为真）
+      --one-output                       如果为真，仅将日志写入其原生严重性级别（而不是也写入每个较低的严重性级别；当 -logtostderr=true 时无效）
+      --skip-headers                     如果为真，避免在日志消息中使用头部前缀
+      --skip-log-headers                 如果为真，打开日志文件时避免使用头部（当 -logtostderr=true 时无效）
+      --stderrthreshold severity         记录在此阈值或以上的日志在写入文件和标准错误时转到 stderr（当 -logtostderr=true 或 -alsologtostderr=true 时无效）（默认值 2）
+  -v, --v Level                          日志级别详细程度的数字
+      --vmodule moduleSpec               用逗号分隔的 pattern=N 设置列表，用于文件过滤日志
 ```
 
-### SEE ALSO
+### 参见
 
-* [karmadactl](karmadactl.md)	 - karmadactl controls a Kubernetes Cluster Federation.
+* [karmadactl](karmadactl.md)	 - karmadactl 控制 Kubernetes 集群联合
 
-#### Go Back to [Karmadactl Commands](karmadactl_index.md) Homepage.
+#### 返回 [Karmadactl Commands](karmadactl_index.md) 首页
 
 
-###### Auto generated by [spf13/cobra script in Karmada](https://github.com/karmada-io/karmada/tree/master/hack/tools/genkarmadactldocs).
+###### 由 [spf13/cobra script in Karmada](https://github.com/karmada-io/karmada/tree/master/hack/tools/genkarmadactldocs) 自动生成
