@@ -22,6 +22,7 @@ import iflytek from "../../static/img/supporters/iflytek.png"
 import tongchengtravel from "../../static/img/supporters/tongchengtravel.png"
 import trip from "../../static/img/supporters/trip.png"
 import leinao from "../../static/img/supporters/leinao.png"
+import alibabacloud from "../../static/img/supporters/alibabacloud.png"
 
 const supportersData = [
     {
@@ -119,6 +120,10 @@ const supportersData = [
     {
         logo: leinao,
         alt: 'leinao',
+    },
+    {
+        logo: alibabacloud,
+        alt: 'Alibaba Cloud',
     },
 ]
 
