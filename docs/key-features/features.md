@@ -50,7 +50,7 @@ If one cluster does not have enough resources to accommodate their pods, Karmada
 
 Karmada supports:
 
-* [Cluster failover](../userguide/failover/failover-overview.md):
+* [Cluster failover](../userguide/failover/cluster-failover.md):
   * Karmada supports users to set distribution policies, and automatically migrates the faulty cluster replicas in a centralized or decentralized manner after a cluster failure.
 * Cluster taint settings:
   * When the user sets a taint for the cluster and the resource distribution strategy cannot tolerate the taint, Karmada will also automatically trigger the migration of the cluster replicas.

@@ -82,7 +82,7 @@ module.exports = {
                     type: "category",
                     label: "Multi-cluster Failover",
                     items: [
-                        "userguide/failover/failover-overview",
+                        "userguide/failover/cluster-failover",
                         "userguide/failover/cluster-taint-management",
                         "userguide/failover/determine-cluster-failures",
                         "userguide/failover/failover-analysis",
