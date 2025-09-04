@@ -50,7 +50,7 @@ Karmada 支持：
 
 Karmada 支持：
 
-* [集群故障迁移](../userguide/failover/failover-overview.md) ：
+* [集群故障迁移](../userguide/failover/cluster-failover.md) ：
   * Karmada 支持用户设置分发策略，在集群发生故障后，将故障集群实例进行自动的集中式或分散式的迁移。
 * 集群污点设置：
   * 当用户为集群设置污点，且资源分发策略无法容忍污点时，Karmada 也会自动触发集群实例的迁移。
