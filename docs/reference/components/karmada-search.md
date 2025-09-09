@@ -70,8 +70,10 @@ karmada-search [flags]
       --disable-search                                          Disable search feature that would save memory usage significantly.
       --emulated-version strings                                The versions different components emulate their capabilities (APIs, features, ...) of.
                                                                 If set, the component will emulate the behavior of this version instead of the underlying binary version.
-                                                                Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'. Options are:
-                                                                kube=1.32..1.32 (default=1.32)If the component is not specified, defaults to "kube"
+                                                                Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'.
+                                                                Options are: kube=1.31..1.33(default:1.33)
+                                                                If the component is not specified, defaults to "kube"
+      --emulation-forward-compatible                            If true, for any beta+ APIs enabled by default or by --runtime-config at the emulation version, their future versions with higher priority/stability will be auto enabled even if they introduced after the emulation version. Can only be set to true if the emulation version is lower than the binary version.
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
       --enable-pprof                                            Enable profiling via web interface host:port/debug/pprof/.
       --enable-priority-and-fairness                            If true, replace the max-in-flight handler with an enhanced one that queues and dispatches with priority and fairness (default true)
@@ -97,36 +99,42 @@ karmada-search [flags]
                                                                 kube:APIServingWithRoutine=true|false (ALPHA - default=false)
                                                                 kube:AllAlpha=true|false (ALPHA - default=false)
                                                                 kube:AllBeta=true|false (BETA - default=false)
+                                                                kube:AllowParsingUserUIDFromCertAuth=true|false (BETA - default=true)
                                                                 kube:AllowUnsafeMalformedObjectDeletion=true|false (ALPHA - default=false)
                                                                 kube:AnonymousAuthConfigurableEndpoints=true|false (BETA - default=true)
                                                                 kube:AuthorizeWithSelectors=true|false (BETA - default=true)
-                                                                kube:BtreeWatchCache=true|false (BETA - default=true)
                                                                 kube:CBORServingAndStorage=true|false (ALPHA - default=false)
                                                                 kube:ConcurrentWatchObjectDecode=true|false (BETA - default=false)
                                                                 kube:ConsistentListFromCache=true|false (BETA - default=true)
-                                                                kube:CoordinatedLeaderElection=true|false (ALPHA - default=false)
+                                                                kube:ContextualLogging=true|false (BETA - default=true)
+                                                                kube:ControllerPriorityQueue=true|false (ALPHA - default=false)
+                                                                kube:CoordinatedLeaderElection=true|false (BETA - default=false)
                                                                 kube:CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                 kube:Failover=true|false (BETA - default=false)
                                                                 kube:FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                                 kube:GracefulEviction=true|false (BETA - default=true)
+                                                                kube:ListFromCacheSnapshot=true|false (ALPHA - default=false)
+                                                                kube:LoggingAlphaOptions=true|false (ALPHA - default=false)
+                                                                kube:LoggingBetaOptions=true|false (BETA - default=true)
                                                                 kube:MultiClusterService=true|false (ALPHA - default=false)
+                                                                kube:MultiplePodTemplatesScheduling=true|false (ALPHA - default=false)
                                                                 kube:MutatingAdmissionPolicy=true|false (ALPHA - default=false)
                                                                 kube:OpenAPIEnums=true|false (BETA - default=true)
                                                                 kube:PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                                 kube:PropagateDeps=true|false (BETA - default=true)
                                                                 kube:PropagationPolicyPreemption=true|false (ALPHA - default=false)
-                                                                kube:RemoteRequestHeaderUID=true|false (ALPHA - default=false)
+                                                                kube:RemoteRequestHeaderUID=true|false (BETA - default=true)
                                                                 kube:ResilientWatchCacheInitialization=true|false (BETA - default=true)
                                                                 kube:ResourceQuotaEstimate=true|false (ALPHA - default=false)
-                                                                kube:SeparateCacheWatchRPC=true|false (BETA - default=true)
                                                                 kube:StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionHash=true|false (BETA - default=true)
+                                                                kube:StreamingCollectionEncodingToJSON=true|false (BETA - default=true)
+                                                                kube:StreamingCollectionEncodingToProtobuf=true|false (BETA - default=true)
                                                                 kube:StructuredAuthenticationConfiguration=true|false (BETA - default=true)
                                                                 kube:UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
                                                                 kube:WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
-                                                                kube:WatchFromStorageWithoutResourceVersion=true|false (BETA - default=false)
-                                                                kube:WatchList=true|false (BETA - default=true)
+                                                                kube:WatchList=true|false (BETA - default=false)
       --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
@@ -135,10 +143,14 @@ karmada-search [flags]
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
       --lease-reuse-duration-seconds int                        The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
       --livez-grace-period duration                             This option represents the maximum amount of time it should take for apiserver to complete its startup sequence and become live. From apiserver's start time to when this amount of time has elapsed, /livez will assume that unfinished post-start hooks will complete successfully and therefore return true.
+      --log-flush-frequency duration                            Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity                      [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                                   [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
       --log_backtrace_at traceLocation                          when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                                          If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log_file string                                         If non-empty, use this log file (no effect when -logtostderr=true)
       --log_file_max_size uint                                  Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --logging-format string                                   Sets the log format. Permitted formats: "text". (default "text")
       --logtostderr                                             log to standard error instead of files (default true)
       --max-mutating-requests-inflight int                      This and --max-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of mutating requests in flight, or a zero value disables the limit completely. (default 200)
       --max-requests-inflight int                               This and --max-mutating-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of non-mutating requests in flight, or a zero value disables the limit completely. (default 400)
@@ -155,6 +167,7 @@ karmada-search [flags]
       --requestheader-group-headers strings                     List of request headers to inspect for groups. X-Remote-Group is suggested. (default [x-remote-group])
       --requestheader-uid-headers strings                       List of request headers to inspect for UIDs. X-Remote-Uid is suggested. Requires the RemoteRequestHeaderUID feature to be enabled.
       --requestheader-username-headers strings                  List of request headers to inspect for usernames. X-Remote-User is common. (default [x-remote-user])
+      --runtime-config-emulation-forward-compatible             If true, APIs identified by group/version that are enabled in the --runtime-config flag will be installed even if it is introduced after the emulation version. If false, server would fail to start if any APIs identified by group/version that are enabled in the --runtime-config flag are introduced after the emulation version. Can only be set to true if the emulation version is lower than the binary version.
       --secure-port int                                         The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
       --shutdown-delay-duration duration                        Time to delay the termination. During that time the server keeps serving requests normally. The endpoints /healthz and /livez will return success, but /readyz immediately returns failure. Graceful termination starts after this delay has elapsed. This can be used to allow load balancer to stop sending traffic to this server.
       --shutdown-send-retry-after                               If true the HTTP Server will continue listening until all non long running request(s) in flight have been drained, during this window all incoming requests will be rejected with a status code 429 and a 'Retry-After' response header, in addition 'Connection: close' response header is set in order to tear down the TCP connection when idle.
@@ -174,7 +187,7 @@ karmada-search [flags]
       --tls-private-key-file string                             File containing the default x509 private key matching --tls-cert-file.
       --tls-sni-cert-key namedCertKey                           A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com". (default [])
   -v, --v Level                                                 number for the log level verbosity
-      --vmodule moduleSpec                                      comma-separated list of pattern=N settings for file-filtered logging
+      --vmodule pattern=N,...                                   comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
       --watch-cache                                             Enable watch caching in the apiserver (default true)
       --watch-cache-sizes strings                               Watch cache size settings for some resources (pods, nodes, etc.), comma separated. The individual setting format: resource[.group]#size, where resource is lowercase plural (no version), group is omitted for resources of apiVersion v1 (the legacy core API) and included for others, and size is a number. This option is only meaningful for resources built into the apiserver, not ones defined by CRDs or aggregated from external servers, and is only consulted if the watch-cache is enabled. The only meaningful size setting to supply here is zero, which means to disable watch caching for the associated resource; all non-zero values are equivalent and mean to not disable watch caching for that resource
 ```

@@ -126,7 +126,7 @@ PropagationPolicy represents the policy that propagates a group of resources to 
 
       - **spec.failover.application.purgeMode** (string)
 
-        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never". Defaults to "Graciously".
+        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never", "Immediately"(deprecated), and "Graciously"(deprecated). Defaults to "Gracefully".
 
       - **spec.failover.application.statePreservation** (StatePreservation)
 
@@ -153,6 +153,48 @@ PropagationPolicy represents the policy that propagates a group of resources to 
             AliasLabelName is the name that will be used as a label key when the preserved data is passed to the new cluster. This facilitates the injection of the preserved state back into the application resources during recovery.
 
           - **spec.failover.application.statePreservation.rules.jsonPath** (string), required
+
+            JSONPath is the JSONPath template used to identify the state data to be preserved from the original resource configuration. The JSONPath syntax follows the Kubernetes specification: https://kubernetes.io/docs/reference/kubectl/jsonpath/
+            
+            Note: The JSONPath expression will start searching from the "status" field of the API resource object by default. For example, to extract the "availableReplicas" from a Deployment, the JSONPath expression should be "[.availableReplicas]", not "[.status.availableReplicas]".
+
+    - **spec.failover.cluster** (ClusterFailoverBehavior)
+
+      Cluster indicates failover behaviors in case of cluster failure. If this value is nil, the failover behavior in case of cluster failure will be controlled by the controller's no-execute-taint-eviction-purge-mode parameter. If set, the failover behavior in case of cluster failure will be defined by this value.
+
+      <a name="ClusterFailoverBehavior"></a>
+
+      *ClusterFailoverBehavior indicates cluster failover behaviors.*
+
+      - **spec.failover.cluster.purgeMode** (string)
+
+        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully". Defaults to "Gracefully".
+
+      - **spec.failover.cluster.statePreservation** (StatePreservation)
+
+        StatePreservation defines the policy for preserving and restoring state data during failover events for stateful applications.
+        
+        When an application fails over from one cluster to another, this policy enables the extraction of critical data from the original resource configuration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact. This is particularly useful for stateful applications where maintaining data consistency across failover events is crucial. If not specified, means no state data will be preserved.
+        
+        Note: This requires the StatefulFailoverInjection feature gate to be enabled, which is alpha.
+
+        <a name="StatePreservation"></a>
+
+        *StatePreservation defines the policy for preserving state during failover events.*
+
+        - **spec.failover.cluster.statePreservation.rules** ([]StatePreservationRule), required
+
+          Rules contains a list of StatePreservationRule configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An AliasLabelName is associated with each rule, serving as a label key when the preserved data is passed to the new cluster.
+
+          <a name="StatePreservationRule"></a>
+
+          *StatePreservationRule defines a single rule for state preservation. It includes a JSONPath expression and an alias name that will be used as a label key when passing state information to the new cluster.*
+
+          - **spec.failover.cluster.statePreservation.rules.aliasLabelName** (string), required
+
+            AliasLabelName is the name that will be used as a label key when the preserved data is passed to the new cluster. This facilitates the injection of the preserved state back into the application resources during recovery.
+
+          - **spec.failover.cluster.statePreservation.rules.jsonPath** (string), required
 
             JSONPath is the JSONPath template used to identify the state data to be preserved from the original resource configuration. The JSONPath syntax follows the Kubernetes specification: https://kubernetes.io/docs/reference/kubectl/jsonpath/
             

@@ -40,15 +40,15 @@ karmadactl explain TYPE [--recursive=FALSE|TRUE] [--api-version=api-version-grou
 ### Options
 
 ```
-      --api-version string               Use given api-version (group/version) of the resource.
+      --api-version string               Get different explanations for particular API version (API group/version)
       --cluster string                   Used to specify a target member cluster and only takes effect when the command's operation scope is member clusters, for example: --operation-scope=all --cluster=member1
   -h, --help                             help for explain
       --karmada-context string           The name of the kubeconfig context to use
       --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
   -n, --namespace string                 If present, the namespace scope for this CLI request.
   -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
-      --output string                    Format in which to render the schema. Valid values are: (plaintext, plaintext-openapiv2). (default "plaintext")
-      --recursive                        When true, print the name of all the fields recursively. Otherwise, print the available fields with their description.
+  -o, --output string                    Format in which to render the schema (plaintext, plaintext-openapiv2) (default "plaintext")
+      --recursive                        Print the fields of fields (Currently only 1 level deep)
 ```
 
 ### Options inherited from parent commands

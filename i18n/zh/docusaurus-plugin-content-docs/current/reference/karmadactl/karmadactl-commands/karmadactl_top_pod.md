@@ -50,7 +50,7 @@ karmadactl top pod [NAME | -l label]
       --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
   -n, --namespace string         If present, the namespace scope for this CLI request.
       --no-headers               If present, print output without headers.
-  -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+  -l, --selector string          Selector (label query) to filter on, supports '=', '==', '!=', 'in', 'notin'.(e.g. -l key1=value1,key2=value2,key3 in (value3)). Matching objects must satisfy all of the specified label constraints.
       --sort-by string           If non-empty, sort pods list using specified field. The field can be either 'cpu' or 'memory'.
       --sum                      Print the sum of the resource usage
       --use-protocol-buffers     Enables using protocol-buffers to access Metrics API. (default true)
