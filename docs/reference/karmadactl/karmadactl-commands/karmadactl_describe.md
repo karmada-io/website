@@ -55,7 +55,7 @@ karmadactl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) (-
   -n, --namespace string                 If present, the namespace scope for this CLI request.
   -s, --operation-scope operationScope   Used to control the operation scope of the command. The optional values are karmada and members. Defaults to karmada. (default karmada)
   -R, --recursive                        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
-  -l, --selector string                  Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+  -l, --selector string                  Selector (label query) to filter on, supports '=', '==', '!=', 'in', 'notin'.(e.g. -l key1=value1,key2=value2,key3 in (value3)). Matching objects must satisfy all of the specified label constraints.
       --show-events                      If true, display events related to the described object. (default true)
 ```
 

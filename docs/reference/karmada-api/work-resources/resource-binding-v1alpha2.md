@@ -92,6 +92,119 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
     Replicas in target cluster
 
+- **components** ([]Component)
+
+  Components represents the requirements of multiple pod templates of the referencing resource. It is designed to support workloads that consist of multiple pod templates, such as distributed training jobs (e.g., PyTorch, TensorFlow) and big data workloads (e.g., FlinkDeployment), where each workload is composed of more than one pod template. It is also capable of representing single-component workloads, such as Deployment.
+  
+  Note: This field is intended to replace the legacy ReplicaRequirements and Replicas fields above. It is only populated when the MultiplePodTemplatesScheduling feature gate is enabled.
+
+  <a name="Component"></a>
+
+  *Component represents the requirements for a specific component.*
+
+  - **components.name** (string), required
+
+    Name of this component. It is required when the resource contains multiple components to ensure proper identification, and must also be unique within the same resource.
+
+  - **components.replicas** (int32), required
+
+    Replicas represents the replica number of the resource's component.
+
+  - **components.replicaRequirements** (ComponentReplicaRequirements)
+
+    ReplicaRequirements represents the requirements required by each replica for this component.
+
+    <a name="ComponentReplicaRequirements"></a>
+
+    *ComponentReplicaRequirements represents the requirements required by each replica.*
+
+    - **components.replicaRequirements.nodeClaim** (NodeClaim)
+
+      NodeClaim represents the node claim HardNodeAffinity, NodeSelector and Tolerations required by each replica.
+
+      <a name="NodeClaim"></a>
+
+      *NodeClaim represents the node claim HardNodeAffinity, NodeSelector and Tolerations required by each replica.*
+
+      - **components.replicaRequirements.nodeClaim.hardNodeAffinity** (NodeSelector)
+
+        A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms. Note that only PodSpec.Affinity.NodeAffinity.RequiredDuringSchedulingIgnoredDuringExecution is included here because it has a hard limit on pod scheduling.
+
+        <a name="NodeSelector"></a>
+
+        *A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.*
+
+        - **components.replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms** ([]NodeSelectorTerm), required
+
+          *Atomic: will be replaced during a merge*
+          
+          Required. A list of node selector terms. The terms are ORed.
+
+          <a name="NodeSelectorTerm"></a>
+
+          *A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.*
+
+          - **components.replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
+
+            *Atomic: will be replaced during a merge*
+            
+            A list of node selector requirements by node's labels.
+
+          - **components.replicaRequirements.nodeClaim.hardNodeAffinity.nodeSelectorTerms.matchFields** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
+
+            *Atomic: will be replaced during a merge*
+            
+            A list of node selector requirements by node's fields.
+
+      - **components.replicaRequirements.nodeClaim.nodeSelector** (map[string]string)
+
+        NodeSelector is a selector which must be true for the pod to fit on a node. Selector which must match a node's labels for the pod to be scheduled on that node.
+
+      - **components.replicaRequirements.nodeClaim.tolerations** ([]Toleration)
+
+        If specified, the pod's tolerations.
+
+        <a name="Toleration"></a>
+
+        *The pod this Toleration is attached to tolerates any taint that matches the triple &lt;key,value,effect&gt; using the matching operator &lt;operator&gt;.*
+
+        - **components.replicaRequirements.nodeClaim.tolerations.effect** (string)
+
+          Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
+          
+          Possible enum values:
+           - `"NoExecute"` Evict any already-running pods that do not tolerate the taint. Currently enforced by NodeController.
+           - `"NoSchedule"` Do not allow new pods to schedule onto the node unless they tolerate the taint, but allow all pods submitted to Kubelet without going through the scheduler to start, and allow all already-running pods to continue running. Enforced by the scheduler.
+           - `"PreferNoSchedule"` Like TaintEffectNoSchedule, but the scheduler tries not to schedule new pods onto the node, rather than prohibiting new pods from scheduling onto the node entirely. Enforced by the scheduler.
+
+        - **components.replicaRequirements.nodeClaim.tolerations.key** (string)
+
+          Key is the taint key that the toleration applies to. Empty means match all taint keys. If the key is empty, operator must be Exists; this combination means to match all values and all keys.
+
+        - **components.replicaRequirements.nodeClaim.tolerations.operator** (string)
+
+          Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+          
+          Possible enum values:
+           - `"Equal"`
+           - `"Exists"`
+
+        - **components.replicaRequirements.nodeClaim.tolerations.tolerationSeconds** (int64)
+
+          TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+
+        - **components.replicaRequirements.nodeClaim.tolerations.value** (string)
+
+          Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
+
+    - **components.replicaRequirements.priorityClassName** (string)
+
+      PriorityClassName represents the resources priorityClassName
+
+    - **components.replicaRequirements.resourceRequest** (map[string][Quantity](../common-definitions/quantity#quantity))
+
+      ResourceRequest represents the resources required by each replica.
+
 - **conflictResolution** (string)
 
   ConflictResolution declares how potential conflict should be handled when a resource that is being propagated already exists in the target cluster.
@@ -132,7 +245,7 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
     - **failover.application.purgeMode** (string)
 
-      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never". Defaults to "Graciously".
+      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never", "Immediately"(deprecated), and "Graciously"(deprecated). Defaults to "Gracefully".
 
     - **failover.application.statePreservation** (StatePreservation)
 
@@ -159,6 +272,48 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
           AliasLabelName is the name that will be used as a label key when the preserved data is passed to the new cluster. This facilitates the injection of the preserved state back into the application resources during recovery.
 
         - **failover.application.statePreservation.rules.jsonPath** (string), required
+
+          JSONPath is the JSONPath template used to identify the state data to be preserved from the original resource configuration. The JSONPath syntax follows the Kubernetes specification: https://kubernetes.io/docs/reference/kubectl/jsonpath/
+          
+          Note: The JSONPath expression will start searching from the "status" field of the API resource object by default. For example, to extract the "availableReplicas" from a Deployment, the JSONPath expression should be "[.availableReplicas]", not "[.status.availableReplicas]".
+
+  - **failover.cluster** (ClusterFailoverBehavior)
+
+    Cluster indicates failover behaviors in case of cluster failure. If this value is nil, the failover behavior in case of cluster failure will be controlled by the controller's no-execute-taint-eviction-purge-mode parameter. If set, the failover behavior in case of cluster failure will be defined by this value.
+
+    <a name="ClusterFailoverBehavior"></a>
+
+    *ClusterFailoverBehavior indicates cluster failover behaviors.*
+
+    - **failover.cluster.purgeMode** (string)
+
+      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully". Defaults to "Gracefully".
+
+    - **failover.cluster.statePreservation** (StatePreservation)
+
+      StatePreservation defines the policy for preserving and restoring state data during failover events for stateful applications.
+      
+      When an application fails over from one cluster to another, this policy enables the extraction of critical data from the original resource configuration. Upon successful migration, the extracted data is then re-injected into the new resource, ensuring that the application can resume operation with its previous state intact. This is particularly useful for stateful applications where maintaining data consistency across failover events is crucial. If not specified, means no state data will be preserved.
+      
+      Note: This requires the StatefulFailoverInjection feature gate to be enabled, which is alpha.
+
+      <a name="StatePreservation"></a>
+
+      *StatePreservation defines the policy for preserving state during failover events.*
+
+      - **failover.cluster.statePreservation.rules** ([]StatePreservationRule), required
+
+        Rules contains a list of StatePreservationRule configurations. Each rule specifies a JSONPath expression targeting specific pieces of state data to be preserved during failover events. An AliasLabelName is associated with each rule, serving as a label key when the preserved data is passed to the new cluster.
+
+        <a name="StatePreservationRule"></a>
+
+        *StatePreservationRule defines a single rule for state preservation. It includes a JSONPath expression and an alias name that will be used as a label key when passing state information to the new cluster.*
+
+        - **failover.cluster.statePreservation.rules.aliasLabelName** (string), required
+
+          AliasLabelName is the name that will be used as a label key when the preserved data is passed to the new cluster. This facilitates the injection of the preserved state back into the application resources during recovery.
+
+        - **failover.cluster.statePreservation.rules.jsonPath** (string), required
 
           JSONPath is the JSONPath template used to identify the state data to be preserved from the original resource configuration. The JSONPath syntax follows the Kubernetes specification: https://kubernetes.io/docs/reference/kubectl/jsonpath/
           
@@ -220,7 +375,7 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   - **gracefulEvictionTasks.purgeMode** (string)
 
-    PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Graciously" and "Never".
+    PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Directly", "Graciously", "Gracefully" and "Never".
 
   - **gracefulEvictionTasks.replicas** (int32)
 

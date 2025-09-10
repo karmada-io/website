@@ -75,7 +75,7 @@ karmadactl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --a
   -o, --output string                   Output mode. Use "-o name" for shorter output (resource/name).
       --raw string                      Raw URI to DELETE to the server.  Uses the transport specified by the kubeconfig file.
   -R, --recursive                       Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
-  -l, --selector string                 Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+  -l, --selector string                 Selector (label query) to filter on, supports '=', '==', '!=', 'in', 'notin'.(e.g. -l key1=value1,key2=value2,key3 in (value3)). Matching objects must satisfy all of the specified label constraints.
       --timeout duration                The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object
       --wait                            If true, wait for resources to be gone before returning. This waits for finalizers. (default true)
 ```

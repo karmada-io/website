@@ -7,8 +7,8 @@ title: karmada-controller-manager
 ### Synopsis
 
 The karmada-controller-manager runs various controllers.
-The controllers watch Karmada objects and then talk to the underlying clusters' API servers
-to create regular Kubernetes resources.
+The controllers watch Karmada objects and then talk to the underlying
+clusters' API servers to create regular Kubernetes resources.
 
 ```
 karmada-controller-manager [flags]
@@ -54,11 +54,16 @@ karmada-controller-manager [flags]
       --feature-gates mapStringBool                                    A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
                                                                        AllAlpha=true|false (ALPHA - default=false)
                                                                        AllBeta=true|false (BETA - default=false)
+                                                                       ContextualLogging=true|false (BETA - default=true)
+                                                                       ControllerPriorityQueue=true|false (ALPHA - default=false)
                                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                                        Failover=true|false (BETA - default=false)
                                                                        FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                                        GracefulEviction=true|false (BETA - default=true)
+                                                                       LoggingAlphaOptions=true|false (ALPHA - default=false)
+                                                                       LoggingBetaOptions=true|false (BETA - default=true)
                                                                        MultiClusterService=true|false (ALPHA - default=false)
+                                                                       MultiplePodTemplatesScheduling=true|false (ALPHA - default=false)
                                                                        PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                                        PropagateDeps=true|false (BETA - default=true)
                                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
@@ -83,10 +88,14 @@ karmada-controller-manager [flags]
       --leader-elect-renew-deadline duration                           The interval between attempts by the acting master to renew a leadership slot before it stops leading. This must be less than or equal to the lease duration. This is only applicable if leader election is enabled. (default 10s)
       --leader-elect-resource-namespace string                         The namespace of resource object that is used for locking during leader election. (default "karmada-system")
       --leader-elect-retry-period duration                             The duration the clients should wait between attempting acquisition and renewal of a leadership. This is only applicable if leader election is enabled. (default 2s)
+      --log-flush-frequency duration                                   Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity                             [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                                          [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
       --log_backtrace_at traceLocation                                 when logging hits line file:N, emit a stack trace (default :0)
       --log_dir string                                                 If non-empty, write log files in this directory (no effect when -logtostderr=true)
       --log_file string                                                If non-empty, use this log file (no effect when -logtostderr=true)
       --log_file_max_size uint                                         Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --logging-format string                                          Sets the log format. Permitted formats: "text". (default "text")
       --logtostderr                                                    log to standard error instead of files (default true)
       --metrics-bind-address string                                    The TCP address that the controller should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. (default ":8080")
       --no-execute-taint-eviction-purge-mode string                    Controls resource cleanup behavior for NoExecute-triggered evictions (only active when --enable-no-execute-taint-eviction=true). Supported values are "Directly", and "Gracefully". "Directly" mode directly evicts workloads first (risking temporary service interruption) and then triggers rescheduling to other clusters, while "Gracefully" mode first schedules workloads to new clusters and then cleans up original workloads after successful startup elsewhere to ensure service continuity. (default "Gracefully")
@@ -107,7 +116,7 @@ karmada-controller-manager [flags]
                                                                        Note: 'karmada-system', 'karmada-cluster' and 'karmada-es-.*' are Karmada reserved namespaces that will always be skipped. (default [kube-.*])
       --stderrthreshold severity                                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
   -v, --v Level                                                        number for the log level verbosity
-      --vmodule moduleSpec                                             comma-separated list of pattern=N settings for file-filtered logging
+      --vmodule pattern=N,...                                          comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
 ```
 
 ###### Auto generated by [spf13/cobra script in Karmada](https://github.com/karmada-io/karmada/tree/master/hack/tools/gencomponentdocs)

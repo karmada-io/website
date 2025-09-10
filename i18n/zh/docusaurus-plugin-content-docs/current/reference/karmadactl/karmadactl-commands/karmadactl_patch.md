@@ -53,7 +53,7 @@ karmadactl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE]
       --patch-file string              A file containing a patch to be applied to the resource.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
       --show-managed-fields            If true, keep the managedFields when printing objects in JSON or YAML format.
-      --subresource string             If specified, patch will operate on the subresource of the requested object. This flag is beta and may change in the future.
+      --subresource string             If specified, patch will operate on the subresource of the requested object.
       --template string                Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
       --type string                    The type of patch being provided; one of [json merge strategic] (default "strategic")
 ```

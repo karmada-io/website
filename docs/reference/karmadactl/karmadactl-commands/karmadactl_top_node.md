@@ -41,7 +41,7 @@ karmadactl top node [NAME | -l label]
       --karmada-context string   The name of the kubeconfig context to use
       --kubeconfig string        Path to the kubeconfig file to use for CLI requests.
       --no-headers               If present, print output without headers
-  -l, --selector string          Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.
+  -l, --selector string          Selector (label query) to filter on, supports '=', '==', '!=', 'in', 'notin'.(e.g. -l key1=value1,key2=value2,key3 in (value3)). Matching objects must satisfy all of the specified label constraints.
       --show-capacity            Print node resources based on Capacity instead of Allocatable(default) of the nodes.
       --sort-by string           If non-empty, sort nodes list using specified field. The field can be either 'cpu' or 'memory'.
       --use-protocol-buffers     Enables using protocol-buffers to access Metrics API. (default true)
