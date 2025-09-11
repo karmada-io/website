@@ -132,7 +132,7 @@ There are currently some limitations when using this feature. Please pay attenti
 
 #### JSONPath Syntax Description
 
-JSONPath expressions follow the Kubernetes specification: <https://kubernetes.io/docs/reference/kubectl/jsonpath/> .
+JSONPath expressions follow the Kubernetes specification: [https://kubernetes.io/docs/reference/kubectl/jsonpath/](https://kubernetes.io/docs/reference/kubectl/jsonpath/)  .
 
 **Note**: JSONPath expressions by default start searching from the "status" field of the API resource object. For example, to extract "availableReplicas" from a Deployment, the JSONPath expression should be `{.availableReplicas}` instead of `{.status.availableReplicas}`.
 

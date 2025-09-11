@@ -698,7 +698,7 @@ ResourceBindingList 中包含 ResourceBinding 列表。
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### 参数
 
@@ -722,7 +722,7 @@ GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### 参数
 
@@ -746,7 +746,7 @@ GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP 请求
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### 参数
 
@@ -862,7 +862,7 @@ GET /apis/work.karmada.io/v1alpha2/resourcebindings
 
 #### HTTP 请求
 
-POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+POST /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### 参数
 
@@ -901,7 +901,7 @@ POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+PUT /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### 参数
 
@@ -942,7 +942,7 @@ PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP 请求
 
-PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+PUT /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### 参数
 
@@ -983,7 +983,7 @@ PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+PATCH /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### 参数
 
@@ -1028,7 +1028,7 @@ PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{na
 
 #### HTTP 请求
 
-PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+PATCH /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### 参数
 
@@ -1073,7 +1073,7 @@ PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{na
 
 #### HTTP 请求
 
-DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+DELETE /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### 参数
 
@@ -1114,7 +1114,7 @@ DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{n
 
 #### HTTP 请求
 
-DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+DELETE /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### 参数
 

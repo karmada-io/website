@@ -106,7 +106,7 @@ RemedyList contains a list of Remedy.
 
 #### HTTP Request
 
-GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+GET /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### Parameters
 
@@ -126,7 +126,7 @@ GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP Request
 
-GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+GET /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### Parameters
 
@@ -238,7 +238,7 @@ POST /apis/remedy.karmada.io/v1alpha1/remedies
 
 #### HTTP Request
 
-PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+PUT /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### Parameters
 
@@ -276,7 +276,7 @@ PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP Request
 
-PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+PUT /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### Parameters
 
@@ -314,7 +314,7 @@ PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+PATCH /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### Parameters
 
@@ -356,7 +356,7 @@ PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP Request
 
-PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+PATCH /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### Parameters
 
@@ -398,7 +398,7 @@ PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+DELETE /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### Parameters
 

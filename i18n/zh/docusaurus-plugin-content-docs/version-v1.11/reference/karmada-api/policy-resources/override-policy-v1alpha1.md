@@ -466,7 +466,7 @@ OverridePolicyList 是一组 OverridePolicy 的集合。
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`
 
 #### 参数
 
@@ -490,7 +490,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`/status
 
 #### 参数
 
@@ -514,7 +514,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies
 
 #### 参数
 
@@ -630,7 +630,7 @@ GET /apis/policy.karmada.io/v1alpha1/overridepolicies
 
 #### HTTP 请求
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+POST /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies
 
 #### 参数
 
@@ -669,7 +669,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`
 
 #### 参数
 
@@ -710,7 +710,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`/status
 
 #### 参数
 
@@ -751,7 +751,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{na
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`
 
 #### 参数
 
@@ -796,7 +796,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`/status
 
 #### 参数
 
@@ -841,7 +841,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies/`{name}`
 
 #### 参数
 
@@ -882,7 +882,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies/
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/overridepolicies
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/overridepolicies
 
 #### 参数
 

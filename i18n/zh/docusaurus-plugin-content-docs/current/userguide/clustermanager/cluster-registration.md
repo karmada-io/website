@@ -18,7 +18,7 @@ Karmada 支持通过 `Push` 和 `Pull` 两种模式来管理成员集群。 二�
 每个 `karmada-agent` 对应一个集群，其职责包括：
 - 向 Karmada 控制面注册集群（创建 Cluster 对象）
 - 维护集群状态并上报给 Karmada 控制面（更新 Cluster 对象状态）
-- 监控 Karmada 执行空间（命名空间 karmada-es-<集群名称>）中的清单，并将这些资源部署到其所服务的集群。
+- 监控 Karmada 执行空间（命名空间 karmada-es-`<集群名称>`）中的清单，并将这些资源部署到其所服务的集群。
 此模式需要为每个成员集群部署一个 `karmada-agent` 组件（部署位置需能同时访问成员集群和 Karmada 控制面）。相比 Push 模式，Pull 模式
 引入了额外的运维开销，但因为 `karmada-agent` 分担了控制面的压力，性能更优。它特别适用于特殊的网络环境，比如成员集群位于 NAT 或网关后方，
 Karmada 控制面无法直接访问，或者需要管理超大规模集群。

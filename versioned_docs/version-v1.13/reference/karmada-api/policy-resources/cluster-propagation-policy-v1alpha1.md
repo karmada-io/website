@@ -498,7 +498,7 @@ ClusterPropagationPolicyList contains a list of ClusterPropagationPolicy.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`
 
 #### Parameters
 
@@ -518,7 +518,7 @@ GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`/status
 
 #### Parameters
 
@@ -630,7 +630,7 @@ POST /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`
 
 #### Parameters
 
@@ -668,7 +668,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`/status
 
 #### Parameters
 
@@ -706,7 +706,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`
 
 #### Parameters
 
@@ -748,7 +748,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`/status
 
 #### Parameters
 
@@ -790,7 +790,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies/`{name}`
 
 #### Parameters
 

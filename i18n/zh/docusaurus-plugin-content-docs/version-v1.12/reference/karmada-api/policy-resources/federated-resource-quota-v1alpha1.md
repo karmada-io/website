@@ -120,7 +120,7 @@ FederatedResourceQuotaList 罗列 FederatedResourceQuota。
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### 参数
 
@@ -144,7 +144,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### 参数
 
@@ -168,7 +168,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
 
 #### 参数
 
@@ -284,7 +284,7 @@ GET /apis/policy.karmada.io/v1alpha1/federatedresourcequotas
 
 #### HTTP 请求
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+POST /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
 
 #### 参数
 
@@ -323,7 +323,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequ
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### 参数
 
@@ -364,7 +364,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### 参数
 
@@ -405,7 +405,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### 参数
 
@@ -450,7 +450,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### 参数
 
@@ -495,7 +495,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### 参数
 
@@ -536,7 +536,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresource
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
 
 #### 参数
 

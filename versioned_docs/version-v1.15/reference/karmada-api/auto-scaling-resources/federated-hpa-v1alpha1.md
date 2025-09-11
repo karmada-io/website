@@ -751,7 +751,7 @@ FederatedHPAList contains a list of FederatedHPA.
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -775,7 +775,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -799,7 +799,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Parameters
 
@@ -915,7 +915,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/federatedhpas
 
 #### HTTP Request
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Parameters
 
@@ -955,7 +955,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -997,7 +997,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -1039,7 +1039,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -1085,7 +1085,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -1131,7 +1131,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -1177,7 +1177,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpa
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Parameters
 

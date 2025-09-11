@@ -299,7 +299,7 @@ ResourceInterpreterCustomizationList 包含 ResourceInterpreterCustomization 的
 
 #### HTTP 请求
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`
 
 #### 参数
 
@@ -319,7 +319,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP 请求
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+GET /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`/status
 
 #### 参数
 
@@ -430,7 +430,7 @@ POST /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations
 
 #### HTTP 请求
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`
 
 #### 参数
 
@@ -467,7 +467,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP 请求
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`/status
 
 #### 参数
 
@@ -504,7 +504,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/st
 
 #### HTTP 请求
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`
 
 #### 参数
 
@@ -545,7 +545,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
 
 #### HTTP 请求
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/status
+PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`/status
 
 #### 参数
 
@@ -586,7 +586,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}/
 
 #### HTTP 请求
 
-DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/{name}
+DELETE /apis/config.karmada.io/v1alpha1/resourceinterpretercustomizations/`{name}`
 
 #### 参数
 

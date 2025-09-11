@@ -466,7 +466,7 @@ ClusterOverridePolicyList 表示一组 ClusterOverridePolicy 的集合。
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### 参数
 
@@ -486,7 +486,7 @@ GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### 参数
 
@@ -597,7 +597,7 @@ POST /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### 参数
 
@@ -634,7 +634,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### 参数
 
@@ -671,7 +671,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### 参数
 
@@ -712,7 +712,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### 参数
 
@@ -753,7 +753,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### 参数
 

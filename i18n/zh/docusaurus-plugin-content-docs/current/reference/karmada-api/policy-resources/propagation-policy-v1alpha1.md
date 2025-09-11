@@ -395,7 +395,7 @@ PropagationPolicyList 罗列 PropagationPolicy。
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`
 
 #### 参数
 
@@ -419,7 +419,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`/status
 
 #### 参数
 
@@ -443,7 +443,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP 请求
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies
 
 #### 参数
 
@@ -559,7 +559,7 @@ GET /apis/policy.karmada.io/v1alpha1/propagationpolicies
 
 #### HTTP 请求
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+POST /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies
 
 #### 参数
 
@@ -598,7 +598,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`
 
 #### 参数
 
@@ -639,7 +639,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP 请求
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`/status
 
 #### 参数
 
@@ -680,7 +680,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`
 
 #### 参数
 
@@ -725,7 +725,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicie
 
 #### HTTP 请求
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`/status
 
 #### 参数
 
@@ -770,7 +770,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicie
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies/`{name}`
 
 #### 参数
 
@@ -811,7 +811,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolici
 
 #### HTTP 请求
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/propagationpolicies
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/propagationpolicies
 
 #### 参数
 

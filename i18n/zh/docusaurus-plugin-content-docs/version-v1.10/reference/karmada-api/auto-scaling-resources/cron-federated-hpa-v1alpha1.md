@@ -222,7 +222,7 @@ CronFederatedHPAList 罗列 CronFederatedHPA。
 
 #### HTTP 请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### 参数
 
@@ -246,7 +246,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP 请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### 参数
 
@@ -270,7 +270,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP 请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
 
 #### 参数
 
@@ -386,7 +386,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/cronfederatedhpas
 
 #### HTTP 请求
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
 
 #### 参数
 
@@ -426,7 +426,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedh
 
 #### HTTP 请求
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### 参数
 
@@ -468,7 +468,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP 请求
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### 参数
 
@@ -510,7 +510,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP 请求
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### 参数
 
@@ -556,7 +556,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP 请求
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### 参数
 
@@ -602,7 +602,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP 请求
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### 参数
 
@@ -644,7 +644,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederate
 
 #### HTTP 请求
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
 
 #### 参数
 

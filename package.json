@@ -15,19 +15,19 @@
     "start:watch": "docusaurus start --host 0.0.0.0 && sh start-watch.sh"
   },
   "dependencies": {
-    "@docusaurus/core": "2.4.3",
-    "@docusaurus/plugin-content-blog": "^2.4.3",
-    "@docusaurus/plugin-content-docs": "^2.4.3",
-    "@docusaurus/plugin-content-pages": "^2.4.3",
-    "@docusaurus/plugin-sitemap": "^2.4.3",
-    "@docusaurus/preset-classic": "2.4.3",
+    "@docusaurus/core": "^3.8.1",
+    "@docusaurus/plugin-content-blog": "^3.8.1",
+    "@docusaurus/plugin-content-docs": "^3.8.1",
+    "@docusaurus/plugin-content-pages": "^3.8.1",
+    "@docusaurus/plugin-sitemap": "^3.8.1",
+    "@docusaurus/preset-classic": "^3.8.1",
     "@douyinfe/semi-ui": "^2.87.1",
     "asciinema-player": "^3.12.1",
     "clsx": "^2.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-github-btn": "^1.4.0",
-    "yarn": "^1.22.22"
+    "prism-react-renderer": "^2.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-github-btn": "^1.4.0"
   },
   "browserslist": {
     "production": [
@@ -40,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": ">=18.0"
   }
 }
