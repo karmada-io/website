@@ -109,7 +109,7 @@ Subject Public Key Info:
 
 ### ETCD客户端证书
 
-Karmada Aggregated API Server ETCD 客户端证书用于`karmada-aggregated-apiserver`访问 ETCD 数据存储时的身份验证。它确`karmada-aggregated-apiserver`能够安全地存储和检索其扩展 API 资源的状态信息，同时维护适当的访问控制。
+Karmada Aggregated API Server ETCD 客户端证书用于`karmada-aggregated-apiserver`访问 ETCD 数据存储时的身份验证。它确保`karmada-aggregated-apiserver`能够安全地存储和检索其扩展 API 资源的状态信息，同时维护适当的访问控制。
 
 **命令行标志**
 

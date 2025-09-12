@@ -15,8 +15,8 @@ Velero lets you:
 This document gives an example to demonstrate how to use the `Velero` to back up and restore Kubernetes cluster resources
 and persistent volumes. Following example backups resources in cluster `member1`, and then restores those to cluster `member2`.
 
-## Start up Karamda clusters
-You just need to clone Karamda repo, and run the following script in Karamda directory.
+## Start up Karmada clusters
+You just need to clone Karmada repo, and run the following script in Karmada directory.
 ```shell
 hack/local-up-karmada.sh
 ```

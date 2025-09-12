@@ -120,7 +120,7 @@ and also aggregated the read and writ permissions for accessing Karmada namespac
 
 More details please refer to:
 - [Aggregated ClusterRoles](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles)
-- [grant admin clusterrole with karamda resource permission](https://github.com/karmada-io/karmada/issues/3916)
+- [grant admin clusterrole with karmada resource permission](https://github.com/karmada-io/karmada/issues/3916)
 
 ### Optional Controllers
 

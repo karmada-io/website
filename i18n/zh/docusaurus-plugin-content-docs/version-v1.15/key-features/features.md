@@ -38,7 +38,7 @@ Karmada 支持：
   * Descheduler（karmada-descheduler）：根据成员集群内实例状态变化触发重调度。
   * Scheduler-estimator(karmada-scheduler-estimator)：为调度器提供更精确的成员集群运行实例的期望状态。
 
-像 k8s 调度一样，Karamda 支持不同的调度策略。整体的调度流程如下图所示：
+像 k8s 调度一样，Karmada 支持不同的调度策略。整体的调度流程如下图所示：
 
 ![overall-relationship.png](../resources/key-features/overall-scheduling.png)
 
@@ -78,7 +78,7 @@ Karmada 支持：
 
 ![overall-relationship.png](../resources/key-features/unified-operation.png)
 
-用户也可以通过 karamda-apiserver 检查和搜索所有成员集群的资源：
+用户也可以通过 karmada-apiserver 检查和搜索所有成员集群的资源：
 
 ![overall-relationship.png](../resources/key-features/unified-resourcequota.png)
 

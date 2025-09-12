@@ -4,7 +4,7 @@ title: 更正您的信息，以便更好地贡献
 
 通过问题、评论、拉取请求等向 [karmada-io](https://github.com/karmada-io) 做出贡献后，您可以在[此处](https://karmada.devstats.cncf.io/d/66/developer-activity-counts-by-companies)查看您的贡献。
 如果您发现到公司栏中的信息错误或为空,我们强烈建议您更正它
-列如，应该使用 `Huawei Technologies Co. Ltd` 而不是 `HUAWEI`:
+例如，应该使用 `Huawei Technologies Co. Ltd` 而不是 `HUAWEI`:
 ![Wrong Information](../resources/contributor/contributions_list.png)
 
 以下是解决此问题的步骤。

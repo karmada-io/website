@@ -323,7 +323,7 @@ For a better experience with visual metrics, we can also use Grafana with Promet
 
 **Attention**:
 
-In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apisever, kamada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
+In k8s v1.24+, the metrics from cadvisor may miss image, name and container labels, this may cause the metrics of the karmada components (e.g karmada-apiserver, karmada-controller-manager) to be unobserved [link](https://github.com/kubernetes/kubernetes/issues/111077)
 
 
 
