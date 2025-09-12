@@ -38,8 +38,7 @@ karmadactl join cluster1 --cluster-context cluster1 --karmada-context karmada
 ```
 
 `join` 命令背后的行为在 Kubefed 和 Karmada 中类似。
-对于 Kubefed，它将创建一个 Kubefed 和 Karmada 所使用的 `join` 命令在后台具有类似的行为。
-对于 Kubefed，此命令将创建一个对象，
+对于 Kubefed，此命令将创建一个[KubeFedCluster](https://github.com/kubernetes-sigs/kubefed/blob/96f03f0dea62fe09136010255acf218ed14987f3/pkg/apis/core/v1beta1/kubefedcluster_types.go#L94)对象，
 而 Karmada 将创建一个 [Cluster](https://github.com/karmada-io/karmada/blob/aa2419cb1f447d5512b2a998ec81c9013fa31586/pkg/apis/cluster/types.go#L36)对象来描述所接入的集群。
 
 ### 检查接入集群的状态

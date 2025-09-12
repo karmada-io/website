@@ -119,7 +119,7 @@ Karmada 维护了一系列包含控制循环的控制器，它们监视系统状
 
 有关详细信息，请参考：
 - [Aggregated ClusterRoles](https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles)
-- [grant admin clusterrole with karamda resource permission](https://github.com/karmada-io/karmada/issues/3916)
+- [grant admin clusterrole with karmada resource permission](https://github.com/karmada-io/karmada/issues/3916)
 
 ### 可选控制器
 

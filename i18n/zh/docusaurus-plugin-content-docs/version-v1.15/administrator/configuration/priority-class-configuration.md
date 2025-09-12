@@ -55,7 +55,7 @@ webhook:
 或者，你可以在执行 `helm install` 时使用 `--set` 参数为目标组件设置优先级类名称，例如：
 
 ```bash
-$ helm install karamda -n karmada-system --create-namespace --dependency-update ./charts/karmada --set apiServer.priorityClassName=system-cluster-critical
+$ helm install karmada -n karmada-system --create-namespace --dependency-update ./charts/karmada --set apiServer.priorityClassName=system-cluster-critical
 ```
 
 上述命令将 `karmada-apiserver` 组件的优先级类名称设置为 `system-cluster-critical`，其他组件也可以用类似方式进行配置。

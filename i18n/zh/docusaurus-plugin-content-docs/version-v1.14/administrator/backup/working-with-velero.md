@@ -14,15 +14,15 @@ Velero 让你：
 本文举例说明如何使用 Velero 来备份和恢复 Kubernetes 集群资源和持久化卷。
 下面的例子备份了集群 `member1` 中的资源，然后将这些资源恢复到集群 `member2` 中。
 
-## 启动 Karamda 集群
+## 启动 Karmada 集群
 
-你只需要克隆 Karamda repo，并在 Karamda 目录下运行以下脚本。
+你只需要克隆 Karmada repo，并在 Karmada 目录下运行以下脚本。
 
 ```shell
 hack/local-up-karmada.sh
 ```
 
-然后运行下面的命令，切换到成员集群 `member1'。
+然后运行下面的命令，切换到成员集群 `member1`。
 
 ```shell
 export KUBECONFIG=/root/.kube/members.config

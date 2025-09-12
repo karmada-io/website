@@ -317,7 +317,7 @@ hack/local-up-karmada.sh
 
 **注意**：
 
-在 k8s v1.24+ 中，来自 cadvisor 的指标可能遗漏图片、名称和容器标签，这会导致无法观测 Karmada 组件（例如 karmada-apisever、kamada-controller-manager）的指标。参见[相关链接](https://github.com/kubernetes/kubernetes/issues/111077)
+在 k8s v1.24+ 中，来自 cadvisor 的指标可能遗漏图片、名称和容器标签，这会导致无法观测 Karmada 组件（例如 karmada-apiserver、karmada-controller-manager）的指标。参见[相关链接](https://github.com/kubernetes/kubernetes/issues/111077)
 
 
 

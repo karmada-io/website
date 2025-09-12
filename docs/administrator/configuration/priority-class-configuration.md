@@ -54,12 +54,12 @@ webhook:
 Or, you can use the `--set` flag to set the priority class name for target components during `helm install`, for example:
 
 ```bash
-$ helm install karamda -n karmada-system --create-namespace --dependency-update ./charts/karmada --set apiServer.priorityClassName=system-cluster-critical
+$ helm install karmada -n karmada-system --create-namespace --dependency-update ./charts/karmada --set apiServer.priorityClassName=system-cluster-critical
 ```
 
 The above command sets the priority class name for the `karmada-apiserver` component to `system-cluster-critical`, other components can be configured in a similar way.
 
-### karamdactl
+### karmadactl
 
 Karmadactl provides command `init` to install control plane components and command `addons` to install addons like `karmada-descheduler`. They both support setting the priority class name for target components with specific flags.
 
