@@ -1,53 +1,55 @@
 ---
-title: Cluster Accurate Scheduler Estimator For Rescheduling
+title: 面向二次调度的集群精确调度器估算器
 ---
 
-Users could divide their replicas of a workload into different clusters in terms of available resources of member clusters. When some clusters are lack of resources, scheduler would not assign excessive replicas into these clusters by calling karmada-scheduler-estimator.
+用户可以根据各成员集群的可用资源，将某个工作负载的多个副本拆分给不同的成员集群。当某些成员集群资源不足时，调度器会通过调用 `karmada-scheduler-estimator`，避免将过多副本分配到这些成员集群。
 
-## Prerequisites
+## 前提条件
 
-### Karmada has been installed
+### 已安装 Karmada
 
-We can install Karmada by referring to [quick-start](https://github.com/karmada-io/karmada#quick-start), or directly run `hack/local-up-karmada.sh` script which is also used to run our E2E cases.
+可以参考 [quick-start](https://github.com/karmada-io/karmada#quick-start) 安装 Karmada，或直接运行 `hack/local-up-karmada.sh` 脚本（该脚本同样用于运行我们的 E2E 用例）。
 
-### Member cluster component is ready
+### 成员集群组件已就绪
 
-Ensure that all member clusters have been joined and their corresponding karmada-scheduler-estimator is installed into karmada-host.
+确保所有成员集群都已被接入，并且所有成员集群的对应 `karmada-scheduler-estimator` 已安装到 `karmada-host` 上。
 
-You could check by using the following command:
+你可以通过以下命令进行检查：
 
 ```bash
-# check whether the member cluster has been joined
+# 检查成员集群是否已被接入
 $ kubectl get cluster
 NAME       VERSION   MODE   READY   AGE
 member1    v1.19.1   Push   True    11m
 member2    v1.19.1   Push   True    11m
 member3    v1.19.1   Pull   True    5m12s
 
-# check whether the karmada-scheduler-estimator of a member cluster has been working well
+# 检查某成员集群对应的 karmada-scheduler-estimator 是否运行正常
 $ kubectl --context karmada-host get pod -n karmada-system | grep estimator
 karmada-scheduler-estimator-member1-696b54fd56-xt789   1/1     Running   0          77s
 karmada-scheduler-estimator-member2-774fb84c5d-md4wt   1/1     Running   0          75s
 karmada-scheduler-estimator-member3-5c7d87f4b4-76gv9   1/1     Running   0          72s
 ```
 
-- If the cluster has not been joined, you could use `hack/deploy-agent-and-estimator.sh` to deploy both karmada-agent and karmada-scheduler-estimator.
-- If the cluster has been joined already, you could use `hack/deploy-scheduler-estimator.sh` to only deploy karmada-scheduler-estimator.
+- 如果你在物理机上部署 Karmada，请参阅[通过二进制文件安装](../../installation/install-binary.md#install-karmada-scheduler-estimator)。
+- 如果你在宿主 Kubernetes 集群中部署 Karmada：
+  - 如果成员集群尚未接入，可以使用 `hack/deploy-agent-and-estimator.sh` 同时部署 `karmada-agent` 和 `karmada-scheduler-estimator`。
+  - 如果成员集群已接入，可以使用 `hack/deploy-scheduler-estimator.sh` 仅部署 `karmada-scheduler-estimator`。
 
-### Scheduler option '--enable-scheduler-estimator'
+### 调度器选项 '--enable-scheduler-estimator'
 
-After all member clusters have been joined and estimators are all ready, please specify the option `--enable-scheduler-estimator=true` to enable scheduler estimator.
+在所有成员集群完成加入且估算器均已就绪后，请通过选项 `--enable-scheduler-estimator=true` 启用调度器估算器。
 
 ```bash
-# edit the deployment of karmada-scheduler
+# 编辑 karmada-scheduler 的 Deployment
 kubectl --context karmada-host edit -n karmada-system deployments.apps karmada-scheduler
 ```
 
-And then add the option `--enable-scheduler-estimator=true` into the command of container `karmada-scheduler`.
+随后将 `--enable-scheduler-estimator=true` 选项添加到 `karmada-scheduler` 容器的启动命令中。
 
-## Example
+## 示例
 
-Now we could divide the replicas into different member clusters. Note that `propagationPolicy.spec.replicaScheduling.replicaSchedulingType` must be `Divided` and `propagationPolicy.spec.replicaScheduling.replicaDivisionPreference` must be `Aggregated`. The scheduler will try to divide the replicas aggregately in terms of all available resources of member clusters.
+现在可以将副本划分到不同的成员集群。需要注意：`propagationPolicy.spec.replicaScheduling.replicaSchedulingType` 必须为 `Divided`，且 `propagationPolicy.spec.replicaScheduling.replicaDivisionPreference` 必须为 `Aggregated`。调度器将依据成员集群的可用资源总量，尽可能以聚合的方式划分副本。
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -99,7 +101,7 @@ spec:
             memory: 2Gi
 ```
 
-You will find all replicas have been assigned to as few clusters as possible.
+可以看到，所有副本都被分配到了尽可能少的集群中。
 
 ```
 $ kubectl get deployments.apps          
@@ -110,7 +112,7 @@ NAME               CLUSTER
 nginx-deployment   [map[name:member1 replicas:5] map[name:member2] map[name:member3]]
 ```
 
-After that, we change the resource request of the deployment to a large number and have a try again.
+随后，将该 Deployment 的资源请求调大，再次尝试。
 
 ```yaml
 apiVersion: apps/v1
@@ -141,7 +143,7 @@ spec:
             memory: 200Gi
 ```
 
-As any node of member clusters does not have so many cpu and memory resources, we will find workload scheduling failed.
+由于任一成员集群的节点都无法满足如此大的 CPU 与内存请求，工作负载将无法完成调度。
 
 ```bash
 $ kubectl get deployments.apps 
