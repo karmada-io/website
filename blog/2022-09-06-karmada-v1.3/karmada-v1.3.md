@@ -208,7 +208,7 @@ Karmada v1.3版本包含了来自51位贡献者的数百次代码提交，在此
 ## 参考链接
 
 - Release Notes：https://github.com/karmada-io/karmada/releases/tag/v1.3.0
-- 集群故障迁移使用指导：https://karmada.io/docs/userguide/failover/#concept
+- 集群故障迁移使用指导：https://karmada.io/docs/userguide/failover/cluster-failover
 - 多集群资源全局代理使用指导：https://karmada.io/docs/userguide/globalview/proxy-global-resource/
 - 集群资源模型使用指导：https://karmada.io/docs/userguide/scheduling/cluster-resources
 - 基于Bootstrap令牌的集群注册使用指导：https://karmada.io/docs/userguide/clustermanager/cluster-registration

@@ -49,7 +49,7 @@ The following is a step-by-step guide, consistent with the execution steps of th
 
 ### 1. Install Karmada Control Plane
 
-Refer to the [Karmada documentation](https://karmada.io/docs/install/) to install the Karmada control plane. After initializing Karmada, register the **three member clusters**, cluster-1, cluster-2, and cluster-3, with the Karmada control plane. You can refer to the [Karmada cluster registration guide](https://karmada.io/docs/userguide/clustermanager/cluster-registration/) for instructions.
+Refer to the [Karmada documentation](https://karmada.io/docs/installation/) to install the Karmada control plane. After initializing Karmada, register the **three member clusters**, cluster-1, cluster-2, and cluster-3, with the Karmada control plane. You can refer to the [Karmada cluster registration guide](https://karmada.io/docs/userguide/clustermanager/cluster-registration/) for instructions.
 
 Here is an example command for cluster registration using the push mode (execute on the control-plane cluster):
 
