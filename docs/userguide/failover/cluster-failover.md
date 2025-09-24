@@ -136,6 +136,28 @@ JSONPath expressions follow the Kubernetes specification: <https://kubernetes.io
 
 **Note**: JSONPath expressions by default start searching from the "status" field of the API resource object. For example, to extract "availableReplicas" from a Deployment, the JSONPath expression should be `{.availableReplicas}` instead of `{.status.availableReplicas}`.
 
+#### Configuring Eviction Rate Limiting
+
+In scenarios involving large-scale multi-cluster failures, evicting a large number of workloads simultaneously can put significant pressure on the Karmada control plane and the remaining healthy clusters, potentially leading to cascading failures. To enhance the stability and controllability of the failover process, Karmada introduces a dynamic rate limiting mechanism that automatically adjusts eviction rates based on the overall health of the clusters.
+
+Users can fine-tune the eviction behavior by configuring the following command-line flags on the `karmada-controller-manager` component:
+
+* `--resource-eviction-rate`:
+  The default eviction rate per second when the system is healthy. Default: **0.5**.
+* `--secondary-resource-eviction-rate`:
+  The degraded eviction rate used when the system is unhealthy but considered a large-scale instance. Default: **0.1**.
+* `--unhealthy-cluster-threshold`:
+  The failure rate threshold (unhealthy clusters / total clusters) above which the system is considered unhealthy. Default: **0.55**.
+* `--large-cluster-num-threshold`:
+  The number of total clusters above which the instance is considered large-scale, affecting the rate limiting strategy when unhealthy. Default: **10**.
+
+The collaborative logic of the above parameters is as follows: When the cluster failure rate exceeds the threshold defined by `--unhealthy-cluster-threshold`, Karmada considers the system to be in an unhealthy state. At this point:
+
+* If the total number of clusters is **greater than** `--large-cluster-num-threshold` (large-scale scenario), the eviction rate is downgraded to `--secondary-resource-eviction-rate`.
+* If the total number of clusters is **less than or equal to** `--large-cluster-num-threshold` (small- to medium-scale scenario), the eviction rate is reduced to 0, i.e., **eviction is paused**, to provide the safest guarantee.
+
+When the system is healthy, the eviction rate will be maintained at the default `--resource-eviction-rate`.
+
 :::note
 
 Cluster failover is still in continuous iteration. We are in the progress of gathering use cases. If you are interested in this feature, please feel free to start an enhancement issue to let us know.
