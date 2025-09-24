@@ -136,6 +136,19 @@ JSONPath 表达式遵循 Kubernetes 规范：<https://kubernetes.io/docs/referen
 
 **注意**：JSONPath 表达式默认从 API 资源对象的 "status" 字段开始查找。例如，若要提取 Deployment 的 "availableReplicas"，应使用 `{.availableReplicas}`，而不是 `{.status.availableReplicas}`。
 
+### 配置驱逐速率限制
+
+在集群故障的场景下，短时间内连续驱逐大量工作负载可能会对 Karmada 控制面以及剩余的健康集群造成巨大压力。为了提升故障迁移过程的稳定性和可控性，Karmada 引入了速率限制机制，可以根据需要通过命令行参数调整驱逐速率。
+
+用户可以通过在 `karmada-controller-manager` 组件上配置以下命令行参数，来精细化控制驱逐行为：
+
+* `--resource-eviction-rate`:
+  每秒驱逐的数量。默认值为 **0.5**。设置为 0 时驱逐速率会以 30 分钟一个的速度进行。
+
+示例：
+- 假设需要驱逐 12 个工作负载，设置 `--resource-eviction-rate=0.5` 时，大约每 2 秒驱逐 1 个，约 24 秒完成全部驱逐。
+- 若设置为 `--resource-eviction-rate=2`，则大约每秒驱逐 2 个，约 6 秒完成。
+
 :::note
 
 集群故障迁移特性仍在持续迭代中，欢迎大家反馈实际使用场景。如果您对该特性感兴趣，欢迎提交增强 issue 与我们交流。
