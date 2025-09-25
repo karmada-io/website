@@ -124,7 +124,7 @@ FederatedResourceQuotaList contains a list of FederatedResourceQuota.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### Parameters
 
@@ -148,7 +148,7 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### Parameters
 
@@ -167,66 +167,6 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 #### Response
 
 200 ([FederatedResourceQuota](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequota)): OK
-
-### `list` list or watch objects of kind FederatedResourceQuota
-
-#### HTTP Request
-
-GET /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
 
 ### `list` list or watch objects of kind FederatedResourceQuota
 
@@ -284,11 +224,71 @@ GET /apis/policy.karmada.io/v1alpha1/federatedresourcequotas
 
 200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
 
+### `list` list or watch objects of kind FederatedResourceQuota
+
+#### HTTP Request
+
+GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
+
+#### Parameters
+
+- **namespace** (*in path*): string, required
+
+  [namespace](../common-parameter/common-parameters#namespace)
+
+- **allowWatchBookmarks** (*in query*): boolean
+
+  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
+
+- **continue** (*in query*): string
+
+  [continue](../common-parameter/common-parameters#continue)
+
+- **fieldSelector** (*in query*): string
+
+  [fieldSelector](../common-parameter/common-parameters#fieldselector)
+
+- **labelSelector** (*in query*): string
+
+  [labelSelector](../common-parameter/common-parameters#labelselector)
+
+- **limit** (*in query*): integer
+
+  [limit](../common-parameter/common-parameters#limit)
+
+- **pretty** (*in query*): string
+
+  [pretty](../common-parameter/common-parameters#pretty)
+
+- **resourceVersion** (*in query*): string
+
+  [resourceVersion](../common-parameter/common-parameters#resourceversion)
+
+- **resourceVersionMatch** (*in query*): string
+
+  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
+
+- **sendInitialEvents** (*in query*): boolean
+
+  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **timeoutSeconds** (*in query*): integer
+
+  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
+
+- **watch** (*in query*): boolean
+
+  [watch](../common-parameter/common-parameters#watch)
+
+#### Response
+
+200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
+
 ### `create` create a FederatedResourceQuota
 
 #### HTTP Request
 
-POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+POST /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
 
 #### Parameters
 
@@ -328,7 +328,7 @@ POST /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequ
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### Parameters
 
@@ -370,7 +370,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### Parameters
 
@@ -412,7 +412,7 @@ PUT /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequo
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### Parameters
 
@@ -458,7 +458,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`/status
 
 #### Parameters
 
@@ -504,7 +504,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourceq
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas/`{name}`
 
 #### Parameters
 
@@ -550,7 +550,7 @@ DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresource
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/namespaces/{namespace}/federatedresourcequotas
+DELETE /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
 
 #### Parameters
 

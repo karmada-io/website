@@ -751,7 +751,7 @@ FederatedHPAList contains a list of FederatedHPA.
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -775,7 +775,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -794,66 +794,6 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 #### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
-
-### `list` list or watch objects of kind FederatedHPA
-
-#### HTTP Request
-
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
 
 ### `list` list or watch objects of kind FederatedHPA
 
@@ -911,11 +851,71 @@ GET /apis/autoscaling.karmada.io/v1alpha1/federatedhpas
 
 200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
 
+### `list` list or watch objects of kind FederatedHPA
+
+#### HTTP Request
+
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
+
+#### Parameters
+
+- **namespace** (*in path*): string, required
+
+  [namespace](../common-parameter/common-parameters#namespace)
+
+- **allowWatchBookmarks** (*in query*): boolean
+
+  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
+
+- **continue** (*in query*): string
+
+  [continue](../common-parameter/common-parameters#continue)
+
+- **fieldSelector** (*in query*): string
+
+  [fieldSelector](../common-parameter/common-parameters#fieldselector)
+
+- **labelSelector** (*in query*): string
+
+  [labelSelector](../common-parameter/common-parameters#labelselector)
+
+- **limit** (*in query*): integer
+
+  [limit](../common-parameter/common-parameters#limit)
+
+- **pretty** (*in query*): string
+
+  [pretty](../common-parameter/common-parameters#pretty)
+
+- **resourceVersion** (*in query*): string
+
+  [resourceVersion](../common-parameter/common-parameters#resourceversion)
+
+- **resourceVersionMatch** (*in query*): string
+
+  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
+
+- **sendInitialEvents** (*in query*): boolean
+
+  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **timeoutSeconds** (*in query*): integer
+
+  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
+
+- **watch** (*in query*): boolean
+
+  [watch](../common-parameter/common-parameters#watch)
+
+#### Response
+
+200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
+
 ### `create` create a FederatedHPA
 
 #### HTTP Request
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Parameters
 
@@ -955,7 +955,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -997,7 +997,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -1039,7 +1039,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -1085,7 +1085,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -1131,7 +1131,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### Parameters
 
@@ -1177,7 +1177,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpa
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Parameters
 

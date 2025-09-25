@@ -222,7 +222,7 @@ CronFederatedHPAList contains a list of CronFederatedHPA.
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### Parameters
 
@@ -246,7 +246,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -265,66 +265,6 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 #### Response
 
 200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
-
-### `list` list or watch objects of kind CronFederatedHPA
-
-#### HTTP Request
-
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
 ### `list` list or watch objects of kind CronFederatedHPA
 
@@ -382,11 +322,71 @@ GET /apis/autoscaling.karmada.io/v1alpha1/cronfederatedhpas
 
 200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
+### `list` list or watch objects of kind CronFederatedHPA
+
+#### HTTP Request
+
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
+
+#### Parameters
+
+- **namespace** (*in path*): string, required
+
+  [namespace](../common-parameter/common-parameters#namespace)
+
+- **allowWatchBookmarks** (*in query*): boolean
+
+  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
+
+- **continue** (*in query*): string
+
+  [continue](../common-parameter/common-parameters#continue)
+
+- **fieldSelector** (*in query*): string
+
+  [fieldSelector](../common-parameter/common-parameters#fieldselector)
+
+- **labelSelector** (*in query*): string
+
+  [labelSelector](../common-parameter/common-parameters#labelselector)
+
+- **limit** (*in query*): integer
+
+  [limit](../common-parameter/common-parameters#limit)
+
+- **pretty** (*in query*): string
+
+  [pretty](../common-parameter/common-parameters#pretty)
+
+- **resourceVersion** (*in query*): string
+
+  [resourceVersion](../common-parameter/common-parameters#resourceversion)
+
+- **resourceVersionMatch** (*in query*): string
+
+  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
+
+- **sendInitialEvents** (*in query*): boolean
+
+  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **timeoutSeconds** (*in query*): integer
+
+  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
+
+- **watch** (*in query*): boolean
+
+  [watch](../common-parameter/common-parameters#watch)
+
+#### Response
+
+200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
+
 ### `create` create a CronFederatedHPA
 
 #### HTTP Request
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
 
 #### Parameters
 
@@ -426,7 +426,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedh
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### Parameters
 
@@ -468,7 +468,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -510,7 +510,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhp
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### Parameters
 
@@ -556,7 +556,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP Request
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`/status
 
 #### Parameters
 
@@ -602,7 +602,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederated
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas/`{name}`
 
 #### Parameters
 
@@ -648,7 +648,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederate
 
 #### HTTP Request
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/cronfederatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederatedhpas
 
 #### Parameters
 
