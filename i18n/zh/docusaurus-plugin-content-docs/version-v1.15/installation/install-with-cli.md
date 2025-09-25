@@ -1,16 +1,16 @@
 ---
-title: Installation with CLI
+title: 使用 CLI 安装
 ---
 
-## Prerequisites
-## Installation with init flags
+## 前提条件
+## 使用初始化标志安装
 
-## Installation with init configuration
+## 使用初始化配置安装
 
-`karmadactl init` allows you to install Karmada by specifying a configuration file, which provides a structured way to define all settings in a YAML file.
+`karmadactl init` 命令允许您通过指定配置文件来安装 Karmada，该文件提供了一种结构化方式，可在 YAML 文件中定义所有设置。
 
-### Example Configuration File
-Here is an example of the configuration file for Karmada deployment:
+### 配置文件示例
+以下是 Karmada 部署的配置文件示例：
 ```yaml
 apiVersion: config.karmada.io/v1alpha1
 kind: KarmadaInitConfig
@@ -44,11 +44,11 @@ spec:
       imageTag: "v1.10.3"
 ```
 
-### Deploying Karmada with Configuration File
+### 使用配置文件部署 Karmada
 
-1.Save the example configuration above to a file, e.g., karmada-init-config.yaml.
+1. 将上述示例配置保存到文件（例如 `karmada-init-config.yaml`）。
 
-2.Use the following command to deploy Karmada with the configuration file:
+2. 使用以下命令通过配置文件部署 Karmada：
 
   ```bash
   sudo karmadactl init --config /path/to/your/karmada-init-config.yaml
@@ -56,19 +56,18 @@ spec:
 
 :::note
 
-You need to use sudo for elevated permissions because `karmadactl` creates a
-`karmada-apiserver.config` file at the `/etc/karmada/` directory.
+由于 `karmadactl` 需要在 `/etc/karmada/` 目录下创建 `karmada-apiserver.config` 文件，因此需使用 `sudo` 提升权限。
 
 :::
 
-3.This configuration file allows you to define essential parameters, including:
+3. 该配置文件可用于定义以下关键参数：
 
-- certificates: Defines certificate paths and validity period.
-- etcd: Configures Etcd settings, including local or external Etcd options.
-- hostCluster: Specifies host cluster API endpoint and kubeconfig.
-- images: Configures image settings for components.
-- components: Sets up replicas for API Server and other core components.
-- karmadaDataPath: Defines the data path for Karmada.
--  ...
+- certificates：定义证书路径和有效期。
+- etcd：配置 Etcd 相关设置，包括本地或外部 Etcd 选项。
+- hostCluster：指定宿主集群的 API 端点和 kubeconfig。
+- images：配置各组件的镜像设置。
+- components：设置 API 服务器及其他核心组件的副本数。
+- karmadaDataPath：定义 Karmada 的数据存储路径。
+- ......
 
-If you need more information about the configuration file, please refer to the [karmadactl init API reference](../reference/karmadactl/karmadactl-config.v1alpha1.md).
+如需了解配置文件的更多详细信息，请参考 [karmadactl init API 参考](../reference/karmadactl/karmadactl-config.v1alpha1.md)。
