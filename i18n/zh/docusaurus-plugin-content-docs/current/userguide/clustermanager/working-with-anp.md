@@ -1,33 +1,33 @@
 ---
-title: Deploy apiserver-network-proxy (ANP) For Pull mode
+title: 为拉取模式部署 apiserver-network-proxy（ANP）
 ---
 
-## Purpose
+## 目的
 
-For a member cluster that joins Karmada in the pull mode, you need to provide a method to connect the network between the Karmada control plane and the member cluster, so that karmada-aggregated-apiserver can access this member cluster.
+对于以拉取模式加入 Karmada 的成员集群，您需要提供 Karmada 控制平面与该成员集群之间的网络连接方案，确保 Karmada 聚合 API 服务器（karmada-aggregated-apiserver）能够访问该成员集群。
 
-Deploying ANP to achieve this is one of the methods. This document describes how to deploy ANP for Karmada.
+部署 ANP（apiserver-network-proxy）是实现该网络连接的方案之一。本文档将介绍如何为 Karmada 部署 ANP。
 
-## Environment
+## 环境
 
-Karmada can be deployed using the kind tool.
+Karmada 可通过 kind 工具部署，您可直接使用 `hack/local-up-karmada.sh` 脚本完成 Karmada 部署。
 
-You can directly use `hack/local-up-karmada.sh` to deploy Karmada.
+## 操作步骤
 
-## Actions
+### 步骤 1：下载代码
 
-### Step 1: Download code
+为方便演示，以下代码基于 ANP v0.0.24 版本修改，支持通过 HTTP 访问前端服务器。代码仓库地址如下：https://github.com/mrlihanbo/apiserver-network-proxy/tree/v0.0.24/dev
 
-To facilitate demonstration, the code is modified based on ANP v0.0.24 to support access to the front server through HTTP. Here is the code repository address: https://github.com/mrlihanbo/apiserver-network-proxy/tree/v0.0.24/dev.
+执行以下命令下载代码并进入仓库目录：
 
 ```shell
 git clone -b v0.0.24/dev https://github.com/mrlihanbo/apiserver-network-proxy.git
 cd apiserver-network-proxy/
 ```
 
-### Step 2: Build images
+### 步骤 2：构建镜像
 
-Build the proxy-server and proxy-agent images.
+构建 proxy-server 和 proxy-agent 镜像，执行以下命令：
 
 ```shell
 docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24
@@ -35,28 +35,28 @@ docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile
 docker build . --build-arg ARCH=amd64 -f artifacts/images/server-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24
 ```
 
-### Step 3: Generate certificates
+### 步骤 3：生成证书
 
-Run the command to check the IP address of karmada-host:
+执行以下命令检查 karmada-host 的 IP 地址：
 
 ```shell
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane
 ```
 
-Run the `make certs` command to generate certificates and specify `PROXY_SERVER_IP` as the IP address obtained in the preceding command.
+执行 `make certs` 命令生成证书，并将 `PROXY_SERVER_IP` 指定为上一步获取的 IP 地址（将 x.x.x.x 替换为实际 IP）：
 
 ```shell
 make certs PROXY_SERVER_IP=x.x.x.x
 ```
 
-The certificates are generated in the `certs` folder.
+生成的证书将存储在 `certs` 文件夹中。
 
-### Step 4: Deploy proxy-server
+### 步骤 4：部署 proxy-server
 
-Save the `proxy-server.yaml` file in the root directory of the ANP code repository.
+在 ANP 代码仓库的根目录下，创建并保存 `proxy-server.yaml` 文件。
 
 <details>
-<summary>unfold me to see the yaml</summary>
+<summary>展开查看 yaml 文件</summary>
 
 ```yaml
 # proxy-server.yaml
@@ -135,10 +135,10 @@ data:
 
 </details>
 
-Save the `replace-proxy-server.sh` file in the root directory of the ANP code repository.
+在 ANP 代码仓库的根目录下，创建并保存 `replace-proxy-server.sh` 脚本文件。
 
 <details>
-<summary>unfold me to see the shell</summary>
+<summary>展开查看 shell 脚本</summary>
 
 ```shell
 #!/bin/bash
@@ -167,14 +167,14 @@ sed -i'' -e "s/{{cluster_key}}/${CLUSTER_KEY}/g" ${cert_yaml}
 
 </details>
 
-Run the following commands to run the script:
+执行以下命令运行脚本:
 
 ```shell
 chmod +x replace-proxy-server.sh
 bash replace-proxy-server.sh
 ```
 
-Deploy the proxy-server on the karmada-host:
+在 karmada-host 集群上部署 proxy-server：
 
 ```shell
 kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24 --name karmada-host
@@ -182,12 +182,12 @@ export KUBECONFIG=/root/.kube/karmada.config
 kubectl --context=karmada-host apply -f proxy-server.yaml
 ```
 
-### Step 5: Deploy proxy-agent
+### 步骤 5：部署 proxy-agent
 
-Save the `proxy-agent.yaml` file in the root directory of the ANP code repository.
+在 ANP 代码仓库的根目录下，创建并保存 `proxy-agent.yaml` 文件。
 
 <details>
-<summary>unfold me to see the yaml</summary>
+<summary>展开查看 yaml 文件</summary>
 
 ```yaml
 # proxy-agent.yaml
@@ -254,10 +254,10 @@ data:
 
 </details>
 
-Save the `replace-proxy-agent.sh` file in the root directory of the ANP code repository.
+在 ANP 代码仓库的根目录下，创建并保存 `replace-proxy-agent.sh` 脚本文件。
 
 <details>
-<summary>unfold me to see the shell</summary>
+<summary>展开查看 shell 脚本</summary>
 
 ```shell
 #!/bin/bash
@@ -281,32 +281,33 @@ sed -i'' -e "s/{{proxy_agent_key}}/${PROXY_AGENT_KEY}/g" ${cert_yaml}
 
 </details>
 
-Run the following commands to run the script:
+执行以下命令运行脚本:
 
 ```shell
 chmod +x replace-proxy-agent.sh
 bash replace-proxy-agent.sh
 ```
 
-Deploy the proxy-agent in the pull mode for a member cluster (in this example, the `member3` cluster is in the pull mode.):
+以拉取模式为成员集群部署 proxy-agent（本文以 `member3` 集群为例，该集群已配置为拉取模式）：
 
 ```shell
 kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24 --name member3
 kubectl --kubeconfig=/root/.kube/members.config --context=member3 apply -f proxy-agent.yaml
 ```
 
-**The ANP deployment is completed now.**
+**至此，ANP 部署完成。**
 
-### Step 6: Add command flags for the karmada-agent deployment
+### 步骤 6：为 karmada-agent 部署添加命令参数
 
-After deploying the ANP deployment, you need to add extra command flags `--cluster-api-endpoint` and `--proxy-server-address` for the `karmada-agent` deployment in the `member3` cluster.
+ANP 部署完成后，需为 `member3` 集群中的 `karmada-agent` 部署添加额外的命令参数 `--cluster-api-endpoint` 和 `--proxy-server-address`，具体说明如下：
 
-Where `--cluster-api-endpoint` is the APIEndpoint of the cluster. You can obtain it from the KubeConfig file of the `member3` cluster.
+- `--cluster-api-endpoint`：成员集群的 API 端点，可从 `member3` 集群的 KubeConfig 文件中获取。
 
-Where `--proxy-server-address` is the address of the proxy server that is used to proxy the cluster. In current case, you can set `--proxy-server-address` to `http://<karmada_control_plane_addr>:8088`. Get `karmada_control_plane_addr` value through the following command:
+- `--proxy-server-address`：用于代理该集群的 `proxy-server` 地址，本文中需设置为 `http://<karmada_control_plane_addr>:8088`（将 `<karmada_control_plane_addr>` 替换为实际 IP）。
+执行以下命令获取 `karmada_control_plane_addr` 的地址：
 
 ```shell
 docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' karmada-host-control-plane
 ```
 
-Set port `8088` by modifying the code in ANP: https://github.com/mrlihanbo/apiserver-network-proxy/blob/v0.0.24/dev/cmd/server/app/server.go#L267. You can also modify it to a different value.
+端口 `8088` 可通过修改 ANP 中的代码进行设置: https://github.com/mrlihanbo/apiserver-network-proxy/blob/v0.0.24/dev/cmd/server/app/server.go#L267。 您也可以将其修改为其他端口值。 
