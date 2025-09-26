@@ -4,12 +4,21 @@ parts:
       - name: WorkloadRebalancer
         group: "apps.karmada.io"
         version: v1alpha1
+      - name: WorkloadRebalancerList
+        group: "apps.karmada.io"
+        version: v1alpha1
   - name: AutoScaling Resources
     chapters:
       - name: FederatedHPA
         group: "autoscaling.karmada.io"
         version: v1alpha1
+      - name: FederatedHPAList
+        group: "autoscaling.karmada.io"
+        version: v1alpha1
       - name: CronFederatedHPA
+        group: "autoscaling.karmada.io"
+        version: v1alpha1
+      - name: CronFederatedHPAList
         group: "autoscaling.karmada.io"
         version: v1alpha1
   - name: Cluster Resources
@@ -17,12 +26,21 @@ parts:
       - name: Cluster
         group: "cluster.karmada.io"
         version: v1alpha1
+      - name: ClusterList
+        group: "cluster.karmada.io"
+        version: v1alpha1
   - name: Config Resources
     chapters:
       - name: ResourceInterpreterCustomization
         group: "config.karmada.io"
         version: v1alpha1
+      - name: ResourceInterpreterCustomizationList
+        group: "config.karmada.io"
+        version: v1alpha1
       - name: ResourceInterpreterWebhookConfiguration
+        group: "config.karmada.io"
+        version: v1alpha1
+      - name: ResourceInterpreterWebhookConfigurationList
         group: "config.karmada.io"
         version: v1alpha1
   - name: Networking Resources
@@ -30,7 +48,13 @@ parts:
       - name: MultiClusterIngress
         group: "networking.karmada.io"
         version: v1alpha1
+      - name: MultiClusterIngressList
+        group: "networking.karmada.io"
+        version: v1alpha1
       - name: MultiClusterService
+        group: "networking.karmada.io"
+        version: v1alpha1
+      - name: MultiClusterServiceList
         group: "networking.karmada.io"
         version: v1alpha1
   - name: Policy Resources
@@ -38,19 +62,37 @@ parts:
       - name: FederatedResourceQuota
         group: "policy.karmada.io"
         version: v1alpha1
+      - name: FederatedResourceQuotaList
+        group: "policy.karmada.io"
+        version: v1alpha1
       - name: OverridePolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: OverridePolicyList
         group: "policy.karmada.io"
         version: v1alpha1
       - name: ClusterOverridePolicy
         group: "policy.karmada.io"
         version: v1alpha1
+      - name: ClusterOverridePolicyList
+        group: "policy.karmada.io"
+        version: v1alpha1
       - name: PropagationPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: PropagationPolicyList
         group: "policy.karmada.io"
         version: v1alpha1
       - name: ClusterPropagationPolicy
         group: "policy.karmada.io"
         version: v1alpha1
+      - name: ClusterPropagationPolicyList
+        group: "policy.karmada.io"
+        version: v1alpha1
       - name: ClusterTaintPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: ClusterTaintPolicyList
         group: "policy.karmada.io"
         version: v1alpha1
   - name: Remedy Resources
@@ -58,9 +100,15 @@ parts:
       - name: Remedy
         group: "remedy.karmada.io"
         version: v1alpha1
+      - name: RemedyList
+        group: "remedy.karmada.io"
+        version: v1alpha1
   - name: Search Resources
     chapters:
       - name: ResourceRegistry
+        group: "search.karmada.io"
+        version: v1alpha1
+      - name: ResourceRegistryList
         group: "search.karmada.io"
         version: v1alpha1
   - name: Work Resources
@@ -68,10 +116,19 @@ parts:
       - name: Work
         group: "work.karmada.io"
         version: v1alpha1
+      - name: WorkList
+        group: "work.karmada.io"
+        version: v1alpha1
       - name: ResourceBinding
         group: "work.karmada.io"
         version: v1alpha2
+      - name: ResourceBindingList
+        group: "work.karmada.io"
+        version: v1alpha2
       - name: ClusterResourceBinding
+        group: "work.karmada.io"
+        version: v1alpha2
+      - name: ClusterResourceBindingList
         group: "work.karmada.io"
         version: v1alpha2
   - name: Common Definitions
