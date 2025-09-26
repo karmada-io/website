@@ -136,6 +136,28 @@ JSONPath 表达式遵循 Kubernetes 规范：<https://kubernetes.io/docs/referen
 
 **注意**：JSONPath 表达式默认从 API 资源对象的 "status" 字段开始查找。例如，若要提取 Deployment 的 "availableReplicas"，应使用 `{.availableReplicas}`，而不是 `{.status.availableReplicas}`。
 
+#### 配置驱逐速率限制
+
+在多集群大规模故障的场景下，同时驱逐大量工作负载可能会对 Karmada 控制面以及剩余的健康集群造成巨大压力，甚至引发级联故障。为了提升故障迁移过程的稳定性和可控性，Karmada 引入了动态速率限制机制，可以根据集群的整体健康状况自动调整驱逐速率。
+
+用户可以通过在 `karmada-controller-manager` 组件上配置以下命令行参数，来精细化控制驱逐行为：
+
+* `--resource-eviction-rate`:
+  系统健康时的默认每秒驱逐速率。默认值为 **0.5**。
+* `--secondary-resource-eviction-rate`:
+  当系统不健康但被认为是大规模实例时，所采用的降级驱逐速率。默认值为 **0.1**。
+* `--unhealthy-cluster-threshold`:
+  集群故障率阈值（不健康集群数 / 总集群数），超过此阈值系统被认为是不健康的。默认值为 **0.55**。
+* `--large-cluster-num-threshold`:
+  用于判断实例是否为大规模集群的集群总数阈值，它会影响不健康状态下的速率限制策略。默认值为 **10**。
+
+上述参数的协同工作逻辑如下：当集群故障率超过 `--unhealthy-cluster-threshold` 定义的阈值时，Karmada 会认为系统处于不健康状态。此时：
+
+* 如果集群总数**大于** `--large-cluster-num-threshold`（大规模场景），驱逐速率将降级为 `--secondary-resource-eviction-rate`。
+* 如果集群总数**小于或等于** `--large-cluster-num-threshold`（中小规模场景），驱逐速率将降为0，即**暂停驱逐**，以提供最安全的保障。
+
+在系统健康时，驱逐速率将维持在默认的 `--resource-eviction-rate`。
+
 :::note
 
 集群故障迁移特性仍在持续迭代中，欢迎大家反馈实际使用场景。如果您对该特性感兴趣，欢迎提交增强 issue 与我们交流。
