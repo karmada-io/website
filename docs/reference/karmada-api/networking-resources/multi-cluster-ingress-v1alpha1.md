@@ -312,7 +312,7 @@ MultiClusterIngressList is a collection of MultiClusterIngress.
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### Parameters
 
@@ -336,7 +336,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### Parameters
 
@@ -355,66 +355,6 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 #### Response
 
 200 ([MultiClusterIngress](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringress)): OK
-
-### `list` list or watch objects of kind MultiClusterIngress
-
-#### HTTP Request
-
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([MultiClusterIngressList](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringresslist)): OK
 
 ### `list` list or watch objects of kind MultiClusterIngress
 
@@ -472,11 +412,71 @@ GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses
 
 200 ([MultiClusterIngressList](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringresslist)): OK
 
+### `list` list or watch objects of kind MultiClusterIngress
+
+#### HTTP Request
+
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
+
+#### Parameters
+
+- **namespace** (*in path*): string, required
+
+  [namespace](../common-parameter/common-parameters#namespace)
+
+- **allowWatchBookmarks** (*in query*): boolean
+
+  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
+
+- **continue** (*in query*): string
+
+  [continue](../common-parameter/common-parameters#continue)
+
+- **fieldSelector** (*in query*): string
+
+  [fieldSelector](../common-parameter/common-parameters#fieldselector)
+
+- **labelSelector** (*in query*): string
+
+  [labelSelector](../common-parameter/common-parameters#labelselector)
+
+- **limit** (*in query*): integer
+
+  [limit](../common-parameter/common-parameters#limit)
+
+- **pretty** (*in query*): string
+
+  [pretty](../common-parameter/common-parameters#pretty)
+
+- **resourceVersion** (*in query*): string
+
+  [resourceVersion](../common-parameter/common-parameters#resourceversion)
+
+- **resourceVersionMatch** (*in query*): string
+
+  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
+
+- **sendInitialEvents** (*in query*): boolean
+
+  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **timeoutSeconds** (*in query*): integer
+
+  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
+
+- **watch** (*in query*): boolean
+
+  [watch](../common-parameter/common-parameters#watch)
+
+#### Response
+
+200 ([MultiClusterIngressList](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringresslist)): OK
+
 ### `create` create a MultiClusterIngress
 
 #### HTTP Request
 
-POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+POST /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
 
 #### Parameters
 
@@ -516,7 +516,7 @@ POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclustering
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+PUT /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### Parameters
 
@@ -558,7 +558,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+PUT /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### Parameters
 
@@ -600,7 +600,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+PATCH /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### Parameters
 
@@ -646,7 +646,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP Request
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+PATCH /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### Parameters
 
@@ -692,7 +692,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+DELETE /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### Parameters
 
@@ -738,7 +738,7 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteri
 
 #### HTTP Request
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+DELETE /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
 
 #### Parameters
 

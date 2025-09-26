@@ -159,7 +159,7 @@ ClusterTaintPolicyList contains a list of ClusterTaintPolicy
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`
 
 #### Parameters
 
@@ -179,7 +179,7 @@ GET /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`/status
 
 #### Parameters
 
@@ -291,7 +291,7 @@ POST /apis/policy.karmada.io/v1alpha1/clustertaintpolicies
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`
 
 #### Parameters
 
@@ -329,7 +329,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`/status
 
 #### Parameters
 
@@ -367,7 +367,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`
 
 #### Parameters
 
@@ -409,7 +409,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`/status
 
 #### Parameters
 
@@ -451,7 +451,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/clustertaintpolicies/`{name}`
 
 #### Parameters
 

@@ -18,6 +18,8 @@ kwebsite: clean
 	sed -i '/: ".*"/{s|{|[|g}' $(SWAGGER_FILE)
 	sed -i '/: ".*"/{s|}|]|g}' $(SWAGGER_FILE)
 
+	sed -i -E 's/\{([^}]+)\}/`{\1}`/g' $(SWAGGER_FILE) # replace {xxx} with `{xxx}` to make it work with MDX v3.0+
+
 	go run cmd/main.go kwebsite --config-dir config/$(VERSION)/ --file $(SWAGGER_FILE) --output-dir kwebsite/content/en/docs --templates ./templates
 
 	find kwebsite -name "_index.md" -print -exec rm {} \;
