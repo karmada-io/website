@@ -10,7 +10,7 @@ Describe fields and structure of various resources in Karmada control plane or a
 
  This command describes the fields associated with each supported API resource. Fields are identified via a simple JSONPath identifier:
 
-        <type>.<fieldName>[.<fieldName>]
+        `<type>.<fieldName>[.<fieldName>]`
         
  Information about each field is retrieved from the server in OpenAPI format.
 
