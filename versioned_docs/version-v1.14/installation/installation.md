@@ -36,7 +36,7 @@ setting `--kubeconfig` flag to the following commands.
 
 Run the following command to install:
 ```bash
-kubectl karmada init
+karmadactl init
 ```
 It might take about 5 minutes and if everything goes well, you will see outputs similar to:
 ```
@@ -102,25 +102,25 @@ The configuration file of Karmada will be created to `/etc/karmada/karmada-apise
 
 #### Offline installation
 
-When installing Karmada, the `kubectl karmada init` will download the APIs(CRD) from the Karmada official release page
+When installing Karmada, the `karmadactl init` will download the APIs(CRD) from the Karmada official release page
 (e.g. `https://github.com/karmada-io/karmada/releases/tag/v0.10.1`) and load images from the official registry by default.
 
 If you want to install Karmada offline, maybe you have to specify the APIs tar file as well as the image.
 
 Use `--crds` flag to specify the CRD file. e.g.
 ```bash
-kubectl karmada init --crds /$HOME/crds.tar.gz
+karmadactl init --crds /$HOME/crds.tar.gz
 ```
 
 The images of Karmada components could be specified, take `karmada-controller-manager` as an example:
 ```bash
-kubectl karmada init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0
+karmadactl init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0
 ```
 
 #### Deploy HA
 Use `--karmada-apiserver-replicas` and `--etcd-replicas` flags to specify the number of the replicas (defaults to `1`).
 ```bash
-kubectl karmada init --karmada-apiserver-replicas 3 --etcd-replicas 3
+karmadactl init --karmada-apiserver-replicas 3 --etcd-replicas 3
 ```
 
 ### Install Karmada in Kind cluster
@@ -133,9 +133,9 @@ Create a cluster named `host` by `hack/create-cluster.sh`:
 hack/create-cluster.sh host $HOME/.kube/host.config
 ```
 
-Install Karmada v1.2.0 by command `kubectl karmada init`:
+Install Karmada v1.2.0 by command `karmadactl init`:
 ```bash
-kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
+karmadactl init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
 ```
 
 Check installed components:

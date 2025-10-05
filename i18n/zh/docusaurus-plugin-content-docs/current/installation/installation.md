@@ -33,7 +33,7 @@ title: 安装概述
 
 运行以下命令进行安装：
 ```bash
-kubectl karmada init
+karmadactl init
 ```
 安装过程需要大约 5 分钟。如果一切正常，你将看到类似的输出：
 ```
@@ -91,24 +91,24 @@ Karmada 的配置文件默认创建到 `/etc/karmada/karmada-apiserver.config`�
 
 #### 离线安装
 
-安装 Karmada 时，`kubectl karmada init` 默认将从 Karmada 官网 release 页面（例如 `https://github.com/karmada-io/karmada/releases/tag/v0.10.1`）下载 API(CRD)，并从官方镜像仓库加载镜像。
+安装 Karmada 时，`karmadactl init` 默认将从 Karmada 官网 release 页面（例如 `https://github.com/karmada-io/karmada/releases/tag/v0.10.1`）下载 API(CRD)，并从官方镜像仓库加载镜像。
 
 如果你要离线安装 Karmada，你可能必须指定 API tar 文件和镜像。
 
 使用 `--crds` 标志指定 CRD 文件，例如：
 ```bash
-kubectl karmada init --crds /$HOME/crds.tar.gz
+karmadactl init --crds /$HOME/crds.tar.gz
 ```
 
 你可以指定 Karmada 组件的镜像，以 `karmada-controller-manager` 为例：
 ```bash
-kubectl karmada init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0 
+karmadactl init --karmada-controller-manager-image=example.registry.com/library/karmada-controller-manager:1.0 
 ```
 
 #### 高可用部署
 使用 `--karmada-apiserver-replicas` 和 `--etcd-replicas` 标志指定副本数（默认为 `1`）。
 ```bash
-kubectl karmada init --karmada-apiserver-replicas 3 --etcd-replicas 3
+karmadactl init --karmada-apiserver-replicas 3 --etcd-replicas 3
 ```
 
 ### 在 Kind 集群中安装 Karmada
@@ -121,9 +121,9 @@ kubectl karmada init --karmada-apiserver-replicas 3 --etcd-replicas 3
 hack/create-cluster.sh host $HOME/.kube/host.config
 ```
 
-通过命令 `kubectl karmada init` 安装 Karmada v1.2.0：
+通过命令 `karmadactl init` 安装 Karmada v1.2.0：
 ```bash
-kubectl karmada init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
+karmadactl init --crds https://github.com/karmada-io/karmada/releases/download/v1.2.0/crds.tar.gz --kubeconfig=$HOME/.kube/host.config
 ```
 
 检查已安装的组件：
