@@ -1,28 +1,25 @@
 ---
-title: Propagate dependencies
+title: 分发依赖项
 ---
 
-Deployment, Job, Pod, DaemonSet and StatefulSet dependencies (ConfigMaps and Secrets) can be propagated to member
-clusters automatically. This document demonstrates how to use this feature. For more design details, please refer to
-[dependencies-automatically-propagation](https://github.com/karmada-io/karmada/blob/master/docs/proposals/dependencies-automatically-propagation/README.md)
+Deployment、Job、Pod、DaemonSet 和 StatefulSet 的依赖项（ConfigMap 和 Secret）可自动传播到成员集群。本文档将演示如何使用该特性，更多设计细节可参考 [依赖项自动传播](https://github.com/karmada-io/karmada/blob/master/docs/proposals/dependencies-automatically-propagation/README.md)。
 
-## Prerequisites
-### Karmada has been installed
+## 前提条件
+### 已安装 Karmada
 
-We can install Karmada by referring to [quick-start](https://github.com/karmada-io/karmada#quick-start), or directly run
-`hack/local-up-karmada.sh` script which is also used to run our E2E cases.
+可参考 [快速开始](https://github.com/karmada-io/karmada#quick-start) 安装 Karmada，也可直接运行 `hack/local-up-karmada.sh` 脚本（该脚本也用于运行 E2E 测试用例）。
 
-### Enable PropagateDeps feature
+### 开启 PropagateDeps 特性
 
-`PropagateDeps` feature gate has evolved to the Beta sine Karmada v1.4 and is enabled by default. If you use the Karmada 1.3 or earlier, you need to enable this feature gate.
+自 Karmada v1.4 版本起，`PropagateDeps` 特性门控（Feature Gate）已演进至 Beta 阶段，且默认开启。若您使用的是 Karmada 1.3 及更早版本，需手动开启该特性门控：
 
 ```bash
 kubectl edit deployment karmada-controller-manager -n karmada-system
 ```
-Add `--feature-gates=PropagateDeps=true` option.
+在 `karmada-controller-manager` 容器的 `args` 列表中添加 `--feature-gates=PropagateDeps=true`。
 
-## Example
-Create a Deployment mounted with a ConfigMap
+## 示例演示
+创建包含 Deployment 和其依赖 ConfigMap 的 YAML 文件，内容如下：
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -63,7 +60,7 @@ data:
     proxy-read-timeout: "10s"
     client-max-body-size: "2m"
 ```
-Create a propagation policy with this Deployment and set `propagateDeps: true`.
+创建针对上述 Deployment 的传播策略，并设置 `propagateDeps: true` 以开启依赖项自动传播
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: PropagationPolicy
@@ -94,7 +91,7 @@ spec:
                 - member2
             weight: 1
 ```
-Upon successful policy execution, the Deployment and ConfigMap are properly propagated to the member cluster.
+策略执行成功后，Deployment 及其依赖的 ConfigMap 会自动传播到目标成员集群，可通过以下命令验证：
 ```bash
 $  kubectl --kubeconfig /etc/karmada/karmada-apiserver.config get propagationpolicy
 NAME                   AGE
