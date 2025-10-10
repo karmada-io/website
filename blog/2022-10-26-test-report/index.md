@@ -21,8 +21,6 @@ This article will introduce the metrics used in the test, how to conduct large-s
 Cloud computing is entering a new stage featuring multicloud and distributed clouds. As surveyed by Flexera, a well-known analyst company, more than 93% of enterprises are using services from multiple cloud vendors at the same time. Single Kubernetes clusters, limited by their capacity and fault recovery capabilities, cannot support services to run as distributed as wanted, especially if one's organization wants to go globalization. A hybrid cloud or multi-public cloud architecture helps avoid vendor lock-in or optimize costs.
 Karmada users are also demanding large-scale node and application management in their multi-cluster deployments.
 
-<!--truncate-->
-
 ## Introduction to Karmada
 
 Karmada (Kubernetes Armada) is a Kubernetes management system that enables you to run your cloud-native applications across multiple Kubernetes clusters and clouds, with no changes to your applications. By speaking Kubernetes-native APIs and providing advanced scheduling capabilities, Karmada enables truly open, multi-cloud Kubernetes.

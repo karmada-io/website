@@ -10,8 +10,6 @@ authors:
 
 In terms of multi-cluster management, Industrial and Commercial Bank of China (ICBC) found a new way to do it efficiently, that is, using Karmada. At KubeCon 2021, Kevin Wang from Huawei Cloud and Shen Yifan from ICBC shared how they managed it.
 
-<!--truncate-->
-
 ## Construction of ICBC Cloud Platform
 
 ![Construction of ICBC Cloud Platform](./img/image1.png)

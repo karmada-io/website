@@ -213,6 +213,9 @@ module.exports = {
           anonymizeIP: false,
         },
         blog: {
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
+          postsPerPage: 1,
           showReadingTime: true,
           editUrl: "https://github.com/karmada-io/website/tree/main/",
         },
