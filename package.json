@@ -22,7 +22,7 @@
     "@docusaurus/plugin-sitemap": "^2.4.3",
     "@docusaurus/preset-classic": "2.4.3",
     "@douyinfe/semi-ui": "^2.86.0",
-    "asciinema-player": "^3.11.0",
+    "asciinema-player": "^3.12.1",
     "clsx": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
