@@ -56,6 +56,41 @@ karmadactl init
   
   # Install Karmada using a configuration file
   karmadactl init --config /path/to/your/config/file.yaml
+  
+  # Pass extra arguments to Local Etcd. (Parameters are separated by commas)
+  karmadactl init --etcd-extra-args="--snapshot-count=5000,--heartbeat-interval=100"
+  # Or write them separately.
+  karmadactl init --etcd-extra-args="--snapshot-count=5000" --etcd-extra-args="--heartbeat-interval=100"
+  
+  # Pass extra arguments to Karmada API Server. (Parameters are separated by commas)
+  karmadactl init --karmada-apiserver-extra-args="--tls-min-version=VersionTLS12,--audit-log-path=-"
+  # Or write them separately.
+  karmadactl init --karmada-apiserver-extra-args="--tls-min-version=VersionTLS12" --karmada-apiserver-extra-args="--audit-log-path=-"
+  
+  # Pass extra arguments to Karmada Scheduler. (Parameters are separated by commas)
+  karmadactl init --karmada-scheduler-extra-args="--scheduler-name=test-scheduler,--enable-pprof"
+  # Or write them separately.
+  karmadactl init --karmada-scheduler-extra-args="--scheduler-name=test-scheduler" --karmada-scheduler-extra-args="--enable-pprof"
+  
+  # Pass extra arguments to Kube Controller Manager. (Parameters are separated by commas)
+  karmadactl init --kube-controller-manager-extra-args="--node-monitor-grace-period=50s,--node-monitor-period=5s"
+  # Or write them separately.
+  karmadactl init --kube-controller-manager-extra-args="--node-monitor-grace-period=50s" --kube-controller-manager-extra-args="--node-monitor-period=5s"
+  
+  # Pass extra arguments to Karmada Controller Manager. (Parameters are separated by commas)
+  karmadactl init --karmada-controller-manager-extra-args="--v=2,--enable-pprof"
+  # Or write them separately.
+  karmadactl init --karmada-controller-manager-extra-args="--v=2" --karmada-controller-manager-extra-args="--enable-pprof"
+  
+  # Pass extra arguments to Karmada Webhook. (Parameters are separated by commas)
+  karmadactl init --karmada-webhook-extra-args="--v=2,--enable-pprof"
+  # Or write them separately.
+  karmadactl init --karmada-webhook-extra-args="--v=2" --karmada-webhook-extra-args="--enable-pprof"
+  
+  # Pass extra arguments to Karmada Aggregated API Server. (Parameters are separated by commas)
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4,--enable-pprof"
+  # Or write them separately.
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4" --karmada-aggregated-apiserver-extra-args="--enable-pprof"
 ```
 
 ### Options
@@ -70,6 +105,7 @@ karmadactl init
       --context string                                          The name of the kubeconfig context to use
       --crds string                                             Karmada crds resource.(local file e.g. --crds /root/crds.tar.gz) (default "https://github.com/karmada-io/karmada/releases/download/v0.0.0-master/crds.tar.gz")
       --etcd-data string                                        etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
+      --etcd-extra-args strings                                 Additional command line arguments to pass to the etcd component. Can be specified multiple times or as comma-separated values (e.g., '--snapshot-count=5000,--heartbeat-interval=100')
       --etcd-image string                                       etcd image
       --etcd-init-image string                                  etcd init container image (default "docker.io/alpine:3.21.3")
       --etcd-node-selector-labels string                        the labels used for etcd pod to select nodes, valid in hostPath mode, and with each label separated by a comma. ( e.g. --etcd-node-selector-labels karmada.io/etcd=true,kubernetes.io/os=linux)
@@ -86,24 +122,30 @@ karmadactl init
       --host-cluster-domain string                              The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --image-pull-policy string                                The image pull policy for all Karmada components container. One of Always, Never, IfNotPresent. Defaults to IfNotPresent. (default "IfNotPresent")
       --image-pull-secrets strings                              Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
+      --karmada-aggregated-apiserver-extra-args strings         Additional command line arguments to pass to the karmada-aggregated-apiserver component. Can be specified multiple times or as comma-separated values (e.g., '--v=4,--enable-pprof')
       --karmada-aggregated-apiserver-image string               Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0-master")
       --karmada-aggregated-apiserver-priority-class string      The priority class name for the component karmada-aggregated-apiserver. (default "system-node-critical")
       --karmada-aggregated-apiserver-replicas int32             Karmada aggregated apiserver replica set (default 1)
       --karmada-apiserver-advertise-address string              The IP address the Karmada API Server will advertise it's listening on. If not set, the address on the master node will be used.
+      --karmada-apiserver-extra-args strings                    Additional command line arguments to pass to the karmada-apiserver component. Can be specified multiple times or as comma-separated values (e.g., '--tls-min-version=VersionTLS12,--audit-log-path=-')
       --karmada-apiserver-image string                          Kubernetes apiserver image
       --karmada-apiserver-priority-class string                 The priority class name for the component karmada-apiserver. (default "system-node-critical")
       --karmada-apiserver-replicas int32                        Karmada apiserver replica set (default 1)
+      --karmada-controller-manager-extra-args strings           Additional command line arguments to pass to the karmada-controller-manager component. Can be specified multiple times or as comma-separated values (e.g., '--v=2,--enable-pprof')
       --karmada-controller-manager-image string                 Karmada controller manager image (default "docker.io/karmada/karmada-controller-manager:v0.0.0-master")
       --karmada-controller-manager-priority-class string        The priority class name for the component karmada-controller-manager. (default "system-node-critical")
       --karmada-controller-manager-replicas int32               Karmada controller manager replica set (default 1)
   -d, --karmada-data string                                     Karmada data path. kubeconfig cert and crds files (default "/etc/karmada")
+      --karmada-kube-controller-manager-extra-args strings      Additional command line arguments to pass to the karmada-kube-controller-manager component. Can be specified multiple times or as comma-separated values (e.g., '--node-monitor-grace-period=50s,--node-monitor-period=5s')
       --karmada-kube-controller-manager-image string            Kubernetes controller manager image
       --karmada-kube-controller-manager-priority-class string   The priority class name for the component karmada-kube-controller-manager. (default "system-node-critical")
       --karmada-kube-controller-manager-replicas int32          Karmada kube controller manager replica set (default 1)
       --karmada-pki string                                      Karmada pki path. Karmada cert files (default "/etc/karmada/pki")
+      --karmada-scheduler-extra-args strings                    Additional command line arguments to pass to the karmada-scheduler component. Can be specified multiple times or as comma-separated values (e.g., '--scheduler-name=test-scheduler,--enable-pprof')
       --karmada-scheduler-image string                          Karmada scheduler image (default "docker.io/karmada/karmada-scheduler:v0.0.0-master")
       --karmada-scheduler-priority-class string                 The priority class name for the component karmada-scheduler. (default "system-node-critical")
       --karmada-scheduler-replicas int32                        Karmada scheduler replica set (default 1)
+      --karmada-webhook-extra-args strings                      Additional command line arguments to pass to the karmada-webhook component. Can be specified multiple times or as comma-separated values (e.g., '--v=2,--enable-pprof')
       --karmada-webhook-image string                            Karmada webhook image (default "docker.io/karmada/karmada-webhook:v0.0.0-master")
       --karmada-webhook-priority-class string                   The priority class name for the component karmada-webhook. (default "system-node-critical")
       --karmada-webhook-replicas int32                          Karmada webhook replica set (default 1)
