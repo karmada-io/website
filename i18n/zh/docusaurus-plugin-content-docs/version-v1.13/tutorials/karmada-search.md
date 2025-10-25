@@ -225,7 +225,7 @@ kubectl --kubeconfig $HOME/.kube/karmada.config --context karmada-host port-forw
 
 ### 4. 访问仪表盘
 
-访问 OpenSearch 仪表板（http://NodeIP:5601）：
+访问 OpenSearch 仪表板（`http://NodeIP:5601`）：
 
 ![opensearch](../resources/tutorials/opensearch.png)
 

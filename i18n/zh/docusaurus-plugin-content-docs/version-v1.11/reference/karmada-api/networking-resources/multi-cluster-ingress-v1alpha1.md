@@ -286,7 +286,7 @@ MultiClusterIngressList 是 MultiClusterIngress 的集合。
 
 #### HTTP 请求
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### 参数
 
@@ -310,7 +310,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP 请求
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### 参数
 
@@ -334,7 +334,7 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP 请求
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
 
 #### 参数
 
@@ -450,7 +450,7 @@ GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses
 
 #### HTTP 请求
 
-POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+POST /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
 
 #### 参数
 
@@ -489,7 +489,7 @@ POST /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclustering
 
 #### HTTP 请求
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+PUT /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### 参数
 
@@ -530,7 +530,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP 请求
 
-PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+PUT /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### 参数
 
@@ -571,7 +571,7 @@ PUT /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringr
 
 #### HTTP 请求
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+PATCH /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### 参数
 
@@ -616,7 +616,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP 请求
 
-PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}/status
+PATCH /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`/status
 
 #### 参数
 
@@ -661,7 +661,7 @@ PATCH /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusterin
 
 #### HTTP 请求
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses/{name}
+DELETE /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses/`{name}`
 
 #### 参数
 
@@ -702,7 +702,7 @@ DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteri
 
 #### HTTP 请求
 
-DELETE /apis/networking.karmada.io/v1alpha1/namespaces/{namespace}/multiclusteringresses
+DELETE /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
 
 #### 参数
 

@@ -1,3 +1,5 @@
+const { themes } = require('prism-react-renderer'); 
+
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
   title: "karmada",
@@ -191,8 +193,9 @@ module.exports = {
       `,
     },
     prism: {
-      theme: require("prism-react-renderer/themes/github"),
-      darkTheme: require("prism-react-renderer/themes/dracula")
+      theme: themes.github,
+      darkTheme: themes.dracula,
+      additionalLanguages: ['bash', 'json', 'yaml', 'markdown', 'go']
     },
   },
   presets: [

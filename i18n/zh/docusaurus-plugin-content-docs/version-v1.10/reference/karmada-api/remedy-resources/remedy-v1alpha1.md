@@ -106,7 +106,7 @@ RemedyList 是 Remedy 的集合。
 
 #### HTTP 请求
 
-GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+GET /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### 参数
 
@@ -126,7 +126,7 @@ GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP 请求
 
-GET /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+GET /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### 参数
 
@@ -238,7 +238,7 @@ POST /apis/remedy.karmada.io/v1alpha1/remedies
 
 #### HTTP 请求
 
-PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+PUT /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### 参数
 
@@ -276,7 +276,7 @@ PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP 请求
 
-PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+PUT /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### 参数
 
@@ -314,7 +314,7 @@ PUT /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+PATCH /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### 参数
 
@@ -356,7 +356,7 @@ PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}
 
 #### HTTP 请求
 
-PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
+PATCH /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`/status
 
 #### 参数
 
@@ -398,7 +398,7 @@ PATCH /apis/remedy.karmada.io/v1alpha1/remedies/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/remedy.karmada.io/v1alpha1/remedies/{name}
+DELETE /apis/remedy.karmada.io/v1alpha1/remedies/`{name}`
 
 #### 参数
 

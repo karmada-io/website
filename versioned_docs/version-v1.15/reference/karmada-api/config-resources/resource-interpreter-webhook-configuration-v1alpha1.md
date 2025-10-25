@@ -175,7 +175,7 @@ ResourceInterpreterWebhookConfigurationList contains a list of ResourceInterpret
 
 #### HTTP Request
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`
 
 #### Parameters
 
@@ -195,7 +195,7 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP Request
 
-GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`/status
 
 #### Parameters
 
@@ -307,7 +307,7 @@ POST /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations
 
 #### HTTP Request
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`
 
 #### Parameters
 
@@ -345,7 +345,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP Request
 
-PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`/status
 
 #### Parameters
 
@@ -383,7 +383,7 @@ PUT /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{n
 
 #### HTTP Request
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`
 
 #### Parameters
 
@@ -425,7 +425,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/
 
 #### HTTP Request
 
-PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}/status
+PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`/status
 
 #### Parameters
 
@@ -467,7 +467,7 @@ PATCH /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/
 
 #### HTTP Request
 
-DELETE /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/{name}
+DELETE /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations/`{name}`
 
 #### Parameters
 

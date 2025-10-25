@@ -727,7 +727,7 @@ FederatedHPAList 罗列 FederatedHPA。
 
 #### HTTP请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### 参数
 
@@ -751,7 +751,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### 参数
 
@@ -775,7 +775,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP请求
 
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### 参数
 
@@ -891,7 +891,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/federatedhpas
 
 #### HTTP请求
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### 参数
 
@@ -931,7 +931,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP请求
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### 参数
 
@@ -973,7 +973,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP请求
 
-PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### 参数
 
@@ -1015,7 +1015,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{
 
 #### HTTP请求
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### 参数
 
@@ -1061,7 +1061,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP请求
 
-PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}/status
+PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
 #### 参数
 
@@ -1107,7 +1107,7 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
 
 #### HTTP请求
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas/{name}
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
 #### 参数
 
@@ -1149,7 +1149,7 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpa
 
 #### HTTP请求
 
-DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/{namespace}/federatedhpas
+DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### 参数
 

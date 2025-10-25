@@ -584,7 +584,7 @@ ClusterOverridePolicyList is a collection of ClusterOverridePolicy.
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### Parameters
 
@@ -604,7 +604,7 @@ GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+GET /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### Parameters
 
@@ -716,7 +716,7 @@ POST /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### Parameters
 
@@ -754,7 +754,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP Request
 
-PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### Parameters
 
@@ -792,7 +792,7 @@ PUT /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### Parameters
 
@@ -834,7 +834,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
 
 #### HTTP Request
 
-PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
+PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`/status
 
 #### Parameters
 
@@ -876,7 +876,7 @@ PATCH /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/{name}
+DELETE /apis/policy.karmada.io/v1alpha1/clusteroverridepolicies/`{name}`
 
 #### Parameters
 

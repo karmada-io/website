@@ -27,8 +27,8 @@ title: RBAC Permissions for Karmada Components
 | API Group | Resource | Verbs | Description |
 |-----------|----------|-------|-------------|
 | cluster.karmada.io | clusters | list, watch | To manage and monitor clusters. |
-| cluster.karmada.io | clusters | get, create, delete | resourceNames: {{clustername}} |
-| cluster.karmada.io | clusters/status | update | resourceNames: {{clustername}} |
+| cluster.karmada.io | clusters | get, create, delete | resourceNames: `{{clustername}}` |
+| cluster.karmada.io | clusters/status | update | resourceNames: `{{clustername}}` |
 | config.karmada.io | resourceinterpreterwebhookconfigurations, resourceinterpretercustomizations | get, list, watch | To list and watch resource interpreter configurations. |
 | "" (core) | namespaces | get | To get information about namespaces. |
 | coordination.k8s.io | leases | get, create, update | Required for leader election. |

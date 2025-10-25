@@ -198,7 +198,7 @@ ResourceRegistryList is a collection of ResourceRegistry.
 
 #### HTTP Request
 
-GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+GET /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`
 
 #### Parameters
 
@@ -218,7 +218,7 @@ GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP Request
 
-GET /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+GET /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`/status
 
 #### Parameters
 
@@ -330,7 +330,7 @@ POST /apis/search.karmada.io/v1alpha1/resourceregistries
 
 #### HTTP Request
 
-PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+PUT /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`
 
 #### Parameters
 
@@ -368,7 +368,7 @@ PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP Request
 
-PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+PUT /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`/status
 
 #### Parameters
 
@@ -406,7 +406,7 @@ PUT /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`
 
 #### Parameters
 
@@ -448,7 +448,7 @@ PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
 
 #### HTTP Request
 
-PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
+PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`/status
 
 #### Parameters
 
@@ -490,7 +490,7 @@ PATCH /apis/search.karmada.io/v1alpha1/resourceregistries/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/search.karmada.io/v1alpha1/resourceregistries/{name}
+DELETE /apis/search.karmada.io/v1alpha1/resourceregistries/`{name}`
 
 #### Parameters
 

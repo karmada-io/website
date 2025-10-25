@@ -93,7 +93,7 @@ The top section between two lines of --- is the Front Matter section. Here we de
 
 You can easily route to other places by adding any of the following links:
 * Absolute URLs to external sites like `https://github.com` or `https://k8s.io` - you can use any of the Markdown notations for this, so
-  * `<https://github.com>` or
+  * `[https://github.com](https://github.com)` or
   * `[kubernetes](https://k8s.io)` will work.
 * Link to markdown files or the resulting path.
   You can use relative paths to index the corresponding files.

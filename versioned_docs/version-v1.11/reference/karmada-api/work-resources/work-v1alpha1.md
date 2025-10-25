@@ -223,7 +223,7 @@ WorkList is a collection of Work.
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+GET /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`
 
 #### Parameters
 
@@ -247,7 +247,7 @@ GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+GET /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`/status
 
 #### Parameters
 
@@ -271,7 +271,7 @@ GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+GET /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works
 
 #### Parameters
 
@@ -387,7 +387,7 @@ GET /apis/work.karmada.io/v1alpha1/works
 
 #### HTTP Request
 
-POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+POST /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works
 
 #### Parameters
 
@@ -427,7 +427,7 @@ POST /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+PUT /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`
 
 #### Parameters
 
@@ -469,7 +469,7 @@ PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+PUT /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`/status
 
 #### Parameters
 
@@ -511,7 +511,7 @@ PUT /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+PATCH /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`
 
 #### Parameters
 
@@ -557,7 +557,7 @@ PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
+PATCH /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`/status
 
 #### Parameters
 
@@ -603,7 +603,7 @@ PATCH /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
+DELETE /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works/`{name}`
 
 #### Parameters
 
@@ -645,7 +645,7 @@ DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works/{name}
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha1/namespaces/{namespace}/works
+DELETE /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works
 
 #### Parameters
 

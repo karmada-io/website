@@ -132,7 +132,7 @@ spec:
 
 #### JSONPath 语法说明
 
-JSONPath 表达式遵循 Kubernetes 规范：<https://kubernetes.io/docs/reference/kubectl/jsonpath/> 。
+JSONPath 表达式遵循 Kubernetes 规范：[https://kubernetes.io/docs/reference/kubectl/jsonpath/](https://kubernetes.io/docs/reference/kubectl/jsonpath/) 。
 
 **注意**：JSONPath 表达式默认从 API 资源对象的 "status" 字段开始查找。例如，若要提取 Deployment 的 "availableReplicas"，应使用 `{.availableReplicas}`，而不是 `{.status.availableReplicas}`。
 

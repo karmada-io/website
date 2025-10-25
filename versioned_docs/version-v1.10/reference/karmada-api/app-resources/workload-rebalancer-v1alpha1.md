@@ -154,7 +154,7 @@ WorkloadRebalancerList contains a list of WorkloadRebalancer
 
 #### HTTP Request
 
-GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
@@ -174,7 +174,7 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP Request
 
-GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
@@ -286,7 +286,7 @@ POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### HTTP Request
 
-PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
@@ -324,7 +324,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP Request
 
-PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
@@ -362,7 +362,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
 #### HTTP Request
 
-PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
@@ -404,7 +404,7 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP Request
 
-PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
@@ -446,7 +446,7 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
 #### HTTP Request
 
-DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 

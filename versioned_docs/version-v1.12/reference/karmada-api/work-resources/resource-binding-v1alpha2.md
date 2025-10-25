@@ -787,7 +787,7 @@ ResourceBindingList contains a list of ResourceBinding.
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### Parameters
 
@@ -811,7 +811,7 @@ GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### Parameters
 
@@ -835,7 +835,7 @@ GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### Parameters
 
@@ -951,7 +951,7 @@ GET /apis/work.karmada.io/v1alpha2/resourcebindings
 
 #### HTTP Request
 
-POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+POST /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### Parameters
 
@@ -991,7 +991,7 @@ POST /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+PUT /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### Parameters
 
@@ -1033,7 +1033,7 @@ PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+PUT /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### Parameters
 
@@ -1075,7 +1075,7 @@ PUT /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+PATCH /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### Parameters
 
@@ -1121,7 +1121,7 @@ PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{na
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}/status
+PATCH /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`/status
 
 #### Parameters
 
@@ -1167,7 +1167,7 @@ PATCH /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{na
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{name}
+DELETE /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings/`{name}`
 
 #### Parameters
 
@@ -1209,7 +1209,7 @@ DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings/{n
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha2/namespaces/{namespace}/resourcebindings
+DELETE /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
 #### Parameters
 

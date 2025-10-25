@@ -154,7 +154,7 @@ WorkloadRebalancerList 是 WorkloadRebalancer 的集合。
 
 #### HTTP 请求
 
-GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### 参数
 
@@ -174,7 +174,7 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP 请求
 
-GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### 参数
 
@@ -286,7 +286,7 @@ POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### HTTP 请求
 
-PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### 参数
 
@@ -324,7 +324,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP 请求
 
-PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### 参数
 
@@ -362,7 +362,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
 #### HTTP 请求
 
-PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### 参数
 
@@ -404,7 +404,7 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
 
 #### HTTP 请求
 
-PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### 参数
 
@@ -446,7 +446,7 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}/status
 
 #### HTTP 请求
 
-DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/{name}
+DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### 参数
 

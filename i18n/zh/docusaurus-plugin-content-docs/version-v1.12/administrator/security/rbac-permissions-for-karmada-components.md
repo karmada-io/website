@@ -27,8 +27,8 @@ title: Karmada 组件的 RBAC 权限
 | API Group | Resource | Verbs | Description |
 |-----------|----------|-------|-------------|
 | cluster.karmada.io | clusters | list, watch | 用于管理和查看集群。 |
-| cluster.karmada.io | clusters | get, create, delete | resourceNames: {{clustername}} |
-| cluster.karmada.io | clusters/status | update | 用于更新集群状态。resourceNames: {{clustername}} |
+| cluster.karmada.io | clusters | get, create, delete | resourceNames: `{{clustername}}` |
+| cluster.karmada.io | clusters/status | update | 用于更新集群状态。resourceNames: `{{clustername}}` |
 | config.karmada.io | resourceinterpreterwebhookconfigurations, resourceinterpretercustomizations | get, list, watch | 用于获取 ResourceInterpreterCustomizations 和 ResourceInterpreterWebhookConfigurations。 |
 | "" (core) | namespaces | get | 用于获取命名空间。 |
 | coordination.k8s.io | leases | get, create, update | 用于 leader 选举。 |
