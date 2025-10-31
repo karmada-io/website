@@ -136,6 +136,18 @@ JSONPath expressions follow the Kubernetes specification: [https://kubernetes.io
 
 **Note**: JSONPath expressions by default start searching from the "status" field of the API resource object. For example, to extract "availableReplicas" from a Deployment, the JSONPath expression should be `{.availableReplicas}` instead of `{.status.availableReplicas}`.
 
+### Configuring Eviction Rate Limiting
+
+In scenarios involving large-scale failures across multiple clusters, simultaneously evicting a large number of workloads can put immense pressure on the Karmada control plane and the remaining healthy clusters. To improve the stability and controllability of the failover process, Karmada introduces a rate limiting mechanism, allowing the eviction rate to be adjusted as needed via command-line parameters.
+
+You can fine-tune the eviction behavior by configuring the following command-line parameters on the `karmada-controller-manager` component:
+* `--resource-eviction-rate`:
+  Number of evictions per second. Default: **0.5**. When the value is 0, the acceleration speed will be set to run at a rate of 30 minutes per cycle.
+
+Examples:
+- If 12 workloads must be evicted and `--resource-eviction-rate=0.5`, Karmada evicts roughly one workload every 2 seconds and completes in about 24 seconds.
+- If set to `--resource-eviction-rate=2`, about 2 resources will be evicted per second, completing in roughly 6 seconds.
+
 :::note
 
 Cluster failover is still in continuous iteration. We are in the progress of gathering use cases. If you are interested in this feature, please feel free to start an enhancement issue to let us know.
