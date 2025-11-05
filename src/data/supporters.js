@@ -24,6 +24,7 @@ import trip from "../../static/img/supporters/trip.png"
 import leinao from "../../static/img/supporters/leinao.png"
 import alibabacloud from "../../static/img/supporters/alibabacloud.png"
 import scatterlab from "../../static/img/supporters/scatterlab.png"
+import gongjikeji from "../../static/img/supporters/gongjikeji.png"
 
 const supportersData = [
     {
@@ -129,6 +130,10 @@ const supportersData = [
     {
         logo: scatterlab,
         alt: 'Scatter Lab',
+    },
+    {
+        logo: gongjikeji,
+        alt: 'GongJiKeJi',
     },
 ]
 
