@@ -7,7 +7,6 @@ module.exports = {
   url: "https://karmada.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "throw",
   organizationName: "karmada-io",
   projectName: "website",
   i18n: {
@@ -240,4 +239,9 @@ module.exports = {
       },
     ],
   ],
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    }
+  },
 };
