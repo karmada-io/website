@@ -28,6 +28,7 @@ The Karmada operator is a method for installing, upgrading, and deleting Karmada
 | services        | ""                  | *              | *         | get, create, update, delete | To manage services to expose applications within the cluster |
 | statefulsets    | ""                  | *              | *         | get, create, update, delete | To manage StatefulSets, e.g., etcd                           |
 | deployments     | apps                | *              | *         | get, create, update, delete | To manage Deployments, e.g., karmada-apiserver               |
+| poddisruptionbudgets | policy              | *              | *         | get, create, update, delete | To manage PodDisruptionBudget for components             |
 
 | Non-Resource URLs | Verbs | Description |
 |-------------|-------|-------------|
