@@ -1,5 +1,5 @@
 ---
-title: Determine cluster failures
+title: Cluster Status Maintenance
 ---
 
 Karmada supports both `Push` and `Pull` modes to manage member clusters. More details about cluster registration please refer to [Cluster Registration](../clustermanager/cluster-registration.md).
