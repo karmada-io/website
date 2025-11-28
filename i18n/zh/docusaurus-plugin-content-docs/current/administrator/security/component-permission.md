@@ -25,9 +25,10 @@ Karmada-operator 是一种用于安装、升级和删除 Karmada 实例的组件
 | pods            | ""                  | *              | *         | list                        | 用于 pod 的健康检查                                          |
 | namespaces      | ""                  | *              | *         | get                         | 用于获取命名空间信息，并将资源部署到特定命名空间中           |
 | secrets         | ""                  | *              | *         | get, create, update, delete | 用于管理 Secret（可能包含敏感数据，如认证信息）              |
-| services        | ""                  | *              | *         | get, create, update, delete | 用于管理Service，为集群内应用提供服务发现                    |
+| services        | ""                  | *              | *         | get, create, update, delete | 用于管理 Service，为集群内应用提供服务发现                    |
 | statefulsets    | ""                  | *              | *         | get, create, update, delete | 用于管理 StatefulSet（如 etcd）                              |
-| deployments     | apps                | *              | *         | get, create, update, delete | 用于管理Deployment（如 karmada-apiserver)                    |
+| deployments     | apps                | *              | *         | get, create, update, delete | 用于管理 Deployment（如 karmada-apiserver)                    |
+| poddisruptionbudgets | policy              | *              | *         | get, create, update, delete | 用于管理组件的 PodDisruptionBudget 配置             |
 
 | Non-Resource URLs | Verbs | Description |
 |-------------|-------|-------------|
