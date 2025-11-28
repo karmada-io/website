@@ -1,76 +1,32 @@
 ---
-title: Failover Analysis
+title: Cluster Failover Process Analysis
 ---
 
 Let's briefly analyze the Karmada failover feature.
 
 ## Add taints on fault cluster
 
-After the cluster is determined to be unhealthy, a taint with `Effect` set to `NoSchedule` will be added to the cluster as follows:
+After the [cluster status becomes unhealthy](./cluster-status-maintenance.md), a `taint{effect: NoSchedule}` will be added to the cluster as follows:
 
-- when cluster's `Ready` condition is `False`, add the following taint:
+- when cluster's `Ready` condition is `False`, Karmada controller will add the following taint to the cluster object:
 
 ```yaml
 key: cluster.karmada.io/not-ready
 effect: NoSchedule
 ```
 
-- when cluster's `Ready` condition is `Unknown`, add the following taint:
+- when cluster's `Ready` condition is `Unknown`, Karmada controller will add the following taint to the cluster object:
 
 ```yaml
 key: cluster.karmada.io/unreachable
 effect: NoSchedule
 ```
 
-If an unhealthy cluster is not recovered for a period of time, which can be configured via `--failover-eviction-timeout` flag(default is 5 minutes), a new taint with `Effect` set to `NoExecute` will be added to the cluster as follows:
-
-- when cluster's `Ready` condition is `False`, add the following taint:
-
-```yaml
-key: cluster.karmada.io/not-ready
-effect: NoExecute
-```
-
-- when cluster's `Ready` condition is `Unknown`, add the following taint:
-
-```yaml
-key: cluster.karmada.io/unreachable
-effect: NoExecute
-```
-
-## Tolerate cluster taints
-
-After users creates a `PropagationPolicy/ClusterPropagationPolicy`, Karmada will automatically add the following toleration through webhook:
-
-```yaml
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: nginx-propagation
-  namespace: default
-spec:
-  placement:
-    clusterTolerations:
-    - effect: NoExecute
-      key: cluster.karmada.io/not-ready
-      operator: Exists
-      tolerationSeconds: 300
-    - effect: NoExecute
-      key: cluster.karmada.io/unreachable
-      operator: Exists
-      tolerationSeconds: 300
-  resourceSelectors:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: nginx
-    namespace: default
-```
-
-The `tolerationSeconds` can be configured via `--default-not-ready-toleration-seconds` flag(default is 300) and `default-unreachable-toleration-seconds` flag(default is 300).
+In addition, Karmada controller will not actively add `NoExecute` taints to cluster objects. Users can actively manage taints on cluster objects, including `NoExecute` taints, through the [cluster taint management](./cluster-taint-management.md) feature.
 
 ## Failover
 
-When karmada detects that the faulty cluster is no longer tolerated by `PropagationPolicy/ClusterPropagationPolicy`, the cluster will be removed from the resource scheduling result and the karmada scheduler will reschedule the reference application.
+When Karmada detects that a cluster has been tainted with `NoExecute` and the taint cannot be tolerated by the toleration strategy in `PropagationPolicy/ClusterPropagationPolicy`, Karmada controller will remove the cluster from the resource scheduling result, and then Karmada scheduler will reschedule the target workload.
 
 There are several constraints:
 - For each rescheduled application, it still needs to meet the restrictions of `PropagationPolicy/ClusterPropagationPolicy`, such as ClusterAffinity or SpreadConstraints.
