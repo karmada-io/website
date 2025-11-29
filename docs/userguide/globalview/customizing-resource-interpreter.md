@@ -1290,7 +1290,7 @@ Karmada provides a built-in `Retain` interpreter for Deployment resources:
 
 - **Label-based control**: If the resource template has the label `resourcetemplate.karmada.io/retain-replicas`, the replicas field is retained from the member cluster (controlled by HPA)
 - **Without label**: Replicas are controlled by the Karmada control plane
-- **Automatic labeling**: When the `hpaReplicasSyncer` controller is enabled, Karmada automatically adds this label to Deployments that have an associated HPA
+- **Automatic labeling**: When the `deploymentReplicasSyncer` controller is enabled, Karmada automatically adds this label to Deployments that have an associated HPA
 
 **Custom Implementation for CRDs**:
 
@@ -1380,8 +1380,8 @@ For a more integrated approach, use Karmada's [FederatedHPA](../../userguide/aut
 - No need for Retain interpreters
 
 **Reference**:
-- Built-in Deployment Retain implementation: [`pkg/resourceinterpreter/default/native/deployment.go`](https://github.com/karmada-io/karmada/blob/master/pkg/resourceinterpreter/default/native/deployment.go)
-- HPA Replicas Syncer controller: [`pkg/controllers/hpareplicassyncer`](https://github.com/karmada-io/karmada/tree/master/pkg/controllers/hpareplicassyncer)
+- Built-in Deployment Retain implementation: [`pkg/resourceinterpreter/default/native/deployment.go`](https://github.com/karmada-io/karmada/blob/master/pkg/resourceinterpreter/default/native/retain.go)
+- Deployment Replicas Syncer controller: [`pkg/controllers/deploymentreplicassyncer`](https://github.com/karmada-io/karmada/tree/master/pkg/controllers/deploymentreplicassyncer)
 - Retention API: [ResourceInterpreterCustomization retention field][13]
 
 ---
