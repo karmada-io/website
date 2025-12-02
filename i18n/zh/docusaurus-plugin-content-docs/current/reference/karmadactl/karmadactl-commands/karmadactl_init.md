@@ -107,7 +107,6 @@ karmadactl init
       --etcd-data string                                        etcd data path,valid in hostPath mode. (default "/var/lib/karmada-etcd")
       --etcd-extra-args strings                                 Additional command line arguments to pass to the etcd component. Can be specified multiple times or as comma-separated values (e.g., '--snapshot-count=5000,--heartbeat-interval=100')
       --etcd-image string                                       etcd image
-      --etcd-init-image string                                  etcd init container image (default "docker.io/alpine:3.21.3")
       --etcd-node-selector-labels string                        the labels used for etcd pod to select nodes, valid in hostPath mode, and with each label separated by a comma. ( e.g. --etcd-node-selector-labels karmada.io/etcd=true,kubernetes.io/os=linux)
       --etcd-priority-class string                              The priority class name for the component etcd. (default "system-node-critical")
       --etcd-pvc-size string                                    etcd data path,valid in pvc mode. (default "5Gi")
@@ -151,7 +150,7 @@ karmadactl init
       --karmada-webhook-replicas int32                          Karmada webhook replica set (default 1)
       --kube-image-mirror-country string                        Country code of the kube image registry to be used. For Chinese mainland users, set it to cn
       --kube-image-registry string                              Kube image registry. For Chinese mainland users, you may use local gcr.io mirrors such as registry.cn-hangzhou.aliyuncs.com/google_containers to override default kube image registry
-      --kube-image-tag string                                   Choose a specific Kubernetes version for the control plane. (default "v1.31.3")
+      --kube-image-tag string                                   Choose a specific Kubernetes version for the control plane. (default "v1.34.1")
       --kubeconfig string                                       absolute path to the kubeconfig file
   -n, --namespace string                                        Kubernetes namespace (default "karmada-system")
   -p, --port int32                                              Karmada apiserver service node port (default 32443)

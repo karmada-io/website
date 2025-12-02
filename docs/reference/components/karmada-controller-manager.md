@@ -105,6 +105,7 @@ karmada-controller-manager [flags]
       --rate-limiter-bucket-size int                                   The bucket size for rate limier. (default 100)
       --rate-limiter-max-delay duration                                The max delay for rate limiter. (default 16m40s)
       --rate-limiter-qps int                                           The QPS for rate limier. (default 10)
+      --resource-eviction-rate float32                                 This is the number of resources to be evicted per second in a cluster failover scenario. (default 0.5)
       --resync-period duration                                         Base frequency the informers are resynced.
       --skip_headers                                                   If true, avoid header prefixes in the log messages
       --skip_log_headers                                               If true, avoid headers when opening log files (no effect when -logtostderr=true)

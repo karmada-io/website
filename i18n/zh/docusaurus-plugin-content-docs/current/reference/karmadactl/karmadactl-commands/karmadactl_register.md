@@ -19,9 +19,13 @@ karmadactl register [karmada-apiserver-endpoint]
   # If '--cluster-name' isn't specified, the cluster of current-context will be used by default.
   karmadactl register [karmada-apiserver-endpoint] --cluster-name=<CLUSTER_NAME> --token=<TOKEN>  --discovery-token-ca-cert-hash=<CA-CERT-HASH>
   
+  # The 'karmada-apiserver-endpoint' argument is an address of the Karmada API server from which info will be fetched.
+  # It should be provided in the format '<host>:<port>'.
+  karmadactl register 172.18.0.2:5443 --cluster-name=<CLUSTER_NAME> --token=<TOKEN> --discovery-token-ca-cert-hash=<CA-CERT-HASH>
+  
   # UnsafeSkipCAVerification allows token-based discovery without CA verification via CACertHashes. This can weaken
   # the security of register command since other clusters can impersonate the control-plane.
-  karmadactl register [karmada-apiserver-endpoint] --token=<TOKEN>  --discovery-token-unsafe-skip-ca-verification=true
+  karmadactl register [karmada-apiserver-endpoint] --token=<TOKEN> --discovery-token-unsafe-skip-ca-verification=true
 ```
 
 ### Options

@@ -71,7 +71,7 @@ karmada-search [flags]
       --emulated-version strings                                The versions different components emulate their capabilities (APIs, features, ...) of.
                                                                 If set, the component will emulate the behavior of this version instead of the underlying binary version.
                                                                 Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'.
-                                                                Options are: kube=1.31..1.33(default:1.33)
+                                                                Options are: kube=1.31..1.34(default:1.34)
                                                                 If the component is not specified, defaults to "kube"
       --emulation-forward-compatible                            If true, for any beta+ APIs enabled by default or by --runtime-config at the emulation version, their future versions with higher priority/stability will be auto enabled even if they introduced after the emulation version. Can only be set to true if the emulation version is lower than the binary version.
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
@@ -89,52 +89,50 @@ karmada-search [flags]
       --etcd-prefix string                                      The prefix to prepend to all resource paths in etcd. (default "/registry")
       --etcd-readycheck-timeout duration                        The timeout to use when checking etcd readiness (default 2s)
       --etcd-servers strings                                    List of etcd servers to connect with (scheme://ip:port), comma separated.
-      --etcd-servers-overrides strings                          Per-resource etcd servers overrides, comma separated. The individual override format: group/resource#servers, where servers are URLs, semicolon separated. Note that this applies only to resources compiled into this server binary. 
+      --etcd-servers-overrides strings                          Per-resource etcd servers overrides, comma separated. The individual override format: group/resource#servers, where servers are URLs, semicolon separated. Note that this applies only to resources compiled into this server binary. e.g. "/pods#http://etcd4:2379;http://etcd5:2379,/events#http://etcd6:2379"
       --external-hostname string                                The hostname to use when generating externalized URLs for this master (e.g. Swagger API Docs or OpenID Discovery).
       --feature-gates colonSeparatedMultimapStringString        Comma-separated list of component:key=value pairs that describe feature gates for alpha/experimental features of different components.
                                                                 If the component is not specified, defaults to "kube". This flag can be repeatedly invoked. For example: --feature-gates 'wardle:featureA=true,wardle:featureB=false' --feature-gates 'kube:featureC=true'Options are:
                                                                 kube:APIResponseCompression=true|false (BETA - default=true)
                                                                 kube:APIServerIdentity=true|false (BETA - default=true)
-                                                                kube:APIServerTracing=true|false (BETA - default=true)
                                                                 kube:APIServingWithRoutine=true|false (ALPHA - default=false)
                                                                 kube:AllAlpha=true|false (ALPHA - default=false)
                                                                 kube:AllBeta=true|false (BETA - default=false)
                                                                 kube:AllowParsingUserUIDFromCertAuth=true|false (BETA - default=true)
                                                                 kube:AllowUnsafeMalformedObjectDeletion=true|false (ALPHA - default=false)
-                                                                kube:AnonymousAuthConfigurableEndpoints=true|false (BETA - default=true)
-                                                                kube:AuthorizeWithSelectors=true|false (BETA - default=true)
                                                                 kube:CBORServingAndStorage=true|false (ALPHA - default=false)
+                                                                kube:ComponentFlagz=true|false (ALPHA - default=false)
+                                                                kube:ComponentStatusz=true|false (ALPHA - default=false)
                                                                 kube:ConcurrentWatchObjectDecode=true|false (BETA - default=false)
-                                                                kube:ConsistentListFromCache=true|false (BETA - default=true)
                                                                 kube:ContextualLogging=true|false (BETA - default=true)
                                                                 kube:ControllerPriorityQueue=true|false (ALPHA - default=false)
                                                                 kube:CoordinatedLeaderElection=true|false (BETA - default=false)
                                                                 kube:CustomizedClusterResourceModeling=true|false (BETA - default=true)
+                                                                kube:DetectCacheInconsistency=true|false (BETA - default=true)
                                                                 kube:Failover=true|false (BETA - default=false)
                                                                 kube:FederatedQuotaEnforcement=true|false (ALPHA - default=false)
                                                                 kube:GracefulEviction=true|false (BETA - default=true)
-                                                                kube:ListFromCacheSnapshot=true|false (ALPHA - default=false)
+                                                                kube:ListFromCacheSnapshot=true|false (BETA - default=true)
                                                                 kube:LoggingAlphaOptions=true|false (ALPHA - default=false)
                                                                 kube:LoggingBetaOptions=true|false (BETA - default=true)
                                                                 kube:MultiClusterService=true|false (ALPHA - default=false)
                                                                 kube:MultiplePodTemplatesScheduling=true|false (ALPHA - default=false)
-                                                                kube:MutatingAdmissionPolicy=true|false (ALPHA - default=false)
+                                                                kube:MutatingAdmissionPolicy=true|false (BETA - default=false)
                                                                 kube:OpenAPIEnums=true|false (BETA - default=true)
                                                                 kube:PriorityBasedScheduling=true|false (ALPHA - default=false)
                                                                 kube:PropagateDeps=true|false (BETA - default=true)
                                                                 kube:PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 kube:RemoteRequestHeaderUID=true|false (BETA - default=true)
-                                                                kube:ResilientWatchCacheInitialization=true|false (BETA - default=true)
                                                                 kube:ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                                kube:SizeBasedListCostEstimate=true|false (BETA - default=true)
                                                                 kube:StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionHash=true|false (BETA - default=true)
-                                                                kube:StreamingCollectionEncodingToJSON=true|false (BETA - default=true)
-                                                                kube:StreamingCollectionEncodingToProtobuf=true|false (BETA - default=true)
-                                                                kube:StructuredAuthenticationConfiguration=true|false (BETA - default=true)
+                                                                kube:StructuredAuthenticationConfigurationEgressSelector=true|false (BETA - default=true)
+                                                                kube:TokenRequestServiceAccountUIDValidation=true|false (BETA - default=true)
                                                                 kube:UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
                                                                 kube:WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
-                                                                kube:WatchList=true|false (BETA - default=false)
+                                                                kube:WatchList=true|false (BETA - default=true)
       --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.

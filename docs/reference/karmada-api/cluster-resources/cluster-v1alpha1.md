@@ -214,7 +214,7 @@ ClusterSpec defines the desired state of a member cluster.
 
   - **taints.timeAdded** (Time)
 
-    TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
+    TimeAdded represents the time at which the taint was added.
 
     <a name="Time"></a>
 

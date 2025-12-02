@@ -112,11 +112,11 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   - **components.replicaRequirements** (ComponentReplicaRequirements)
 
-    ReplicaRequirements represents the requirements required by each replica for this component.
+    ReplicaRequirements represents the resource and scheduling requirements for each replica.
 
     <a name="ComponentReplicaRequirements"></a>
 
-    *ComponentReplicaRequirements represents the requirements required by each replica.*
+    *ComponentReplicaRequirements represents the resource and scheduling requirements for each replica.*
 
     - **components.replicaRequirements.nodeClaim** (NodeClaim)
 
@@ -620,11 +620,11 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
 - **replicaRequirements** (ReplicaRequirements)
 
-  ReplicaRequirements represents the requirements required by each replica.
+  ReplicaRequirements represents the resource and scheduling requirements for each replica.
 
   <a name="ReplicaRequirements"></a>
 
-  *ReplicaRequirements represents the requirements required by each replica.*
+  *ReplicaRequirements represents the resource and scheduling requirements for each replica.*
 
   - **replicaRequirements.namespace** (string)
 
