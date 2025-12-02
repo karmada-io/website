@@ -120,7 +120,7 @@ Velero 由两个部分组成。
 
   用你自己的服务器外部 IP 替换 `{SERVER_EXTERNAL_IP}`。
 
-   3. 将 nginx 应用程序部署到集群 `member1':
+   3. 将 nginx 应用程序部署到集群 `member1`:
 
   在 Karmada 目录下运行以下命令。
   
@@ -146,7 +146,7 @@ velero backup create nginx-backup --selector app=nginx
 
 恢复 `member2` 中的备份
 
-运行此命令切换到 `member2'
+运行此命令切换到 `member2`
 
 ```shell
 export KUBECONFIG=/root/.kube/members.config
