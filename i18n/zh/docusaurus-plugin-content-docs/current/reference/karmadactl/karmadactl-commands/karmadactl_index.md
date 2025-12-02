@@ -36,7 +36,7 @@ title: Karmadactl Commands
 
  This command describes the fields associated with each supported API resource. Fields are identified via a simple JSONPath identifier:
 
-        `<type>`.`<fieldName>`[.`<fieldName>`]
+        `<type>.<fieldName>[.<fieldName>]`
         
  Information about each field is retrieved from the server in OpenAPI format.
 * [karmadactl get](karmadactl_get.md)	 - Display one or many resources in Karmada control plane and member clusters.

@@ -360,66 +360,6 @@ GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusterin
 
 #### HTTP Request
 
-GET /apis/networking.karmada.io/v1alpha1/namespaces/`{namespace}`/multiclusteringresses
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([MultiClusterIngressList](../networking-resources/multi-cluster-ingress-v1alpha1#multiclusteringresslist)): OK
-
-### `list` list or watch objects of kind MultiClusterIngress
-
-#### HTTP Request
-
 GET /apis/networking.karmada.io/v1alpha1/multiclusteringresses
 
 #### Parameters

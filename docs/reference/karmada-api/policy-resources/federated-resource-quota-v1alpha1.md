@@ -172,66 +172,6 @@ GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourceq
 
 #### HTTP Request
 
-GET /apis/policy.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedresourcequotas
-
-#### Parameters
-
-- **namespace** (*in path*): string, required
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks** (*in query*): boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue** (*in query*): string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector** (*in query*): string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector** (*in query*): string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit** (*in query*): integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty** (*in query*): string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion** (*in query*): string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch** (*in query*): string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents** (*in query*): boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds** (*in query*): integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch** (*in query*): boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### Response
-
-200 ([FederatedResourceQuotaList](../policy-resources/federated-resource-quota-v1alpha1#federatedresourcequotalist)): OK
-
-### `list` list or watch objects of kind FederatedResourceQuota
-
-#### HTTP Request
-
 GET /apis/policy.karmada.io/v1alpha1/federatedresourcequotas
 
 #### Parameters
