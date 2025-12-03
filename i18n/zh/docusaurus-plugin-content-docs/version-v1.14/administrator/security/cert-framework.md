@@ -6,7 +6,7 @@ title: 证书框架
 
 本文档详细描述了 Karmada 系统中的证书框架体系，包括所有证书资源的组织结构、用途及其配置建议。Karmada 证书框架定义了组件间安全通信所需的证书体系，清晰地阐明了各组件如何使用证书进行身份验证和通信加密。本文档将帮助管理员了解 Karmada 的证书体系架构，正确配置和管理组件所需的证书，确保整个系统的安全性。
 
-注意：当前，通过社区维护的 [hack/deploy-karmada.sh](https://github.com/karmada-io/karmada/blob/master/hack/deploy-karmada.sh) 脚本安装 Karmada 时，会按照本文档所述的证书框架生成证书。其他[安装方式](../../installation/installation.md)（包括 `karmadactl init`、`karmada-operator` 和 Helm）将在后续版本中逐步统一采用本标准。更多信息请参考[issue: Karmada Self-Signed Certificate Content Standardization](https://github.com/karmada-io/karmada/issues/6091).。
+注意：当前，通过社区维护的 [hack/deploy-karmada.sh](https://github.com/karmada-io/karmada/blob/master/hack/deploy-karmada.sh) 脚本安装 Karmada 时，会按照本文档所述的证书框架生成证书。其他[安装方式](../../installation/installation.md)（包括 `karmadactl init`、`karmada-operator` 和 Helm）将在后续版本中逐步统一采用本标准。更多信息请参考[issue: Karmada Self-Signed Certificate Content Standardization](https://github.com/karmada-io/karmada/issues/6091)。
 
 ## Karmada 根证书
 
