@@ -71,6 +71,7 @@ module.exports = {
                         "userguide/scheduling/resource-propagating",
                         "userguide/scheduling/override-policy",
                         "userguide/scheduling/propagate-dependencies",
+                        "userguide/scheduling/multi-component-scheduling",
                         "userguide/scheduling/descheduler",
                         "userguide/scheduling/scheduler-estimator",
                         "userguide/scheduling/cluster-resources",
