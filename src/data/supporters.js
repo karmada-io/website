@@ -25,6 +25,7 @@ import leinao from "../../static/img/supporters/leinao.png"
 import alibabacloud from "../../static/img/supporters/alibabacloud.png"
 import scatterlab from "../../static/img/supporters/scatterlab.png"
 import gongjikeji from "../../static/img/supporters/gongjikeji.png"
+import sensetime from "../../static/img/supporters/sensetime.png"
 
 const supportersData = [
     {
@@ -135,6 +136,11 @@ const supportersData = [
         logo: gongjikeji,
         alt: 'GongJiKeJi',
     },
+    {
+        logo: sensetime,
+        alt: 'SenseTime',
+    },
+
 ]
 
 export default supportersData
