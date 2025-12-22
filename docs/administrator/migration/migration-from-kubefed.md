@@ -183,7 +183,7 @@ spec:
 
 The `PropagationPolicy` defines the rules of which resources(`resourceSelectors`) should be propagated to
 where (`placement`).
-See [Resource Propagating](https://karmada.io/docs/userguide/scheduling/resource-propagating) for more details.
+See [Propagation Policy](https://karmada.io/docs/userguide/scheduling/propagation-policy) for more details.
 
 For the `override` part, Karmada provides `OverridePolicy` API to hold the rules for differentiation:
 

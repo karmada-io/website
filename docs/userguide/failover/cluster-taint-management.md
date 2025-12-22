@@ -74,7 +74,7 @@ reliability by allowing automatic rescheduling to healthy clusters.
 
 `TargetClusters` field specifies the clusters that `ClusterTaintPolicy` needs to pay attention to. It uses the `ClusterAffinity`
 structure from the `PropagationPolicy` API to select target clusters. The usage is identical, so you can directly refer to
-[its documentation](../scheduling/resource-propagating#deploy-deployment-into-a-specified-set-of-target-clusters)
+[its documentation](../scheduling/propagation-policy#cluster-affinity)
 for user-guide.
 
 > Note: If you modify the `TargetClusters` field or change the label of the clusters such that no longer match the ClusterTaintPolicy's
@@ -231,7 +231,7 @@ Karmada no longer performs automatic `NoExecute` effect taint management.
 
 ## Configuring Application Tolerations
 
-Taints on the cluster object can be tolerated by workloads, which is defined in the [`.spec.placement.clusterTolerations` field of PropagationPolicy/ClusterPropagationPolicy](../scheduling/resource-propagating#schedule-based-on-taints-and-tolerations).
+Taints on the cluster object can be tolerated by workloads, which is defined in the [`.spec.placement.clusterTolerations` field of PropagationPolicy/ClusterPropagationPolicy](../scheduling/propagation-policy#cluster-tolerations).
 
 When a workload tolerates a **NoSchedule** taint, the workload will be able to schedule to the cluster even if the cluster
 has the **NoSchedule** taint.
