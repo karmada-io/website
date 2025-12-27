@@ -24,7 +24,7 @@ Karmada 支持：
 
 Karmada 支持：
 
-* 不同 [调度策略](../userguide/scheduling/resource-propagating.md) 下的集群分发能力：
+* 不同 [调度策略](../userguide/scheduling/propagation-policy.md) 下的集群分发能力：
   * ClusterAffinity：基于 ClusterName、Label、Field 的定向调度。
   * Toleration：基于 Taint 和 Toleration 的调度。
   * SpreadConstraint：基于集群拓扑的调度。

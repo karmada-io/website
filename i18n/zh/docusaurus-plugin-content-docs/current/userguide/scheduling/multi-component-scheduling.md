@@ -85,5 +85,5 @@ Karmada 为流行的 CRD 提供了内置的解释器支持。您可以在[资源
 
 - [自定义资源解释器](../globalview/customizing-resource-interpreter) - 为您的 CRD 实现解释器
 - [调度器评估器](./scheduler-estimator) - 启用资源感知调度
-- [资源分发](./resource-propagating) - 将资源分发到集群的基础知识
+- [分发策略](./propagation-policy) - 将资源分发到集群的基础知识
 - [集群资源](./cluster-resources) - 理解集群资源建模

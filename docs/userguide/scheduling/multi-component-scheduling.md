@@ -85,5 +85,5 @@ We welcome user feedback and use cases for cross-cluster component distribution.
 
 - [Customizing Resource Interpreter](../globalview/customizing-resource-interpreter) - Implement interpreters for your CRDs
 - [Scheduler Estimator](./scheduler-estimator) - Enable resource-aware scheduling
-- [Resource Propagating](./resource-propagating) - Basics of propagating resources to clusters
+- [Propagation Policy](./propagation-policy) - Basics of propagating resources to clusters
 - [Cluster Resources](./cluster-resources) - Understanding cluster resource modeling

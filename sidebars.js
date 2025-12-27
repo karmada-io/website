@@ -68,7 +68,7 @@ module.exports = {
                     type: "category",
                     label: "Multi-cluster Scheduling",
                     items: [
-                        "userguide/scheduling/resource-propagating",
+                        "userguide/scheduling/propagation-policy",
                         "userguide/scheduling/override-policy",
                         "userguide/scheduling/propagate-dependencies",
                         "userguide/scheduling/multi-component-scheduling",
