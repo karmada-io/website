@@ -175,7 +175,7 @@ spec:
 ```
 
 `PropagationPolicy` 定义了哪些资源 (`resourceSelectors`) 应该被分发到哪里 (`placement`) 的规则。
-参见[资源分发](https://karmada.io/docs/userguide/scheduling/resource-propagating)了解更多细节。
+参见[分发策略](https://karmada.io/docs/userguide/scheduling/propagation-policy)了解更多细节。
 
 对于 `override` 部分，Karmada 提供了 `OverridePolicy` API 来保存差异化规则：
 

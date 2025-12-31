@@ -24,7 +24,7 @@ The overall relationship between the member cluster and the control plane is sho
 
 Karmada supports:
 
-* Cluster distribution capability under [different scheduling strategies](../userguide/scheduling/resource-propagating.md):
+* Cluster distribution capability under [different scheduling strategies](../userguide/scheduling/propagation-policy.md):
   * ClusterAffinity: Oriented scheduling based on ClusterName, Label, Field.
   * Toleration: Scheduling based on Taint and Toleration.
   * SpreadConstraint: Scheduling based on cluster topology.

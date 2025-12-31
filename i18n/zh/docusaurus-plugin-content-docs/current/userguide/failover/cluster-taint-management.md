@@ -65,7 +65,7 @@ spec:
 ### 选择一组目标集群
 
 `TargetClusters` 字段指定了 `ClusterTaintPolicy` 需要关注的集群。它使用 `PropagationPolicy` API 中的`ClusterAffinity` 结构来选
-择目标集群，其用法完全相同，因此你可以直接参考[其文档](../scheduling/resource-propagating#deploy-deployment-into-a-specified-set-of-target-clusters) 获取用户指南。
+择目标集群，其用法完全相同，因此你可以直接参考[其文档](../scheduling/propagation-policy#cluster-affinity) 获取用户指南。
 
 > 注意：如果您修改 `TargetClusters` 字段或更改集群的标签，使集群不再符合 `ClusterTaintPolicy` 的标准，此前由该 `ClusterTaintPolicy`
 添加的现有污点将不会自动移除。
@@ -210,7 +210,7 @@ spec:
 
 ## 配置应用容忍
 
-集群对象上的污点可以被应用程序容忍，这在[PropagationPolicy/ClusterPropagationPolicy 的 `.spec.placement.clusterTolerations` 字段](../scheduling/resource-propagating#schedule-based-on-taints-and-tolerations)中进行了定义。
+集群对象上的污点可以被应用程序容忍，这在[PropagationPolicy/ClusterPropagationPolicy 的 `.spec.placement.clusterTolerations` 字段](../scheduling/propagation-policy#cluster-tolerations)中进行了定义。
 
 当应用程序容忍 **NoSchedule** 污点时，即使集群上存在 **NoSchedule** 污点，该应用程序也能够调度到集群中。
 

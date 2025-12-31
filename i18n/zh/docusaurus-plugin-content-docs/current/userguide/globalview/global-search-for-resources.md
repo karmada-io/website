@@ -44,7 +44,7 @@ It has three fields to set:
 ### TargetCluster
 
 `TargetCluster` means the cluster from which the cache system collects resources.
-It's exactly the same with [clusterAffinity](../scheduling/resource-propagating.md#deploy-deployment-into-a-specified-set-of-target-clusters) in `PropagationPolicy`.
+It's exactly the same with [clusterAffinity](../scheduling/propagation-policy.md#cluster-affinity) in `PropagationPolicy`.
 
 ### ResourceSelector
 
