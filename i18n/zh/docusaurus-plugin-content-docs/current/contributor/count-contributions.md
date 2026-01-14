@@ -17,5 +17,6 @@ title: 更正您的信息，以便更好地贡献
 
 ## 更新用于计算贡献的 CNCF 存储库
 一旦您在 CNCF 系统中验证了您的组织，您必须在 gitdm 中使用更新的从属关系创建拉取请求。
-为此，您需要修改两个文件: `company_developers*.txt` 和 `developers_affiliations*.txt`。请参考这个示例拉请求: [PR Example](https://github.com/cncf/gitdm/pull/183)。
-拉取请求合并成功后,更改同步可能需要最多四周的时间
+为此，您需要修改文件: `developers_affiliations*.txt`。请参考 [Adding/Updating affiliation](https://github.com/cncf/gitdm?tab=readme-ov-file#addingupdating-affiliation) 或参考示例拉请求: [PR Example](https://github.com/cncf/gitdm/pull/951)。
+当前有多个 `developers_affiliations*.txt` 文件，您可以按照 Github 用户名的字母序，找到任意一个合适的文件进行添加。
+拉取请求合并成功后，更改同步可能需要最多四周的时间。
