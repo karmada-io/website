@@ -96,3 +96,74 @@ spec:
         - /bin/karmada-controller-manager
         - --metrics-bind-address=$(POD_IP):8080
 ```
+
+### Certificate 配置
+
+作为保障安全的重要手段，Karmada 使用证书来实现组件间的身份验证和加密通信。在安装部署 Karmada 时，Karmada 提供了丰富的配置来满足用户的不同需求。用户可以根据自己的安全策略和需求，选择合适的证书配置选项。以下是不同安装方式下，证书相关的默认行为和配置选项：
+
+#### Helm
+
+##### 默认行为
+
+通过 Helm 安装时，pre-install job 会自动生成所需的证书。其中：
+- CA 证书的默认有效期是 10 年（3650 天）。
+- 各组件身份证书的默认有效期是 5 年（43800h）。
+- 证书 RSA 密钥长度默认为 3072 位。
+
+##### 自定义
+
+用户可以通过修改 Helm chart 中的 `values.yaml` 文件，来自定义证书的相关配置选项，例如：
+- `certs.auto.rootCAExpiryDays`: CA 证书的有效期，单位为天。
+- `certs.auto.expiry`: 身份证书的有效期，格式为时间段字符串（例如，`43800h` 表示 5 年）。
+- `certs.auto.rsaSize`: 证书 RSA 密钥的长度。
+
+除此之外，如果用户已有自己的证书，也可以配置 Helm chart 跳过自动生成步骤，直接使用用户提供的证书。配置选项如下：
+- `certs.mode`: 证书模式。设置为 `custom` 时，将使用自定义证书。默认值为 `auto`。
+- `certs.custom`: 当 `certs.mode` 为 `custom` 时，此部分用于配置用户自定义证书的相关字段，例如 `caCrt`、`caKey`、`frontProxyCaCrt` 等。
+
+#### karmadactl init
+
+##### 默认行为
+
+通过 `karmadactl init` 安装时，karmadactl 会自动生成所需的证书。其中：
+- CA 证书的有效期是 10 年（3650 天）。在自动生成时，此值固定，不支持调整。
+- 身份证书的默认有效期是 1 年（8760h）。
+- 证书 RSA 密钥长度默认为 3072 位。在自动生成时，此值固定，不支持调整。
+
+##### 自定义
+
+用户可以通过在执行 `karmadactl init` 命令时，传入相关参数来自定义证书的配置选项。
+
+若希望调整**身份证书**的有效期，可以使用：
+- `--cert-validity-period`: 身份证书的有效期，格式为时间段字符串（例如，`8760h` 表示 1 年）。
+
+若希望使用**自定义的 CA**，可以指定 CA 文件路径，此时将不会执行自动生成 CA 的步骤：
+- `--ca-cert-file`: 自定义的 root CA 证书文件路径。
+- `--ca-key-file`: 自定义的 root CA 私钥文件路径。需要和 `--ca-cert-file` 一起使用。
+
+除此之外，也可以通过 `--config` 参数传入一个配置文件，来指定证书的相关配置选项。配置文件示例如下：
+```yaml
+apiVersion: config.karmada.io/v1alpha1
+kind: KarmadaInitConfig
+spec:
+  certificates:
+    caCertFile: "path/to/ca.crt"
+    caKeyFile: "path/to/ca.key"
+    validityPeriod: "43800h" # 5 years
+```
+
+#### Operator
+
+##### 默认行为
+
+通过 Operator 安装时，karmada-operator 会自动生成所需的证书。其中：
+- CA 证书的有效期是 10 年（3650 天）。在自动生成时，此值固定，不支持调整。
+- 身份证书的默认有效期是 1 年 (8760h)。
+- 证书 RSA 密钥长度默认为 3072 位。在自动生成时，此值固定，不支持调整。
+
+##### 自定义
+
+用户可以通过修改 `Karmada` CR 来自定义证书的相关配置选项。
+
+- `spec.customCertificate.leafCertValidityDays`: **身份证书**的有效期，单位为天。
+- `spec.customCertificate.apiServerCACert`: 用于指定包含自定义 CA 证书和私钥的 Secret。如果设置了此字段，Operator 将跳过自动生成 CA 的过程，直接使用该 Secret 中的凭证。
