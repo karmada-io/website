@@ -9,6 +9,7 @@ module.exports = {
   onBrokenLinks: "throw",
   organizationName: "karmada-io",
   projectName: "website",
+  themes: ['@docusaurus/theme-mermaid'],
   i18n: {
     defaultLocale: "en",
     locales: ["en", "zh"],
@@ -240,6 +241,7 @@ module.exports = {
     ],
   ],
   markdown: {
+    mermaid: true,
     hooks: {
       onBrokenMarkdownLinks: "throw",
     }
