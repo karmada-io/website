@@ -19,7 +19,9 @@ If you don't want to propagate a namespace automatically:
 - Option C: use custom namespace propagation
 
 ### Option A: Configure `karmada-controller-manager`
-The flag `--skipped-propagating-namespaces` can skip namespace auto propagation in `karmada-controller-manager` which defaults to the regex "kube-.*". Here is an example:
+
+The flag `--skipped-propagating-namespaces` can skip namespace auto propagation in `karmada-controller-manager` which defaults to the regex "kube-.\*". Here is an example:
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -44,7 +46,7 @@ spec:
 ```
 With this change:
 - `ns1` and `ns2` will not be propagated to all the member clusters.
-- the previously ignored "kube-.*" namespaces will be propagated to all the member clusters.
+- the previously ignored "kube-.\*" namespaces will be propagated to all the member clusters.
 
 ### Option B: Label the namespace
 Configure label `namespace.karmada.io/skip-auto-propagation: "true"` to skip namespace auto propagation. Here is an example:
@@ -68,13 +70,13 @@ but also means you have to add new clusters to the propagation policy yourself.
 Change the `karmada-controller-manager` command to not run the "namespace" controller:
 ```yaml
 command:
-- /bin/karmada-controller-manager
-- --controllers=*,-namespace
+  - /bin/karmada-controller-manager
+  - --controllers=*,-namespace
 ```
 
 #### Step 2: Create a clusterpropagationpolicy to propagate namespaces
 
-Example:
+##### Example 1: Propagate all namespaces manually
 
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
@@ -88,24 +90,49 @@ spec:
   placement:
     clusterAffinity:
       clusterNames:
-      - cluster-a
-      - cluster-b
+        - cluster-a
+        - cluster-b
   resourceSelectors:
-  - apiVersion: v1
-    kind: Namespace
-    labelSelector:
-      matchExpressions:
-      - key: kubernetes.io/metadata.name
-        operator: NotIn
-        values:
-        - kube-system
-        - kube-public
-        - kube-node-lease
-        - default
-        - karmada-system
-        - karmada-cluster
-      - key: karmada.io/managed
-        operator: NotIn
-        values:
-        - "true"
+    - apiVersion: v1
+      kind: Namespace
+      labelSelector:
+        matchExpressions:
+          - key: kubernetes.io/metadata.name
+            operator: NotIn
+            values:
+              - kube-system
+              - kube-public
+              - kube-node-lease
+              - default
+              - karmada-system
+              - karmada-cluster
+          - key: karmada.io/managed
+            operator: NotIn
+            values:
+              - "true"
+```
+
+##### Example 2: Propagate specific namespace to specific clusters
+
+If you want to propagate a specific namespace (e.g. `example`) to a subset of clusters (e.g. `member1`), you can use the following configuration:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example
+---
+apiVersion: policy.karmada.io/v1alpha1
+kind: ClusterPropagationPolicy
+metadata:
+  name: propagate-example-ns
+spec:
+  resourceSelectors:
+    - apiVersion: v1
+      kind: Namespace
+      name: example
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
 ```
