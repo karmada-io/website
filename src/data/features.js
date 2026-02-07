@@ -17,7 +17,7 @@ const features = [
         // imgUrl: 'img/logo.svg',
         description: (
             <Translate>
-                Jointly initiated by Internet, finance, manufacturing, teleco, cloud providers, etc. Target for open
+                Jointly initiated by Internet, finance, manufacturing, telecommunications, cloud providers, etc. Target for open
                 governance with CNCF
             </Translate>
         ),

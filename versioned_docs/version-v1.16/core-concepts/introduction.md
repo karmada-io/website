@@ -36,7 +36,7 @@ Karmada is an incubation project of the [Cloud Native Computing Foundation](http
     - Multi-Dimension HA: Region/AZ/Cluster/Provider
 
 - __Open and Neutral__
-    - Jointly initiated by Internet, finance, manufacturing, teleco, cloud providers, etc.
+    - Jointly initiated by Internet, finance, manufacturing, telecommunications, cloud providers, etc.
     - Target for open governance with CNCF
 
 
