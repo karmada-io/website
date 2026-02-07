@@ -74,7 +74,7 @@ validating webhooks are invoked and can reject requests to enforce custom polici
 
 ### etcd
 
-Consistent and highly-available key value store used as Karmada' backing store for all Karmada/Kubernetes API objects.
+Consistent and highly-available key value store used as Karmada's backing store for all Karmada/Kubernetes API objects.
 
 If your Karmada uses etcd as its backing store, make sure you have a back up plan for the data.
 
