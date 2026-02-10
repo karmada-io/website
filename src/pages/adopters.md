@@ -5,7 +5,7 @@ hide_table_of_contents: true
 
 # Karmada Adopters
 
-Organisations below all are using Karmada in production.
+All organisations below are using Karmada in production.
 
 We are happy and proud to have you all as part of our community!💖
 
