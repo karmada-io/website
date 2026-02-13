@@ -181,6 +181,7 @@ module.exports = {
                     type: "category",
                     label: "Monitoring",
                     items: [
+                        "administrator/monitoring/karmada-observability",
                         "administrator/monitoring/working-with-filebeat",
                         "administrator/monitoring/working-with-prometheus-in-control-plane",
                         "administrator/monitoring/working-with-prometheus",
