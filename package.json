@@ -21,7 +21,7 @@
     "@docusaurus/plugin-content-pages": "^3.8.1",
     "@docusaurus/plugin-sitemap": "^3.8.1",
     "@docusaurus/preset-classic": "^3.8.1",
-    "@douyinfe/semi-ui": "^2.90.13",
+    "@douyinfe/semi-ui": "^2.91.0",
     "asciinema-player": "^3.14.0",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.4.1",
