@@ -55,6 +55,9 @@ These metrics track scheduling operations and performance.
   - `result`: `success` or `error`
   - `schedule_type`: `ResourceBinding` or `ClusterResourceBinding`
 - **Description**: Number of attempts to schedule a ResourceBinding or ClusterResourceBinding. High error rate indicates scheduling failures preventing workload placement.
+- **Related Events**:
+  - [`ScheduleBindingSucceed`](./event.md#schedulebindingsucceed) - Emitted when `result=success`
+  - [`ScheduleBindingFailed`](./event.md#schedulebindingfailed) - Emitted when `result=error`
 - **Example queries**:
   ```promql
   # Scheduling success rate
@@ -77,6 +80,9 @@ These metrics track scheduling operations and performance.
   - `result`: `success` or `error`
   - `schedule_type`: `ResourceBinding` or `ClusterResourceBinding`
 - **Description**: End-to-end scheduling latency from when binding enters queue to placement decision. Use to monitor overall scheduling performance.
+- **Related Events**:
+  - [`ScheduleBindingSucceed`](./event.md#schedulebindingsucceed) - Emitted after successful scheduling
+  - [`ScheduleBindingFailed`](./event.md#schedulebindingfailed) - Emitted after failed scheduling
 - **Buckets**: Exponential from 0.001s to ~32s
 - **Example queries**:
   ```promql
@@ -355,6 +361,9 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Stability**: STABLE
 - **Labels**: None
 - **Description**: Duration to find a matched PropagationPolicy or ClusterPropagationPolicy for a resource template. **First step** in propagation pipeline - delays here impact the entire process.
+- **Related Events**:
+  - [`ApplyPolicySucceed`](./event.md#applypolicysucceed) - Includes policy matching time
+  - [`ApplyPolicyFailed`](./event.md#applypolicyfailed) - May indicate policy matching failures
 - **Buckets**: Exponential from 0.001s to ~4s
 - **Example query**:
   ```promql
@@ -370,6 +379,9 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to apply a PropagationPolicy or ClusterPropagationPolicy to a resource template.
+- **Related Events**:
+  - [`ApplyPolicySucceed`](./event.md#applypolicysucceed) - Emitted when `result=success`
+  - [`ApplyPolicyFailed`](./event.md#applypolicyfailed) - Emitted when `result=error`
 - **Buckets**: Exponential from 0.001s to ~4s
 
 #### karmada_policy_apply_attempts_total
@@ -380,6 +392,9 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Number of attempts to apply a PropagationPolicy or ClusterPropagationPolicy. High error rate indicates policy application failures preventing propagation.
+- **Related Events**:
+  - [`ApplyPolicySucceed`](./event.md#applypolicysucceed) - Emitted when `result=success`
+  - [`ApplyPolicyFailed`](./event.md#applypolicyfailed) - Emitted when `result=error`
 - **Example query**:
   ```promql
   # Policy application error rate
@@ -396,6 +411,9 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Number of preemptions where a resource is taken over by a higher-priority propagation policy. High error rate indicates policy conflict issues.
+- **Related Events**:
+  - [`PreemptPolicySucceed`](./event.md#preemptpolicysucceed) - Emitted when `result=success`
+  - [`PreemptPolicyFailed`](./event.md#preemptpolicyfailed) - Emitted when `result=error`
 
 #### karmada_binding_sync_work_duration_seconds
 
@@ -405,6 +423,11 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to sync Work objects for a ResourceBinding or ClusterResourceBinding. **Second step** in propagation - converts bindings to executable work.
+- **Related Events**:
+  - [`ApplyOverridePolicySucceed`](./event.md#applyoverridepolicysucceed) - Override application is part of work sync
+  - [`ApplyOverridePolicyFailed`](./event.md#applyoverridepolicyfailed) - May cause work sync failures
+  - [`SyncWorkSucceed`](./event.md#syncworksucceed) - Emitted after successful work sync
+  - [`SyncWorkFailed`](./event.md#syncworkfailed) - Emitted when `result=error`
 - **Buckets**: Exponential from 0.001s to ~4s
 - **Example query**:
   ```promql
@@ -420,6 +443,10 @@ These metrics track the propagation of resources from Karmada control plane to m
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to sync the workload to a target member cluster. **Critical metric** - measures end-to-end sync time from Work object to cluster.
+- **Related Events**:
+  - [`WorkDispatching`](./event.md#workdispatching) - Emitted when work dispatching starts
+  - [`SyncSucceed`](./event.md#syncsucceed) - Emitted when `result=success`
+  - [`SyncFailed`](./event.md#syncfailed) - Emitted when `result=error`
 - **Buckets**: Exponential from 0.001s to ~4s
 - **Example query**:
   ```promql
@@ -439,6 +466,9 @@ These metrics track the propagation of resources from Karmada control plane to m
   - `member_cluster`: Target cluster name
   - `recreate`: `true` or `false` (indicates recreating a previously deleted resource)
 - **Description**: Number of resource creation operations to member clusters. Errors indicate connectivity or permission issues.
+- **Related Events**:
+  - [`SyncSucceed`](./event.md#syncsucceed) - Emitted when resource creation succeeds
+  - [`SyncFailed`](./event.md#syncfailed) - Emitted when resource creation fails
 - **Example query**:
   ```promql
   # Resource creation error rate by cluster
@@ -459,6 +489,11 @@ These metrics track the propagation of resources from Karmada control plane to m
   - `member_cluster`: Target cluster name
   - `operationResult`: Type of update performed
 - **Description**: Number of resource update operations to member clusters.
+- **Related Events**:
+  - [`SyncSucceed`](./event.md#syncsucceed) - Emitted when resource update succeeds
+  - [`SyncFailed`](./event.md#syncfailed) - Emitted when resource update fails
+  - [`ReflectStatusSucceed`](./event.md#reflectstatussucceed) - Status updates may trigger this event
+  - [`ReflectStatusFailed`](./event.md#reflectstatusfailed) - Status update failures may trigger this event
 - **Example query**:
   ```promql
   # Resource update error rate by kind
@@ -478,6 +513,10 @@ These metrics track the propagation of resources from Karmada control plane to m
   - `kind`: Resource kind
   - `member_cluster`: Target cluster name
 - **Description**: Number of resource deletion operations from member clusters. Errors indicate issues removing resources during cleanup or migration.
+- **Related Events**:
+  - [`SyncSucceed`](./event.md#syncsucceed) - Emitted when resource deletion succeeds
+  - [`SyncFailed`](./event.md#syncfailed) - Emitted when resource deletion fails
+  - [`CleanupWorkFailed`](./event.md#cleanupworkfailed) - May be emitted during work cleanup failures
 
 ### Failover and Eviction Metrics
 
@@ -539,6 +578,9 @@ These metrics track cluster failure handling and resource eviction.
   - `name`: Queue name
   - `result`: `success` or `error`
 - **Description**: Total evictions processed. High error rate indicates issues rescheduling workloads during cluster failures.
+- **Related Events**:
+  - [`EvictWorkloadFromClusterSucceed`](./event.md#evictworkloadfromclustersucceed) - Emitted when `result=success`
+  - [`EvictWorkloadFromClusterFailed`](./event.md#evictworkloadfromclusterfailed) - Emitted when `result=error`
 - **Example query**:
   ```promql
   # Eviction success rate
@@ -559,6 +601,11 @@ These metrics track FederatedHPA and CronFederatedHPA controllers.
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to process a FederatedHPA object (one reconciliation loop). High latency delays scaling decisions.
+- **Related Events**:
+  - [`SuccessfulRescale`](./event.md#successfulrescale) - Emitted when scaling operation succeeds
+  - [`FailedRescale`](./event.md#failedrescale) - Emitted when scaling operation fails
+  - [`FailedGetScale`](./event.md#failedgetscale) - May occur during HPA processing
+  - [`FailedComputeMetricsReplicas`](./event.md#failedcomputemetricsreplicas) - Indicates metric computation failures
 - **Buckets**: Exponential from 0.01s to ~40s
 - **Example query**:
   ```promql
@@ -590,6 +637,10 @@ These metrics track FederatedHPA and CronFederatedHPA controllers.
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to process a CronFederatedHPA object.
+- **Related Events**:
+  - [`UpdateCronFederatedHPAFailed`](./event.md#updatecronfederatedhpafailed) - Emitted when CronFederatedHPA update fails
+  - [`StartRuleFailed`](./event.md#startrulefailed) - Emitted when cron rule execution fails
+  - [`ScaleFailed`](./event.md#scalefailed) - Emitted when scaling operation fails
 - **Buckets**: Exponential from 0.001s to ~4s
 
 #### karmada_cronfederatedhpa_rule_process_duration_seconds
@@ -600,6 +651,9 @@ These metrics track FederatedHPA and CronFederatedHPA controllers.
 - **Labels**:
   - `result`: `success` or `error`
 - **Description**: Duration to process a single CronFederatedHPA rule. Use to identify slow or problematic cron rules.
+- **Related Events**:
+  - [`StartRuleFailed`](./event.md#startrulefailed) - Emitted when `result=error`
+  - [`ScaleFailed`](./event.md#scalefailed) - May be emitted during rule processing failures
 - **Buckets**: Exponential from 0.001s to ~4s
 
 ### HPA Controller Metrics
@@ -615,6 +669,11 @@ These metrics are from the horizontal pod autoscaler controller (based on Kubern
   - `action`: `scale_up`, `scale_down`, or `none`
   - `error`: `spec`, `internal`, or `none`
 - **Description**: Number of HPA reconciliations. `action` indicates scaling decision, `error` indicates failure type. Spec errors are configuration issues, internal errors are runtime failures.
+- **Related Events**:
+  - [`SuccessfulRescale`](./event.md#successfulrescale) - Emitted when `action` is `scale_up` or `scale_down` and `error=none`
+  - [`FailedRescale`](./event.md#failedrescale) - Emitted when scaling fails
+  - [`FailedGetScale`](./event.md#failedgetscale) - May cause reconciliation errors
+  - [`FailedUpdateStatus`](./event.md#failedupdatestatus) - Status update failures during reconciliation
 
 #### horizontal_pod_autoscaler_controller_reconciliation_duration_seconds
 
@@ -637,6 +696,9 @@ These metrics are from the horizontal pod autoscaler controller (based on Kubern
   - `error`: Error type
   - `metric_type`: `Resource`, `Pods`, `Object`, `External`, or `ContainerResource`
 - **Description**: Number of metric computations. Use to identify problematic metric types.
+- **Related Events**:
+  - [`FailedComputeMetricsReplicas`](./event.md#failedcomputemetricsreplicas) - Emitted when `error != none`
+  - [`FailedGetScale`](./event.md#failedgetscale) - May cause metric computation failures
 
 #### horizontal_pod_autoscaler_controller_metric_computation_duration_seconds
 
@@ -681,6 +743,7 @@ Standard controller-runtime workqueue metrics available on all Karmada controlle
 - **Labels**:
   - `name`: Controller/queue name
 - **Description**: Current workqueue depth. High values indicate controller cannot keep up. Values &gt;100 warrant investigation.
+- **Related Events**: Many failure events (e.g., [`ApplyPolicyFailed`](./event.md#applypolicyfailed), [`SyncWorkFailed`](./event.md#syncworkfailed)) can cause work items to accumulate in queues.
 - **Example query**:
   ```promql
   # Controllers with deep queues
@@ -725,6 +788,7 @@ Standard controller-runtime workqueue metrics available on all Karmada controlle
 - **Labels**:
   - `name`: Controller/queue name
 - **Description**: Total retries processed by the workqueue. High retry rate indicates transient failures or bugs. Retry rate &gt;10% of adds rate is concerning.
+- **Related Events**: Many failure events (e.g., [`ApplyPolicyFailed`](./event.md#applypolicyfailed), [`SyncWorkFailed`](./event.md#syncworkfailed)) trigger controller retries, which increment this metric.
 - **Example query**:
   ```promql
   # Retry ratio (should be <10%)
