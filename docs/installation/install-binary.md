@@ -681,7 +681,7 @@ Execute operations at `karmada-01`.
 git clone https://github.com/karmada-io/karmada
 cd karmada/charts/karmada/_crds/bases
 
-kubectl apply -f .
+kubectl apply -Rf .
 
 cd ../patches/
 ca_string=$(cat /etc/karmada/pki/server-ca.crt | base64 | tr "\n" " "|sed s/[[:space:]]//g)
