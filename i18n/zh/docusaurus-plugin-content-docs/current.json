@@ -152,5 +152,8 @@
   },
   "sidebar.docs.category.Work Resources": {
     "message": "Work 资源"
+  },
+  "sidebar.docs.category.Karmadactl Operations": {
+    "message": "Karmadactl 运维指南"
   }
 }
