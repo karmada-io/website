@@ -33,6 +33,10 @@ The MultiClusterService is an API in the Karmada networking API group. The curre
 
 You can check the MultiClusterService API specification [here](https://github.com/karmada-io/karmada/blob/65376b28d5037c27ff7ec0e56542c2a345d1a120/pkg/apis/networking/v1alpha1/service_types.go#L50).
 
+## 限制
+
+当成员集群处于未就绪状态时（例如 Karmada 控制面无法访问该集群的 kube-apiserver），Karmada **不会**删除该集群的 MultiClusterService 或 EndpointSlice 资源，从而避免服务中断（多数情况下集群内 Pod 仍在运行并对外提供服务）。因此，当集群未就绪且该集群内后端 Pod 实际已无法提供服务时，多集群服务发现可能会失败。此时您可以修改或删除 MultiClusterService 资源，不再使用目标集群上的服务即可。
+
 ## What's next
 
 If you configure MultiClusterService, you may also want to consider how to connect the network between clusters, such as [Submariner](../network/working-with-submariner).

@@ -33,6 +33,10 @@ The MultiClusterService is an API in the Karmada networking API group. The curre
 
 You can check the MultiClusterService API specification [here](https://github.com/karmada-io/karmada/blob/65376b28d5037c27ff7ec0e56542c2a345d1a120/pkg/apis/networking/v1alpha1/service_types.go#L50).
 
+## Restrictions
+
+When a member cluster is not ready (for example, when the Karmada control plane cannot access the cluster's kube-apiserver), Karmada does **not** delete the MultiClusterService or EndpointSlice resources for that cluster. This is to avoid service interruption, as pods in the cluster may still be running and serving traffic. However, if a cluster is not ready and its backend pods are also unavailable, multi-cluster service discovery may fail. In this situation, you can modify or delete the MultiClusterService resource to stop using the service on the target cluster.
+
 ## What's next
 
 If you configure MultiClusterService, you may also want to consider how to connect the network between clusters, such as [Submariner](../network/working-with-submariner).
