@@ -598,6 +598,186 @@ spec:
 
 :::
 
+### WorkloadAffinity(工作负载亲和性)
+
+`.spec.placement.workloadAffinity` 字段启用工作负载间的亲和性和反亲和性调度策略。这允许您控制工作负载是应该在相同集群上共同调度(亲和性)还是分散到不同集群(反亲和性)。
+
+这对以下场景特别有用:
+- `高可用性`:确保重复工作负载在不同集群上运行,避免单点故障
+- `共同调度`:将相关工作负载调度到同一集群以最小化延迟
+- `资源隔离`:分离不应共享集群资源的工作负载
+
+#### 工作负载亲和性的工作原理
+
+工作负载亲和性使用资源模板上的标签来定义亲和性组。具有相同标签键值的工作负载属于同一组:
+
+- `亲和性组`通过标签键值对标识(例如 `app.group=frontend`)
+- `亲和性组`是命名空间范围的:不同命名空间中具有相同标签的工作负载不被视为同一组的一部分
+- 调度器维护亲和性组的内存索引,以便在调度期间进行高效查找
+
+#### Affinity(亲和性-共同调度)
+
+亲和性规则确保工作负载调度到同一亲和性组中其他工作负载已存在的集群。
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: training-job-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: batch/v1
+      kind: Job
+      labelSelector:
+        matchLabels:
+          workload.type: training
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      affinity:
+        groupByLabelKey: app.group
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training-job-1
+  namespace: default
+  labels:
+    app.group: ml-training
+    workload.type: training
+spec:
+  template:
+    spec:
+      containers:
+      - name: trainer
+        image: training:latest
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training-job-2
+  namespace: default
+  labels:
+    app.group: ml-training
+    workload.type: training
+spec:
+  template:
+    spec:
+      containers:
+      - name: trainer
+        image: training:latest
+```
+
+两个训练任务都有标签 `app.group=ml-training`,因此它们属于同一亲和性组。调度器会将 `training-job-2` 调度到 `training-job-1` 运行的同一集群。
+
+:::note
+
+对于亲和性组中的第一个工作负载(当不存在具有匹配标签的其他工作负载时),调度器不会阻止调度。这允许创建新的工作负载组而不会遇到调度死锁。
+
+:::
+
+#### Anti-affinity(反亲和性-分离)
+
+反亲和性规则确保工作负载调度到同一反亲和性组中不存在其他工作负载的集群。
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: flink-anti-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: flink.apache.org/v1beta1
+      kind: FlinkDeployment
+      labelSelector:
+        matchLabels:
+          ha.enabled: "true"
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      antiAffinity:
+        groupByLabelKey: pipeline.id
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-pipeline-primary
+  namespace: default
+  labels:
+    pipeline.id: payment-processing
+    ha.enabled: "true"
+spec:
+  image: flink:1.17
+  flinkVersion: v1_17
+  jobManager:
+    replicas: 1
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-pipeline-backup
+  namespace: default
+  labels:
+    pipeline.id: payment-processing
+    ha.enabled: "true"
+spec:
+  image: flink:1.17
+  flinkVersion: v1_17
+  jobManager:
+    replicas: 1
+```
+
+两个 FlinkDeployment 都有标签 `pipeline.id=payment-processing`,因此它们属于同一反亲和性组。调度器将确保它们在不同的集群上运行以提供高可用性。
+
+#### 组合亲和性和反亲和性
+
+您可以在同一策略中指定亲和性和反亲和性规则。在调度期间两个规则都必须满足:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: combined-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      affinity:
+        groupByLabelKey: app.stack
+      antiAffinity:
+        groupByLabelKey: app.instance
+```
+
+这确保:
+- 具有相同 `app.stack` 标签值的工作负载在同一集群上共同调度
+- 具有相同 `app.instance` 标签值的工作负载在不同集群之间分离
+
+:::note
+
+工作负载亲和性在调度期间作为硬性要求进行评估。如果无法满足亲和性或反亲和性规则,调度将失败。这确保亲和性保证得到严格执行。
+
+对软亲和性偏好的支持(例如 `PreferredDuringScheduling`)可能会在未来版本中添加,如果有足够的使用场景。
+
+:::
+
 ## Priority(优先级)
 
 `.spec.priority` 字段确定当多个策略匹配一个资源时应用哪个策略。值越高优先级越高。
