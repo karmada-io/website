@@ -598,6 +598,186 @@ If `ReplicaDivisionPreference` is set to `Weighted` without `WeightPreference`, 
 
 :::
 
+### WorkloadAffinity
+
+The `.spec.placement.workloadAffinity` field enables inter-workload affinity and anti-affinity scheduling policies. This allows you to control whether workloads should be co-located on the same clusters (affinity) or separated across different clusters (anti-affinity).
+
+This is particularly useful for:
+- `High availability`: Ensuring duplicate workloads run on different clusters to avoid single points of failure
+- `Co-location`: Scheduling related workloads to the same cluster to minimize latency
+- `Resource isolation`: Separating workloads that should not share cluster resources
+
+#### How workload affinity works
+
+Workload affinity uses labels on resource templates to define affinity groups. Workloads with the same label value under the specified key belong to the same group:
+
+- `Affinity groups` are identified by a label key-value pair (e.g., `app.group=frontend`)
+- `Affinity groups` are namespace-scoped: workloads with the same label in different namespaces are not treated as part of the same group
+- The scheduler maintains an in-memory index of affinity groups for efficient lookup during scheduling
+
+#### Affinity (co-location)
+
+Affinity rules ensure workloads are scheduled to clusters where other workloads in the same affinity group already exist.
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: training-job-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: batch/v1
+      kind: Job
+      labelSelector:
+        matchLabels:
+          workload.type: training
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      affinity:
+        groupByLabelKey: app.group
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training-job-1
+  namespace: default
+  labels:
+    app.group: ml-training
+    workload.type: training
+spec:
+  template:
+    spec:
+      containers:
+      - name: trainer
+        image: training:latest
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training-job-2
+  namespace: default
+  labels:
+    app.group: ml-training
+    workload.type: training
+spec:
+  template:
+    spec:
+      containers:
+      - name: trainer
+        image: training:latest
+```
+
+Both training jobs have the label `app.group=ml-training`, so they belong to the same affinity group. The scheduler will schedule `training-job-2` to the same cluster where `training-job-1` is running.
+
+:::note
+
+For the first workload in an affinity group (when no other workloads with matching labels exist), the scheduler will not block scheduling. This allows new workload groups to be created without encountering scheduling deadlocks.
+
+:::
+
+#### Anti-affinity (separation)
+
+Anti-affinity rules ensure workloads are scheduled to clusters where no other workloads in the same anti-affinity group exist.
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: flink-anti-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: flink.apache.org/v1beta1
+      kind: FlinkDeployment
+      labelSelector:
+        matchLabels:
+          ha.enabled: "true"
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      antiAffinity:
+        groupByLabelKey: pipeline.id
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-pipeline-primary
+  namespace: default
+  labels:
+    pipeline.id: payment-processing
+    ha.enabled: "true"
+spec:
+  image: flink:1.17
+  flinkVersion: v1_17
+  jobManager:
+    replicas: 1
+---
+apiVersion: flink.apache.org/v1beta1
+kind: FlinkDeployment
+metadata:
+  name: flink-pipeline-backup
+  namespace: default
+  labels:
+    pipeline.id: payment-processing
+    ha.enabled: "true"
+spec:
+  image: flink:1.17
+  flinkVersion: v1_17
+  jobManager:
+    replicas: 1
+```
+
+Both FlinkDeployments have the label `pipeline.id=payment-processing`, so they belong to the same anti-affinity group. The scheduler will ensure they run on different clusters to provide high availability.
+
+#### Combining affinity and anti-affinity
+
+You can specify both affinity and anti-affinity terms in the same policy. Both rules must be satisfied during scheduling:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: combined-affinity
+  namespace: default
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+  placement:
+    clusterAffinity:
+      clusterNames:
+        - member1
+        - member2
+        - member3
+    workloadAffinity:
+      affinity:
+        groupByLabelKey: app.stack
+      antiAffinity:
+        groupByLabelKey: app.instance
+```
+
+This ensures:
+- Workloads with the same `app.stack` label value are co-located on the same cluster
+- Workloads with the same `app.instance` label value are separated across different clusters
+
+:::note
+
+Workload affinity is evaluated as a hard requirement during scheduling. If affinity or anti-affinity rules cannot be satisfied, scheduling will fail. This ensures that affinity guarantees are strictly enforced.
+
+Support for soft affinity preferences (e.g., `PreferredDuringScheduling`) may be added in future releases if there are sufficient use cases.
+
+:::
+
 ## Priority
 
 The `.spec.priority` field determines which policy applies when multiple policies match a resource. Higher values have higher priority.
