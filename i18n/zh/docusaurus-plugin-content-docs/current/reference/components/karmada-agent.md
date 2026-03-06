@@ -46,7 +46,7 @@ karmada-agent [flags]
                                                        AllAlpha=true|false (ALPHA - default=false)
                                                        AllBeta=true|false (BETA - default=false)
                                                        ContextualLogging=true|false (BETA - default=true)
-                                                       ControllerPriorityQueue=true|false (ALPHA - default=false)
+                                                       ControllerPriorityQueue=true|false (BETA - default=true)
                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                        Failover=true|false (BETA - default=false)
                                                        FederatedQuotaEnforcement=true|false (ALPHA - default=false)
@@ -60,6 +60,7 @@ karmada-agent [flags]
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
                                                        StatefulFailoverInjection=true|false (ALPHA - default=false)
+                                                       WorkloadAffinity=true|false (ALPHA - default=false)
       --health-probe-bind-address string               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357. (default ":10357")
   -h, --help                                           help for karmada-agent
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.

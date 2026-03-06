@@ -57,7 +57,7 @@ karmadactl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=V
       --list                           If true, display the labels for a given resource.
       --local                          If true, label will NOT contact api-server but run locally.
   -n, --namespace string               If present, the namespace scope for this CLI request.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --overwrite                      If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
       --resource-version string        If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.

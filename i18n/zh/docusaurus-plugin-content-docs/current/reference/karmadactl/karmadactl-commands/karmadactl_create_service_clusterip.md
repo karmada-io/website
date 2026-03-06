@@ -30,7 +30,7 @@ karmadactl create service clusterip NAME [--tcp=<port>:<targetPort>] [--dry-run=
       --dry-run string[="unchanged"]   Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without sending it. If server strategy, submit server-side request without persisting the resource. (default "none")
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
   -h, --help                           help for clusterip
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
       --show-managed-fields            If true, keep the managedFields when printing objects in JSON or YAML format.
       --tcp strings                    Port pairs can be specified as '<port>:<targetPort>'.

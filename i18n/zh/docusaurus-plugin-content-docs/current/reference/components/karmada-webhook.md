@@ -27,7 +27,7 @@ karmada-webhook [flags]
                                              AllAlpha=true|false (ALPHA - default=false)
                                              AllBeta=true|false (BETA - default=false)
                                              ContextualLogging=true|false (BETA - default=true)
-                                             ControllerPriorityQueue=true|false (ALPHA - default=false)
+                                             ControllerPriorityQueue=true|false (BETA - default=true)
                                              CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                              Failover=true|false (BETA - default=false)
                                              FederatedQuotaEnforcement=true|false (ALPHA - default=false)
@@ -41,6 +41,7 @@ karmada-webhook [flags]
                                              PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                              ResourceQuotaEstimate=true|false (ALPHA - default=false)
                                              StatefulFailoverInjection=true|false (ALPHA - default=false)
+                                             WorkloadAffinity=true|false (ALPHA - default=false)
       --health-probe-bind-address string     The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:8000, :8000) (default ":8000")
   -h, --help                                 help for karmada-webhook
       --kube-api-burst int                   Burst to use while talking with karmada-apiserver. (default 60)

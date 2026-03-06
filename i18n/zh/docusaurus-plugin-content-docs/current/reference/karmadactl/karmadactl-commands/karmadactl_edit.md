@@ -54,7 +54,7 @@ karmadactl edit (RESOURCE/NAME | -f FILENAME)
       --kubeconfig string             Path to the kubeconfig file to use for CLI requests.
   -k, --kustomize string              Process the kustomization directory. This flag can't be used together with -f or -R.
   -n, --namespace string              If present, the namespace scope for this CLI request.
-  -o, --output string                 Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                 Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --output-patch                  Output the patch if the resource is edited.
   -R, --recursive                     Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
       --save-config                   If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.

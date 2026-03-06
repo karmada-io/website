@@ -63,7 +63,7 @@ The Resource Interpreter Framework defines several operations for extracting dif
 
 The diagram below illustrates how different interpreter operations are applied throughout the resource propagation lifecycle:
 
-![Resource Interpreter Operations](../../../../static/img/resource-interpreter-framework.png)
+![Resource Interpreter Operations](../../resources/userguide/globalview/resource-interpreter-framework.png)
 
 **Lifecycle Stages**:
 

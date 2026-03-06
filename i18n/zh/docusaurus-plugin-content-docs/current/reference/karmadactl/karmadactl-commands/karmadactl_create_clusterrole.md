@@ -43,7 +43,7 @@ karmadactl create clusterrole NAME --verb=verb --resource=resource.group [--reso
       --field-manager string               Name of the manager used to track field ownership. (default "kubectl-create")
   -h, --help                               help for clusterrole
       --non-resource-url strings           A partial url that user should have access to.
-  -o, --output string                      Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                      Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --resource strings                   Resource that the rule applies to
       --resource-name stringArray          Resource in the white list that the rule applies to, repeat this flag for multiple items
       --save-config                        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.

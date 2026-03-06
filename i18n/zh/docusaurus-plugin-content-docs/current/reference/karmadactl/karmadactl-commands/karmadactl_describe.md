@@ -45,7 +45,7 @@ karmadactl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME) (-
 
 ```
   -A, --all-namespaces                   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
-      --chunk-size int                   Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future. (default 500)
+      --chunk-size int                   Return large lists in chunks rather than all at once. Pass 0 to disable. (default 500)
   -C, --cluster string                   Used to specify a target member cluster and only takes effect when the command's operation scope is members, for example: --operation-scope=members --cluster=member1
   -f, --filename strings                 Filename, directory, or URL to files containing the resource to describe
   -h, --help                             help for describe
