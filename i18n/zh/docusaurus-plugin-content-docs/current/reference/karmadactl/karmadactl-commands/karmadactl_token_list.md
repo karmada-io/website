@@ -40,7 +40,7 @@ karmadactl token list [flags]
 
 ### SEE ALSO
 
-* [karmadactl token](karmadactl_token.md)	 - Manage bootstrap tokens
+* [karmadactl token](karmadactl_token.md)	 - Manage bootstrap tokens for joining member clusters to Karmada
 
 #### Go Back to [Karmadactl Commands](karmadactl_index.md) Homepage.
 

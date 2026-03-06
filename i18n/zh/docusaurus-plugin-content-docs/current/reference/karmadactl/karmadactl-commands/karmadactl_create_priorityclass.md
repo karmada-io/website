@@ -34,7 +34,7 @@ karmadactl create priorityclass NAME --value=VALUE --global-default=BOOL [--dry-
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
       --global-default                 global-default specifies whether this PriorityClass should be considered as the default priority.
   -h, --help                           help for priorityclass
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --preemption-policy string       preemption-policy is the policy for preempting pods with lower priority. (default "PreemptLowerPriority")
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
       --show-managed-fields            If true, keep the managedFields when printing objects in JSON or YAML format.

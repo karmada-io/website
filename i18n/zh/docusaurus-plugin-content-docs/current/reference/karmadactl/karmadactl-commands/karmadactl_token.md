@@ -2,7 +2,7 @@
 title: karmadactl token
 ---
 
-Manage bootstrap tokens
+Manage bootstrap tokens for joining member clusters to Karmada
 
 ### Synopsis
 

@@ -71,7 +71,7 @@ karmada-search [flags]
       --emulated-version strings                                The versions different components emulate their capabilities (APIs, features, ...) of.
                                                                 If set, the component will emulate the behavior of this version instead of the underlying binary version.
                                                                 Version format could only be major.minor, for example: '--emulated-version=wardle=1.2,kube=1.31'.
-                                                                Options are: kube=1.31..1.34(default:1.34)
+                                                                Options are: kube=1.32..1.35(default:1.35)
                                                                 If the component is not specified, defaults to "kube"
       --emulation-forward-compatible                            If true, for any beta+ APIs enabled by default or by --runtime-config at the emulation version, their future versions with higher priority/stability will be auto enabled even if they introduced after the emulation version. Can only be set to true if the emulation version is lower than the binary version.
       --enable-garbage-collector                                Enables the generic garbage collector. MUST be synced with the corresponding flag of the kube-controller-manager. (default true)
@@ -104,10 +104,13 @@ karmada-search [flags]
                                                                 kube:ComponentFlagz=true|false (ALPHA - default=false)
                                                                 kube:ComponentStatusz=true|false (ALPHA - default=false)
                                                                 kube:ConcurrentWatchObjectDecode=true|false (BETA - default=false)
+                                                                kube:ConstrainedImpersonation=true|false (ALPHA - default=false)
                                                                 kube:ContextualLogging=true|false (BETA - default=true)
-                                                                kube:ControllerPriorityQueue=true|false (ALPHA - default=false)
+                                                                kube:ControllerPriorityQueue=true|false (BETA - default=true)
                                                                 kube:CoordinatedLeaderElection=true|false (BETA - default=false)
                                                                 kube:CustomizedClusterResourceModeling=true|false (BETA - default=true)
+                                                                kube:DeclarativeValidation=true|false (BETA - default=true)
+                                                                kube:DeclarativeValidationTakeover=true|false (BETA - default=false)
                                                                 kube:DetectCacheInconsistency=true|false (BETA - default=true)
                                                                 kube:Failover=true|false (BETA - default=false)
                                                                 kube:FederatedQuotaEnforcement=true|false (ALPHA - default=false)
@@ -129,10 +132,13 @@ karmada-search [flags]
                                                                 kube:StorageVersionAPI=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionHash=true|false (BETA - default=true)
                                                                 kube:StructuredAuthenticationConfigurationEgressSelector=true|false (BETA - default=true)
+                                                                kube:StructuredAuthenticationConfigurationJWKSMetrics=true|false (BETA - default=true)
                                                                 kube:TokenRequestServiceAccountUIDValidation=true|false (BETA - default=true)
                                                                 kube:UnauthenticatedHTTP2DOSMitigation=true|false (BETA - default=true)
+                                                                kube:UnknownVersionInteroperabilityProxy=true|false (ALPHA - default=false)
                                                                 kube:WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
                                                                 kube:WatchList=true|false (BETA - default=true)
+                                                                kube:WorkloadAffinity=true|false (ALPHA - default=false)
       --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
   -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
@@ -152,6 +158,10 @@ karmada-search [flags]
       --logtostderr                                             log to standard error instead of files (default true)
       --max-mutating-requests-inflight int                      This and --max-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of mutating requests in flight, or a zero value disables the limit completely. (default 200)
       --max-requests-inflight int                               This and --max-mutating-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of non-mutating requests in flight, or a zero value disables the limit completely. (default 400)
+      --min-compatibility-version strings                       The min version of control plane components the server should be compatible with.
+                                                                Must be less or equal to the emulated-version. Version format could only be major.minor, for example: '--min-compatibility-version=wardle=1.2,kube=1.31'.
+                                                                Options are: kube=1.32..1.35(default:1.34)
+                                                                If the component is not specified, defaults to "kube"
       --min-request-timeout int                                 An optional field indicating the minimum number of seconds a handler must keep a request open before timing it out. Currently only honored by the watch request handler, which picks a randomized value above this number as the connection timeout, to spread out load. (default 1800)
       --one_output                                              If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --permit-address-sharing                                  If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]

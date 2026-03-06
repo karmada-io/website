@@ -60,7 +60,7 @@ karmadactl [flags]
 * [karmadactl promote](karmadactl_promote.md)	 - Promote resources from legacy clusters to Karmada control plane
 * [karmadactl register](karmadactl_register.md)	 - Register a cluster to Karmada control plane with Pull mode
 * [karmadactl taint](karmadactl_taint.md)	 - Update the taints on one or more clusters
-* [karmadactl token](karmadactl_token.md)	 - Manage bootstrap tokens
+* [karmadactl token](karmadactl_token.md)	 - Manage bootstrap tokens for joining member clusters to Karmada
 * [karmadactl top](karmadactl_top.md)	 - Display resource (CPU/memory) usage of member clusters
 * [karmadactl uncordon](karmadactl_uncordon.md)	 - Mark cluster as schedulable
 * [karmadactl unjoin](karmadactl_unjoin.md)	 - Remove a cluster from Karmada control plane

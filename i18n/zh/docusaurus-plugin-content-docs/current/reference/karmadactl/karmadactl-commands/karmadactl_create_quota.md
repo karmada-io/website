@@ -30,7 +30,7 @@ karmadactl create quota NAME [--hard=key1=value1,key2=value2] [--scopes=Scope1,S
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
       --hard string                    A comma-delimited set of resource=quantity pairs that define a hard limit.
   -h, --help                           help for quota
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
       --scopes string                  A comma-delimited set of quota scopes that must all match each object tracked by the quota.
       --show-managed-fields            If true, keep the managedFields when printing objects in JSON or YAML format.

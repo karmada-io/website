@@ -48,7 +48,7 @@ karmadactl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE]
   -k, --kustomize string               Process the kustomization directory. This flag can't be used together with -f or -R.
       --local                          If true, patch will operate on the content of the file, not the server-side resource.
   -n, --namespace string               If present, the namespace scope for this CLI request.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
   -p, --patch string                   The patch to be applied to the resource JSON file.
       --patch-file string              A file containing a patch to be applied to the resource.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
