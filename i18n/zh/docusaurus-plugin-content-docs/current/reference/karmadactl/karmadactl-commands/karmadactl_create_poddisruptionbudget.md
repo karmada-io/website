@@ -33,7 +33,7 @@ karmadactl create poddisruptionbudget NAME --selector=SELECTOR --min-available=N
   -h, --help                           help for poddisruptionbudget
       --max-unavailable string         The maximum number or percentage of unavailable pods this budget requires.
       --min-available string           The minimum number or percentage of available pods this budget requires.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
       --selector string                A label selector to use for this budget. Only equality-based selector requirements are supported.
       --show-managed-fields            If true, keep the managedFields when printing objects in JSON or YAML format.

@@ -28,7 +28,7 @@ karmada-scheduler [flags]
                                                        AllAlpha=true|false (ALPHA - default=false)
                                                        AllBeta=true|false (BETA - default=false)
                                                        ContextualLogging=true|false (BETA - default=true)
-                                                       ControllerPriorityQueue=true|false (ALPHA - default=false)
+                                                       ControllerPriorityQueue=true|false (BETA - default=true)
                                                        CustomizedClusterResourceModeling=true|false (BETA - default=true)
                                                        Failover=true|false (BETA - default=false)
                                                        FederatedQuotaEnforcement=true|false (ALPHA - default=false)
@@ -42,6 +42,7 @@ karmada-scheduler [flags]
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
                                                        StatefulFailoverInjection=true|false (ALPHA - default=false)
+                                                       WorkloadAffinity=true|false (ALPHA - default=false)
       --health-probe-bind-address string               The TCP address that the server should bind to for serving health probes(e.g. 127.0.0.1:10351, :10351). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10351. (default ":10351")
   -h, --help                                           help for karmada-scheduler
       --insecure-skip-estimator-verify                 Controls whether verifies the scheduler estimator's certificate chain and host name.

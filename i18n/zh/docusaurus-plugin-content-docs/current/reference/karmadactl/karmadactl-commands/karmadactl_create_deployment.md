@@ -39,7 +39,7 @@ karmadactl create deployment NAME --image=image -- [COMMAND] [args...]
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
   -h, --help                           help for deployment
       --image strings                  Image names to run. A deployment can have multiple images set for multi-container pod.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --port int32                     The containerPort that this deployment exposes. (default -1)
   -r, --replicas int32                 Number of replicas to create. Default is 1. (default 1)
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.

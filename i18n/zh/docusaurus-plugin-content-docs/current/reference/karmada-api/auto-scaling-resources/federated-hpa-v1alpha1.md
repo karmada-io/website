@@ -20,7 +20,7 @@ auto_generated: true
 
 ## FederatedHPA 
 
-FederatedHPA 是一个可以聚合多个集群指标的 HPA。当系统负载增加时，它会从多个集群查询指标，并增加副本。当系统负载减少时，它会从多个集群查询指标，并减少副本。副本增加或减少后，karmada-scheduler 将根据策略调度副本。
+FederatedHPA is centralized HPA that can aggregate the metrics in multiple clusters. When the system load increases, it will query the metrics from multiple clusters and scales up the replicas. When the system load decreases, it will query the metrics from multiple clusters and scales down the replicas. After the replicas are scaled up/down, karmada-scheduler will schedule the replicas based on the policy.
 
 <hr/>
 
@@ -30,684 +30,708 @@ FederatedHPA 是一个可以聚合多个集群指标的 HPA。当系统负载增
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([FederatedHPASpec](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpaspec))，必选
+- **spec** ([FederatedHPASpec](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpaspec)), required
 
-  Spec表示 FederatedHPA 的规范。
+  Spec is the specification of the FederatedHPA.
 
 - **status** (HorizontalPodAutoscalerStatus)
 
-  Status 是 FederatedHPA 当前的状态。
+  Status is the current status of the FederatedHPA.
 
   <a name="HorizontalPodAutoscalerStatus"></a>
 
-  *HorizontalPodAutoscalerStatus 描述 pod 水平伸缩器当前的状态。*
+  *HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.*
 
-  - **status.desiredReplicas** (int32)，必选
+  - **status.desiredReplicas** (int32), required
 
-    desiredReplicas 是自动伸缩器自上次计算起，其所管理的pod所需的副本数量。
+    desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler.
 
   - **status.conditions** ([]HorizontalPodAutoscalerCondition)
 
-    *补丁策略：根据键 `type` 进行合并。*
+    *Patch strategy: merge on key `type`*
     
-    *Map：在合并过程中将保留键类型的唯一值。*
+    *Map: unique values on key type will be kept during a merge*
     
-    conditions 是自动伸缩器伸缩其目标所需的状况，并表明是否满足这些状况。
+    conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
 
     <a name="HorizontalPodAutoscalerCondition"></a>
 
-    *HorizontalPodAutoscalerCondition 描述 HorizontalPodAutoscaler 在特定时刻的状态。*
+    *HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.*
 
-    - **status.conditions.status** (string)，必选
+    - **status.conditions.status** (string), required
 
-      status 表示状况的状态（True、False 和 Unknown）。
+      status is the status of the condition (True, False, Unknown)
 
-    - **status.conditions.type** (string)，必选
+    - **status.conditions.type** (string), required
 
-      type 描述当前的状况。
+      type describes the current condition
 
     - **status.conditions.lastTransitionTime** (Time)
 
-      lastTransitionTime 是状况最后一次从一种状态转换到另一种状态的时间。
+      lastTransitionTime is the last time the condition transitioned from one status to another
 
       <a name="Time"></a>
 
-      *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
+      *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
 
     - **status.conditions.message** (string)
 
-      message 解释了有关状态转换的细节（人类可读消息）。
+      message is a human-readable explanation containing details about the transition
 
     - **status.conditions.reason** (string)
 
-      reason 是状况（Condition）最后一次转换的原因。
+      reason is the reason for the condition's last transition.
 
   - **status.currentMetrics** ([]MetricStatus)
 
-    *Atomic：将在合并过程中被替换掉。*
+    *Atomic: will be replaced during a merge*
     
-    currentMetrics 是自动伸缩器所用指标最后读取的状态。
+    currentMetrics is the last read state of the metrics used by this autoscaler.
 
     <a name="MetricStatus"></a>
 
-    *MetricStatus 描述单个指标最后读取的状态。*
+    *MetricStatus describes the last-read state of a single metric.*
 
-    - **status.currentMetrics.type** (string)，必选
+    - **status.currentMetrics.type** (string), required
 
-      type 表示指标源的类别。指标源可能是 ContainerResource、External、Object、Pods 或 Resource，均对应对象中的一个匹配字段。注意：ContainerResource 只有在特性开关 HPAContainerMetrics 启用时可用。
+      type is the type of metric source.  It will be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each corresponds to a matching field in the object.
 
     - **status.currentMetrics.containerResource** (ContainerResourceMetricStatus)
 
-      容器资源是 Kubernetes 已知的资源指标（如 request 与 limit），用于描述当前伸缩目标（如 CPU 或内存）中每个 pod 中单个容器的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。
+      container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 
       <a name="ContainerResourceMetricStatus"></a>
 
-      *ContainerResourceMetricStatus 表示 Kubernetes 已知的资源指标的当前值，如 request 与 limit，描述当前伸缩目标（如 CPU 或内存）中每个 Pod 中的单个容器的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。*
+      *ContainerResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing a single container in each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.*
 
-      - **status.currentMetrics.containerResource.container** (string)，必选
+      - **status.currentMetrics.containerResource.container** (string), required
 
-        container 是伸缩目标的 pod 中容器的名称。
+        container is the name of the container in the pods of the scaling target
 
-      - **status.currentMetrics.containerResource.current** (MetricValueStatus)，必选
+      - **status.currentMetrics.containerResource.current** (MetricValueStatus), required
 
-        current 是给定指标的当前值。
+        current contains the current value for the given metric
 
         <a name="MetricValueStatus"></a>
 
-        *MetricValueStatus 表示指标的当前值。*
+        *MetricValueStatus holds the current value for a metric*
 
         - **status.currentMetrics.containerResource.current.averageUtilization** (int32)
 
-          currentAverageUtilization 是所有相关 pod 中资源指标当前的平均值，表示为 pod 请求的资源值的百分比。
+          currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 
         - **status.currentMetrics.containerResource.current.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-          averageValue 是所有相关 pod 中资源指标当前的平均值（数量）。
+          averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
 
         - **status.currentMetrics.containerResource.current.value** ([Quantity](../common-definitions/quantity#quantity))
 
-          value 是指标的当前值（数量）。
+          value is the current value of the metric (as a quantity).
 
-      - **status.currentMetrics.containerResource.name** (string)，必选
+      - **status.currentMetrics.containerResource.name** (string), required
 
-        name 是伸缩资源的名称。
+        name is the name of the resource in question.
 
     - **status.currentMetrics.external** (ExternalMetricStatus)
 
-      external 是指不与任何 Kubernetes 对象关联的全局指标。它允许根据集群外运行的组件的信息（例如，云消息传递服务中的队列长度，或集群外运行的负载平衡器的 QPS）进行自动伸缩。
+      external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
 
       <a name="ExternalMetricStatus"></a>
 
-      *ExternalMetricStatus 表示与任何 Kubernetes 对象无关的全局指标的当前值。*
+      *ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.*
 
-      - **status.currentMetrics.external.current** (MetricValueStatus)，必选
+      - **status.currentMetrics.external.current** (MetricValueStatus), required
 
-        current 是给定指标的当前值。
+        current contains the current value for the given metric
 
         <a name="MetricValueStatus"></a>
 
-        *MetricValueStatus 表示指标的当前值。*
+        *MetricValueStatus holds the current value for a metric*
 
         - **status.currentMetrics.external.current.averageUtilization** (int32)
 
-          currentAverageUtilization 是所有相关 pod 中资源指标当前的平均值，表示为 pod 请求的资源值的百分比。
+          currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 
         - **status.currentMetrics.external.current.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-          averageValue 是所有相关 pod 中资源指标当前的平均值。
+          averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
 
         - **status.currentMetrics.external.current.value** ([Quantity](../common-definitions/quantity#quantity))
 
-          value 是指标的当前值（数量）。
+          value is the current value of the metric (as a quantity).
 
-      - **status.currentMetrics.external.metric** (MetricIdentifier)，必选
+      - **status.currentMetrics.external.metric** (MetricIdentifier), required
 
-        metric 通过名称和选择器标识目标指标。
+        metric identifies the target metric by name and selector
 
         <a name="MetricIdentifier"></a>
 
-        *MetricIdentifier 定义指标的名称和可选的选择器。*
+        *MetricIdentifier defines the name and optionally selector for a metric*
 
-        - **status.currentMetrics.external.metric.name** (string)，必选
+        - **status.currentMetrics.external.metric.name** (string), required
 
-          name 是给定指标的名称。
+          name is the name of the given metric
 
         - **status.currentMetrics.external.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-          selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+          selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
     - **status.currentMetrics.object** (ObjectMetricStatus)
 
-      object 是描述单个 Kubernetes 对象的指标（例如，Ingress 对象每秒的点击量）。
+      object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
 
       <a name="ObjectMetricStatus"></a>
 
-      *ObjectMetricStatus 是 Kubernetes 对象指标（例如，Ingress对象每秒的点击量）的当前值。*
+      *ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).*
 
-      - **status.currentMetrics.object.current** (MetricValueStatus)，必选
+      - **status.currentMetrics.object.current** (MetricValueStatus), required
 
-        current 是给定指标的当前值。
+        current contains the current value for the given metric
 
         <a name="MetricValueStatus"></a>
 
-        *MetricValueStatus 表示指标的当前值。*
+        *MetricValueStatus holds the current value for a metric*
 
         - **status.currentMetrics.object.current.averageUtilization** (int32)
 
-          currentAverageUtilization 是所有相关 pod 中资源指标当前的平均值，表示为 pod 请求的资源值的百分比。
+          currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 
         - **status.currentMetrics.object.current.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-          averageValue 是所有相关 pod 中资源指标当前的平均值。
+          averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
 
         - **status.currentMetrics.object.current.value** ([Quantity](../common-definitions/quantity#quantity))
 
-          value 是指标的当前值（数量）。
+          value is the current value of the metric (as a quantity).
 
-      - **status.currentMetrics.object.describedObject** (CrossVersionObjectReference)，必选
+      - **status.currentMetrics.object.describedObject** (CrossVersionObjectReference), required
 
-        DescribedObject 是对象的描述，如类别、名称和 apiVersion。
+        DescribedObject specifies the descriptions of a object,such as kind,name apiVersion
 
         <a name="CrossVersionObjectReference"></a>
 
-        *CrossVersionObjectReference 包含可以识别被引用资源的足够信息。*
+        *CrossVersionObjectReference contains enough information to let you identify the referred resource.*
 
-        - **status.currentMetrics.object.describedObject.kind** (string)，必选
+        - **status.currentMetrics.object.describedObject.kind** (string), required
 
-          kind 表示引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+          kind is the kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
-        - **status.currentMetrics.object.describedObject.name** (string)，必选
+        - **status.currentMetrics.object.describedObject.name** (string), required
 
-          name 表示引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+          name is the name of the referent; More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
         - **status.currentMetrics.object.describedObject.apiVersion** (string)
 
-          apiVersion 是引用资源的API版本。
+          apiVersion is the API version of the referent
 
-      - **status.currentMetrics.object.metric** (MetricIdentifier)，必选
+      - **status.currentMetrics.object.metric** (MetricIdentifier), required
 
-        metric 通过名称和选择器标识目标指标。
+        metric identifies the target metric by name and selector
 
         <a name="MetricIdentifier"></a>
 
-        *MetricIdentifier 定义指标的名称和可选的选择器。*
+        *MetricIdentifier defines the name and optionally selector for a metric*
 
-        - **status.currentMetrics.object.metric.name** (string)，必选
+        - **status.currentMetrics.object.metric.name** (string), required
 
-          name 是给定指标的名称。
+          name is the name of the given metric
 
         - **status.currentMetrics.object.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-          selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+          selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
     - **status.currentMetrics.pods** (PodsMetricStatus)
 
-      pods 是指描述当前伸缩目标中每个 pod 的指标（例如，每秒处理的事务）。在与目标值进行比较之前，会将所有指标值进行平均。
+      pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
 
       <a name="PodsMetricStatus"></a>
 
-      *PodsMetricStatus 表示描述当前规模目标（例如，每秒处理的事务）中每个 pod 的指标的当前值（例如，每秒处理的事务）。*
+      *PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).*
 
-      - **status.currentMetrics.pods.current** (MetricValueStatus)，必选
+      - **status.currentMetrics.pods.current** (MetricValueStatus), required
 
-        current 是给定指标的当前值。
+        current contains the current value for the given metric
 
         <a name="MetricValueStatus"></a>
 
-        *MetricValueStatus 表示指标的当前值。*
+        *MetricValueStatus holds the current value for a metric*
 
         - **status.currentMetrics.pods.current.averageUtilization** (int32)
 
-          currentAverageUtilization 是所有相关 pod 中资源指标当前的平均值，表示为 pod 请求的资源值的百分比。
+          currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 
         - **status.currentMetrics.pods.current.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-          averageValue 是所有相关 pod 中资源指标当前的平均值。
+          averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
 
         - **status.currentMetrics.pods.current.value** ([Quantity](../common-definitions/quantity#quantity))
 
-          value 是指标的当前值（数量）。
+          value is the current value of the metric (as a quantity).
 
-      - **status.currentMetrics.pods.metric** (MetricIdentifier)，必选
+      - **status.currentMetrics.pods.metric** (MetricIdentifier), required
 
-        metric 通过名称和选择器标识目标指标。
+        metric identifies the target metric by name and selector
 
         <a name="MetricIdentifier"></a>
 
-        *MetricIdentifier 定义指标的名称和可选的选择器。*
+        *MetricIdentifier defines the name and optionally selector for a metric*
 
-        - **status.currentMetrics.pods.metric.name** (string)，必选
+        - **status.currentMetrics.pods.metric.name** (string), required
 
-          name 是给定指标的名称。
+          name is the name of the given metric
 
         - **status.currentMetrics.pods.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-          selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+          selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
     - **status.currentMetrics.resource** (ResourceMetricStatus)
 
-      resource 表示 Kubernetes 已知的资源指标（如 request 与 limit），用于描述当前伸缩目标（如 CPU 或内存）中每个 pod 的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。
+      resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 
       <a name="ResourceMetricStatus"></a>
 
-      *ResourceMetricStatus 表示 Kubernetes 已知的资源指标的当前值，如 request 与 limit，描述当前伸缩目标（如 CPU 或内存）中每个 pod 的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。*
+      *ResourceMetricStatus indicates the current value of a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.*
 
-      - **status.currentMetrics.resource.current** (MetricValueStatus)，必选
+      - **status.currentMetrics.resource.current** (MetricValueStatus), required
 
-        current 是给定指标的当前值。
+        current contains the current value for the given metric
 
         <a name="MetricValueStatus"></a>
 
-        *MetricValueStatus 表示指标的当前值。*
+        *MetricValueStatus holds the current value for a metric*
 
         - **status.currentMetrics.resource.current.averageUtilization** (int32)
 
-          currentAverageUtilization 是所有相关 pod 中资源指标当前的平均值，表示为 pod 请求的资源值的百分比。
+          currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
 
         - **status.currentMetrics.resource.current.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-          averageValue 是所有相关 pod 中资源指标当前的平均值。
+          averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
 
         - **status.currentMetrics.resource.current.value** ([Quantity](../common-definitions/quantity#quantity))
 
-          value 是指标的当前值（数量）。
+          value is the current value of the metric (as a quantity).
 
-      - **status.currentMetrics.resource.name** (string)，必选
+      - **status.currentMetrics.resource.name** (string), required
 
-        name 是伸缩资源的名称。
+        name is the name of the resource in question.
 
   - **status.currentReplicas** (int32)
 
-    currentReplicas 是指从自动伸缩器上次计算后，其所管理的 pod 当前的副本数。
+    currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
 
   - **status.lastScaleTime** (Time)
 
-    lastScaleTime 是 HorizontalPodAutoscaler 最后一次伸缩 pod 的时间，自动伸缩器用此控制 pod 数量更改的频率。
+    lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.
 
     <a name="Time"></a>
 
-    *Time 是 time.Time 的包装器，它支持对 YAML 和 JSON 的正确编组。time 包的许多工厂方法提供了包装器。*
+    *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
 
   - **status.observedGeneration** (int64)
 
-    observedGeneration 是此自动伸缩器观察到的最新一代。
+    observedGeneration is the most recent generation observed by this autoscaler.
 
 ## FederatedHPASpec 
 
-FederatedHPASpec 描述了 FederatedHPA 的所需功能。
+FederatedHPASpec describes the desired functionality of the FederatedHPA.
 
 <hr/>
 
-- **maxReplicas** (int32)，必选
+- **maxReplicas** (int32), required
 
-  MaxReplicas 是自动伸缩器可增加的副本量的上限。它不能小于 minReplicas。
+  MaxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
 
-- **scaleTargetRef** (CrossVersionObjectReference)，必选
+- **scaleTargetRef** (CrossVersionObjectReference), required
 
-  ScaleTargetRef 指向要伸缩的目标资源，用于收集 pod的指标，以及实际更改副本的数量。
+  ScaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.
 
   <a name="CrossVersionObjectReference"></a>
 
-  *CrossVersionObjectReference 包含可以识别被引用资源的足够信息。*
+  *CrossVersionObjectReference contains enough information to let you identify the referred resource.*
 
-  - **scaleTargetRef.kind** (string)，必选
+  - **scaleTargetRef.kind** (string), required
 
-    kind 表示引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+    kind is the kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
-  - **scaleTargetRef.name** (string)，必选
+  - **scaleTargetRef.name** (string), required
 
-    name 表示引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+    name is the name of the referent; More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
   - **scaleTargetRef.apiVersion** (string)
 
-    apiVersion 是引用资源的API版本。
+    apiVersion is the API version of the referent
 
 - **behavior** (HorizontalPodAutoscalerBehavior)
 
-  Behavior 表示目标的伸缩行为（scaleUp 或 scaleDown）。如果未设置，则使用默认的 HPAScalingRules 完成伸缩。
+  Behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
 
   <a name="HorizontalPodAutoscalerBehavior"></a>
 
-  *HorizontalPodAutoscalerBehavior 表示目标的伸缩行为（scaleUp 或 scaleDown）。*
+  *HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).*
 
   - **behavior.scaleDown** (HPAScalingRules)
 
-    scaleDown 是用于缩容的伸缩策略。如果未设置，默认允许伸缩至 minReplicas，稳定窗口为 300 秒（建议为 300 秒）。
+    scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
 
     <a name="HPAScalingRules"></a>
 
-    *HPAScalingRules 表示一个方向伸缩行为。在根据 HPA 的指标计算 DesiredReplicas 后应用这些规则。可以通过指定伸缩策略来限制伸缩速度，也可以通过指定稳定窗口来防止抖动，这样就不会立即设置副本的数量，而是选择稳定窗口中最安全的值。*
+    *HPAScalingRules configures the scaling behavior for one direction via scaling Policy Rules and a configurable metric tolerance.
+    
+    Scaling Policy Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+    
+    The tolerance is applied to the metric values and prevents scaling too eagerly for small metric variations. (Note that setting a tolerance requires the beta HPAConfigurableTolerance feature gate to be enabled.)*
 
     - **behavior.scaleDown.policies** ([]HPAScalingPolicy)
 
-      *Atomic：将在合并过程中被替换掉。*
+      *Atomic: will be replaced during a merge*
       
-      policies 罗列伸缩过程中可用的伸缩策略。必须至少指定一条策略，否则 HPAScalingRules 将被视为无效而丢弃。
+      policies is a list of potential scaling polices which can be used during scaling. If not set, use the default values: - For scale up: allow doubling the number of pods, or an absolute change of 4 pods in a 15s window. - For scale down: allow all pods to be removed in a 15s window.
 
       <a name="HPAScalingPolicy"></a>
 
-      *HPAScalingPolicy 表示单条策略，在指定的过去间隔内取值必须为 true。*
+      *HPAScalingPolicy is a single policy which must hold true for a specified past interval.*
 
-      - **behavior.scaleDown.policies.periodSeconds** (int32)，必选
+      - **behavior.scaleDown.policies.periodSeconds** (int32), required
 
-        periodSeconds 表示策略取值为 true 的时间窗口。periodSeconds 必须大于 0，且小于或等于 1800 秒（30 分钟）。
+        periodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
 
-      - **behavior.scaleDown.policies.type** (string)，必选
+      - **behavior.scaleDown.policies.type** (string), required
 
-        type 用于指定伸缩策略。
+        type is used to specify the scaling policy.
 
-      - **behavior.scaleDown.policies.value** (int32)，必选
+      - **behavior.scaleDown.policies.value** (int32), required
 
-        value 包含策略允许的变化数量。取值必须大于 0。
+        value contains the amount of change which is permitted by the policy. It must be greater than zero
 
     - **behavior.scaleDown.selectPolicy** (string)
 
-      selectPolicy 用于指定应使用的策略。如果未设置，则使用默认值 Max。
+      selectPolicy is used to specify which policy should be used. If not set, the default value Max is used.
 
     - **behavior.scaleDown.stabilizationWindowSeconds** (int32)
 
-      stabilizationWindowSeconds 是指伸缩时应考虑之前建议的秒数。取值必须大于等于 0 且小于等于 3600 秒（即一个小时）。如果未设置，请使用默认值：- 扩容：0（不设置稳定窗口）。- 缩容：300（即稳定窗口为 300 秒）。
+      stabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+
+    - **behavior.scaleDown.tolerance** ([Quantity](../common-definitions/quantity#quantity))
+
+      tolerance is the tolerance on the ratio between the current and desired metric value under which no updates are made to the desired number of replicas (e.g. 0.01 for 1%). Must be greater than or equal to zero. If not set, the default cluster-wide tolerance is applied (by default 10%).
+      
+      For example, if autoscaling is configured with a memory consumption target of 100Mi, and scale-down and scale-up tolerances of 5% and 1% respectively, scaling will be triggered when the actual consumption falls below 95Mi or exceeds 101Mi.
+      
+      This is an beta field and requires the HPAConfigurableTolerance feature gate to be enabled.
 
   - **behavior.scaleUp** (HPAScalingRules)
 
-    scaleUp 是用于扩容的伸缩策略。如果未设置，默认值为以下中较高的值：
-      *每 60 秒增加不超过 4 个pod
-      *每 60 秒 pod 数量翻倍
-    不使用稳定窗口。
+    scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:
+      * increase no more than 4 pods per 60 seconds
+      * double the number of pods per 60 seconds
+    No stabilization is used.
 
     <a name="HPAScalingRules"></a>
 
-    *HPAScalingRules 表示一个方向的伸缩行为。在根据 HPA 的指标计算 DesiredReplicas 后应用这些规则。可以通过指定伸缩策略来限制伸缩速度，也可以通过指定稳定窗口来防止抖动，这样就不会立即设置副本的数量，而是选择稳定窗口中最安全的值。*
+    *HPAScalingRules configures the scaling behavior for one direction via scaling Policy Rules and a configurable metric tolerance.
+    
+    Scaling Policy Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
+    
+    The tolerance is applied to the metric values and prevents scaling too eagerly for small metric variations. (Note that setting a tolerance requires the beta HPAConfigurableTolerance feature gate to be enabled.)*
 
     - **behavior.scaleUp.policies** ([]HPAScalingPolicy)
 
-      *Atomic：将在合并过程中被替换掉。*
+      *Atomic: will be replaced during a merge*
       
-      policies 罗列伸缩过程中可用的伸缩策略。必须至少指定一条策略，否则 HPAScalingRules 将被视为无效而丢弃。
+      policies is a list of potential scaling polices which can be used during scaling. If not set, use the default values: - For scale up: allow doubling the number of pods, or an absolute change of 4 pods in a 15s window. - For scale down: allow all pods to be removed in a 15s window.
 
       <a name="HPAScalingPolicy"></a>
 
-      *HPAScalingPolicy 表示单条策略，在指定的过去间隔内取值必须为 true。*
+      *HPAScalingPolicy is a single policy which must hold true for a specified past interval.*
 
-      - **behavior.scaleUp.policies.periodSeconds** (int32)，必选
+      - **behavior.scaleUp.policies.periodSeconds** (int32), required
 
-        periodSeconds 表示策略取值为 true 的时间窗口。periodSeconds 必须大于 0，且小于或等于 1800 秒（即30 分钟）。
+        periodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
 
-      - **behavior.scaleUp.policies.type** (string)，必选
+      - **behavior.scaleUp.policies.type** (string), required
 
-        type 用于指定伸缩策略。
+        type is used to specify the scaling policy.
 
-      - **behavior.scaleUp.policies.value** (int32)，必选
+      - **behavior.scaleUp.policies.value** (int32), required
 
-        value 包含策略允许的伸缩数量。取值必须大于 0。
+        value contains the amount of change which is permitted by the policy. It must be greater than zero
 
     - **behavior.scaleUp.selectPolicy** (string)
 
-      selectPolicy 用于指定应使用的策略。如果未设置，则使用默认值 Max。
+      selectPolicy is used to specify which policy should be used. If not set, the default value Max is used.
 
     - **behavior.scaleUp.stabilizationWindowSeconds** (int32)
 
-      stabilizationWindowSeconds 是指伸缩时应考虑之前建议的秒数。取值必须大于等于 0 且小于等于 3600 秒（即一个小时）。如果未设置，请使用默认值：- 扩容：0（不设置稳定窗口）。- 缩容：300（即稳定窗口为 300 秒）。
+      stabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
+
+    - **behavior.scaleUp.tolerance** ([Quantity](../common-definitions/quantity#quantity))
+
+      tolerance is the tolerance on the ratio between the current and desired metric value under which no updates are made to the desired number of replicas (e.g. 0.01 for 1%). Must be greater than or equal to zero. If not set, the default cluster-wide tolerance is applied (by default 10%).
+      
+      For example, if autoscaling is configured with a memory consumption target of 100Mi, and scale-down and scale-up tolerances of 5% and 1% respectively, scaling will be triggered when the actual consumption falls below 95Mi or exceeds 101Mi.
+      
+      This is an beta field and requires the HPAConfigurableTolerance feature gate to be enabled.
 
 - **metrics** ([]MetricSpec)
 
-  Metrics 包含用于计算所需副本数的规范（将使用所有指标中的最大副本数）。所需的副本数是目标值和当前值之间的比率与当前 pod 数的乘积。因此，指标必须随 pod 数的增加而减少，反之亦然。有关每种类型的指标源详细信息，参见各个指标源类型。如果未设置，默认指标为平均 CPU 利用率的 80%。
+  Metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used). The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods. Ergo, metrics used must decrease as the pod count is increased, and vice-versa. See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
 
   <a name="MetricSpec"></a>
 
-  *MetricSpec 是如何基于单个指标进行伸缩的规范（每次只应设置* *`type`* *和一个其他匹配字段）。*
+  *MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).*
 
-  - **metrics.type** (string)，必选
+  - **metrics.type** (string), required
 
-    type 表示指标源的类别。指标源类别可以是 ContainerResource、External、Object、Pods 或 Resource，每个类别映射对象中的一个对应字段。注意：ContainerResource 只有在特性开关 HPAContainerMetrics 启用时可用。
+    type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object.
 
   - **metrics.containerResource** (ContainerResourceMetricSource)
 
-    containerResource 表示 Kubernetes 已知的资源指标（如 request 与 limit），用于描述当前伸缩目标（如 CPU 或内存）中每个 pod 中单个容器的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。这是一个 alpha 特性，可以通过 HPAContainerMetrics 特性标志启用。
+    containerResource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 
     <a name="ContainerResourceMetricSource"></a>
 
-    *ContainerResourceMetricSource 表明在 Kubernetes 已知资源指标（如 request 与 limit）的基础上进行伸缩的方式，该指标描述当前伸缩目标（例如CPU或内存）中每个Pod的资源使用情况。在与目标值进行比较之前，会将所有指标值进行平均。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。只应设置一种 “target” 类别。*
+    *ContainerResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.*
 
-    - **metrics.containerResource.container** (string)，必选
+    - **metrics.containerResource.container** (string), required
 
-      container 是伸缩目标的 pod 中容器的名称。
+      container is the name of the container in the pods of the scaling target
 
-    - **metrics.containerResource.name** (string)，必选
+    - **metrics.containerResource.name** (string), required
 
-      name 是伸缩资源的名称。
+      name is the name of the resource in question.
 
-    - **metrics.containerResource.target** (MetricTarget)，必选
+    - **metrics.containerResource.target** (MetricTarget), required
 
-      target 是给定指标的目标值
+      target specifies the target value for the given metric
 
       <a name="MetricTarget"></a>
 
-      *MetricTarget 定义特定指标的目标值、平均值或平均利用率。*
+      *MetricTarget defines the target value, average value, or average utilization of a specific metric*
 
-      - **metrics.containerResource.target.type** (string)，必选
+      - **metrics.containerResource.target.type** (string), required
 
-        type 表示指标类型：利用率（Utilization）、值（Value）和平均值（AverageValue）。
+        type represents whether the metric type is Utilization, Value, or AverageValue
 
       - **metrics.containerResource.target.averageUtilization** (int32)
 
-        averageUtilization 是所有相关 pod 中资源指标均值的目标值，表示为 pod 资源请求值的百分比。目前仅对 Resource 指标源类别有效。
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 
       - **metrics.containerResource.target.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-        averageValue 是所有相关 pod 中资源指标均值的目标值 （数量）。
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
 
       - **metrics.containerResource.target.value** ([Quantity](../common-definitions/quantity#quantity))
 
-        value 是指标的目标值（数量）。
+        value is the target value of the metric (as a quantity).
 
   - **metrics.external** (ExternalMetricSource)
 
-    external 是指不与任何 Kubernetes 对象关联的全局指标。它允许根据集群外运行的组件的信息（例如，云消息传递服务中的队列长度，或集群外运行的负载平衡器的 QPS）进行自动伸缩。
+    external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
 
     <a name="ExternalMetricSource"></a>
 
-    *ExternalMetricSource 表示基于任何与 Kubernetes 对象无关的指标（例如，云消息传递服务中的队列长度，或集群外的负载平衡器的QPS）进行伸缩的方式。*
+    *ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).*
 
-    - **metrics.external.metric** (MetricIdentifier)，必选
+    - **metrics.external.metric** (MetricIdentifier), required
 
-      metric 通过名称和选择器标识目标指标。
+      metric identifies the target metric by name and selector
 
       <a name="MetricIdentifier"></a>
 
-      *MetricIdentifier 定义指标的名称和可选的选择器。*
+      *MetricIdentifier defines the name and optionally selector for a metric*
 
-      - **metrics.external.metric.name** (string)，必选
+      - **metrics.external.metric.name** (string), required
 
-        name 是给定指标的名称。
+        name is the name of the given metric
 
       - **metrics.external.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+        selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
-    - **metrics.external.target** (MetricTarget)，必选
+    - **metrics.external.target** (MetricTarget), required
 
-      target 是给定指标的目标值。
+      target specifies the target value for the given metric
 
       <a name="MetricTarget"></a>
 
-      *MetricTarget 定义特定指标的目标值、平均值或平均利用率。*
+      *MetricTarget defines the target value, average value, or average utilization of a specific metric*
 
-      - **metrics.external.target.type** (string)，必选
+      - **metrics.external.target.type** (string), required
 
-        type 表示指标类型：利用率（Utilization）、值（Value）和平均值（AverageValue）。
+        type represents whether the metric type is Utilization, Value, or AverageValue
 
       - **metrics.external.target.averageUtilization** (int32)
 
-        averageUtilization 是所有相关 pod 中资源指标均值的目标值，表示为 pod 资源请求值的百分比。目前仅对 Resource 指标源类别有效。
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 
       - **metrics.external.target.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-        averageValue 是所有相关 pod 中资源指标均值的目标值 （数量）。
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
 
       - **metrics.external.target.value** ([Quantity](../common-definitions/quantity#quantity))
 
-        value 是指标的目标值（数量）。
+        value is the target value of the metric (as a quantity).
 
   - **metrics.object** (ObjectMetricSource)
 
-    object 是描述单个 Kubernetes 对象的指标（例如，Ingress 对象每秒的点击量）。
+    object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
 
     <a name="ObjectMetricSource"></a>
 
-    *ObjectMetricSource 是 Kubernetes 对象（例如，Ingress对象每秒的点击量）指标的伸缩方式。*
+    *ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).*
 
-    - **metrics.object.describedObject** (CrossVersionObjectReference)，必选
+    - **metrics.object.describedObject** (CrossVersionObjectReference), required
 
-      DescribedObject 是对象的描述，如类别、名称和 apiVersion。
+      describedObject specifies the descriptions of a object,such as kind,name apiVersion
 
       <a name="CrossVersionObjectReference"></a>
 
-      *CrossVersionObjectReference 包含可以识别被引用资源的足够信息。*
+      *CrossVersionObjectReference contains enough information to let you identify the referred resource.*
 
-      - **metrics.object.describedObject.kind** (string)，必选
+      - **metrics.object.describedObject.kind** (string), required
 
-        kind 表示被引用资源的类别。更多信息，请浏览 https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+        kind is the kind of the referent; More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 
-      - **metrics.object.describedObject.name** (string)，必选
+      - **metrics.object.describedObject.name** (string), required
 
-        name 表示被引用资源的名称。更多信息，请浏览 https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+        name is the name of the referent; More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 
       - **metrics.object.describedObject.apiVersion** (string)
 
-        apiVersion 是被引用资源的API版本。
+        apiVersion is the API version of the referent
 
-    - **metrics.object.metric** (MetricIdentifier)，必选
+    - **metrics.object.metric** (MetricIdentifier), required
 
-      metric 通过名称和选择器标识目标指标。
+      metric identifies the target metric by name and selector
 
       <a name="MetricIdentifier"></a>
 
-      *MetricIdentifier 定义指标的名称和可选的选择器。*
+      *MetricIdentifier defines the name and optionally selector for a metric*
 
-      - **metrics.object.metric.name** (string)，必选
+      - **metrics.object.metric.name** (string), required
 
-        name 是给定指标的名称。
+        name is the name of the given metric
 
       - **metrics.object.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+        selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
-    - **metrics.object.target** (MetricTarget)，必选
+    - **metrics.object.target** (MetricTarget), required
 
-      target 是给定指标的目标值。
+      target specifies the target value for the given metric
 
       <a name="MetricTarget"></a>
 
-      *MetricTarget 定义特定指标的目标值、平均值或平均利用率。*
+      *MetricTarget defines the target value, average value, or average utilization of a specific metric*
 
-      - **metrics.object.target.type** (string)，必选
+      - **metrics.object.target.type** (string), required
 
-        type 表示指标类型：利用率（Utilization）、值（Value）和平均值（AverageValue）。
+        type represents whether the metric type is Utilization, Value, or AverageValue
 
       - **metrics.object.target.averageUtilization** (int32)
 
-        averageUtilization 是所有相关 pod 中资源指标均值的目标值，表示为 pod 资源请求值的百分比。目前仅对 Resource 指标源类别有效。
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 
       - **metrics.object.target.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-        averageValue 是所有相关 pod 中资源指标均值的目标值 （数量）。
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
 
       - **metrics.object.target.value** ([Quantity](../common-definitions/quantity#quantity))
 
-        value 是指标的目标值（数量）。
+        value is the target value of the metric (as a quantity).
 
   - **metrics.pods** (PodsMetricSource)
 
-    pods 是指描述当前伸缩目标（例如，每秒处理的事务）中每个 pod 的指标。在与目标值进行比较之前，会将所有指标值进行平均。
+    pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
 
     <a name="PodsMetricSource"></a>
 
-    *PodsMetricSource 表示根据指标进行伸缩的方式，该指标描述当前伸缩目标（例如，每秒处理的事务）中每个pod的资源情况。在与目标值进行比较之前，会将所有指标值进行平均。*
+    *PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.*
 
-    - **metrics.pods.metric** (MetricIdentifier)，必选
+    - **metrics.pods.metric** (MetricIdentifier), required
 
-      metric 通过名称和选择器标识目标指标。
+      metric identifies the target metric by name and selector
 
       <a name="MetricIdentifier"></a>
 
-      *MetricIdentifier 定义指标的名称和可选的选择器。*
+      *MetricIdentifier defines the name and optionally selector for a metric*
 
-      - **metrics.pods.metric.name** (string)，必选
+      - **metrics.pods.metric.name** (string), required
 
-        name 是给定指标的名称。
+        name is the name of the given metric
 
       - **metrics.pods.metric.selector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
-        selector 是给定指标的标准 Kubernetes 标签选择器的字符串编码形式。如果设置，将作为附加参数传递给指标服务器，以实现更具体的指标范围。如果未设置，只使用 metricName 收集指标。
+        selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
 
-    - **metrics.pods.target** (MetricTarget)，必选
+    - **metrics.pods.target** (MetricTarget), required
 
-      target 是给定指标的目标值。
+      target specifies the target value for the given metric
 
       <a name="MetricTarget"></a>
 
-      *MetricTarget 定义特定指标的目标值、平均值或平均利用率。*
+      *MetricTarget defines the target value, average value, or average utilization of a specific metric*
 
-      - **metrics.pods.target.type** (string)，必选
+      - **metrics.pods.target.type** (string), required
 
-        type 表示指标类型：利用率（Utilization）、值（Value）和平均值（AverageValue）。
+        type represents whether the metric type is Utilization, Value, or AverageValue
 
       - **metrics.pods.target.averageUtilization** (int32)
 
-        averageUtilization 是所有相关 pod 中资源指标均值的目标值，表示为 pod 资源请求值的百分比。目前仅对 Resource 指标源类别有效。
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 
       - **metrics.pods.target.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-        averageValue 是所有相关 pod 中资源指标均值的目标值 （数量）。
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
 
       - **metrics.pods.target.value** ([Quantity](../common-definitions/quantity#quantity))
 
-        value 是指标的目标值（数量）。
+        value is the target value of the metric (as a quantity).
 
   - **metrics.resource** (ResourceMetricSource)
 
-    resource 表示 Kubernetes 已知的资源指标（如 request 与 limit），用于描述当前伸缩目标（如 CPU 或内存）中每个 pod 的资源使用情况。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。
+    resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
 
     <a name="ResourceMetricSource"></a>
 
-    *ResourceMetricSource 表明在 Kubernetes 已知资源指标（如 request 与 limit）的基础上进行伸缩的方式，该指标描述当前伸缩目标（例如 CPU 或内存）中每个Pod的资源使用情况。在与目标值进行比较之前，会将所有指标值进行平均。这类指标是 Kubernetes 内置指标，除了使用 Pods 源的 pod 粒度的正常指标以外，还有一些特殊的伸缩选项。只应设置一种 target 类别。*
+    *ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.*
 
-    - **metrics.resource.name** (string)，必选
+    - **metrics.resource.name** (string), required
 
-      name 是伸缩资源的名称。
+      name is the name of the resource in question.
 
-    - **metrics.resource.target** (MetricTarget)，必选
+    - **metrics.resource.target** (MetricTarget), required
 
-      target 是给定指标的目标值。
+      target specifies the target value for the given metric
 
       <a name="MetricTarget"></a>
 
-      *MetricTarget 定义特定指标的目标值、平均值或平均利用率。*
+      *MetricTarget defines the target value, average value, or average utilization of a specific metric*
 
-      - **metrics.resource.target.type** (string)，必选
+      - **metrics.resource.target.type** (string), required
 
-        type 表示指标类型：利用率（Utilization）、值（Value）和平均值（AverageValue）。
+        type represents whether the metric type is Utilization, Value, or AverageValue
 
       - **metrics.resource.target.averageUtilization** (int32)
 
-        averageUtilization 是所有相关 pod 中资源指标均值的目标值，表示为 pod 资源请求值的百分比。目前仅对 Resource 指标源类别有效。
+        averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
 
       - **metrics.resource.target.averageValue** ([Quantity](../common-definitions/quantity#quantity))
 
-        averageValue 是所有相关 pod 中资源指标均值的目标值 （数量）。
+        averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
 
       - **metrics.resource.target.value** ([Quantity](../common-definitions/quantity#quantity))
 
-        value 是指标的目标值（数量）。
+        value is the target value of the metric (as a quantity).
 
 - **minReplicas** (int32)
 
-  MinReplicas 是自动伸缩器可减少的副本量的下限。默认值为1。
+  MinReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod.
 
 ## FederatedHPAList 
 
-FederatedHPAList 罗列 FederatedHPA。
+FederatedHPAList contains a list of FederatedHPA.
 
 <hr/>
 
@@ -717,209 +741,209 @@ FederatedHPAList 罗列 FederatedHPA。
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa))，必选
+- **items** ([][FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)), required
 
-## 操作
+## Operations 
 
 <hr/>
 
-### `get`：查询指定的 FederatedHPA
+### `get` read the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-### `get`：查询指定 FederatedHPA 的状态
+### `get` read status of the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA 的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-### `list`：查询指定命名空间内的所有 FederatedHPA
+### `list` list or watch objects of kind FederatedHPA
 
-#### HTTP请求
-
-GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
-
-#### 参数
-
-- **namespace**（*路径参数*）：string，必选
-
-  [namespace](../common-parameter/common-parameters#namespace)
-
-- **allowWatchBookmarks**（*查询参数*）：boolean
-
-  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
-
-- **continue**（*查询参数*）：string
-
-  [continue](../common-parameter/common-parameters#continue)
-
-- **fieldSelector**（*查询参数*）：string
-
-  [fieldSelector](../common-parameter/common-parameters#fieldselector)
-
-- **labelSelector**（*查询参数*）：string
-
-  [labelSelector](../common-parameter/common-parameters#labelselector)
-
-- **limit**（*查询参数*）：integer
-
-  [limit](../common-parameter/common-parameters#limit)
-
-- **pretty**（*查询参数*）：string
-
-  [pretty](../common-parameter/common-parameters#pretty)
-
-- **resourceVersion**（*查询参数*）：string
-
-  [resourceVersion](../common-parameter/common-parameters#resourceversion)
-
-- **resourceVersionMatch**（*查询参数*）：string
-
-  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
-
-- **sendInitialEvents**（*查询参数*）：boolean
-
-  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
-
-- **timeoutSeconds**（*查询参数*）：integer
-
-  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
-
-- **watch**（*查询参数*）：boolean
-
-  [watch](../common-parameter/common-parameters#watch)
-
-#### 响应
-
-200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
-
-### `list`：查询所有 FederatedHPA
-
-#### HTTP请求
+#### HTTP Request
 
 GET /apis/autoscaling.karmada.io/v1alpha1/federatedhpas
 
-#### 参数
+#### Parameters
 
-- **allowWatchBookmarks**（*查询参数*）：boolean
+- **allowWatchBookmarks** (*in query*): boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue**（*查询参数*）：string
+- **continue** (*in query*): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector**（*查询参数*）：string
+- **fieldSelector** (*in query*): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector**（*查询参数*）：string
+- **labelSelector** (*in query*): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit**（*查询参数*）：integer
+- **limit** (*in query*): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion**（*查询参数*）：string
+- **resourceVersion** (*in query*): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch**（*查询参数*）：string
+- **resourceVersionMatch** (*in query*): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents**（*查询参数*）：boolean
+- **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds**（*查询参数*）：integer
+- **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch**（*查询参数*）：boolean
+- **watch** (*in query*): boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
 
-### `create`：创建一条 FederatedHPA
+### `list` list or watch objects of kind FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
-POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
+GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
-#### 参数
+#### Parameters
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)，必选
+- **allowWatchBookmarks** (*in query*): boolean
 
-  
+  [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **dryRun**（*查询参数*）：string
+- **continue** (*in query*): string
 
-  [dryRun](../common-parameter/common-parameters#dryrun)
+  [continue](../common-parameter/common-parameters#continue)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldSelector** (*in query*): string
 
-  [fieldManager](../common-parameter/common-parameters#fieldmanager)
+  [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **fieldValidation**（*查询参数*）：string
+- **labelSelector** (*in query*): string
 
-  [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
+  [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **pretty**（*查询参数*）：string
+- **limit** (*in query*): integer
+
+  [limit](../common-parameter/common-parameters#limit)
+
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+- **resourceVersion** (*in query*): string
+
+  [resourceVersion](../common-parameter/common-parameters#resourceversion)
+
+- **resourceVersionMatch** (*in query*): string
+
+  [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
+
+- **sendInitialEvents** (*in query*): boolean
+
+  [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **timeoutSeconds** (*in query*): integer
+
+  [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
+
+- **watch** (*in query*): boolean
+
+  [watch](../common-parameter/common-parameters#watch)
+
+#### Response
+
+200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
+
+### `create` create a FederatedHPA
+
+#### HTTP Request
+
+POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
+
+#### Parameters
+
+- **namespace** (*in path*): string, required
+
+  [namespace](../common-parameter/common-parameters#namespace)
+
+- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
+
+  
+
+- **dryRun** (*in query*): string
+
+  [dryRun](../common-parameter/common-parameters#dryrun)
+
+- **fieldManager** (*in query*): string
+
+  [fieldManager](../common-parameter/common-parameters#fieldmanager)
+
+- **fieldValidation** (*in query*): string
+
+  [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
+
+- **pretty** (*in query*): string
+
+  [pretty](../common-parameter/common-parameters#pretty)
+
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
@@ -927,195 +951,195 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpa
 
 202 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Accepted
 
-### `update`：更新指定的 FederatedHPA
+### `update` replace the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)，必选
+- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
 
   
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
-### `update`：更新指定 FederatedHPA 的状态
+### `update` replace status of the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)，必选
+- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
 
   
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
-### `patch`：更新指定 FederatedHPA 的部分信息
+### `patch` partially update the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch)，必选
+- **body**: [Patch](../common-definitions/patch#patch), required
 
   
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force**（*查询参数*）：boolean
+- **force** (*in query*): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
-### `patch`：更新指定 FederatedHPA 状态的部分信息
+### `patch` partially update status of the specified FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA 的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [Patch](../common-definitions/patch#patch)，必选
+- **body**: [Patch](../common-definitions/patch#patch), required
 
   
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force**（*查询参数*）：boolean
+- **force** (*in query*): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
-### `delete`：删除一条 FederatedHPA
+### `delete` delete a FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas/`{name}`
 
-#### 参数
+#### Parameters
 
-- **名称**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  FederatedHPA 的名称
+  name of the FederatedHPA
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -1123,37 +1147,41 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedh
 
   
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds**（*查询参数*）：integer
+- **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty**（*查询参数*）：string
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy**（*查询参数*）：string
+- **propagationPolicy** (*in query*): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### 响应
+#### Response
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection`：删除指定命名空间内的所有 FederatedHPA
+### `deletecollection` delete collection of FederatedHPA
 
-#### HTTP请求
+#### HTTP Request
 
 DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
-#### 参数
+#### Parameters
 
-- **namespace**（*路径参数*）：string，必选
+- **namespace** (*in path*): string, required
 
   [namespace](../common-parameter/common-parameters#namespace)
 
@@ -1161,54 +1189,59 @@ DELETE /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedh
 
   
 
-- **continue**（*查询参数*）：string
+- **continue** (*in query*): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector**（*查询参数*）：string
+- **fieldSelector** (*in query*): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds**（*查询参数*）：integer
+- **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector**（*查询参数*）：string
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
+- **labelSelector** (*in query*): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit**（*查询参数*）：integer
+- **limit** (*in query*): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy**（*查询参数*）：string
+- **propagationPolicy** (*in query*): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion**（*查询参数*）：string
+- **resourceVersion** (*in query*): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch**（*查询参数*）：string
+- **resourceVersionMatch** (*in query*): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents**（*查询参数*）：boolean
+- **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds**（*查询参数*）：integer
+- **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### 响应
+#### Response
 
 200 ([Status](../common-definitions/status#status)): OK
+

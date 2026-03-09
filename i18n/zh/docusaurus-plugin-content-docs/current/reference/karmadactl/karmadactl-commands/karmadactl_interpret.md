@@ -67,7 +67,7 @@ karmadactl interpret (-f FILENAME) (--operation OPERATION) [--ARGS VALUE]...
       --kubeconfig string             Path to the kubeconfig file to use for CLI requests.
       --observed-file string          Filename, directory, or URL to files identifying the resource to use as observedObj argument in rule script.
       --operation string              The interpret operation to use. One of: (Retain,InterpretReplica,InterpretComponent,ReviseReplica,InterpretStatus,AggregateStatus,InterpretHealth,InterpretDependency)
-  -o, --output string                 Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                 Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
   -R, --recursive                     Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
       --show-doc                      Show document of rules when editing
       --show-managed-fields           If true, keep the managedFields when printing objects in JSON or YAML format.

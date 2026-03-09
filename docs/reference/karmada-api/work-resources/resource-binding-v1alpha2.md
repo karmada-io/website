@@ -183,11 +183,13 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
         - **components.replicaRequirements.nodeClaim.tolerations.operator** (string)
 
-          Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+          Operator represents a key's relationship to the value. Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category. Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
           
           Possible enum values:
            - `"Equal"`
            - `"Exists"`
+           - `"Gt"`
+           - `"Lt"`
 
         - **components.replicaRequirements.nodeClaim.tolerations.tolerationSeconds** (int64)
 
@@ -500,11 +502,13 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
     - **placement.clusterTolerations.operator** (string)
 
-      Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+      Operator represents a key's relationship to the value. Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category. Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
       
       Possible enum values:
        - `"Equal"`
        - `"Exists"`
+       - `"Gt"`
+       - `"Lt"`
 
     - **placement.clusterTolerations.tolerationSeconds** (int64)
 
@@ -610,6 +614,56 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
       SpreadByLabel represents the label key used for grouping member clusters into different groups. Resources will be spread among different cluster groups. SpreadByLabel should not co-exist with SpreadByField.
 
+  - **placement.workloadAffinity** (WorkloadAffinity)
+
+    WorkloadAffinity represents inter-workload affinity and anti-affinity scheduling policies.
+
+    <a name="WorkloadAffinity"></a>
+
+    *WorkloadAffinity defines inter-workload affinity and anti-affinity rules.*
+
+    - **placement.workloadAffinity.affinity** (WorkloadAffinityTerm)
+
+      Affinity represents inter-workload affinity scheduling rules. These are hard requirements: workloads will only be scheduled to clusters that satisfy the affinity term if it is specified.
+      
+      For the first workload of an affinity group (when no workloads with a matching label value exist in the system), the scheduler will not block scheduling. This allows bootstrapping new workload groups without encountering scheduling deadlocks, providing a better user experience.
+
+      <a name="WorkloadAffinityTerm"></a>
+
+      *WorkloadAffinityTerm defines affinity rules for co-locating workloads with specific workload groups.*
+
+      - **placement.workloadAffinity.affinity.groupByLabelKey** (string), required
+
+        GroupByLabelKey declares the label key on the workload resource template that determines the affinity group. Workloads with the same label value under this key belong to the same affinity group.
+        
+        The scheduler maintains a global index of affinity groups in memory for efficient lookup. Each affinity group is identified by a serialized key-value pair and contains all workload resource templates that belong to the group.
+        
+        Note: Affinity groups are scoped to the namespace. Workloads that use the same affinity label but reside in different namespaces are not treated as part of the same group.
+        
+        The key must be a valid Kubernetes label key.
+        
+        Example: If GroupByLabelKey is "app.group", workloads with the label "app.group=frontend" will form one affinity group, while those with "app.group=backend" will form another.
+
+    - **placement.workloadAffinity.antiAffinity** (WorkloadAntiAffinityTerm)
+
+      AntiAffinity represents inter-workload anti-affinity scheduling rules. These are hard requirements: workloads will be scheduled to avoid clusters where matching workloads are already scheduled.
+
+      <a name="WorkloadAntiAffinityTerm"></a>
+
+      *WorkloadAntiAffinityTerm defines anti-affinity rules for separating workloads from specific workload groups.*
+
+      - **placement.workloadAffinity.antiAffinity.groupByLabelKey** (string), required
+
+        GroupByLabelKey declares the label key on the workload resource template that determines the anti-affinity group. Workloads with the same label value under this key belong to the same anti-affinity group and will be separated.
+        
+        The scheduler maintains a global index of affinity groups in memory for efficient lookup. Each affinity group is identified by a serialized key-value pair and contains all workload resource templates that belong to the group.
+        
+        Note: Affinity groups are scoped to the namespace. Workloads that use the same anti-affinity label but reside in different namespaces are not treated as part of the same group.
+        
+        The key must be a valid Kubernetes label key.
+        
+        Example: If GroupByLabelKey is "app.group", workloads with the label "app.group=frontend" will avoid clusters where other "app.group=frontend" workloads already exist.
+
 - **preserveResourcesOnDeletion** (boolean)
 
   PreserveResourcesOnDeletion controls whether resources should be preserved on the member clusters when the binding object is deleted. If set to true, resources will be preserved on the member clusters. Default is false, which means resources will be deleted along with the binding object. This setting applies to all Work objects created under this binding object.
@@ -695,11 +749,13 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
       - **replicaRequirements.nodeClaim.tolerations.operator** (string)
 
-        Operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.
+        Operator represents a key's relationship to the value. Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category. Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
         
         Possible enum values:
          - `"Equal"`
          - `"Exists"`
+         - `"Gt"`
+         - `"Lt"`
 
       - **replicaRequirements.nodeClaim.tolerations.tolerationSeconds** (int64)
 
@@ -806,6 +862,22 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
   - **suspension.scheduling** (boolean)
 
     Scheduling controls whether scheduling should be suspended, the scheduler will pause scheduling and not process resource binding when the value is true and resume scheduling when it's false or nil. This is designed for third-party systems to temporarily pause the scheduling of applications, which enabling manage resource allocation, prioritize critical workloads, etc. It is expected that third-party systems use an admission webhook to suspend scheduling at the time of ResourceBinding creation. Once a ResourceBinding has been scheduled, it cannot be paused afterward, as it may lead to ineffective suspension.
+
+- **workloadAffinityGroups** (WorkloadAffinityGroups)
+
+  WorkloadAffinityGroups represents instantiated grouping results from .spec.placement.workloadAffinity, used to keep workloads with the same affinity group co-located or those with the same anti-affinity group separated across clusters. Populated by controllers, the scheduler consumes it for decisions. Note: Since workloads are namespace-scoped resources, workload affinity only applies to ResourceBinding. Therefore, the WorkloadAffinityGroups field in ClusterResourceBinding will not be set and will not be consumed by the scheduler.
+
+  <a name="WorkloadAffinityGroups"></a>
+
+  *WorkloadAffinityGroups stores the instantiated affinity and anti-affinity group names. Each group name is serialized as "&lt;labelKey&gt;=&lt;labelValue&gt;" (for example: "app.group=frontend"), and is used by the scheduler to co-locate workloads in the same affinity group and to separate workloads in the same anti-affinity group. Note: If multiple groups are needed later, prefer adding list-typed fields (e.g., AffinityGroups, AntiAffinityGroups) alongside these fields to keep backward compatibility.*
+
+  - **workloadAffinityGroups.affinityGroup** (string)
+
+    AffinityGroup is the instantiated group name derived from affinity rules.
+
+  - **workloadAffinityGroups.antiAffinityGroup** (string)
+
+    AntiAffinityGroup is the instantiated group name derived from anti-affinity rules.
 
 ## ResourceBindingStatus 
 

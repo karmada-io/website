@@ -18,9 +18,9 @@ auto_generated: true
 
 `import "github.com/karmada-io/karmada/pkg/apis/work/v1alpha2"`
 
-## ClusterResourceBinding
+## ClusterResourceBinding 
 
-ClusterResourceBinding 表示某种 Kubernetes 资源与集群分发策略（ClusterPropagationPolicy）之间的绑定关系。
+ClusterResourceBinding represents a binding of a kubernetes resource with a ClusterPropagationPolicy.
 
 <hr/>
 
@@ -30,17 +30,17 @@ ClusterResourceBinding 表示某种 Kubernetes 资源与集群分发策略（Clu
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([ResourceBindingSpec](../work-resources/resource-binding-v1alpha2#resourcebindingspec))，必选
+- **spec** ([ResourceBindingSpec](../work-resources/resource-binding-v1alpha2#resourcebindingspec)), required
 
-  **spec**表示规范。
+  Spec represents the desired behavior.
 
 - **status** ([ResourceBindingStatus](../work-resources/resource-binding-v1alpha2#resourcebindingstatus))
 
-  **status**表示 ResourceBinding 的最新状态。
+  Status represents the most recently observed status of the ResourceBinding.
 
-## ClusterResourceBindingList
+## ClusterResourceBindingList 
 
-ClusterResourceBindingList 中包含 ClusterResourceBinding 列表。
+ClusterResourceBindingList contains a list of ClusterResourceBinding.
 
 <hr/>
 
@@ -50,138 +50,139 @@ ClusterResourceBindingList 中包含 ClusterResourceBinding 列表。
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding))，必选
+- **items** ([][ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)), required
 
-  items 表示 ClusterResourceBinding 列表。
+  Items is the list of ClusterResourceBinding.
 
-## 操作
+## Operations 
 
 <hr/>
 
-### `get`：查询指定的 ClusterResourceBinding
+### `get` read the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
-### `get`：查询指定 ClusterResourceBinding 的状态
+### `get` read status of the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
-### `list`：查询全部 ClusterResourceBinding
+### `list` list or watch objects of kind ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
-#### 参数
+#### Parameters
 
-- **allowWatchBookmarks**（*查询参数*）：boolean
+- **allowWatchBookmarks** (*in query*): boolean
 
   [allowWatchBookmarks](../common-parameter/common-parameters#allowwatchbookmarks)
 
-- **continue**（*查询参数*）：string
+- **continue** (*in query*): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **fieldSelector**（*查询参数*）：string
+- **fieldSelector** (*in query*): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **labelSelector**（*查询参数*）：string
+- **labelSelector** (*in query*): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit**（*查询参数*）：integer
+- **limit** (*in query*): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **resourceVersion**（*查询参数*）：string
+- **resourceVersion** (*in query*): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch**（*查询参数*）：string
+- **resourceVersionMatch** (*in query*): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents**（*查询参数*）：boolean
+- **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds**（*查询参数*）：integer
+- **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-- **watch**（*查询参数*）：boolean
+- **watch** (*in query*): boolean
 
   [watch](../common-parameter/common-parameters#watch)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBindingList](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebindinglist)): OK
 
-### `create`：创建一个 ClusterResourceBinding
+### `create` create a ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
-#### 参数
+#### Parameters
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)，必选
+- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
@@ -189,258 +190,273 @@ POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
 202 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Accepted
 
-### `update`：更新指定的 ClusterResourceBinding
+### `update` replace the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)，必选
+- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
 201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
 
-### `update`：更新指定 ClusterResourceBinding 的状态
+### `update` replace status of the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)，必选
+- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
 201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
 
-### `patch`：更新指定 ClusterResourceBinding 的部分信息
+### `patch` partially update the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **body**: [Patch](../common-definitions/patch#patch)，必选
+- **body**: [Patch](../common-definitions/patch#patch), required
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force**（*查询参数*）：boolean
+- **force** (*in query*): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
 201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
 
-### `patch`：更新指定 ClusterResourceBinding 状态的部分信息
+### `patch` partially update status of the specified ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
-- **body**: [Patch](../common-definitions/patch#patch)，必选
+- **body**: [Patch](../common-definitions/patch#patch), required
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldManager**（*查询参数*）：string
+- **fieldManager** (*in query*): string
 
   [fieldManager](../common-parameter/common-parameters#fieldmanager)
 
-- **fieldValidation**（*查询参数*）：string
+- **fieldValidation** (*in query*): string
 
   [fieldValidation](../common-parameter/common-parameters#fieldvalidation)
 
-- **force**（*查询参数*）：boolean
+- **force** (*in query*): boolean
 
   [force](../common-parameter/common-parameters#force)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-#### 响应
+#### Response
 
 200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
 
 201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
 
-### `delete`：删除一个 ClusterResourceBinding
+### `delete` delete a ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
-#### 参数
+#### Parameters
 
-- **name**（*路径参数*）：string，必选
+- **name** (*in path*): string, required
 
-  ClusterResourceBinding 名称
+  name of the ClusterResourceBinding
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
+  
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **gracePeriodSeconds**（*查询参数*）：integer
+- **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **pretty**（*查询参数*）：string
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy**（*查询参数*）：string
+- **propagationPolicy** (*in query*): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-#### 响应
+#### Response
 
 200 ([Status](../common-definitions/status#status)): OK
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection`：删除 ClusterResourceBinding 的集合
+### `deletecollection` delete collection of ClusterResourceBinding
 
-#### HTTP 请求
+#### HTTP Request
 
 DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
-#### 参数
+#### Parameters
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
+  
 
-- **continue**（*查询参数*）：string
+- **continue** (*in query*): string
 
   [continue](../common-parameter/common-parameters#continue)
 
-- **dryRun**（*查询参数*）：string
+- **dryRun** (*in query*): string
 
   [dryRun](../common-parameter/common-parameters#dryrun)
 
-- **fieldSelector**（*查询参数*）：string
+- **fieldSelector** (*in query*): string
 
   [fieldSelector](../common-parameter/common-parameters#fieldselector)
 
-- **gracePeriodSeconds**（*查询参数*）：integer
+- **gracePeriodSeconds** (*in query*): integer
 
   [gracePeriodSeconds](../common-parameter/common-parameters#graceperiodseconds)
 
-- **labelSelector**（*查询参数*）：string
+- **ignoreStoreReadErrorWithClusterBreakingPotential** (*in query*): boolean
+
+  [ignoreStoreReadErrorWithClusterBreakingPotential](../common-parameter/common-parameters#ignorestorereaderrorwithclusterbreakingpotential)
+
+- **labelSelector** (*in query*): string
 
   [labelSelector](../common-parameter/common-parameters#labelselector)
 
-- **limit**（*查询参数*）：integer
+- **limit** (*in query*): integer
 
   [limit](../common-parameter/common-parameters#limit)
 
-- **pretty**（*查询参数*）：string
+- **pretty** (*in query*): string
 
   [pretty](../common-parameter/common-parameters#pretty)
 
-- **propagationPolicy**（*查询参数*）：string
+- **propagationPolicy** (*in query*): string
 
   [propagationPolicy](../common-parameter/common-parameters#propagationpolicy)
 
-- **resourceVersion**（*查询参数*）：string
+- **resourceVersion** (*in query*): string
 
   [resourceVersion](../common-parameter/common-parameters#resourceversion)
 
-- **resourceVersionMatch**（*查询参数*）：string
+- **resourceVersionMatch** (*in query*): string
 
   [resourceVersionMatch](../common-parameter/common-parameters#resourceversionmatch)
 
-- **sendInitialEvents**（*查询参数*）：boolean
+- **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
-- **timeoutSeconds**（*查询参数*）：integer
+- **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
 
-#### 响应
+#### Response
 
 200 ([Status](../common-definitions/status#status)): OK
+

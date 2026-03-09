@@ -59,7 +59,7 @@ karmadactl annotate [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_
       --list                           If true, display the annotations for a given resource.
       --local                          If true, annotation will NOT contact api-server but run locally.
   -n, --namespace string               If present, the namespace scope for this CLI request.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --overwrite                      If true, allow annotations to be overwritten, otherwise reject annotation updates that overwrite existing annotations.
   -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
       --resource-version string        If non-empty, the annotation update will only succeed if this is the current resource-version for the object. Only valid when specifying a single resource.

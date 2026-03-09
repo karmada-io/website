@@ -30,7 +30,7 @@ karmadactl create cronjob NAME --image=image --schedule='0/5 * * * ?' -- [COMMAN
       --field-manager string           Name of the manager used to track field ownership. (default "kubectl-create")
   -h, --help                           help for cronjob
       --image string                   Image name to run.
-  -o, --output string                  Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
+  -o, --output string                  Output format. One of: (json, yaml, kyaml, name, go-template, go-template-file, template, templatefile, jsonpath, jsonpath-as-json, jsonpath-file).
       --restart string                 job's restart policy. supported values: OnFailure, Never
       --save-config                    If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
       --schedule string                A schedule in the Cron format the job should be run with.
