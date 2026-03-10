@@ -1011,17 +1011,6 @@ Be mindful of label cardinality in queries:
 
 High-cardinality labels like `namespace` or individual resource names are intentionally excluded.
 
-## Deprecated Labels
-
-The following labels are deprecated and will be removed in v1.18:
-
-| Old Label | New Label | Affected Metrics | Deprecated In |
-|-----------|-----------|------------------|---------------|
-| `cluster` | `member_cluster` | All cluster metrics | v1.16 |
-| `cluster_name` | `member_cluster` | All cluster metrics | v1.16 |
-
-**Migration**: Update all queries, dashboards, and alerts to use `member_cluster`.
-
 ## Related Documentation
 
 - [Karmada Observability Guide](../../administrator/monitoring/karmada-observability) - Complete monitoring setup and best practices
