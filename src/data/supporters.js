@@ -27,6 +27,7 @@ import scatterlab from "../../static/img/supporters/scatterlab.png"
 import gongjikeji from "../../static/img/supporters/gongjikeji.png"
 import sensetime from "../../static/img/supporters/sensetime.png"
 import jetbrains from "../../static/img/supporters/jetbrains.png"
+import songke from "../../static/img/supporters/songke.png"
 
 const supportersData = [
     {
@@ -144,6 +145,10 @@ const supportersData = [
     {
         logo: jetbrains,
         alt: 'JetBrains',
+    },
+    {
+        logo: songke,
+        alt: 'Songke Intelligence',
     },
 
 ]
