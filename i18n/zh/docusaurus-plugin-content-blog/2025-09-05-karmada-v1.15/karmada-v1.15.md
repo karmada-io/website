@@ -1,7 +1,6 @@
 # Karmada v1.15 版本发布！多模板工作负载资源感知能力增强！
 
-Karmada 是开放的多云多集群容器编排引擎，旨在帮助用户在多云环境下部署和运维业务应用。凭借兼容 Kubernetes 原生 API 的能力，Karmada 可以
-平滑迁移单集群工作负载，并且仍可保持与 Kubernetes 周边生态工具链协同。
+Karmada 是开放的多云多集群容器编排引擎，旨在帮助用户在多云环境下部署和运维业务应用。凭借兼容 Kubernetes 原生 API 的能力，Karmada 可以平滑迁移单集群工作负载，并且仍可保持与 Kubernetes 周边生态工具链协同。
 
 [Karmada v1.15](https://github.com/karmada-io/karmada/releases/tag/v1.15.0) 版本现已发布，本版本包含下列新增特性：
 
