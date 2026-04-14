@@ -6,7 +6,7 @@ Promote resources from legacy clusters to Karmada control plane.
 
 ### Synopsis
 
-Promote resources from legacy clusters to the Karmada control plane. Requires the clusters to have been joined or registered.
+Promote resources from legacy clusters to the Karmada control plane. Requires the cluster to have been joined or registered.
 
 If the resource already exists in the Karmada control plane, please edit PropagationPolicy and OverridePolicy to propagate it.
 
@@ -43,7 +43,7 @@ karmadactl promote <RESOURCE_TYPE> <RESOURCE_NAME> -n <NAME_SPACE> -C <CLUSTER_N
 
 ```
       --auto-create-policy          Automatically create a PropagationPolicy for namespace-scoped resources or create a ClusterPropagationPolicy for cluster-scoped resources. (default true)
-  -C, --cluster string              Name of the legacy cluster (eg -C=member1)
+  -C, --cluster string              Name of the legacy cluster (e.g. -C=member1)
       --cluster-context string      Context name of legacy cluster in kubeconfig. Only works when there are multiple contexts in the kubeconfig.
       --cluster-kubeconfig string   Path of the legacy cluster's kubeconfig.
   -d, --dependencies                Promote resource with its dependencies automatically, default to false
