@@ -189,6 +189,36 @@ module.exports = {
                 },
                 {
                     type: "category",
+                    label: "Reliability",
+                    items: [
+                        "administrator/reliability/guide",
+                        {
+                            type: "category",
+                            label: "SLO Runbooks",
+                            link: {
+                                type: "doc",
+                                id: "administrator/reliability/runbooks/SLO/index",
+                            },
+                            items: [
+                                "administrator/reliability/runbooks/SLO/karmada-apiserver-availability",
+                                "administrator/reliability/runbooks/SLO/karmada-apiserver-latency",
+                                "administrator/reliability/runbooks/SLO/policy-apply-availability",
+                                "administrator/reliability/runbooks/SLO/policy-apply-latency",
+                                "administrator/reliability/runbooks/SLO/karmada-scheduler-availability",
+                                "administrator/reliability/runbooks/SLO/karmada-scheduler-latency",
+                                "administrator/reliability/runbooks/SLO/karmada-scheduler-estimator-availability",
+                                "administrator/reliability/runbooks/SLO/karmada-scheduler-estimator-latency",
+                                "administrator/reliability/runbooks/SLO/binding-sync-work-availability",
+                                "administrator/reliability/runbooks/SLO/binding-sync-work-latency",
+                                "administrator/reliability/runbooks/SLO/work-sync-workload-availability",
+                                "administrator/reliability/runbooks/SLO/work-sync-workload-latency",
+                                "administrator/reliability/runbooks/SLO/cluster-sync-latency",
+                            ],
+                        },
+                    ],
+                },
+                {
+                    type: "category",
                     label: "Upgrading",
                     items: [
                         "administrator/upgrading/README",
