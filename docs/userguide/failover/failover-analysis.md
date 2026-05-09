@@ -1,85 +1,41 @@
 ---
-title: Failover Analysis
+title: Cluster Failover Process Analysis
 ---
 
-Let's briefly analyze the Karmada failover feature.
+Let's analyze the Karmada failover feature.
 
 ## Add taints on fault cluster
 
-After the cluster is determined to be unhealthy, a taint with `Effect` set to `NoSchedule` will be added to the cluster as follows:
+After the [cluster status becomes unhealthy](./cluster-status-maintenance.md), a `taint{effect: NoSchedule}` will be added to the cluster as follows:
 
-- when cluster's `Ready` condition is `False`, add the following taint:
+- when cluster status's `Ready` condition changes to `False`, Karmada controller will add the following taint to the target cluster object:
 
 ```yaml
 key: cluster.karmada.io/not-ready
 effect: NoSchedule
 ```
 
-- when cluster's `Ready` condition is `Unknown`, add the following taint:
+- when cluster status's `Ready` condition changes to `Unknown`, Karmada controller will add the following taint to the target cluster object:
 
 ```yaml
 key: cluster.karmada.io/unreachable
 effect: NoSchedule
 ```
 
-If an unhealthy cluster is not recovered for a period of time, which can be configured via `--failover-eviction-timeout` flag(default is 5 minutes), a new taint with `Effect` set to `NoExecute` will be added to the cluster as follows:
-
-- when cluster's `Ready` condition is `False`, add the following taint:
-
-```yaml
-key: cluster.karmada.io/not-ready
-effect: NoExecute
-```
-
-- when cluster's `Ready` condition is `Unknown`, add the following taint:
-
-```yaml
-key: cluster.karmada.io/unreachable
-effect: NoExecute
-```
-
-## Tolerate cluster taints
-
-After users creates a `PropagationPolicy/ClusterPropagationPolicy`, Karmada will automatically add the following toleration through webhook:
-
-```yaml
-apiVersion: policy.karmada.io/v1alpha1
-kind: PropagationPolicy
-metadata:
-  name: nginx-propagation
-  namespace: default
-spec:
-  placement:
-    clusterTolerations:
-    - effect: NoExecute
-      key: cluster.karmada.io/not-ready
-      operator: Exists
-      tolerationSeconds: 300
-    - effect: NoExecute
-      key: cluster.karmada.io/unreachable
-      operator: Exists
-      tolerationSeconds: 300
-  resourceSelectors:
-  - apiVersion: apps/v1
-    kind: Deployment
-    name: nginx
-    namespace: default
-```
-
-The `tolerationSeconds` can be configured via `--default-not-ready-toleration-seconds` flag(default is 300) and `default-unreachable-toleration-seconds` flag(default is 300).
+In addition, Karmada controller does not actively add `NoExecute` taints to cluster objects. Users can actively manage taints on cluster objects, including `NoExecute` taints, through the [cluster taint management](./cluster-taint-management.md) feature.
 
 ## Failover
 
-When karmada detects that the faulty cluster is no longer tolerated by `PropagationPolicy/ClusterPropagationPolicy`, the cluster will be removed from the resource scheduling result and the karmada scheduler will reschedule the reference application.
+When the Karmada controller detects that a cluster has been tainted with the `NoExecute` taint, and the taint cannot be tolerated by the tolerance strategy defined in the affected `PropagationPolicy/ClusterPropagationPolicy`, the Karmada controller will remove the cluster from the scheduling results of the resources matched by these policies. Afterward, the Karmada scheduler will reschedule all affected resources.
 
 There are several constraints:
-- For each rescheduled application, it still needs to meet the restrictions of `PropagationPolicy/ClusterPropagationPolicy`, such as ClusterAffinity or SpreadConstraints.
-- The application distributed on the ready clusters after the initial scheduling will remain when failover schedule.
+- For each rescheduled application, it still needs to meet the restrictions of `PropagationPolicy/ClusterPropagationPolicy`, such as `ClusterAffinity` or `SpreadConstraints`.
+- The application distributed on the ready clusters after the initial scheduling will remain during failover rescheduling.
 
 ### Duplicated schedule type
 
-For `Duplicated` schedule policy, when the number of candidate clusters that meet the PropagationPolicy restriction is not less than the number of failed clusters,
-it will be rescheduled to candidate clusters according to the number of failed clusters. Otherwise, no rescheduling. The candidate cluster refers to the newly calculated cluster scheduling result in this scheduling process, which is different from the scheduled cluster in the last scheduling result.
+For resources with the scheduling type set to `Duplicated`, during rescheduling after a cluster failure, the rescheduling process will only proceed if the number of candidate clusters that satisfy the propagation policy constraints is greater than or equal to the number of failed clusters; otherwise, rescheduling will not be performed.
+Here, candidate clusters refer to the newly calculated cluster scheduling results in the current scheduling process, which are different from the already scheduled clusters.
 
 Take `Deployment` as example:
 
@@ -131,14 +87,16 @@ spec:
 ```
 </details>
 
-Suppose there are 5 member clusters, and the initial scheduling result is in member1 and member2. When member2 fails, it triggers rescheduling.
+Suppose a Karmada instance manages 5 clusters: member1, member2, member3, member4, member5, and the initial scheduling result of `Deployment default/nginx` is clusters member1 and member2.
+When the member2 cluster fails, the Karmada scheduler will reschedule this workload.
 
 It should be noted that rescheduling will not delete the application on the ready cluster member1. In the remaining 3 clusters, only member3 and member5 match the `clusterAffinity` policy.
 
 Due to the limitations of spreadConstraints, the final result can be [member1, member3] or [member1, member5].
 
 ### Divided schedule type
-For `Divided` schedule policy, karmada scheduler will try to migrate replicas to the other health clusters.
+
+For resources with the scheduling type set to `Divided`, Karmada scheduler will try to migrate replicas to the other healthy clusters.
 
 Take `Deployment` as example:
 
@@ -208,6 +166,6 @@ The [GracefulEvictionTasks](https://github.com/karmada-io/karmada/blob/12e8f01d0
 
 When the faulty cluster is removed from the resource scheduling result by `taint-manager`, it will be added to the eviction task queue.
 
-The `gracefulEviction` controller is responsible for processing tasks in the eviction task queue. During the procession, the The `gracefulEviction` controller evaluates whether the current task can be removed form the eviction task queue one by one. The judgement conditions are as follows:
+The `gracefulEviction` controller is responsible for processing tasks in the eviction task queue. During the procession, the `gracefulEviction` controller evaluates whether the current task can be removed form the eviction task queue one by one. The judgment conditions are as follows:
 - Check the health status of the current resource scheduling result. If the resource health status is healthy, the condition is met.
 - Check whether the waiting duration of the current task exceeds the timeout interval, which can be configured via `graceful-eviction-timeout` flag(default is 10 minutes). If exceeds, and meets the condition.
