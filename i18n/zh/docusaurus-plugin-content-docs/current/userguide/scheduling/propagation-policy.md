@@ -379,7 +379,7 @@ spec:
 
 这允许调度到被污染为 `dedicated=special-user:NoSchedule` 的集群。
 
-`NoExecute` 效果也用于[多集群故障转移](../failover/failover-analysis.md)。
+`NoExecute` 效果也用于[多集群故障转移](../failover/cluster-failover-internals.md)。
 
 ### SpreadConstraints(扩散约束)
 
@@ -961,7 +961,7 @@ spec:
 
 `.spec.failover` 字段定义当集群失败时应如何迁移应用程序。如果未指定,则禁用故障转移。
 
-有关详细配置,请参阅[故障转移分析](../failover/failover-analysis.md)。
+有关详细配置,请参阅[集群故障迁移机制详解](../failover/cluster-failover-internals.md)。
 
 ## ConflictResolution(冲突解决)
 

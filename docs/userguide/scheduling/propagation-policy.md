@@ -379,7 +379,7 @@ spec:
 
 This allows scheduling onto clusters tainted `dedicated=special-user:NoSchedule`.
 
-The `NoExecute` effect is also used in [Multi-cluster Failover](../failover/failover-analysis.md).
+The `NoExecute` effect is also used in [Multi-cluster Failover](../failover/cluster-failover-internals.md).
 
 ### SpreadConstraints
 
@@ -961,7 +961,7 @@ This policy is scheduled by the custom scheduler named `custom-scheduler`.
 
 The `.spec.failover` field defines how applications should be migrated when clusters fail. If not specified, failover is disabled.
 
-See [Failover Analysis](../failover/failover-analysis.md) for detailed configuration.
+See [Cluster Failover Internals](../failover/cluster-failover-internals.md) for detailed configuration.
 
 ## ConflictResolution
 
