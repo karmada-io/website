@@ -29,6 +29,7 @@ import sensetime from "../../static/img/supporters/sensetime.png"
 import jetbrains from "../../static/img/supporters/jetbrains.png"
 import songke from "../../static/img/supporters/songke.png"
 import gmicloud from "../../static/img/supporters/gmicloud.png"
+import wellhub from "../../static/img/supporters/wellhub.png"
 
 const supportersData = [
     {
@@ -154,6 +155,10 @@ const supportersData = [
     {
         logo: gmicloud,
         alt: 'GMI Cloud',
+    },
+    {
+        logo: wellhub,
+        alt: 'Wellhub'
     },
 
 ]
