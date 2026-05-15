@@ -10,12 +10,13 @@ This document walks you through an example of enabling FederatedHPA to automatic
 
 The walkthrough example will do as follows:  
 
-![federatedhpa-custom-metrics-demo](../resources/tutorials/custom_metrics.png)
-
 * One sample-deployment's pod exists in `member1` cluster.
 * The service is deployed in `member1` and `member2` cluster.
-* Request the multi-cluster service and trigger an increase in the pod's custom metrics(http_requests_total).
+* A `MultiClusterService` enables cross-cluster access between the `sample-app` services in `member1` and `member2`.
+* Request the service from `member1`, route traffic to backend pods in both clusters, and trigger an increase in the pods' custom metrics(`http_requests_total`).
 * The replicas will be scaled up in `member1` and `member2` cluster.
+
+In this example, the role of `MultiClusterService` is to load balance user requests to different member clusters, simulating a real-world scenario where applications in multiple clusters share the load. In practice, `MultiClusterService` is not required.
 
 ## Prerequisites
 
@@ -31,46 +32,6 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 - You can use `Submariner` or other related open source projects to connect networks between member clusters.
 
 > Note: In order to prevent routing conflicts, Pod and Service CIDRs of clusters need non-overlapping.
-
-### The ServiceExport and ServiceImport CRDs have been installed
-
-You need to install `ServiceExport` and `ServiceImport` in the member clusters to enable multi-cluster service.
-
-After `ServiceExport` and `ServiceImport` have been installed on the **Karmada Control Plane**, you can create `ClusterPropagationPolicy` to propagate those two CRDs to the member clusters.
-
-```yaml
-# propagate ServiceExport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceexport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceexports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
----        
-# propagate ServiceImport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceimport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceimports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
-```
 
 ### prometheus and prometheus-adapter have been installed in member clusters
 
@@ -355,73 +316,37 @@ NAME          REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   A
 sample-app    Deployment       sample-app       1         10        1          15d
 ```
 
-## Export service to `member1` cluster
+## Create a `MultiClusterService` for cross-cluster access
 
-As mentioned before, you need a multi-cluster service to route the requests to the pods in `member1` and `member2` cluster, so let create this mult-cluster service.  
-* Create a `ServiceExport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceExport` object to `member1` and `member2` cluster.
+The `MultiClusterService` is used to enable cross-cluster access between the `sample-app` services in `member1` and `member2`. When a client in `member1` accesses `sample-app`, the request is not limited to the backend pods local to `member1`; it can also be routed to backend pods behind the `sample-app` service in `member2`. More usage of `MultiClusterService` can be found in [MultiClusterService user guide](../userguide/service/multi-cluster-service-with-native-svc-access.mdx).
+
+Create a `MultiClusterService` object on Karmada Control Plane.
   ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceExport
-  metadata:
-    name: sample-app
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-export-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceExport
-        name: sample-app
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
-          - member2
-  ```
-* Create a `ServiceImport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceImport` object to `member1` cluster.
-  ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceImport
+  apiVersion: networking.karmada.io/v1alpha1
+  kind: MultiClusterService
   metadata:
     name: sample-app
   spec:
-    type: ClusterSetIP
-    ports:
-    - port: 80
-      protocol: TCP
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-import-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceImport
-        name: sample-app
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
+    types:
+      - CrossCluster
+    consumerClusters:
+      - name: member1
+      - name: member2
+    providerClusters:
+      - name: member1
+      - name: member2
   ```
 
-After deploying, you can check the multi-cluster service:
-```sh
-$ karmadactl get svc --operation-scope members
-NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-derived-sample-app      member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
-```
+After deploying, requests sent from `member1` to `sample-app` can be routed to backend pods in both `member1` and `member2`.
 
 ## Install hey http load testing tool in member1 cluster
 
 In order to do http requests, here you can use `hey`.
 * Download `hey` and copy it to kind cluster container.
 ```sh
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-chmod +x hey_linux_amd64
-docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget -O hey https://storage.googleapis.com/hey-releases/hey_linux_amd64
+chmod +x hey
+docker cp hey member1-control-plane:/usr/local/bin/hey
 ```
 
 ## Test scaling up
@@ -433,14 +358,14 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   sample-app-9b7d8c9f5-xrnfx            member1   1/1     Running   0          111s
   ```
 
-* Check multi-cluster service ip.
+* Check the service IP in `member1`.
   ```sh
   $ karmadactl get svc --operation-scope members
-  NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-  derived-sample-app      member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
+  NAME            CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
+  sample-app      member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request multi-cluster service with hey to increase the nginx pods' custom metrics(http_requests_total).
+* Request the service from `member1` with `hey` to increase the `sample-app` pods' custom metric(`http_requests_total`) across both clusters.
   ```sh
   docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213/metrics
   ```

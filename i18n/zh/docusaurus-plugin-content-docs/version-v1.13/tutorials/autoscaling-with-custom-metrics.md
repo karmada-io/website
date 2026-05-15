@@ -417,9 +417,9 @@ derived-sample-app      member1   ClusterIP   10.11.59.213    <none>        80/T
 为了发送 http 请求，这里我们使用 `hey`。
 * 下载 `hey` 并复制到 kind 集群容器中。
 ```sh
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-chmod +x hey_linux_amd64
-docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget -O hey https://storage.googleapis.com/hey-releases/hey_linux_amd64
+chmod +x hey
+docker cp hey member1-control-plane:/usr/local/bin/hey
 ```
 
 ## 测试扩容
