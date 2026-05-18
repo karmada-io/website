@@ -5,15 +5,17 @@ hide_table_of_contents: true
 
 # Karmada Adopters
 
-All organisations below are using Karmada in production.
+All organizations below are using Karmada in production.
 
-We are happy and proud to have you all as part of our community!💖
+We are happy and proud to have you all as part of our community! 💖
 
-To join this list, please follow [these instructions](https://github.com/karmada-io/website/tree/main/adopters/README.md).
+Want to join this list? The easiest way is to leave a comment on [this GitHub issue](https://github.com/karmada-io/karmada/issues/4540) with your organization's information, and the community will help you complete the onboarding process. Alternatively, you can follow [these instructions](https://github.com/karmada-io/website/tree/main/adopters/README.md) to submit a Pull Request directly.
+
+By joining the Karmada Adopter Group, your organization will gain benefits such as community visibility, networking opportunities, timely notifications on critical updates, event participation invitations, and more. For full details, see the [Karmada Adopter Group](https://github.com/karmada-io/community/tree/main/adopter-group).
 
 ## Karmada Adopters
 
-All organisations are sorted alphabetically by the first letter of their English names.
+All organizations are sorted alphabetically by the first letter of their English names.
 
 | Organization/Company Name | Website                                     | Usage Scenario                                                                                                                                                                                                             | CaseStudy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 |---------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|

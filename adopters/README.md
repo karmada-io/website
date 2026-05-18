@@ -1,14 +1,14 @@
 # Karmada Adopters
 
-So you and your organisation are using Karmada? That's great. We would love to hear from you! 💖
+So you and your organization are using Karmada? That's great. We would love to hear from you! 💖
 
 ## Adding yourself
 
-[Here](../docs/casestudies/adopters.md) lists the organisations who adopted the Karmada project in production.
+[Here](../src/pages/adopters.md) lists the organizations who adopted the Karmada project in production.
 
 You just need to add an entry for your company and upon merging it will automatically be added to our website.
 
-To add your organisation follow these steps:
+To add your organization follow these steps:
 
 1. Fork the [karmada-io/website](https://github.com/karmada-io/website) repository.
 2. Clone it locally with `git clone https://github.com/<YOUR-GH-USERNAME>/website.git`.
