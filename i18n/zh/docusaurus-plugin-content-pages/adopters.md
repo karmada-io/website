@@ -9,7 +9,9 @@ hide_table_of_contents: true
 
 很高兴大家加入 Karmada 社区，我们为此感到自豪！💖
 
-若要加入这个列表，请遵循[这些指示说明](https://github.com/karmada-io/website/tree/main/adopters/README.md)。
+想加入这个列表？最简单的方式是在[这个 GitHub issue](https://github.com/karmada-io/karmada/issues/4540) 中留言提供你的组织信息，社区会帮助你完成后续的入驻流程。或者，你也可以参考[这些说明](https://github.com/karmada-io/website/tree/main/adopters/README.md)直接提交 Pull Request。
+
+加入 Karmada Adopter Group 后，你的组织将获得社区曝光、人脉拓展、关键更新的及时通知、活动参与邀请等权益。详情请参阅 [Karmada Adopter Group](https://github.com/karmada-io/community/tree/main/adopter-group)。
 
 ## Karmada Adopters
 
