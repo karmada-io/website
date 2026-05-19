@@ -274,7 +274,11 @@ spec:
 
 `clusterAffinities` 字段允许定义多个具有回退行为的集群组。`clusterAffinity` 定义一组选择条件,这些条件一起应用以产生单个候选集群集。`clusterAffinities` 定义多个有序的条件集(组),这些条件集按顺序评估:调度器尝试第一组,仅当前一组无法满足调度时才回退到下一组。
 
-注意:`clusterAffinities` 不能与 `clusterAffinity` 共存。
+:::note
+
+`clusterAffinities` 不能与 `clusterAffinity` 共存。
+
+:::
 
 #### 工作原理
 
@@ -283,6 +287,32 @@ spec:
 2. 如果第一组不满足调度限制,尝试下一组
 3. 一个集群可以属于多个组
 4. 如果没有组满足限制,调度失败
+
+#### ClusterAffinityTerm
+
+`clusterAffinities` 中的每个组由一个 `ClusterAffinityTerm` 定义，包含以下内容：
+- `affinityName`：集群组的可读名称
+- 内联 `ClusterAffinity` 字段，如 `labelSelector`、`fieldSelector`、`clusterNames` 和 `exclude`：定义该 term 的**主集群组**
+- `overflowAffinities`（可选）：附加的有序集群组，仅在同一 term 中的主集群组无法容纳调度时才会被使用
+
+通过 `overflowAffinities`，可以实现溢出调度场景，例如优先调度到 IDC 集群，当 IDC 资源不足时溢出到云端集群。
+
+:::note
+
+由于溢出调度需要感知成员集群的可用资源，目前不支持副本复制模式和静态权重分配与溢出调度组合使用。
+
+:::
+
+##### overflowAffinities 工作原理
+
+![overflow-affinities-scheduling](../../resources/userguide/scheduling/overflow-affinities-scheduling.png)
+
+调度器按顺序评估主集群组和溢出集群组：
+1. 尽可能将副本分配到**主集群组**。
+2. 如果主集群组无法容纳所有副本，则尝试将**剩余副本**分配到溢出集群组。
+3. 对于每个溢出组，分配的副本数为剩余未分配副本数与该组总可用容量中的较小值。
+4. 在每个组内，副本根据 `placement.replicaScheduling` 策略分配到各集群。
+5. 一旦所有副本都能被分配，调度成功。如果评估完所有组后仍有副本未分配， 则此 ClusterAffinityTerm 调度失败，调度器将继续评估 clusterAffinities 中的下一个 ClusterAffinityTerm（如有）。
 
 #### 用例 1:本地集群作为主集群,云集群作为备份
 
@@ -339,6 +369,38 @@ spec:
 ```
 
 这首先尝试主集群,如果主集群失败,则将工作负载移动到备份组。
+
+#### 用例 3:从 IDC GPU 集群溢出到云端 GPU 集群
+
+IDC GPU 集群可以作为运行 GPU 推理工作负载的主集群组，而云端 GPU 集群可以作为处理额外峰值流量的溢出集群组。调度器会优先将副本填充到 IDC 集群中，仅当 IDC 集群无法容纳所有副本时，才会将剩余副本溢出到云端集群。
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: gpu-inference-overflow
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+  placement:
+    clusterAffinities:
+      - affinityName: idc-gpu
+        clusterNames:
+          - idc-gpu-cluster1
+        overflowAffinities:
+          - affinityName: cloud-gpu
+            clusterNames:
+              - cloud-gpu-cluster1
+              - cloud-gpu-cluster2
+    replicaScheduling:
+      replicaSchedulingType: Divided
+      replicaDivisionPreference: Weighted
+      weightPreference:
+        dynamicWeight: AvailableReplicas
+```
+
+这会优先使用 IDC GPU 集群；仅当 IDC 集群无法容纳所有副本时，才会溢出到云端 GPU 集群。当流量下降时，副本会优先从云端 GPU 集群回收，从而保持 GPU 使用的成本效益。
 
 ### ClusterTolerations(集群容忍)
 
