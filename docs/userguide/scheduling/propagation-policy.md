@@ -274,7 +274,11 @@ This excludes `member1` and `member3` from the candidate set.
 
 The `clusterAffinities` field allows defining multiple cluster groups with fallback behavior. `clusterAffinity` defines one set of selection criteria applied together to produce a single candidate set of clusters. `clusterAffinities` defines multiple ordered sets of criteria (groups) that are evaluated sequentially: the scheduler tries the first group and falls back to the next only if the previous cannot satisfy scheduling.
 
-Note: `clusterAffinities` cannot co-exist with `clusterAffinity`.
+:::note
+
+`clusterAffinities` cannot co-exist with `clusterAffinity`.
+
+:::
 
 #### How it works
 
@@ -283,6 +287,32 @@ The scheduler evaluates affinity groups in order:
 2. If the first group doesn't satisfy scheduling restrictions, try the next group
 3. A cluster can belong to multiple groups
 4. If no group satisfies the restrictions, scheduling fails
+
+#### ClusterAffinityTerm
+
+Each group in `clusterAffinities` is defined by a `ClusterAffinityTerm`, which includes:
+- `affinityName`: a human-readable name for the cluster group
+- Inline `ClusterAffinity` fields such as `labelSelector`, `fieldSelector`, `clusterNames`, and `exclude`: these define the **primary** cluster group for the term
+- `overflowAffinities` (optional): additional ordered cluster groups that can be used only after the primary group in the same term can no longer accommodate scheduling
+
+With `overflowAffinities`, you can implement overflow scenarios, such as preferring scheduling to IDC clusters and overflowing to cloud clusters when IDC resources are insufficient.
+
+:::note
+
+Because overflow scheduling needs to be aware of member clusters' available resources, Duplicated scheduling and static weight division are currently not supported with overflow scheduling.
+
+:::
+
+##### How overflowAffinities works
+
+![overflow-affinities-scheduling](../../resources/userguide/scheduling/overflow-affinities-scheduling.png)
+
+The scheduler evaluates primary group and overflow groups in order:
+1. Try to assign replicas to the **primary cluster group** as much as possible.
+2. If the primary group cannot accommodate all replicas, attempts to assign the **remaining replicas** to the overflow groups.
+3. For each overflow group, the number of replicas assigned is the lesser of the remaining unassigned replicas and the group's total available capacity. 
+4. Within each group, replicas are distributed across clusters according to the `placement.replicaScheduling` strategy.
+5. Scheduling succeeds once all replicas are assigned. If any replicas remain unassigned after evaluating all groups, scheduling fails with this `ClusterAffinityTerm`. The scheduler then moves on to evaluate the next `ClusterAffinityTerm` in `clusterAffinities`, if any.
 
 #### Use case 1: Local clusters as primary, cloud clusters as backup
 
@@ -339,6 +369,38 @@ spec:
 ```
 
 This tries primary clusters first and then moves workloads to the backup group if primaries fail.
+
+#### Use case 3: Overflow from IDC GPU clusters to cloud GPU clusters
+
+The IDC GPU cluster could be the primary group for running GPU-based inference workloads, and the cloud GPU clusters could be the overflow group for handling extra peak traffic. The scheduler would fill replicas into the IDC cluster first and only overflow the remaining replicas to cloud clusters when the IDC cluster cannot accommodate all replicas.
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: PropagationPolicy
+metadata:
+  name: gpu-inference-overflow
+spec:
+  resourceSelectors:
+    - apiVersion: apps/v1
+      kind: Deployment
+  placement:
+    clusterAffinities:
+      - affinityName: idc-gpu
+        clusterNames:
+          - idc-gpu-cluster1
+        overflowAffinities:
+          - affinityName: cloud-gpu
+            clusterNames:
+              - cloud-gpu-cluster1
+              - cloud-gpu-cluster2
+    replicaScheduling:
+      replicaSchedulingType: Divided
+      replicaDivisionPreference: Weighted
+      weightPreference:
+        dynamicWeight: AvailableReplicas
+```
+
+This prefers the IDC GPU cluster first and overflows to cloud GPU clusters only when the IDC cluster cannot accommodate all replicas. When traffic decreases, replicas are reclaimed from the cloud GPU clusters first, keeping GPU usage cost-efficient.
 
 ### ClusterTolerations
 
