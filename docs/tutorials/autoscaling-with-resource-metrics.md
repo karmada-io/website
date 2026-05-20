@@ -8,11 +8,14 @@ When the load is increased, FederatedHPA scales up the replicas of the workload 
 This document walks you through an example of enabling FederatedHPA to automatically manage scaling for a cross-cluster  nginx Deployment.
 
 The walkthrough example will do as follows:  
-![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
+
 * One Deployment's Pod exists in `member1` cluster.
 * The Service is deployed in `member1` and `member2` clusters.
-* Request to use the multi-cluster Service to increase Pod's CPU utilization.
+* A `MultiClusterService` enables cross-cluster access between the `nginx-service` services in `member1` and `member2`.
+* Request the service from `member1`, route traffic to backend pods in both clusters, and trigger an increase in the pods' CPU utilization.
 * The replicas will be scaled up in `member1` and `member2` clusters.
+
+In this example, the role of `MultiClusterService` is to load balance user requests to different member clusters, simulating a real-world scenario where applications in multiple clusters share the load. In practice, `FederatedHPA` does not require `MultiClusterService`.
 
 ## Prerequisites
 
@@ -28,46 +31,6 @@ Ensure that at least two clusters have been added to Karmada, and the container 
 - You can use `Submariner` or other related open source projects to connect networks between member clusters.
 
 > Note: To prevent routing conflicts, the Pod and Service CIDRs of clusters must be non-overlapping.
-
-### The ServiceExport and ServiceImport CRDs have been installed
-
-We need to install `ServiceExport` and `ServiceImport` in the member clusters to enable multi-cluster Service.
-
-After `ServiceExport` and `ServiceImport` have been installed on the **Karmada Control Plane**, we can create `ClusterPropagationPolicy` to propagate those two CRDs to the member clusters.
-
-```yaml
-# propagate ServiceExport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceexport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceexports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
----        
-# propagate ServiceImport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceimport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceimports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
-```
 
 ### metrics-server has been installed in member clusters
 
@@ -216,75 +179,37 @@ NAME    REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   AGE
 nginx   Deployment       nginx            1         10        1          9h
 ```
 
-## Export Service to `member1` cluster
+## Create a `MultiClusterService` for cross-cluster access
 
-As mentioned before, we need a multi-cluster Service to route the requests to the Pods in `member1` and `member2` clusters, so let create this multi-cluster Service.  
-* Create a `ServiceExport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceExport` object to `member1` and `member2` clusters.
-  
+The `MultiClusterService` is used to enable cross-cluster access between the `nginx-service` services in `member1` and `member2`. When a client in `member1` accesses `nginx-service`, the request is not limited to the backend pods local to `member1`; it can also be routed to backend pods behind the `nginx-service` service in `member2`. More usage of `MultiClusterService` can be found in [MultiClusterService user guide](../userguide/service/multi-cluster-service-with-native-svc-access.mdx).
+
+Create a `MultiClusterService` object on Karmada Control Plane.
   ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceExport
-  metadata:
-    name: nginx-service
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-export-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceExport
-        name: nginx-service
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
-          - member2
-  ```
-* Create a `ServiceImport` object on Karmada Control Plane, and then create a `PropagationPolicy` to propagate the `ServiceImport` object to `member1` clusters.
-  
-  ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceImport
+  apiVersion: networking.karmada.io/v1alpha1
+  kind: MultiClusterService
   metadata:
     name: nginx-service
   spec:
-    type: ClusterSetIP
-    ports:
-    - port: 80
-      protocol: TCP
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-import-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceImport
-        name: nginx-service
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
+    types:
+      - CrossCluster
+    consumerClusters:
+      - name: member1
+      - name: member2
+    providerClusters:
+      - name: member1
+      - name: member2
   ```
 
-After deploying, you can check the multi-cluster Service:
-```sh
-$ karmadactl get svc --operation-scope members
-NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
-```
+After deploying, requests sent from `member1` to `nginx-service` can be routed to backend pods in both `member1` and `member2`.
 
 ## Install hey http load testing tool in member1 cluster
 
 In order to do http requests, here we use `hey`.
 * Download `hey` and copy it to kind cluster container.
 ```sh
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-chmod +x hey_linux_amd64
-docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget -O hey https://storage.googleapis.com/hey-releases/hey_linux_amd64
+chmod +x hey
+docker cp hey member1-control-plane:/usr/local/bin/hey
 ```
 
 ## Test scaling up
@@ -296,14 +221,14 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
 
-* Check multi-cluster Service IP.
+* Check the service IP in `member1`.
   ```sh
   $ karmadactl get svc --operation-scope members
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-  derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
+  nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request multi-cluster Service to increase the nginx Pods' CPU usage using hey.
+* Request the service from `member1` with `hey` to increase the the nginx Pods' CPU usage across both clusters.
   ```sh
   docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```

@@ -282,9 +282,9 @@ derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/T
 In order to do http requests, here we use `hey`.
 * Download `hey` and copy it to kind cluster container.
 ```sh
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-chmod +x hey_linux_amd64
-docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget -O hey https://storage.googleapis.com/hey-releases/hey_linux_amd64
+chmod +x hey
+docker cp hey member1-control-plane:/usr/local/bin/hey
 ```
 
 ## Test scaling up

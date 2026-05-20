@@ -9,12 +9,13 @@ title: 使用资源指标跨集群弹性扩缩容
 
 演示案例将执行以下操作：
 
-![federatedhpa-demo](../resources/tutorials/federatedhpa-demo.png)
-
 * `member1` 集群中存在一个 Deployment 的 Pod。
 * Service 部署在 `member1` 和 `member2` 集群。
-* 请求多集群 Service 来提高 Pod 的 CPU 使用率。
+* `MultiClusterService` 支持在 `member1` 和 `member2` 的 `nginx-service` Service 之间进行跨集群访问。
+* 从 `member1` 请求该服务，流量将路由到两个集群中的后端 Pod，并触发 Pod 的 CPU 利用率的增长。
 * Pod 副本将在 `member1` 和 `member2` 集群中扩容。
+
+在此示例中，`MultiClusterService` 的作用是将用户请求负载均衡到不同的成员集群，模拟多个集群中的应用程序共同分担负载的真实场景。实际上，`FederatedHPA` 并不需要 `MultiClusterService`。
 
 ## 前提条件
 
@@ -30,46 +31,6 @@ title: 使用资源指标跨集群弹性扩缩容
 - 您可以使用 `Submariner` 或其他相关开源项目来连接成员集群之间的网络。
 
 > 注意：为了防止路由冲突，集群中 Pod 和 Service 的 CIDR 必须互不重叠。
-
-### ServiceExport 和 ServiceImport 自定义资源已安装
-
-我们需要在成员集群中安装 `ServiceExport` 和 `ServiceImport` 以启用多集群 Service。
-
-在 **Karmada 控制平面** 上安装了 `ServiceExport` 和 `ServiceImport` 后，我们就可以创建 `ClusterPropagationPolicy`，将以下两个 CRD 分发到成员集群。
-
-```yaml
-# propagate ServiceExport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceexport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceexports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
----        
-# propagate ServiceImport CRD
-apiVersion: policy.karmada.io/v1alpha1
-kind: ClusterPropagationPolicy
-metadata:
-  name: serviceimport-policy
-spec:
-  resourceSelectors:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: serviceimports.multicluster.x-k8s.io
-  placement:
-    clusterAffinity:
-      clusterNames:
-        - member1
-        - member2
-```
 
 ### 成员集群中已安装 metrics-server
 
@@ -218,73 +179,37 @@ NAME    REFERENCE-KIND   REFERENCE-NAME   MINPODS   MAXPODS   REPLICAS   AGE
 nginx   Deployment       nginx            1         10        1          9h
 ```
 
-## 将 Service 导出到 `member1` 集群
+## 创建一个 MultiClusterService 用于跨集群访问
 
-正如前文所提到的，我们需要一个多集群 Service 来将请求转发到 `member1` 和 `member2` 集群中的 Pod，因此让我们创建这个多集群 Service。
-* 在 Karmada 控制平面创建一个 `ServiceExport` 对象，然后创建一个 `PropagationPolicy` 将 `ServiceExport` 对象分发到 `member1` 和 `member2` 集群。
+`MultiClusterService` 用于实现 `member1` 和 `member2` 集群中 `nginx-service` Service 之间的跨集群访问。当 member1 集群内的客户端访问 `nginx-service` 时，请求不再仅局限于 member1 本地的后端 Pod，还可以被路由至 member2 集群中 `nginx-service` Service 的后端 Pod。 更多 `MultiClusterService` 的用法，请参考[MultiClusterService 用户指南](../userguide/service/multi-cluster-service-with-native-svc-access.mdx)。
+
+在 Karmada 控制平面上创建 `MultiClusterService` 资源对象。
   ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceExport
-  metadata:
-    name: nginx-service
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-export-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceExport
-        name: nginx-service
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
-          - member2
-  ```
-* 在 Karmada 控制平面创建一个 `ServiceImport` 对象，然后创建一个 `PropagationPolicy` 将 `ServiceImport` 对象分发到 `member1` 集群。
-  ```yaml
-  apiVersion: multicluster.x-k8s.io/v1alpha1
-  kind: ServiceImport
+  apiVersion: networking.karmada.io/v1alpha1
+  kind: MultiClusterService
   metadata:
     name: nginx-service
   spec:
-    type: ClusterSetIP
-    ports:
-    - port: 80
-      protocol: TCP
-  ---
-  apiVersion: policy.karmada.io/v1alpha1
-  kind: PropagationPolicy
-  metadata:
-    name: serve-import-policy
-  spec:
-    resourceSelectors:
-      - apiVersion: multicluster.x-k8s.io/v1alpha1
-        kind: ServiceImport
-        name: nginx-service
-    placement:
-      clusterAffinity:
-        clusterNames:
-          - member1
+    types:
+      - CrossCluster
+    consumerClusters:
+      - name: member1
+      - name: member2
+    providerClusters:
+      - name: member1
+      - name: member2
   ```
 
-部署完成后，您可以检查多集群 Service：
-```sh
-$ karmadactl get svc --operation-scope members
-NAME                    CLUSTER   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-derived-nginx-service   member1   ClusterIP   10.11.59.213    <none>        80/TCP    9h    Y
-```
+部署完成后，从 `member1` 集群向 `nginx-service` 发起的请求，可被路由至 `member1` 和 `member2` 两个集群的后端 Pod。
 
 ## 在 member1 集群中安装 hey http 负载测试工具
 
 为了发送 http 请求，这里我们使用 `hey`。
 * 下载 `hey` 并复制到 kind 集群容器中。
 ```sh
-wget https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-chmod +x hey_linux_amd64
-docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
+wget -O hey https://storage.googleapis.com/hey-releases/hey_linux_amd64
+chmod +x hey
+docker cp hey member1-control-plane:/usr/local/bin/hey
 ```
 
 ## 测试扩容
@@ -295,14 +220,14 @@ docker cp hey_linux_amd64 member1-control-plane:/usr/local/bin/hey
   NAME                     CLUSTER   READY   STATUS      RESTARTS   AGE
   nginx-777bc7b6d7-mbdn8   member1   1/1     Running     0          61m
   ```
-* 检查多集群 Service ip。
+* 检查 `member1` 集群中的 Service ip。
   ```sh
   $ karmadactl get svc --operation-scope members
   NAME                    CLUSTER   TYPE        CLUSTER-IP        EXTERNAL-IP   PORT(S)   AGE   ADOPTION
-  derived-nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
+  nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* 使用 hey 请求多集群 Service，以提高 nginx Pod 的 CPU 使用率。
+* 通过 `hey` 工具从 `member1` 集群访问该服务，以在两个集群上同时拉高 nginx Pod 的 CPU 使用率。
   ```sh
   docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
