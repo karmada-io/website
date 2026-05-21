@@ -504,12 +504,17 @@ data:
 ```
 
 ### PlaintextOverrider
-The `PlaintextOverrider` is a simple overrider that overrides target fields according to path, operator and value, just like `kubectl patch`.
+The `PlaintextOverrider` is a simple overrider that overrides target fields according to path, operator and value, just like `kubectl patch`. Its behavior follows the [RFC 6902 (JSON Patch)](https://datatracker.ietf.org/doc/html/rfc6902/).
 
 The allowed operations are as follows:
-- `add`: appends one or more elements to the resources.
-- `remove`: removes one or more elements from the resources.
-- `replace`: replaces one or more elements from the resources.
+- `add`: appends one or more elements to the resources. The operation object MUST contain a "value" member whose content specifies the value to be added.
+  - If the target location specifies an array index, a new value is inserted into the array at the specified index.
+  - If the target location specifies an object member that does not already exist, a new member is added to the object.
+  - If the target location specifies an object member that does exist, that member's value is replaced.
+- `remove`: removes one or more elements from the resources. The target location MUST exist for the operation to be successful. If removing an element from an array, any elements above the specified index are shifted one position to the left.
+- `replace`: replaces one or more elements from the resources. The operation object MUST contain a "value" member whose content specifies the replacement value. The target location MUST exist for the operation to be successful.
+
+**Example 1: replace configmap data when propagating resources to specific clusters.**
 
 Suppose we create a configmap named `myconfigmap`.
 ```yaml
@@ -522,7 +527,8 @@ data:
   example: 1
 ```
 
-**Example 1: replace configmap data when propagating resources to specific clusters.**
+And there is an OverridePolicy with `overrideRules` as follows:
+
 ```yaml
 apiVersion: policy.karmada.io/v1alpha1
 kind: OverridePolicy
@@ -548,6 +554,74 @@ metadata:
   #...
 data:
   example: 2
+```
+
+**Example 2: add/replace/remove container env for workloads when propagating resources to specific clusters.**
+
+Suppose we create a deployment named `myapp`.
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: region
+          value: "region1"
+        - name: zone
+          value: "zone1"
+```
+
+And there is an OverridePolicy with `overrideRules` as follows:
+
+```yaml
+apiVersion: policy.karmada.io/v1alpha1
+kind: OverridePolicy
+metadata:
+  name: example
+spec:
+  #...
+  overrideRules:
+    - overriders:
+        plaintext:
+          - path: /spec/template/spec/containers/0/env/-
+            operator: add
+            value: 
+              name: cluster
+              value: "cluster1"
+          - path: /spec/template/spec/containers/0/env/0
+            operator: add
+            value:
+              name: provider
+              value: "provider1"
+          - path: /spec/template/spec/containers/0/env/1
+            operator: replace
+            value:
+              name: region
+              value: "region2"
+          - path: /spec/template/spec/containers/0/env/2
+            operator: remove
+```
+
+Let's analyze the effect of these override rules one by one:
+- The first rule adds a new environment variable `cluster=cluster1` to the end of the container environment variable list.
+- The second rule adds a new environment variable `provider=provider1` at the 0th position of the container environment variable list, and the original environment variables are moved back one position respectively.
+- The third rule replaces the environment variable at the 1st position (originally `region=region1`) with `region=region2`.
+- The fourth rule removes the environment variable at the 2nd position (originally `zone=zone1`).
+
+After the policy is applied for `myapp`, the container environment variables will be:
+```yaml
+      containers:
+      - env:
+        - name: provider
+          value: "provider1"
+        - name: region
+          value: "region2"
+        - name: cluster
+          value: "cluster1"
 ```
 
 [1]: https://github.com/karmada-io/karmada/blob/c37bedc1cfe5a98b47703464fed837380c90902f/pkg/apis/policy/v1alpha1/override_types.go#L13
