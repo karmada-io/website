@@ -1,15 +1,15 @@
 parts:
-  - name: App Resources
+  - name: Apps Resources
     chapters:
       - name: WorkloadRebalancer
         group: "apps.karmada.io"
         version: v1alpha1
-  - name: AutoScaling Resources
+  - name: Autoscaling Resources
     chapters:
-      - name: FederatedHPA
+      - name: CronFederatedHPA
         group: "autoscaling.karmada.io"
         version: v1alpha1
-      - name: CronFederatedHPA
+      - name: FederatedHPA
         group: "autoscaling.karmada.io"
         version: v1alpha1
   - name: Cluster Resources
@@ -35,22 +35,22 @@ parts:
         version: v1alpha1
   - name: Policy Resources
     chapters:
-      - name: FederatedResourceQuota
-        group: "policy.karmada.io"
-        version: v1alpha1
-      - name: OverridePolicy
-        group: "policy.karmada.io"
-        version: v1alpha1
       - name: ClusterOverridePolicy
-        group: "policy.karmada.io"
-        version: v1alpha1
-      - name: PropagationPolicy
         group: "policy.karmada.io"
         version: v1alpha1
       - name: ClusterPropagationPolicy
         group: "policy.karmada.io"
         version: v1alpha1
       - name: ClusterTaintPolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: FederatedResourceQuota
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: OverridePolicy
+        group: "policy.karmada.io"
+        version: v1alpha1
+      - name: PropagationPolicy
         group: "policy.karmada.io"
         version: v1alpha1
   - name: Remedy Resources
@@ -68,10 +68,10 @@ parts:
       - name: Work
         group: "work.karmada.io"
         version: v1alpha1
-      - name: ResourceBinding
+      - name: ClusterResourceBinding
         group: "work.karmada.io"
         version: v1alpha2
-      - name: ClusterResourceBinding
+      - name: ResourceBinding
         group: "work.karmada.io"
         version: v1alpha2
   - name: Common Definitions
