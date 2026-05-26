@@ -41,8 +41,9 @@ For each definition (including resources, which are definitions attached to a Gr
 
 ### Script
 
-1. update the `config/current/toc.yaml` file according to the latest Karmada API resources.
-2. generate the Karmada latest API resources documentation by running the following script:
+Generate the Karmada latest API resources documentation by running the following script:
 ```shell
 $ hack/reference-api.sh
 ```
+
+It will pull the latest `swagger.json` from the Karmada repo, use the `hack/extract-toc.sh` script to extract Karmada API resources from `swagger.json` and update them to `config/current/toc.yaml`, and finally generate the Karmada API resources documentation.
