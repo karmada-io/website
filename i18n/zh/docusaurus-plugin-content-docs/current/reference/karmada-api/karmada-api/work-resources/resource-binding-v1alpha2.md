@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "ResourceBinding represents a binding of a kubernetes resource with a propagation policy."
 title: "ResourceBinding v1alpha2"
-weight: 2
+weight: 3
 auto_generated: true
 ---
 
@@ -443,6 +443,42 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
     - **placement.clusterAffinities.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
 
       LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
+
+    - **placement.clusterAffinities.overflowAffinities** ([]OverflowClusterAffinity)
+
+      OverflowAffinities defines additional cluster groups that the scheduler can progressively include when the primary group (defined by the inline ClusterAffinity) has insufficient resources. Groups are expanded in order and contracted in reverse during scale-down. Can only be used together with the inline ClusterAffinity (the inline ClusterAffinity serves as the primary/preferred group). If a cluster appears in multiple OverflowClusterAffinity entries, it is scheduled according to the first entry in which it appears; subsequent occurrences of the same cluster are ignored.
+
+      <a name="OverflowClusterAffinity"></a>
+
+      *OverflowClusterAffinity represents an overflow tier of candidate clusters.*
+
+      - **placement.clusterAffinities.overflowAffinities.affinityName** (string), required
+
+        AffinityName is the name of the cluster group.
+
+      - **placement.clusterAffinities.overflowAffinities.clusterNames** ([]string)
+
+        ClusterNames is the list of clusters to be selected.
+
+      - **placement.clusterAffinities.overflowAffinities.exclude** ([]string)
+
+        ExcludedClusters is the list of clusters to be ignored.
+
+      - **placement.clusterAffinities.overflowAffinities.fieldSelector** (FieldSelector)
+
+        FieldSelector is a filter to select member clusters by fields. The key(field) of the match expression should be 'provider', 'region', or 'zone', and the operator of the match expression should be 'In' or 'NotIn'. If non-nil and non-empty, only the clusters match this filter will be selected.
+
+        <a name="FieldSelector"></a>
+
+        *FieldSelector is a field filter.*
+
+        - **placement.clusterAffinities.overflowAffinities.fieldSelector.matchExpressions** ([][NodeSelectorRequirement](../common-definitions/node-selector-requirement#nodeselectorrequirement))
+
+          A list of field selector requirements.
+
+      - **placement.clusterAffinities.overflowAffinities.labelSelector** ([LabelSelector](../common-definitions/label-selector#labelselector))
+
+        LabelSelector is a filter to select member clusters by labels. If non-nil and non-empty, only the clusters match this filter will be selected.
 
   - **placement.clusterAffinity** (ClusterAffinity)
 

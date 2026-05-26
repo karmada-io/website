@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "CronFederatedHPA represents a collection of repeating schedule to scale replica number of a specific workload."
 title: "CronFederatedHPA v1alpha1"
-weight: 2
+weight: 1
 auto_generated: true
 ---
 
@@ -30,11 +30,11 @@ CronFederatedHPA represents a collection of repeating schedule to scale replica 
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([CronFederatedHPASpec](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpaspec)), required
+- **spec** ([CronFederatedHPASpec](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpaspec)), required
 
   Spec is the specification of the CronFederatedHPA.
 
-- **status** ([CronFederatedHPAStatus](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpastatus))
+- **status** ([CronFederatedHPAStatus](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpastatus))
 
   Status is the current status of the CronFederatedHPA.
 
@@ -212,7 +212,7 @@ CronFederatedHPAList contains a list of CronFederatedHPA.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)), required
+- **items** ([][CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)), required
 
 ## Operations 
 
@@ -240,7 +240,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 ### `get` read status of the specified CronFederatedHPA
 
@@ -264,7 +264,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
 ### `list` list or watch objects of kind CronFederatedHPA
 
@@ -320,7 +320,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/cronfederatedhpas
 
 #### Response
 
-200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
+200 ([CronFederatedHPAList](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
 ### `list` list or watch objects of kind CronFederatedHPA
 
@@ -380,7 +380,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
 #### Response
 
-200 ([CronFederatedHPAList](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
+200 ([CronFederatedHPAList](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpalist)): OK
 
 ### `create` create a CronFederatedHPA
 
@@ -394,7 +394,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederate
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
 
   
 
@@ -416,11 +416,11 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederate
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
+201 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
-202 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Accepted
+202 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Accepted
 
 ### `update` replace the specified CronFederatedHPA
 
@@ -438,7 +438,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
 
   
 
@@ -460,9 +460,9 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
+201 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
 ### `update` replace status of the specified CronFederatedHPA
 
@@ -480,7 +480,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
+- **body**: [CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa), required
 
   
 
@@ -502,9 +502,9 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederated
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
+201 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
 ### `patch` partially update the specified CronFederatedHPA
 
@@ -548,9 +548,9 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederat
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
+201 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
 ### `patch` partially update status of the specified CronFederatedHPA
 
@@ -594,9 +594,9 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/cronfederat
 
 #### Response
 
-200 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
+200 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): OK
 
-201 ([CronFederatedHPA](../auto-scaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
+201 ([CronFederatedHPA](../autoscaling-resources/cron-federated-hpa-v1alpha1#cronfederatedhpa)): Created
 
 ### `delete` delete a CronFederatedHPA
 

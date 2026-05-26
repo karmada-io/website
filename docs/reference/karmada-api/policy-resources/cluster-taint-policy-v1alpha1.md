@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "ClusterTaintPolicy automates taint management on Cluster objects based on declarative conditions."
 title: "ClusterTaintPolicy v1alpha1"
-weight: 6
+weight: 3
 auto_generated: true
 ---
 

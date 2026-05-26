@@ -37,6 +37,9 @@ LOCAL_FILENAME=$MODULE_ROOT/api/current/swagger.json
 mkdir -p $MODULE_ROOT/api/current
 curl -o "$LOCAL_FILENAME" "$GITHUB_RAW_URL"
 
+# Extract toc.yaml from swagger.json
+bash "$MODULE_ROOT/hack/extract-toc.sh" "$LOCAL_FILENAME" "$MODULE_ROOT/config/current/toc.yaml"
+
 VERSION="current" make
 
 sed -i 's/\r//g' `find $MODULE_ROOT/kwebsite -name "*.md"`

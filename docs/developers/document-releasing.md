@@ -19,92 +19,38 @@ This issue is to track documents which needs to sync zh for release 1.x:
 Before releasing, we need to update reference docs in the website, which includes CLI references, component references and API documentation. The whole process is done by scripts automatically.
 Follow these steps to update reference docs.
 
-1. Clone `karmada-io/karmada` and `karmada-io/website` to the local environment. It's recommended to step up these two projects in the same folder.
+1. Clone `karmada-io/website` to the local environment.
 
-```text
-$ git clone https://github.com/karmada-io/karmada.git
-$ git clone https://github.com/karmada-io/website.git
-
-
-$ tree -L 1
-#.
-#├── karmada
-#├── website
+```bash
+git clone https://github.com/karmada-io/website.git
 ```
 
-2. Run generate command in karmada root dir to generate CLI references.
+2. Generate reference docs.
 
-```shell
-cd karmada/
-go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/docs/reference/karmadactl/karmadactl-commands/
-go run ./hack/tools/genkarmadactldocs/gen_karmadactl_docs.go ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/karmadactl/karmadactl-commands/
-```
-
-3. Generate reference docs of each component.
-
-```shell
-cd karmada/
-go build ./hack/tools/gencomponentdocs/.
-
-./gencomponentdocs ../website/docs/reference/components/ all
-./gencomponentdocs ../website/i18n/zh/docusaurus-plugin-content-docs/current/reference/components/ all
-```
-
-4. Generate API docs.
-
-Enter the website/infra/gen-resourcesdocs directory.
-```shell
-cd website/infra/gen-resourcesdocs
-```
-Modify the file `config/current/toc.yaml` according to the guidance in `README.md`.
-Run the script `hack/reference-api.sh`.
-```shell
-hack/reference-api.sh
+```bash
+$ cd website/infra/document-releasing
+$ hack/update-reference.sh
 ```
 
 ## Setup release-1.x(manually)
 
-1. Update versions.json
+The whole process is done by scripts automatically. Follow these steps to setup release-1.x.
 
-```shell
-$ cd website/
-$ vim versions.json
-
-[
-  v1.5  # add a new version tag
-  v1.4
-  v1.3
-]
+Take release-1.18 as an example, the process is as follows:
+```bash
+# website/infra/document-releasing
+$ hack/release.sh v1.18
 ```
 
-2. Update versioned_docs
+## Stop maintaining the old release branch(manually)
 
-```shell
-mkdir versioned_docs/version-v1.5
-cp docs/* versioned_docs/version-v1.5 -r
-```
+The Karmada website only maintains the latest 6 release versions. When a new version is released, older versions will no longer be maintained. This step removes the outdated version to ensure only the latest 6 versions are kept.
 
-3. Update versioned_sidebars
+First, confirm the version to be removed (e.g., v1.12), then run the following command:
 
-```shell
-cp versioned_sidebars/version-v1.4-sidebars.json versioned_sidebars/version-v1.5-sidebars.json
-sed -i'' -e "s/version-v1.4/version-v1.5/g" versioned_sidebars/version-v1.5-sidebars.json
-```
-
-**Note: update `version-v1.5-sidebars.json` based on `sidebars.js`.**
-
-4. Update versioned_docs for zh
-
-```shell
-mkdir i18n/zh/docusaurus-plugin-content-docs/version-v1.5
-cp i18n/zh/docusaurus-plugin-content-docs/current/*  i18n/zh/docusaurus-plugin-content-docs/version-v1.5 -r
-```
-
-5. Update versioned_sidebars for zh
-
-```shell
-cp i18n/zh/docusaurus-plugin-content-docs/current.json i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
-sed -i'' -e "s/Next/v1.5/g" i18n/zh/docusaurus-plugin-content-docs/version-v1.5.json
+```bash
+# website/infra/document-releasing
+$ hack/prune-release.sh v1.12
 ```
 
 ## Check the difference of website and send a pull request(manually)

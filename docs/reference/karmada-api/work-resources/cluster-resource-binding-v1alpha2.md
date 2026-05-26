@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "ClusterResourceBinding represents a binding of a kubernetes resource with a ClusterPropagationPolicy."
 title: "ClusterResourceBinding v1alpha2"
-weight: 3
+weight: 2
 auto_generated: true
 ---
 

@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "FederatedResourceQuota sets aggregate quota restrictions enforced per namespace across all clusters."
 title: "FederatedResourceQuota v1alpha1"
-weight: 1
+weight: 4
 auto_generated: true
 ---
 

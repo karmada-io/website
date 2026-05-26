@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "FederatedHPA is centralized HPA that can aggregate the metrics in multiple clusters."
 title: "FederatedHPA v1alpha1"
-weight: 1
+weight: 2
 auto_generated: true
 ---
 
@@ -30,7 +30,7 @@ FederatedHPA is centralized HPA that can aggregate the metrics in multiple clust
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([FederatedHPASpec](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpaspec)), required
+- **spec** ([FederatedHPASpec](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpaspec)), required
 
   Spec is the specification of the FederatedHPA.
 
@@ -741,7 +741,7 @@ FederatedHPAList contains a list of FederatedHPA.
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)), required
+- **items** ([][FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)), required
 
 ## Operations 
 
@@ -769,7 +769,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 ### `get` read status of the specified FederatedHPA
 
@@ -793,7 +793,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
 ### `list` list or watch objects of kind FederatedHPA
 
@@ -849,7 +849,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/federatedhpas
 
 #### Response
 
-200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
+200 ([FederatedHPAList](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
 
 ### `list` list or watch objects of kind FederatedHPA
 
@@ -909,7 +909,7 @@ GET /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Response
 
-200 ([FederatedHPAList](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
+200 ([FederatedHPAList](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpalist)): OK
 
 ### `create` create a FederatedHPA
 
@@ -923,7 +923,7 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpa
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
+- **body**: [FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa), required
 
   
 
@@ -945,11 +945,11 @@ POST /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpa
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
+201 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
-202 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Accepted
+202 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Accepted
 
 ### `update` replace the specified FederatedHPA
 
@@ -967,7 +967,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
+- **body**: [FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa), required
 
   
 
@@ -989,9 +989,9 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
+201 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
 ### `update` replace status of the specified FederatedHPA
 
@@ -1009,7 +1009,7 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
   [namespace](../common-parameter/common-parameters#namespace)
 
-- **body**: [FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa), required
+- **body**: [FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa), required
 
   
 
@@ -1031,9 +1031,9 @@ PUT /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhpas
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
+201 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
 ### `patch` partially update the specified FederatedHPA
 
@@ -1077,9 +1077,9 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhp
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
+201 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
 ### `patch` partially update status of the specified FederatedHPA
 
@@ -1123,9 +1123,9 @@ PATCH /apis/autoscaling.karmada.io/v1alpha1/namespaces/`{namespace}`/federatedhp
 
 #### Response
 
-200 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
+200 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): OK
 
-201 ([FederatedHPA](../auto-scaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
+201 ([FederatedHPA](../autoscaling-resources/federated-hpa-v1alpha1#federatedhpa)): Created
 
 ### `delete` delete a FederatedHPA
 
