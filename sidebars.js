@@ -381,23 +381,23 @@ module.exports = {
                     items: [
                         {
                             type: "category",
-                            label: "App Resources",
+                            label: "Apps Resources",
                             link: {
                                 type: 'generated-index',
                             },
                             items: [
-                                "reference/karmada-api/app-resources/workload-rebalancer-v1alpha1",
+                                "reference/karmada-api/apps-resources/workload-rebalancer-v1alpha1",
                             ],
                         },
                         {
                             type: "category",
-                            label: "Auto Scaling Resources",
+                            label: "Autoscaling Resources",
                             link: {
                                 type: 'generated-index',
                             },
                             items: [
-                                "reference/karmada-api/auto-scaling-resources/cron-federated-hpa-v1alpha1",
-                                "reference/karmada-api/auto-scaling-resources/federated-hpa-v1alpha1",
+                                "reference/karmada-api/autoscaling-resources/cron-federated-hpa-v1alpha1",
+                                "reference/karmada-api/autoscaling-resources/federated-hpa-v1alpha1",
                             ],
                         },
                         {

@@ -1,12 +1,12 @@
 ---
 api_metadata:
-  apiVersion: "work.karmada.io/v1alpha2"
-  import: "github.com/karmada-io/karmada/pkg/apis/work/v1alpha2"
-  kind: "ClusterResourceBinding"
+  apiVersion: "apps.karmada.io/v1alpha1"
+  import: "github.com/karmada-io/karmada/pkg/apis/apps/v1alpha1"
+  kind: "WorkloadRebalancer"
 content_type: "api_reference"
-description: "ClusterResourceBinding represents a binding of a kubernetes resource with a ClusterPropagationPolicy."
-title: "ClusterResourceBinding v1alpha2"
-weight: 3
+description: "WorkloadRebalancer represents the desired behavior and status of a job which can enforces a resource rebalance."
+title: "WorkloadRebalancer v1alpha1"
+weight: 1
 auto_generated: true
 ---
 
@@ -14,61 +14,153 @@ auto_generated: true
 [//]: # (which is forked from [reference-docs](https://github.com/kubernetes-sigs/reference-docs.)
 [//]: # (To update the reference content, please follow the `reference-api.sh`.)
 
-`apiVersion: work.karmada.io/v1alpha2`
+`apiVersion: apps.karmada.io/v1alpha1`
 
-`import "github.com/karmada-io/karmada/pkg/apis/work/v1alpha2"`
+`import "github.com/karmada-io/karmada/pkg/apis/apps/v1alpha1"`
 
-## ClusterResourceBinding 
+## WorkloadRebalancer 
 
-ClusterResourceBinding represents a binding of a kubernetes resource with a ClusterPropagationPolicy.
+WorkloadRebalancer represents the desired behavior and status of a job which can enforces a resource rebalance.
 
 <hr/>
 
-- **apiVersion**: work.karmada.io/v1alpha2
+- **apiVersion**: apps.karmada.io/v1alpha1
 
-- **kind**: ClusterResourceBinding
+- **kind**: WorkloadRebalancer
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([ResourceBindingSpec](../work-resources/resource-binding-v1alpha2#resourcebindingspec)), required
+- **spec** ([WorkloadRebalancerSpec](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerspec)), required
 
-  Spec represents the desired behavior.
+  Spec represents the specification of the desired behavior of WorkloadRebalancer.
 
-- **status** ([ResourceBindingStatus](../work-resources/resource-binding-v1alpha2#resourcebindingstatus))
+- **status** ([WorkloadRebalancerStatus](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerstatus))
 
-  Status represents the most recently observed status of the ResourceBinding.
+  Status represents the status of WorkloadRebalancer.
 
-## ClusterResourceBindingList 
+## WorkloadRebalancerSpec 
 
-ClusterResourceBindingList contains a list of ClusterResourceBinding.
+WorkloadRebalancerSpec represents the specification of the desired behavior of Reschedule.
 
 <hr/>
 
-- **apiVersion**: work.karmada.io/v1alpha2
+- **workloads** ([]ObjectReference), required
 
-- **kind**: ClusterResourceBindingList
+  Workloads used to specify the list of expected resource. Nil or empty list is not allowed.
+
+  <a name="ObjectReference"></a>
+
+  *ObjectReference the expected resource.*
+
+  - **workloads.apiVersion** (string), required
+
+    APIVersion represents the API version of the target resource.
+
+  - **workloads.kind** (string), required
+
+    Kind represents the Kind of the target resource.
+
+  - **workloads.name** (string), required
+
+    Name of the target resource.
+
+  - **workloads.namespace** (string)
+
+    Namespace of the target resource. Default is empty, which means it is a non-namespacescoped resource.
+
+- **ttlSecondsAfterFinished** (int32)
+
+  TTLSecondsAfterFinished limits the lifetime of a WorkloadRebalancer that has finished execution (means each target workload is finished with result of Successful or Failed). If this field is set, ttlSecondsAfterFinished after the WorkloadRebalancer finishes, it is eligible to be automatically deleted. If this field is unset, the WorkloadRebalancer won't be automatically deleted. If this field is set to zero, the WorkloadRebalancer becomes eligible to be deleted immediately after it finishes.
+
+## WorkloadRebalancerStatus 
+
+WorkloadRebalancerStatus contains information about the current status of a WorkloadRebalancer updated periodically by schedule trigger controller.
+
+<hr/>
+
+- **finishTime** (Time)
+
+  FinishTime represents the finish time of rebalancer.
+
+  <a name="Time"></a>
+
+  *Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.*
+
+- **observedGeneration** (int64)
+
+  ObservedGeneration is the generation(.metadata.generation) observed by the controller. If ObservedGeneration is less than the generation in metadata means the controller hasn't confirmed the rebalance result or hasn't done the rebalance yet.
+
+- **observedWorkloads** ([]ObservedWorkload)
+
+  ObservedWorkloads contains information about the execution states and messages of target resources.
+
+  <a name="ObservedWorkload"></a>
+
+  *ObservedWorkload the observed resource.*
+
+  - **observedWorkloads.workload** (ObjectReference), required
+
+    Workload the observed resource.
+
+    <a name="ObjectReference"></a>
+
+    *ObjectReference the expected resource.*
+
+    - **observedWorkloads.workload.apiVersion** (string), required
+
+      APIVersion represents the API version of the target resource.
+
+    - **observedWorkloads.workload.kind** (string), required
+
+      Kind represents the Kind of the target resource.
+
+    - **observedWorkloads.workload.name** (string), required
+
+      Name of the target resource.
+
+    - **observedWorkloads.workload.namespace** (string)
+
+      Namespace of the target resource. Default is empty, which means it is a non-namespacescoped resource.
+
+  - **observedWorkloads.reason** (string)
+
+    Reason represents a machine-readable description of why this resource rebalanced failed.
+
+  - **observedWorkloads.result** (string)
+
+    Result the observed rebalance result of resource.
+
+## WorkloadRebalancerList 
+
+WorkloadRebalancerList contains a list of WorkloadRebalancer
+
+<hr/>
+
+- **apiVersion**: apps.karmada.io/v1alpha1
+
+- **kind**: WorkloadRebalancerList
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)), required
+- **items** ([][WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)), required
 
-  Items is the list of ClusterResourceBinding.
+  Items holds a list of WorkloadRebalancer.
 
 ## Operations 
 
 <hr/>
 
-### `get` read the specified ClusterResourceBinding
+### `get` read the specified WorkloadRebalancer
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
 - **pretty** (*in query*): string
 
@@ -76,19 +168,19 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-### `get` read status of the specified ClusterResourceBinding
+### `get` read status of the specified WorkloadRebalancer
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
 - **pretty** (*in query*): string
 
@@ -96,13 +188,13 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-### `list` list or watch objects of kind ClusterResourceBinding
+### `list` list or watch objects of kind WorkloadRebalancer
 
 #### HTTP Request
 
-GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings
+GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Parameters
 
@@ -152,17 +244,17 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
 #### Response
 
-200 ([ClusterResourceBindingList](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebindinglist)): OK
+200 ([WorkloadRebalancerList](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerlist)): OK
 
-### `create` create a ClusterResourceBinding
+### `create` create a WorkloadRebalancer
 
 #### HTTP Request
 
-POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
+POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Parameters
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -184,25 +276,25 @@ POST /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-202 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Accepted
+202 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Accepted
 
-### `update` replace the specified ClusterResourceBinding
+### `update` replace the specified WorkloadRebalancer
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -224,23 +316,23 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `update` replace status of the specified ClusterResourceBinding
+### `update` replace status of the specified WorkloadRebalancer
 
 #### HTTP Request
 
-PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
+PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
-- **body**: [ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -262,21 +354,21 @@ PUT /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `patch` partially update the specified ClusterResourceBinding
+### `patch` partially update the specified WorkloadRebalancer
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
 - **body**: [Patch](../common-definitions/patch#patch), required
 
@@ -304,21 +396,21 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `patch` partially update status of the specified ClusterResourceBinding
+### `patch` partially update status of the specified WorkloadRebalancer
 
 #### HTTP Request
 
-PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
+PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
 - **body**: [Patch](../common-definitions/patch#patch), required
 
@@ -346,21 +438,21 @@ PATCH /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`/status
 
 #### Response
 
-200 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([ClusterResourceBinding](../work-resources/cluster-resource-binding-v1alpha2#clusterresourcebinding)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-### `delete` delete a ClusterResourceBinding
+### `delete` delete a WorkloadRebalancer
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
+DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Parameters
 
 - **name** (*in path*): string, required
 
-  name of the ClusterResourceBinding
+  name of the WorkloadRebalancer
 
 - **body**: [DeleteOptions](../common-definitions/delete-options#deleteoptions)
 
@@ -392,11 +484,11 @@ DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings/`{name}`
 
 202 ([Status](../common-definitions/status#status)): Accepted
 
-### `deletecollection` delete collection of ClusterResourceBinding
+### `deletecollection` delete collection of WorkloadRebalancer
 
 #### HTTP Request
 
-DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings
+DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Parameters
 

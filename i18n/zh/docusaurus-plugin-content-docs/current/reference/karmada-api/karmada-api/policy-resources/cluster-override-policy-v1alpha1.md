@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "ClusterOverridePolicy represents the cluster-wide policy that overrides a group of resources to one or more clusters."
 title: "ClusterOverridePolicy v1alpha1"
-weight: 3
+weight: 1
 auto_generated: true
 ---
 

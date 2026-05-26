@@ -30,11 +30,11 @@ WorkloadRebalancer represents the desired behavior and status of a job which can
 
 - **metadata** ([ObjectMeta](../common-definitions/object-meta#objectmeta))
 
-- **spec** ([WorkloadRebalancerSpec](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerspec)), required
+- **spec** ([WorkloadRebalancerSpec](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerspec)), required
 
   Spec represents the specification of the desired behavior of WorkloadRebalancer.
 
-- **status** ([WorkloadRebalancerStatus](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerstatus))
+- **status** ([WorkloadRebalancerStatus](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerstatus))
 
   Status represents the status of WorkloadRebalancer.
 
@@ -142,7 +142,7 @@ WorkloadRebalancerList contains a list of WorkloadRebalancer
 
 - **metadata** ([ListMeta](../common-definitions/list-meta#listmeta))
 
-- **items** ([][WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)), required
+- **items** ([][WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)), required
 
   Items holds a list of WorkloadRebalancer.
 
@@ -168,7 +168,7 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 ### `get` read status of the specified WorkloadRebalancer
 
@@ -188,7 +188,7 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
 ### `list` list or watch objects of kind WorkloadRebalancer
 
@@ -244,7 +244,7 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Response
 
-200 ([WorkloadRebalancerList](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancerlist)): OK
+200 ([WorkloadRebalancerList](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancerlist)): OK
 
 ### `create` create a WorkloadRebalancer
 
@@ -254,7 +254,7 @@ POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Parameters
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -276,11 +276,11 @@ POST /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
-202 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Accepted
+202 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Accepted
 
 ### `update` replace the specified WorkloadRebalancer
 
@@ -294,7 +294,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
   name of the WorkloadRebalancer
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -316,9 +316,9 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
 ### `update` replace status of the specified WorkloadRebalancer
 
@@ -332,7 +332,7 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
   name of the WorkloadRebalancer
 
-- **body**: [WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
+- **body**: [WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer), required
 
   
 
@@ -354,9 +354,9 @@ PUT /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
 ### `patch` partially update the specified WorkloadRebalancer
 
@@ -396,9 +396,9 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
 ### `patch` partially update status of the specified WorkloadRebalancer
 
@@ -438,9 +438,9 @@ PATCH /apis/apps.karmada.io/v1alpha1/workloadrebalancers/`{name}`/status
 
 #### Response
 
-200 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
+200 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): OK
 
-201 ([WorkloadRebalancer](../app-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
+201 ([WorkloadRebalancer](../apps-resources/workload-rebalancer-v1alpha1#workloadrebalancer)): Created
 
 ### `delete` delete a WorkloadRebalancer
 
