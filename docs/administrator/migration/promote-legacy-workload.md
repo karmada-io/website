@@ -2,7 +2,7 @@
 title: Promote legacy workload
 ---
 
-Assume that there is a member cluster where a workload (like Deployment) is deployed but not managed by Karmada, we can use the `karmadactl promote` command to let Karmada take over this workload directly and not to cause its pods to restart.
+Assuming that there is a member cluster where a workload (like Deployment) is deployed but not managed by Karmada, we can use the `karmadactl promote` command to let Karmada take over this workload directly and not cause its pods to restart.
 
 ## Example
 
@@ -55,6 +55,6 @@ Most steps are same as those for clusters in `Push` mode. Only the flags of the 
 karmadactl promote deployment nginx -n default -C cluster1 --cluster-kubeconfig=<CLUSTER_KUBECONFIG_PATH>
 ```
 
-For more flags and example about the command, you can use `karmadactl promote --help`.
+For more flags and examples for the command, you can use `karmadactl promote --help`.
 
-> Note: As the version upgrade of resources in Kubernetes is in progress, the apiserver of Karmada control plane cloud be different from member clusters. To avoid compatibility issues, you can specify the GVK of a resource, such as replacing `deployment` with `deployment.v1.apps`.
+> Note: During a version upgrade of a resource in Kubernetes, the API versions in Karmada control plane could be different from those in the member clusters. To avoid compatibility issues, you can specify the GVK of a resource, such as replacing `deployment` with `deployment.v1.apps`.
