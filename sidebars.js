@@ -37,6 +37,14 @@ module.exports = {
                 "tutorials/resource-migration",
                 "tutorials/access-service-across-clusters",
                 "tutorials/workload-rebalancer",
+                {
+                    type: "category",
+                    label: "Karmadactl Operations",
+                    items: [
+                        "tutorials/karmadactl/operation-scope",
+                        "tutorials/karmadactl/auto-completion",
+                    ],
+                },
             ],
         },
         {
