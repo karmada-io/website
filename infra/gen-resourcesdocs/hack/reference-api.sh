@@ -47,6 +47,8 @@ sed -i 's/\r//g' `find $MODULE_ROOT/kwebsite -name "*.md"`
 sed -i '/^$/N;/^\n$/D' `find $MODULE_ROOT/kwebsite -name "*.md"`
 
 rm -rf $REPO_ROOT/docs/reference/karmada-api
+rm -rf $REPO_ROOT/i18n/zh/docusaurus-plugin-content-docs/current/reference/karmada-api
 mv -f $MODULE_ROOT/kwebsite/content/en/docs $REPO_ROOT/docs/reference/karmada-api
+cp -r $REPO_ROOT/docs/reference/karmada-api $REPO_ROOT/i18n/zh/docusaurus-plugin-content-docs/current/reference/
 rm -rf $MODULE_ROOT/kwebsite
 rm -rf $MODULE_ROOT/api
