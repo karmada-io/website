@@ -77,6 +77,7 @@ module.exports = {
                         "userguide/scheduling/cluster-resources",
                         "userguide/scheduling/workload-rebalancer",
                         "userguide/scheduling/priority-scheduling",
+                        "userguide/scheduling/scheduling-overcommit-protection",
                     ],
                 },
                 {
