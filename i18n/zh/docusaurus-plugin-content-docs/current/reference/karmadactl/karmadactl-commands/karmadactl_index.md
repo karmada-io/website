@@ -18,7 +18,7 @@ title: Karmadactl Commands
 
  Note that the delete command does NOT do resource version checks, so if someone submits an update to a resource right when you submit a delete, their update will be lost along with the rest of the resource.
 
- After a CustomResourceDefinition is deleted, invalidation of discovery cache may take up to 6 hours. If you don't want to wait, you might want to run "[1]karmadactl api-resources" to refresh the discovery cache.
+ After a CustomResourceDefinition is deleted, invalidation of discovery cache may take up to 6 hours. If you don't want to wait, you might want to run "karmadactl api-resources" to refresh the discovery cache.
 * [karmadactl edit](karmadactl_edit.md)	 - Edit a resource from the default editor.
 
  The edit command allows you to directly edit any API resource you can retrieve via the command-line tools. It will open the editor defined by your KUBE_EDITOR, or EDITOR environment variables, or fall back to 'vi' for Linux or 'notepad' for Windows. When attempting to open the editor, it will first attempt to use the shell that has been defined in the 'SHELL' environment variable. If this is not defined, the default shell will be used, which is '/bin/bash' for Linux or 'cmd' for Windows.
@@ -110,15 +110,15 @@ title: Karmadactl Commands
 
  Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.
 
- Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use %[1]s apply --all-clusters'.
+ Note: It implements the function of 'kubectl apply' by default. If you want to propagate them into member clusters, please use karmadactl apply --all-clusters.
 * [karmadactl patch](karmadactl_patch.md)	 - Update fields of a resource using strategic merge patch, a JSON merge patch, or a JSON patch.
 
  JSON and YAML formats are accepted.
 
  Note: Strategic merge patch is not supported for custom resources.
-* [karmadactl promote](karmadactl_promote.md)	 - Promote resources from legacy clusters to Karmada control plane. Requires the cluster has been joined or registered.
+* [karmadactl promote](karmadactl_promote.md)	 - Promote resources from legacy clusters to the Karmada control plane. Requires the cluster to have been joined or registered.
 
- If the resource already exists in Karmada control plane, please edit PropagationPolicy and OverridePolicy to propagate it.
+ If the resource already exists in the Karmada control plane, please edit PropagationPolicy and OverridePolicy to propagate it.
 * [karmadactl top](karmadactl_top.md)	 - Display Resource (CPU/Memory) usage of member clusters.
 
  The top command allows you to see the resource consumption for pods of member clusters.

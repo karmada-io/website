@@ -16,7 +16,7 @@ Delete resources by file names, stdin, resources and names, or by resources and 
 
  Note that the delete command does NOT do resource version checks, so if someone submits an update to a resource right when you submit a delete, their update will be lost along with the rest of the resource.
 
- After a CustomResourceDefinition is deleted, invalidation of discovery cache may take up to 6 hours. If you don't want to wait, you might want to run "[1]karmadactl api-resources" to refresh the discovery cache.
+ After a CustomResourceDefinition is deleted, invalidation of discovery cache may take up to 6 hours. If you don't want to wait, you might want to run "karmadactl api-resources" to refresh the discovery cache.
 
 ```
 karmadactl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --all)])
@@ -26,31 +26,31 @@ karmadactl delete ([-f FILENAME] | [-k DIRECTORY] | TYPE [(NAME | -l label | --a
 
 ```
   # Delete a propagationpolicy using the type and name specified in propagationpolicy.json
-  [1]karmadactl delete -f ./propagationpolicy.json
+  karmadactl delete -f ./propagationpolicy.json
   
   # Delete resources from a directory containing kustomization.yaml - e.g. dir/kustomization.yaml
-  [1]%!s(MISSING) delete -k dir
+  karmadactl delete -k dir
   
   # Delete resources from all files that end with '.json'
-  [1]%!s(MISSING) delete -f '*.json'
+  karmadactl delete -f '*.json'
   
   # Delete a propagationpolicy based on the type and name in the JSON passed into stdin
-  cat propagationpolicy.json | [1]%!s(MISSING) delete -f -
+  cat propagationpolicy.json | karmadactl delete -f -
   
   # Delete propagationpolicies and services with same names "baz" and "foo"
-  [1]%!s(MISSING) delete propagationpolicy,service baz foo
+  karmadactl delete propagationpolicy,service baz foo
   
   # Delete propagationpolicies and services with label name=myLabel
-  [1]%!s(MISSING) delete propagationpolicies,services -l name=myLabel
+  karmadactl delete propagationpolicies,services -l name=myLabel
   
   # Delete a propagationpolicy with minimal delay
-  [1]%!s(MISSING) delete propagationpolicy foo --now
+  karmadactl delete propagationpolicy foo --now
   
   # Force delete a propagationpolicy on a dead node
-  [1]%!s(MISSING) delete propagationpolicy foo --force
+  karmadactl delete propagationpolicy foo --force
   
   # Delete all propagationpolicies
-  [1]%!s(MISSING) delete propagationpolicies --all
+  karmadactl delete propagationpolicies --all
 ```
 
 ### Options

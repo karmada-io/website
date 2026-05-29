@@ -28,7 +28,7 @@ karmadactl addons disable
   karmadactl addons disable karmada-search karmada-scheduler-estimator --cluster member1
   
   # Specify the host cluster kubeconfig
-  karmadactl addons disable Karmada-search --kubeconfig /root/.kube/config
+  karmadactl addons disable karmada-search --kubeconfig /root/.kube/config
   
   # Specify the Karmada control plane kubeconfig
   karmadactl addons disable karmada-search --karmada-kubeconfig /etc/karmada/karmada-apiserver.config

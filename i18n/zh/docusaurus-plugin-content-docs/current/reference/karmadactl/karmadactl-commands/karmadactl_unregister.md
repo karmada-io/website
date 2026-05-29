@@ -37,7 +37,7 @@ karmadactl unregister CLUSTER_NAME
       --karmada-config string       Path of config to access karmada-apiserver, optional, defaults to fetch automatically from member cluster.
       --karmada-context string      Context in karmada-config to access karmada-apiserver, optional, defaults to current context.
   -n, --namespace string            Namespace of the karmada-agent component deployed. (default "karmada-system")
-      --wait duration               wait for the unjoin command execution process(default 60s), if there is no success after this time, timeout will be returned. (default 1m0s)
+      --wait duration               wait for the unregister command execution process (default 60s); A timeout error occurs if it fails to complete within the period. (default 1m0s)
 ```
 
 ### Options inherited from parent commands

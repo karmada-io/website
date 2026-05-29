@@ -16,9 +16,34 @@ karmada-search [flags]
 ### Options
 
 ```
-      --add_dir_header                                          If true, adds the file directory to the header of the log messages
+Available Commands:
+  karmada-search completion                      Generate the autocompletion script for the specified shell
+  karmada-search help                            Help about any command
+  karmada-search version                         Print the version information
+
+Logs flags:
+
+      --add-dir-header                       If true, adds the file directory to the header of the log messages
+      --alsologtostderr                      log to standard error as well as files (no effect when -logtostderr=true)
+      --log-backtrace-at traceLocation       when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                       If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                      If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint               Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --log-flush-frequency duration         Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity   [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+      --logging-format string                Sets the log format. Permitted formats: "text". (default "text")
+      --logtostderr                          log to standard error instead of files (default true)
+      --one-output                           If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                         If true, avoid header prefixes in the log messages
+      --skip-log-headers                     If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity             logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
+  -v, --v Level                              number for the log level verbosity
+      --vmodule pattern=N,...                comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+
+Generic flags:
+
       --advertise-address ip                                    The IP address on which to advertise the apiserver to members of the cluster. This address must be reachable by the rest of the cluster. If blank, the --bind-address will be used. If --bind-address is unspecified, the host's default interface will be used.
-      --alsologtostderr                                         log to standard error as well as files (no effect when -logtostderr=true)
       --audit-log-batch-buffer-size int                         The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
       --audit-log-batch-max-size int                            The maximum size of a batch. Only used in batch mode. (default 1)
       --audit-log-batch-max-wait duration                       The amount of time to wait before force writing the batch that hadn't reached the max size. Only used in batch mode.
@@ -61,6 +86,8 @@ karmada-search [flags]
       --bind-address ip                                         The IP address on which to listen for the --secure-port port. The associated interface(s) must be reachable by the rest of the cluster, and by CLI/web clients. If blank or an unspecified address (0.0.0.0 or ::), all interfaces and IP address families will be used. (default 0.0.0.0)
       --cert-dir string                                         The directory where the TLS certs are located. If --tls-cert-file and --tls-private-key-file are provided, this flag will be ignored. (default "apiserver.local.config/certificates")
       --client-ca-file string                                   If set, any request presenting a client certificate signed by one of the authorities in the client-ca-file is authenticated with an identity corresponding to the CommonName of the client certificate.
+      --cluster-api-burst int                                   Burst to use while talking with cluster kube-apiserver. (default 60)
+      --cluster-api-qps float32                                 QPS to use while talking with cluster kube-apiserver. (default 40)
       --contention-profiling                                    Enable block profiling, if profiling is enabled
       --cors-allowed-origins strings                            List of allowed origins for CORS, comma separated. An allowed origin can be a regular expression to support subdomain matching. If this list is empty CORS will not be enabled. Please ensure each expression matches the entire hostname by anchoring to the start with '^' or including the '//' prefix, and by anchoring to the end with '$' or including the ':' port separator suffix. Examples of valid expressions are '//example\.com(:|$)' and '^https://example\.com(:|$)'
       --debug-socket-path string                                Use an unprotected (no authn/authz) unix-domain socket for profiling with the given path
@@ -127,6 +154,7 @@ karmada-search [flags]
                                                                 kube:PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 kube:RemoteRequestHeaderUID=true|false (BETA - default=true)
                                                                 kube:ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                                kube:SchedulingOvercommitProtection=true|false (ALPHA - default=false)
                                                                 kube:SizeBasedListCostEstimate=true|false (BETA - default=true)
                                                                 kube:StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                                 kube:StorageVersionAPI=true|false (ALPHA - default=false)
@@ -140,22 +168,12 @@ karmada-search [flags]
                                                                 kube:WatchList=true|false (BETA - default=true)
                                                                 kube:WorkloadAffinity=true|false (ALPHA - default=false)
       --goaway-chance float                                     To prevent HTTP/2 clients from getting stuck on a single apiserver, randomly close a connection (GOAWAY). The client's other in-flight requests won't be affected, and the client will reconnect, likely landing on a different apiserver after going through the load balancer again. This argument sets the fraction of requests that will be sent a GOAWAY. Clusters with single apiservers, or which don't use a load balancer, should NOT enable this. Min is 0 (off), Max is .02 (1/50 requests); .001 (1/1000) is a recommended starting point.
-  -h, --help                                                    help for karmada-search
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
       --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. (default 60)
       --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
       --lease-reuse-duration-seconds int                        The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
       --livez-grace-period duration                             This option represents the maximum amount of time it should take for apiserver to complete its startup sequence and become live. From apiserver's start time to when this amount of time has elapsed, /livez will assume that unfinished post-start hooks will complete successfully and therefore return true.
-      --log-flush-frequency duration                            Maximum number of seconds between log flushes (default 5s)
-      --log-text-info-buffer-size quantity                      [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
-      --log-text-split-stream                                   [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
-      --log_backtrace_at traceLocation                          when logging hits line file:N, emit a stack trace (default :0)
-      --log_dir string                                          If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log_file string                                         If non-empty, use this log file (no effect when -logtostderr=true)
-      --log_file_max_size uint                                  Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logging-format string                                   Sets the log format. Permitted formats: "text". (default "text")
-      --logtostderr                                             log to standard error instead of files (default true)
       --max-mutating-requests-inflight int                      This and --max-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of mutating requests in flight, or a zero value disables the limit completely. (default 200)
       --max-requests-inflight int                               This and --max-mutating-requests-inflight are summed to determine the server's total concurrency limit (which must be positive) if --enable-priority-and-fairness is true. Otherwise, this flag limits the maximum number of non-mutating requests in flight, or a zero value disables the limit completely. (default 400)
       --min-compatibility-version strings                       The min version of control plane components the server should be compatible with.
@@ -163,7 +181,6 @@ karmada-search [flags]
                                                                 Options are: kube=1.32..1.35(default:1.34)
                                                                 If the component is not specified, defaults to "kube"
       --min-request-timeout int                                 An optional field indicating the minimum number of seconds a handler must keep a request open before timing it out. Currently only honored by the watch request handler, which picks a randomized value above this number as the connection timeout, to spread out load. (default 1800)
-      --one_output                                              If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --permit-address-sharing                                  If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]
       --permit-port-sharing                                     If true, SO_REUSEPORT will be used when binding the port, which allows more than one instance to bind on the same address and port. [default=false]
       --profiling                                               Enable profiling via web interface host:port/debug/pprof/ (default true)
@@ -180,9 +197,6 @@ karmada-search [flags]
       --shutdown-delay-duration duration                        Time to delay the termination. During that time the server keeps serving requests normally. The endpoints /healthz and /livez will return success, but /readyz immediately returns failure. Graceful termination starts after this delay has elapsed. This can be used to allow load balancer to stop sending traffic to this server.
       --shutdown-send-retry-after                               If true the HTTP Server will continue listening until all non long running request(s) in flight have been drained, during this window all incoming requests will be rejected with a status code 429 and a 'Retry-After' response header, in addition 'Connection: close' response header is set in order to tear down the TCP connection when idle.
       --shutdown-watch-termination-grace-period duration        This option, if set, represents the maximum amount of grace period the apiserver will wait for active watch request(s) to drain during the graceful server shutdown window.
-      --skip_headers                                            If true, avoid header prefixes in the log messages
-      --skip_log_headers                                        If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                                logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --storage-backend string                                  The storage backend for persistence. Options: 'etcd3' (default).
       --storage-initialization-timeout duration                 Maximum amount of time to wait for storage initialization before declaring apiserver ready. Defaults to 1m. (default 1m0s)
       --storage-media-type string                               The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. Supported media types: [application/json, application/yaml, application/vnd.kubernetes.protobuf] (default "application/json")
@@ -194,8 +208,6 @@ karmada-search [flags]
       --tls-min-version string                                  Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13
       --tls-private-key-file string                             File containing the default x509 private key matching --tls-cert-file.
       --tls-sni-cert-key namedCertKey                           A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com". (default [])
-  -v, --v Level                                                 number for the log level verbosity
-      --vmodule pattern=N,...                                   comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
       --watch-cache                                             Enable watch caching in the apiserver (default true)
       --watch-cache-sizes strings                               Watch cache size settings for some resources (pods, nodes, etc.), comma separated. The individual setting format: resource[.group]#size, where resource is lowercase plural (no version), group is omitted for resources of apiVersion v1 (the legacy core API) and included for others, and size is a number. This option is only meaningful for resources built into the apiserver, not ones defined by CRDs or aggregated from external servers, and is only consulted if the watch-cache is enabled. The only meaningful size setting to supply here is zero, which means to disable watch caching for the associated resource; all non-zero values are equivalent and mean to not disable watch caching for that resource
 ```

@@ -20,19 +20,19 @@ karmadactl patch (-f FILENAME | TYPE NAME) [-p PATCH|--patch-file FILE]
 
 ```
   # Partially update a deployment using a strategic merge patch, specifying the patch as JSON
-  [1]karmadactl patch deployment nginx-deployment -p '{"spec":{"replicas":2}}'
+  karmadactl patch deployment nginx-deployment -p '{"spec":{"replicas":2}}'
   
   # Partially update a deployment using a strategic merge patch, specifying the patch as YAML
-  [1]%!s(MISSING) patch deployment nginx-deployment -p $'spec:\n replicas: 2'
+  karmadactl patch deployment nginx-deployment -p $'spec:\n replicas: 2'
   
   # Partially update a deployment identified by the type and name specified in "deployment.json" using strategic merge patch
-  [1]%!s(MISSING) patch -f deployment.json -p '{"spec":{"replicas":2}}'
+  karmadactl patch -f deployment.json -p '{"spec":{"replicas":2}}'
   
   # Update a propagationpolicy's conflictResolution using a JSON patch with positional arrays
-  [1]%!s(MISSING) patch pp nginx-propagation --type='json' -p='[{"op": "replace", "path": "/spec/conflictResolution", "value":"Overwrite"}]'
+  karmadactl patch pp nginx-propagation --type='json' -p='[{"op": "replace", "path": "/spec/conflictResolution", "value":"Overwrite"}]'
   
   # Update a deployment's replicas through the 'scale' subresource using a merge patch
-  [1]%!s(MISSING) patch deployment nginx-deployment --subresource='scale' --type='merge' -p '{"spec":{"replicas":2}}'
+  karmadactl patch deployment nginx-deployment --subresource='scale' --type='merge' -p '{"spec":{"replicas":2}}'
 ```
 
 ### Options
