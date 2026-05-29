@@ -88,9 +88,9 @@ karmadactl init
   karmadactl init --karmada-webhook-extra-args="--v=2" --karmada-webhook-extra-args="--enable-pprof"
   
   # Pass extra arguments to Karmada Aggregated API Server. (Parameters are separated by commas)
-  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4,--enable-pprof"
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=2,--enable-pprof"
   # Or write them separately.
-  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=4" --karmada-aggregated-apiserver-extra-args="--enable-pprof"
+  karmadactl init --karmada-aggregated-apiserver-extra-args="--v=2" --karmada-aggregated-apiserver-extra-args="--enable-pprof"
 ```
 
 ### Options
@@ -121,7 +121,7 @@ karmadactl init
       --host-cluster-domain string                              The cluster domain of karmada host cluster. (e.g. --host-cluster-domain=host.karmada) (default "cluster.local")
       --image-pull-policy string                                The image pull policy for all Karmada components container. One of Always, Never, IfNotPresent. Defaults to IfNotPresent. (default "IfNotPresent")
       --image-pull-secrets strings                              Image pull secrets are used to pull images from the private registry, could be secret list separated by comma (e.g '--image-pull-secrets PullSecret1,PullSecret2', the secrets should be pre-settled in the namespace declared by '--namespace')
-      --karmada-aggregated-apiserver-extra-args strings         Additional command line arguments to pass to the karmada-aggregated-apiserver component. Can be specified multiple times or as comma-separated values (e.g., '--v=4,--enable-pprof')
+      --karmada-aggregated-apiserver-extra-args strings         Additional command line arguments to pass to the karmada-aggregated-apiserver component. Can be specified multiple times or as comma-separated values (e.g., '--v=2,--enable-pprof')
       --karmada-aggregated-apiserver-image string               Karmada aggregated apiserver image (default "docker.io/karmada/karmada-aggregated-apiserver:v0.0.0-master")
       --karmada-aggregated-apiserver-priority-class string      The priority class name for the component karmada-aggregated-apiserver. (default "system-node-critical")
       --karmada-aggregated-apiserver-replicas int32             Karmada aggregated apiserver replica set (default 1)

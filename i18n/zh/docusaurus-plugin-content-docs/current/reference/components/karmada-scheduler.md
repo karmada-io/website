@@ -18,8 +18,33 @@ karmada-scheduler [flags]
 ### Options
 
 ```
-      --add_dir_header                                 If true, adds the file directory to the header of the log messages
-      --alsologtostderr                                log to standard error as well as files (no effect when -logtostderr=true)
+Available Commands:
+  karmada-scheduler completion                      Generate the autocompletion script for the specified shell
+  karmada-scheduler help                            Help about any command
+  karmada-scheduler version                         Print the version information
+
+Logs flags:
+
+      --add-dir-header                       If true, adds the file directory to the header of the log messages
+      --alsologtostderr                      log to standard error as well as files (no effect when -logtostderr=true)
+      --log-backtrace-at traceLocation       when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                       If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                      If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint               Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --log-flush-frequency duration         Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity   [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+      --logging-format string                Sets the log format. Permitted formats: "text". (default "text")
+      --logtostderr                          log to standard error instead of files (default true)
+      --one-output                           If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                         If true, avoid header prefixes in the log messages
+      --skip-log-headers                     If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity             logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
+  -v, --v Level                              number for the log level verbosity
+      --vmodule pattern=N,...                comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+
+Generic flags:
+
       --disable-scheduler-estimator-in-pull-mode       Disable the scheduler estimator for clusters in pull mode, which takes effect only when enable-scheduler-estimator is true.
       --enable-empty-workload-propagation              Enable workload with replicas 0 to be propagated to member clusters.
       --enable-pprof                                   Enable profiling via web interface host:port/debug/pprof/.
@@ -41,10 +66,10 @@ karmada-scheduler [flags]
                                                        PropagateDeps=true|false (BETA - default=true)
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                       SchedulingOvercommitProtection=true|false (ALPHA - default=false)
                                                        StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                        WorkloadAffinity=true|false (ALPHA - default=false)
       --health-probe-bind-address string               The TCP address that the server should bind to for serving health probes(e.g. 127.0.0.1:10351, :10351). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10351. (default ":10351")
-  -h, --help                                           help for karmada-scheduler
       --insecure-skip-estimator-verify                 Controls whether verifies the scheduler estimator's certificate chain and host name.
       --kube-api-burst int                             Burst to use while talking with karmada-apiserver. (default 60)
       --kube-api-qps float32                           QPS to use while talking with karmada-apiserver. (default 40)
@@ -55,18 +80,8 @@ karmada-scheduler [flags]
       --leader-elect-resource-name string              The name of resource object that is used for locking during leader election. (default "karmada-scheduler")
       --leader-elect-resource-namespace string         The namespace of resource object that is used for locking during leader election. (default "karmada-system")
       --leader-elect-retry-period duration             The duration the clients should wait between attempting acquisition and renewal of a leadership. This is only applicable if leader election is enabled. (default 2s)
-      --log-flush-frequency duration                   Maximum number of seconds between log flushes (default 5s)
-      --log-text-info-buffer-size quantity             [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
-      --log-text-split-stream                          [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
-      --log_backtrace_at traceLocation                 when logging hits line file:N, emit a stack trace (default :0)
-      --log_dir string                                 If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log_file string                                If non-empty, use this log file (no effect when -logtostderr=true)
-      --log_file_max_size uint                         Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logging-format string                          Sets the log format. Permitted formats: "text". (default "text")
-      --logtostderr                                    log to standard error instead of files (default true)
       --master string                                  The address of the Kubernetes API server. Overrides any value in KubeConfig. Only required if out-of-cluster.
       --metrics-bind-address string                    The TCP address that the server should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. Defaults to 0.0.0.0:8080. (default ":8080")
-      --one_output                                     If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --plugins strings                                A list of plugins to enable. '*' enables all build-in and customized plugins, 'foo' enables the plugin named 'foo', '*,-foo' disables the plugin named 'foo'.
                                                        All build-in plugins: APIEnablement,ClusterAffinity,ClusterEviction,ClusterLocality,SpreadConstraint,TaintToleration. (default [*])
       --profiling-bind-address string                  The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
@@ -82,11 +97,6 @@ karmada-scheduler [flags]
       --scheduler-estimator-service-prefix string      The prefix of scheduler estimator service name (default "karmada-scheduler-estimator")
       --scheduler-estimator-timeout duration           Specifies the timeout period of calling the scheduler estimator service. (default 3s)
       --scheduler-name string                          SchedulerName represents the name of the scheduler. default is 'default-scheduler'. (default "default-scheduler")
-      --skip_headers                                   If true, avoid header prefixes in the log messages
-      --skip_log_headers                               If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
-  -v, --v Level                                        number for the log level verbosity
-      --vmodule pattern=N,...                          comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
 ```
 
 ###### Auto generated by [spf13/cobra script in Karmada](https://github.com/karmada-io/karmada/tree/master/hack/tools/gencomponentdocs)

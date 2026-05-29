@@ -21,23 +21,23 @@ karmadactl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=V
 
 ```
   # Update deployment 'foo' with the label 'resourcetemplate.karmada.io/deletion-protected' and the value 'Always'
-  [1]karmadactl label deployment foo resourcetemplate.karmada.io/deletion-protected=Always
+  karmadactl label deployment foo resourcetemplate.karmada.io/deletion-protected=Always
   
   # Update deployment 'foo' with the label 'resourcetemplate.karmada.io/deletion-protected' and the value '', overwriting any existing value
-  [1]%!s(MISSING) label --overwrite deployment foo resourcetemplate.karmada.io/deletion-protected=
+  karmadactl label --overwrite deployment foo resourcetemplate.karmada.io/deletion-protected=
   
-  # Update all deployment in the namespace
-  [1]%!s(MISSING) label pp --all resourcetemplate.karmada.io/deletion-protected=
+  # Update all deployments in the namespace
+  karmadactl label deployments --all resourcetemplate.karmada.io/deletion-protected=
   
   # Update a deployment identified by the type and name in "deployment.json"
-  [1]%!s(MISSING) label -f deployment.json resourcetemplate.karmada.io/deletion-protected=
+  karmadactl label -f deployment.json resourcetemplate.karmada.io/deletion-protected=
   
   # Update deployment 'foo' only if the resource is unchanged from version 1
-  [1]%!s(MISSING) label deployment resourcetemplate.karmada.io/deletion-protected=Always --resource-version=1
+  karmadactl label deployment foo resourcetemplate.karmada.io/deletion-protected=Always --resource-version=1
   
   # Update deployment 'foo' by removing a label named 'bar' if it exists
   # Does not require the --overwrite flag
-  [1]%!s(MISSING) label deployment foo resourcetemplate.karmada.io/deletion-protected-
+  karmadactl label deployment foo bar-
 ```
 
 ### Options

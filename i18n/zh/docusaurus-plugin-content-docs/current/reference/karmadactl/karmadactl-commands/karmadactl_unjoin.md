@@ -36,7 +36,7 @@ karmadactl unjoin CLUSTER_NAME --cluster-kubeconfig=<KUBECONFIG>
   -h, --help                        help for unjoin
       --karmada-context string      The name of the kubeconfig context to use
       --kubeconfig string           Path to the kubeconfig file to use for CLI requests.
-      --wait duration               wait for the unjoin command execution process(default 60s), if there is no success after this time, timeout will be returned. (default 1m0s)
+      --wait duration               wait for the unjoin command execution process (default 60s); A timeout error occurs if it fails to complete within the period. (default 1m0s)
 ```
 
 ### Options inherited from parent commands

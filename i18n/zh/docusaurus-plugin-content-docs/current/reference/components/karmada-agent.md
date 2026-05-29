@@ -17,8 +17,33 @@ karmada-agent [flags]
 ### Options
 
 ```
-      --add_dir_header                                 If true, adds the file directory to the header of the log messages
-      --alsologtostderr                                log to standard error as well as files (no effect when -logtostderr=true)
+Available Commands:
+  karmada-agent completion                      Generate the autocompletion script for the specified shell
+  karmada-agent help                            Help about any command
+  karmada-agent version                         Print the version information
+
+Logs flags:
+
+      --add-dir-header                       If true, adds the file directory to the header of the log messages
+      --alsologtostderr                      log to standard error as well as files (no effect when -logtostderr=true)
+      --log-backtrace-at traceLocation       when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                       If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                      If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint               Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --log-flush-frequency duration         Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity   [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+      --logging-format string                Sets the log format. Permitted formats: "text". (default "text")
+      --logtostderr                          log to standard error instead of files (default true)
+      --one-output                           If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                         If true, avoid header prefixes in the log messages
+      --skip-log-headers                     If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity             logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
+  -v, --v Level                              number for the log level verbosity
+      --vmodule pattern=N,...                comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+
+Generic flags:
+
       --cert-rotation-checking-interval duration       The interval of checking if the certificate need to be rotated. This is only applicable if cert rotation is enabled (default 5m0s)
       --cert-rotation-remaining-time-threshold float   The threshold of remaining time of the valid certificate. This is only applicable if cert rotation is enabled. (default 0.2)
       --cluster-api-burst int                          Burst to use while talking with cluster kube-apiserver. (default 60)
@@ -59,10 +84,10 @@ karmada-agent [flags]
                                                        PropagateDeps=true|false (BETA - default=true)
                                                        PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                        ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                       SchedulingOvercommitProtection=true|false (ALPHA - default=false)
                                                        StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                        WorkloadAffinity=true|false (ALPHA - default=false)
       --health-probe-bind-address string               The TCP address that the controller should bind to for serving health probes(e.g. 127.0.0.1:10357, :10357). It can be set to "0" to disable serving the health probe. Defaults to 0.0.0.0:10357. (default ":10357")
-  -h, --help                                           help for karmada-agent
       --karmada-context string                         Name of the cluster context in karmada control plane kubeconfig file.
       --karmada-kubeconfig string                      Path to karmada control plane kubeconfig file.
       --karmada-kubeconfig-namespace string            Namespace of the secret containing karmada-agent certificate. This is only applicable if cert rotation is enabled. (default "karmada-system")
@@ -74,17 +99,7 @@ karmada-agent [flags]
       --leader-elect-renew-deadline duration           The interval between attempts by the acting master to renew a leadership slot before it stops leading. This must be less than or equal to the lease duration. This is only applicable if leader election is enabled. (default 10s)
       --leader-elect-resource-namespace string         The namespace of resource object that is used for locking during leader election. (default "karmada-system")
       --leader-elect-retry-period duration             The duration the clients should wait between attempting acquisition and renewal of a leadership. This is only applicable if leader election is enabled. (default 2s)
-      --log-flush-frequency duration                   Maximum number of seconds between log flushes (default 5s)
-      --log-text-info-buffer-size quantity             [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
-      --log-text-split-stream                          [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
-      --log_backtrace_at traceLocation                 when logging hits line file:N, emit a stack trace (default :0)
-      --log_dir string                                 If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log_file string                                If non-empty, use this log file (no effect when -logtostderr=true)
-      --log_file_max_size uint                         Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logging-format string                          Sets the log format. Permitted formats: "text". (default "text")
-      --logtostderr                                    log to standard error instead of files (default true)
       --metrics-bind-address string                    The TCP address that the controller should bind to for serving prometheus metrics(e.g. 127.0.0.1:8080, :8080). It can be set to "0" to disable the metrics serving. (default ":8080")
-      --one_output                                     If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --profiling-bind-address string                  The TCP address for serving profiling(e.g. 127.0.0.1:6060, :6060). This is only applicable if profiling is enabled. (default ":6060")
       --proxy-server-address string                    Address of the proxy server that is used to proxy to the cluster.
       --rate-limiter-base-delay duration               The base delay for rate limiter. (default 5ms)
@@ -93,11 +108,6 @@ karmada-agent [flags]
       --rate-limiter-qps int                           The QPS for rate limier. (default 10)
       --report-secrets strings                         The secrets that are allowed to be reported to the Karmada control plane during registering. Valid values are 'KubeCredentials', 'KubeImpersonator' and 'None'. e.g 'KubeCredentials,KubeImpersonator' or 'None'. (default [KubeCredentials,KubeImpersonator])
       --resync-period duration                         Base frequency the informers are resynced.
-      --skip_headers                                   If true, avoid header prefixes in the log messages
-      --skip_log_headers                               If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                       logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
-  -v, --v Level                                        number for the log level verbosity
-      --vmodule pattern=N,...                          comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
 ```
 
 ###### Auto generated by [spf13/cobra script in Karmada](https://github.com/karmada-io/karmada/tree/master/hack/tools/gencomponentdocs)

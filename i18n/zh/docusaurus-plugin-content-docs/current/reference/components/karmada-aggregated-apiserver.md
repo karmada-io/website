@@ -17,8 +17,33 @@ karmada-aggregated-apiserver [flags]
 ### Options
 
 ```
-      --add_dir_header                                          If true, adds the file directory to the header of the log messages
-      --alsologtostderr                                         log to standard error as well as files (no effect when -logtostderr=true)
+Available Commands:
+  karmada-aggregated-apiserver completion                      Generate the autocompletion script for the specified shell
+  karmada-aggregated-apiserver help                            Help about any command
+  karmada-aggregated-apiserver version                         Print the version information
+
+Logs flags:
+
+      --add-dir-header                       If true, adds the file directory to the header of the log messages
+      --alsologtostderr                      log to standard error as well as files (no effect when -logtostderr=true)
+      --log-backtrace-at traceLocation       when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                       If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                      If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint               Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --log-flush-frequency duration         Maximum number of seconds between log flushes (default 5s)
+      --log-text-info-buffer-size quantity   [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
+      --log-text-split-stream                [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
+      --logging-format string                Sets the log format. Permitted formats: "text". (default "text")
+      --logtostderr                          log to standard error instead of files (default true)
+      --one-output                           If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                         If true, avoid header prefixes in the log messages
+      --skip-log-headers                     If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity             logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
+  -v, --v Level                              number for the log level verbosity
+      --vmodule pattern=N,...                comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
+
+Generic flags:
+
       --audit-log-batch-buffer-size int                         The size of the buffer to store events before batching and writing. Only used in batch mode. (default 10000)
       --audit-log-batch-max-size int                            The maximum size of a batch. Only used in batch mode. (default 1)
       --audit-log-batch-max-wait duration                       The amount of time to wait before force writing the batch that hadn't reached the max size. Only used in batch mode.
@@ -116,6 +141,7 @@ karmada-aggregated-apiserver [flags]
                                                                 PropagationPolicyPreemption=true|false (ALPHA - default=false)
                                                                 RemoteRequestHeaderUID=true|false (BETA - default=true)
                                                                 ResourceQuotaEstimate=true|false (ALPHA - default=false)
+                                                                SchedulingOvercommitProtection=true|false (ALPHA - default=false)
                                                                 SizeBasedListCostEstimate=true|false (BETA - default=true)
                                                                 StatefulFailoverInjection=true|false (ALPHA - default=false)
                                                                 StorageVersionAPI=true|false (ALPHA - default=false)
@@ -128,22 +154,11 @@ karmada-aggregated-apiserver [flags]
                                                                 WatchCacheInitializationPostStartHook=true|false (BETA - default=false)
                                                                 WatchList=true|false (BETA - default=true)
                                                                 WorkloadAffinity=true|false (ALPHA - default=false)
-  -h, --help                                                    help for karmada-aggregated-apiserver
       --http2-max-streams-per-connection int                    The limit that the server gives to clients for the maximum number of streams in an HTTP/2 connection. Zero means to use golang's default.
       --kube-api-burst int                                      Burst to use while talking with karmada-apiserver. (default 60)
       --kube-api-qps float32                                    QPS to use while talking with karmada-apiserver. (default 40)
       --kubeconfig string                                       Path to karmada control plane kubeconfig file.
       --lease-reuse-duration-seconds int                        The time in seconds that each lease is reused. A lower value could avoid large number of objects reusing the same lease. Notice that a too small value may cause performance problems at storage layer. (default 60)
-      --log-flush-frequency duration                            Maximum number of seconds between log flushes (default 5s)
-      --log-text-info-buffer-size quantity                      [Alpha] In text format with split output streams, the info messages can be buffered for a while to increase performance. The default value of zero bytes disables buffering. The size can be specified as number of bytes (512), multiples of 1000 (1K), multiples of 1024 (2Ki), or powers of those (3M, 4G, 5Mi, 6Gi). Enable the LoggingAlphaOptions feature gate to use this.
-      --log-text-split-stream                                   [Alpha] In text format, write error messages to stderr and info messages to stdout. The default is to write a single stream to stdout. Enable the LoggingAlphaOptions feature gate to use this.
-      --log_backtrace_at traceLocation                          when logging hits line file:N, emit a stack trace (default :0)
-      --log_dir string                                          If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log_file string                                         If non-empty, use this log file (no effect when -logtostderr=true)
-      --log_file_max_size uint                                  Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logging-format string                                   Sets the log format. Permitted formats: "text". (default "text")
-      --logtostderr                                             log to standard error instead of files (default true)
-      --one_output                                              If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
       --permit-address-sharing                                  If true, SO_REUSEADDR will be used when binding the port. This allows binding to wildcard IPs like 0.0.0.0 and specific IPs in parallel, and it avoids waiting for the kernel to release sockets in TIME_WAIT state. [default=false]
       --permit-port-sharing                                     If true, SO_REUSEPORT will be used when binding the port, which allows more than one instance to bind on the same address and port. [default=false]
       --profiling                                               Enable profiling via web interface host:port/debug/pprof/ (default true)
@@ -155,9 +170,6 @@ karmada-aggregated-apiserver [flags]
       --requestheader-uid-headers strings                       List of request headers to inspect for UIDs. X-Remote-Uid is suggested. Requires the RemoteRequestHeaderUID feature to be enabled.
       --requestheader-username-headers strings                  List of request headers to inspect for usernames. X-Remote-User is common. (default [x-remote-user])
       --secure-port int                                         The port on which to serve HTTPS with authentication and authorization. If 0, don't serve HTTPS at all. (default 443)
-      --skip_headers                                            If true, avoid header prefixes in the log messages
-      --skip_log_headers                                        If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity                                logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
       --storage-backend string                                  The storage backend for persistence. Options: 'etcd3' (default).
       --storage-media-type string                               The media type to use to store objects in storage. Some resources or storage backends may only support a specific media type and will ignore this setting. Supported media types: [application/json, application/yaml, application/vnd.kubernetes.protobuf] (default "application/json")
       --tls-cert-file string                                    File containing the default x509 Certificate for HTTPS. (CA cert, if any, concatenated after server cert). If HTTPS serving is enabled, and --tls-cert-file and --tls-private-key-file are not provided, a self-signed certificate and key are generated for the public address and saved to the directory specified by --cert-dir.
@@ -167,8 +179,6 @@ karmada-aggregated-apiserver [flags]
       --tls-min-version string                                  Minimum TLS version supported. Possible values: VersionTLS10, VersionTLS11, VersionTLS12, VersionTLS13
       --tls-private-key-file string                             File containing the default x509 private key matching --tls-cert-file.
       --tls-sni-cert-key namedCertKey                           A pair of x509 certificate and private key file paths, optionally suffixed with a list of domain patterns which are fully qualified domain names, possibly with prefixed wildcard segments. The domain patterns also allow IP addresses, but IPs should only be used if the apiserver has visibility to the IP address requested by a client. If no domain patterns are provided, the names of the certificate are extracted. Non-wildcard matches trump over wildcard matches, explicit domain patterns trump over extracted names. For multiple key/certificate pairs, use the --tls-sni-cert-key multiple times. Examples: "example.crt,example.key" or "foo.crt,foo.key:*.foo.com,foo.com". (default [])
-  -v, --v Level                                                 number for the log level verbosity
-      --vmodule pattern=N,...                                   comma-separated list of pattern=N settings for file-filtered logging (only works for text log format)
       --watch-cache                                             Enable watch caching in the apiserver (default true)
       --watch-cache-sizes strings                               Watch cache size settings for some resources (pods, nodes, etc.), comma separated. The individual setting format: resource[.group]#size, where resource is lowercase plural (no version), group is omitted for resources of apiVersion v1 (the legacy core API) and included for others, and size is a number. This option is only meaningful for resources built into the apiserver, not ones defined by CRDs or aggregated from external servers, and is only consulted if the watch-cache is enabled. The only meaningful size setting to supply here is zero, which means to disable watch caching for the associated resource; all non-zero values are equivalent and mean to not disable watch caching for that resource
 ```
