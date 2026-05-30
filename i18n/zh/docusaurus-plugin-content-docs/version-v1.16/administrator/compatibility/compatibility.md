@@ -11,7 +11,7 @@ title: Kubernetes 兼容性
 
 ## Karmada 控制平面 API 支持
 
-Karmada 支持其使用的 kube-apiserver 版本中所有可用的 Kubernetes API。例如，如 Karmada APIServer 使用 kube-apiserver@v1.32，
+Karmada 支持其使用的 kube-apiserver 版本中所有可用的 Kubernetes API。例如，如果 Karmada APIServer 使用 kube-apiserver@v1.32，
 则继承支持 Kubernetes v1.32 中所有 API（如 Deployment、Service、Ingress）及 API 版本（如 apps/v1、networking.k8s.io/v1）。
 
 除原生 Kubernetes API 外，Karmada 可通过以下与 Kubernetes 相同的扩展机制增强能力：

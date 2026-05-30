@@ -9,7 +9,7 @@ title: 文档发布
 有时贡献者不会更新所有语言文档的内容。在发布之前，请确保多语种文档同步。这将通过一个 issue 来跟踪。issue 应遵循以下格式:
 
 ```
-This issue is to track documents which needs to sync zh for release 1.x:
+This issue is to track documents which need to sync zh for release 1.x:
 * #268
 ```
 

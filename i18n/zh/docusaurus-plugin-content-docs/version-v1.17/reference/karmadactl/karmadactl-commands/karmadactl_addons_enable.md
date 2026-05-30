@@ -63,7 +63,7 @@ karmadactl addons enable
       --kubeconfig string                          Path to the host cluster kubeconfig file.
       --member-context string                      Member cluster's context which to deploy scheduler estimator
       --member-kubeconfig string                   Member cluster's kubeconfig which to deploy scheduler estimator
-      --metrics-adapter-priority-class string      The priority class name for the component karmada-metrics-adaptor. (default "system-node-critical")
+      --metrics-adapter-priority-class string      The priority class name for the component karmada-metrics-adapter. (default "system-node-critical")
   -n, --namespace string                           namespace where Karmada components are installed. (default "karmada-system")
       --pod-timeout int                            Wait pod ready timeout. (default 120)
       --private-image-registry string              Private image registry where pull images from. If set, all required images will be downloaded from it, it would be useful in offline installation scenarios.
