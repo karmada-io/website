@@ -43,6 +43,7 @@ module.exports = {
                     items: [
                         "tutorials/rollout/overview",
                         "tutorials/rollout/canary",
+                        "tutorials/rollout/rolling-upgrade",
                     ],
                 },
             ],
