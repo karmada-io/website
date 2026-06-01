@@ -37,6 +37,14 @@ module.exports = {
                 "tutorials/resource-migration",
                 "tutorials/access-service-across-clusters",
                 "tutorials/workload-rebalancer",
+                {
+                    type: "category",
+                    label: "Progressive Rollout Strategies",
+                    items: [
+                        "tutorials/rollout/overview",
+                        "tutorials/rollout/canary",
+                    ],
+                },
             ],
         },
         {
