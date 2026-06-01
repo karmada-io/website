@@ -95,7 +95,7 @@ $ karmadactl addons enable --help |grep priority
     --estimator-priority-class='system-node-critical':
         karmada-scheduler-estimator 组件的优先级类名称。
     --metrics-adapter-priority-class='system-node-critical':
-        karmada-metrics-adaptor 组件的优先级类名称。
+        karmada-metrics-adapter 组件的优先级类名称。
     --search-priority-class='system-node-critical':
         karmada-search 组件的优先级类名称。
 ```

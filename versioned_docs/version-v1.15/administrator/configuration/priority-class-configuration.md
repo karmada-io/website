@@ -94,7 +94,7 @@ $ karmadactl addons enable --help |grep priority
     --estimator-priority-class='system-node-critical':
         The priority class name for the component karmada-scheduler-estimator.
     --metrics-adapter-priority-class='system-node-critical':
-        The priority class name for the component karmada-metrics-adaptor.
+        The priority class name for the component karmada-metrics-adapter.
     --search-priority-class='system-node-critical':
         The priority class name for the component karmada-search.
 ```
