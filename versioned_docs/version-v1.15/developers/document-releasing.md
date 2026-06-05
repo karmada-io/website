@@ -10,7 +10,7 @@ Sometimes contributors do not update the content of the documentation in all lan
 This will be tracked by an issue. The issue should follow the format:
 
 ```
-This issue is to track documents which needs to sync zh for release 1.x:
+This issue is to track documents which need to be synced with zh for release 1.x:
 * #268
 ```
 
