@@ -261,7 +261,15 @@ module.exports = {
                         "administrator/security/security-considerations",
                         "administrator/security/verify-artifacts",
                         "administrator/security/component-permission",
-                        "administrator/security/cert-framework"
+                        "administrator/security/cert-framework",
+                        {
+                            type: "category",
+                            label: "Certificate Rotation",
+                            items: [
+                                "administrator/security/certificate-rotation/overview",
+                                "administrator/security/certificate-rotation/built-in-cert-rotation",
+                            ],
+                        },
                     ],
                 },
                 {
