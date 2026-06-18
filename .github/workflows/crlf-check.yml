@@ -1,0 +1,17 @@
+name: CRLF Check
+on:
+  pull_request:
+jobs:
+  crlf-check:
+    name: Check for CRLF line endings
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check for carriage returns in committed text files
+        run: |
+          if git grep --cached -I $'\r'; then
+            echo "::error::CRLF line endings detected in committed text files. Use LF only."
+            exit 1
+          fi
+          echo "No CRLF line endings found."
