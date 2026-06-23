@@ -26,20 +26,26 @@ refer to [Kubernetes Controllers](../administrator/configuration/configure-contr
 
 ## Can I install Karmada in a Kubernetes cluster and reuse the kube-apiserver as Karmada apiserver?
 
-The quick answer is `yes`. In that case, you can save the effort to deploy
-[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml) and just
-share the APIServer between Kubernetes and Karmada. In addition, the high availability capabilities in the origin clusters
-can be inherited seamlessly. We do have some users using Karmada in this way.
+Technically, `yes`. You can install Karmada in an existing Kubernetes cluster and reuse the
+`kube-apiserver` as the Karmada apiserver instead of deploying a standalone
+[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml).
+In this setup, Karmada can also benefit from the high availability capabilities of the existing Kubernetes control plane.
 
-There are some things you should consider before doing so:
+However, this deployment mode is not generally recommended as the default choice. If you still decide to use it, please
+carefully evaluate the following considerations:
 
-- This approach hasn't been fully tested by the Karmada community and no plan for it yet.
-- This approach will increase computation costs for the Karmada system. E.g.
-  After you apply a `resource template`, take `Deployment` as an example, the `kube-controller` will create `Pods` for the
-  Deployment and update the status persistently, Karmada system will reconcile these changes too, so there might be
-  conflicts.
+- This approach has not been fully tested by the Karmada community, and there is no plan to make it a recommended
+  deployment mode at this time.
+- Reusing the Kubernetes `kube-apiserver` may increase the computational cost and reconciliation pressure on the Karmada
+  system. For example, after you apply a `resource template`, such as a `Deployment`, the `kube-controller-manager` may
+  create `Pods` for the `Deployment` and continuously update its status. Karmada controllers may also reconcile these
+  changes, which can lead to unexpected interactions or conflicts.
+- The Kubernetes control plane and the Karmada control plane will share the same API server, so operational issues,
+  configuration changes, or resource pressure in one system may affect the other.
 
-TODO: Link to adoption use case once it gets on board.
+In general, deploying a dedicated `karmada-apiserver` is preferred for clearer isolation and more predictable behavior.
+Reusing an existing `kube-apiserver` should be considered only when you fully understand the trade-offs and can accept the
+potential risks.
 
 ## Why Cluster API doesn't have the CRD YAML file?
 
