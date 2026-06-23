@@ -25,18 +25,21 @@ title: 常见问题
 
 ## 我可以在 Kubernetes 集群中安装 Karmada 并将 kube-apiserver 重用为 Karmada apiserver 吗？
 
-答案是 `yes`。在这种情况下，你可以在部署
-[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml)
-时节省不少时间，只需在 Kubernetes 和 Karmada 之间共享 APIServer 即可。
-此外，这样可以无缝继承原集群的高可用能力。我们确实有一些用户以这种方式使用 Karmada。
+技术上来说，答案是 `yes`。你可以在现有 Kubernetes 集群中安装 Karmada，并复用
+`kube-apiserver` 作为 Karmada apiserver，而不是部署独立的
+[karmada-apiserver](https://github.com/karmada-io/karmada/blob/master/artifacts/deploy/karmada-apiserver.yaml)。
+在这种模式下，Karmada 也可以受益于现有 Kubernetes 控制平面的高可用能力。
 
-不过在此之前你需要注意以下几点：
+不过，通常不建议将这种部署模式作为默认选择。如果你仍决定使用，请仔细评估以下事项：
 
-- 这种方法尚未经过 Karmada 社区的全面测试，也没有相关测试计划。
-- 这种方法会增加 Karmada 系统的计算成本。
-  以 `Deployment` 为例采用 `resource template` 后，`kube-controller` 会为 Deployment 创建 `Pods` 并持续更新状态，Karmada 系统也会协调这些变化，所以可能会发生冲突。
+- 这种方法尚未经过 Karmada 社区的全面测试，目前也没有计划将其作为推荐的部署模式。
+- 复用 Kubernetes `kube-apiserver` 可能会增加 Karmada 系统的计算开销和调谐压力。
+  例如，在你应用 `resource template`（如 `Deployment`）后，`kube-controller-manager` 可能会为该 `Deployment` 创建 `Pods` 并持续更新其状态。
+  Karmada 控制器也可能会调谐这些变更，从而导致非预期的交互或冲突。
+- Kubernetes 控制平面和 Karmada 控制平面将共享同一个 API server，因此其中一个系统中的运维问题、配置变更或资源压力可能会影响另一个系统。
 
-待办事项：一旦有相关使用案例，我们将添加相应链接。
+一般来说，部署专用的 `karmada-apiserver` 更有利于实现清晰的隔离和更可预测的行为。
+只有在你充分理解相关权衡并能够接受潜在风险时，才应考虑复用现有的 `kube-apiserver`。
 
 ## 为什么 Cluster API 没有 CRD YAML 文件?
 
