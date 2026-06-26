@@ -18,8 +18,8 @@ export default function Home() {
 
   return (
     <Layout title={siteConfig.tagline} description={siteConfig.tagline}>
-      <header className={clsx('hero', styles.hero)}>
-        <div className="container text--center">
+      <header className={clsx('hero', styles.hero, styles.heroHeader)}>
+        <div className={clsx('container text--center', styles.heroContainer)}>
           <div className={styles.heroLogoWrapper}>
             <img className={styles.heroLogo} src={useBaseUrl('img/karmada-icon-color.png')} alt="Karmada Logo" />
           </div>

@@ -26,6 +26,28 @@ module.exports = {
     {
       tagName: "link",
       attributes: {
+        rel: "preconnect",
+        href: "https://fonts.googleapis.com",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossorigin: "true",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
         rel: "apple-touch-icon",
         sizes: "180x180",
         href: "/favicons/apple-touch-icon.png",
