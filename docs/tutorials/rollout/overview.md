@@ -42,6 +42,17 @@ export KUBECONFIG=~/.kube/karmada.config
 > (`member1`, `member2`, `member3`). All commands in this guide target the Karmada API —
 > no direct interaction with member clusters is required.
 
+### Website repository cloned
+
+The YAML manifests and scripts used in this tutorial are stored in the website repository.
+Clone it and change into the resources directory — all `kubectl apply -f` commands and
+script invocations in this tutorial use paths relative to this directory:
+
+```shell
+git clone https://github.com/karmada-io/website
+cd website/docs/resources/tutorials/rollout/progressive
+```
+
 ### Required tools
 
 - `kubectl`
@@ -87,9 +98,9 @@ manifests are applied:
   and cannot be selected by a namespaced `PropagationPolicy`.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-deploy.yaml
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-propagation.yaml
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-cluster-propagation.yaml
+kubectl apply -f base/ingress-nginx-deploy.yaml
+kubectl apply -f base/ingress-nginx-propagation.yaml
+kubectl apply -f base/ingress-nginx-cluster-propagation.yaml
 ```
 
 Verify that ingress-nginx has been fully propagated to all member clusters:
@@ -247,7 +258,7 @@ every `curl` command in this tutorial (e.g. `-H "Host: http-probe.local"`), whic
 sufficient for ingress-nginx to route the request to the correct backend.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml
+kubectl apply -f base/http-probe-app.yaml
 ```
 
 Verify propagation from the Karmada control plane:
@@ -339,12 +350,12 @@ Run the following after completing all strategies to remove all resources:
 
 ```shell
 pkill -f "port-forward svc/ingress-nginx-controller" || true
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app-v2.yaml --ignore-not-found
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/wave/http-probe-app-wave-base-v2.yaml --ignore-not-found
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/wave/http-probe-app-wave-deployment.yaml --ignore-not-found
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-propagation.yaml --ignore-not-found
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-cluster-propagation.yaml --ignore-not-found
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/ingress-nginx-deploy.yaml --ignore-not-found
+kubectl delete -f base/http-probe-app-v2.yaml --ignore-not-found
+kubectl delete -f wave/http-probe-app-wave-base-v2.yaml --ignore-not-found
+kubectl delete -f wave/http-probe-app-wave-deployment.yaml --ignore-not-found
+kubectl delete -f base/ingress-nginx-propagation.yaml --ignore-not-found
+kubectl delete -f base/ingress-nginx-cluster-propagation.yaml --ignore-not-found
+kubectl delete -f base/ingress-nginx-deploy.yaml --ignore-not-found
 ```
 
 [samples]: https://github.com/karmada-io/karmada/tree/master/samples/progressive-rollout

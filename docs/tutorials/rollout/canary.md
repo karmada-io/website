@@ -133,7 +133,7 @@ Two things to note:
   propagating the base Deployment to all three clusters.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member1.yaml
+kubectl apply -f canary/http-probe-app-canary-member1.yaml
 ```
 
 Verify the canary Deployment was created and propagated:
@@ -210,7 +210,7 @@ Deployment spec on the Karmada API is unchanged. `member2` and `member3` continu
 `v1` without any interruption.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-promote-override-member1.yaml
+kubectl apply -f canary/http-probe-promote-override-member1.yaml
 ```
 
 Watch the base Deployment roll on `member1`:
@@ -245,9 +245,9 @@ Once you are satisfied that `v2` is healthy on `member1`, finalize the promotion
 3. Deletes the canary Deployment and its `PropagationPolicy`.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app-v2.yaml
+kubectl apply -f base/http-probe-app-v2.yaml
 kubectl delete overridepolicy http-probe-promote-override
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member1.yaml
+kubectl delete -f canary/http-probe-app-canary-member1.yaml
 ```
 
 Verify all clusters are now on `v2`:
@@ -335,7 +335,7 @@ sequenceDiagram
 > the cluster will already be on `v2`. Re-apply the base manifest to reset:
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml
+> kubectl apply -f base/http-probe-app.yaml
 > ```
 
 #### Step 1: Deploy a canary across all clusters
@@ -408,7 +408,7 @@ spec:
 </details>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-all.yaml
+kubectl apply -f canary/http-probe-app-canary-all.yaml
 ```
 
 **What to observe in the dashboard:**
@@ -451,7 +451,7 @@ spec:
 </details>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-promote-override-member1.yaml
+kubectl apply -f canary/http-probe-promote-override-member1.yaml
 ```
 
 Watch the base Deployment roll on `member1`:
@@ -510,7 +510,7 @@ spec:
 </details>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-promote-override-member1-member2.yaml
+kubectl apply -f canary/http-probe-promote-override-member1-member2.yaml
 ```
 
 Watch the base Deployment roll on `member2`:
@@ -562,7 +562,7 @@ spec:
 </details>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-promote-override-all.yaml
+kubectl apply -f canary/http-probe-promote-override-all.yaml
 ```
 
 Watch the base Deployment roll on `member3`:
@@ -587,9 +587,9 @@ Update the base manifest to `v2`, then delete the `OverridePolicy` and the canar
 updating the base manifest is a no-op at the pod level — **no pods are restarted**.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app-v2.yaml
+kubectl apply -f base/http-probe-app-v2.yaml
 kubectl delete overridepolicy http-probe-promote-override
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-all.yaml
+kubectl delete -f canary/http-probe-app-canary-all.yaml
 ```
 
 Verify:
@@ -643,7 +643,7 @@ per-cluster promotion, promotion rollback, and full cleanup.
 > re-apply the base manifest to reset:
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml
+> kubectl apply -f base/http-probe-app.yaml
 > ```
 
 The steps we will execute are:
@@ -697,8 +697,8 @@ Deploy individual canary `Deployments` to `member1` and `member2` — `member3` 
 intentionally skipped throughout this demo.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member1.yaml
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member2.yaml
+kubectl apply -f canary/http-probe-app-canary-member1.yaml
+kubectl apply -f canary/http-probe-app-canary-member2.yaml
 ```
 
 Verify both canaries are running:
@@ -730,7 +730,7 @@ Delete the canary `Deployment` and its `PropagationPolicy` for `member2`. The `m
 canary is unaffected.
 
 ```shell
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member2.yaml
+kubectl delete -f canary/http-probe-app-canary-member2.yaml
 ```
 
 **What to observe in the dashboard:**
@@ -747,7 +747,7 @@ Re-apply the canary manifest for `member2`. This is the same manifest as Step 1 
 operation is fully idempotent.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member2.yaml
+kubectl apply -f canary/http-probe-app-canary-member2.yaml
 ```
 
 **What to observe in the dashboard:**
@@ -765,7 +765,7 @@ Apply the `OverridePolicy` targeting `member2` only. This patches the base Deplo
 not target it.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-promote-override-member2.yaml
+kubectl apply -f canary/http-probe-promote-override-member2.yaml
 ```
 
 Watch the base Deployment roll on `member2`:
@@ -821,8 +821,8 @@ Delete the canary `Deployments` for both `member1` and `member2`. The environmen
 to the baseline state — only the base `Deployment` and its `PropagationPolicy` remain.
 
 ```shell
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member1.yaml
-kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/canary/http-probe-app-canary-member2.yaml
+kubectl delete -f canary/http-probe-app-canary-member1.yaml
+kubectl delete -f canary/http-probe-app-canary-member2.yaml
 ```
 
 **What to observe in the dashboard:**

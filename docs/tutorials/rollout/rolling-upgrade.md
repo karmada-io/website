@@ -93,7 +93,7 @@ sequenceDiagram
 > **Note:** Before running Demo 1, ensure the cluster is on `v1`:
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml
+> kubectl apply -f base/http-probe-app.yaml
 > ```
 
 #### Step 1: Upgrade the base on member1
@@ -129,7 +129,7 @@ spec:
 </details>
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/rolling-upgrade/http-probe-rolling-upgrade-member1.yaml
+kubectl apply -f rolling-upgrade/http-probe-rolling-upgrade-member1.yaml
 ```
 
 Watch the base Deployment roll on `member1`:
@@ -155,7 +155,7 @@ Apply the same `OverridePolicy` with `member1` and `member2` in `clusterNames`. 
 patches the existing policy in place and triggers the rolling update on `member2`.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/rolling-upgrade/http-probe-rolling-upgrade-member1-member2.yaml
+kubectl apply -f rolling-upgrade/http-probe-rolling-upgrade-member1-member2.yaml
 ```
 
 Watch the base Deployment roll on `member2`:
@@ -178,7 +178,7 @@ kubectl --kubeconfig ~/.kube/members.config --context member2 \
 Apply the `OverridePolicy` with all three clusters in `clusterNames`.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/rolling-upgrade/http-probe-rolling-upgrade-all.yaml
+kubectl apply -f rolling-upgrade/http-probe-rolling-upgrade-all.yaml
 ```
 
 Watch the base Deployment roll on `member3`:
@@ -202,7 +202,7 @@ already running `v2` via the override, updating the base manifest is a no-op at 
 level — **no pods are restarted**.
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app-v2.yaml
+kubectl apply -f base/http-probe-app-v2.yaml
 kubectl delete overridepolicy http-probe-rolling-upgrade
 ```
 
@@ -265,13 +265,13 @@ sequenceDiagram
 > **Note:** Before running Demo 2, ensure the cluster is on `v1`:
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml
+> kubectl apply -f base/http-probe-app.yaml
 > ```
 
 #### Step 1: Upgrade the base on member1
 
 ```shell
-kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/rolling-upgrade/http-probe-rolling-upgrade-member1.yaml
+kubectl apply -f rolling-upgrade/http-probe-rolling-upgrade-member1.yaml
 ```
 
 Watch the base Deployment roll on `member1`:

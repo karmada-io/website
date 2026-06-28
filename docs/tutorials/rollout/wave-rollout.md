@@ -27,7 +27,7 @@ Two `OverridePolicy` resources work in tandem:
 - `http-probe-wave-base-down` — scales the base `Deployment` down step by step
 - `http-probe-wave-up` — scales the wave `Deployment` up step by step
 
-The orchestration is handled by `samples/progressive-rollout/wave-rollout.sh`, which patches both policies at each
+The orchestration is handled by [`wave-rollout.sh`](../../resources/tutorials/rollout/progressive/wave-rollout.sh), which patches both policies at each
 step and waits for pod readiness before advancing.
 
 > **Prerequisites for this strategy:** the wave demo requires 6 replicas per cluster to
@@ -40,9 +40,15 @@ step and waits for pod readiness before advancing.
 > previous strategy, delete it first to avoid state conflicts, then apply the wave base
 > manifest:
 >
+> `wave-rollout.sh` reads YAML files relative to its own location. Ensure you have already
+> cloned the website repository and are running all commands from
+> `docs/resources/tutorials/rollout/progressive/` as described in the
+> [overview prerequisites](./overview#website-repository-cloned). Then apply the wave base
+> manifest:
+>
 > ```shell
-> kubectl delete -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/base/http-probe-app.yaml --ignore-not-found
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/wave/http-probe-app-wave-base.yaml
+> kubectl delete -f base/http-probe-app.yaml --ignore-not-found
+> kubectl apply -f wave/http-probe-app-wave-base.yaml
 > ```
 >
 
@@ -108,13 +114,13 @@ sequenceDiagram
 > scheduling (see prerequisites above):
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/wave/http-probe-app-wave-base.yaml
+> kubectl apply -f wave/http-probe-app-wave-base.yaml
 > ```
 
 #### Step 1: Start the wave on member1
 
 ```shell
-samples/progressive-rollout/wave-rollout.sh start member1 25,50,100
+./wave-rollout.sh start member1 25,50,100
 ```
 
 The script is long-running — it does not return until all steps have completed. Observe the
@@ -122,7 +128,7 @@ dashboard while it progresses. The `--wait` flag controls how long the script pa
 step before advancing (default: 30 seconds):
 
 ```shell
-samples/progressive-rollout/wave-rollout.sh start member1 25,50,100 --wait 60
+./wave-rollout.sh start member1 25,50,100 --wait 60
 ```
 
 > **Note:** The script prints every YAML manifest it applies to the terminal as it runs —
@@ -157,7 +163,7 @@ Once satisfied with the wave, finalize to update the base manifest to `v2` and r
 wave resources.
 
 ```shell
-samples/progressive-rollout/wave-rollout.sh finalize
+./wave-rollout.sh finalize
 ```
 
 **What to observe in the dashboard:**
@@ -232,13 +238,13 @@ sequenceDiagram
 > scheduling (see prerequisites above):
 >
 > ```shell
-> kubectl apply -f https://raw.githubusercontent.com/karmada-io/karmada/refs/heads/master/samples/progressive-rollout/wave/http-probe-app-wave-base.yaml
+> kubectl apply -f wave/http-probe-app-wave-base.yaml
 > ```
 
 #### Step 1: Start the wave across all clusters
 
 ```shell
-samples/progressive-rollout/wave-rollout.sh start all 25,50,100
+./wave-rollout.sh start all 25,50,100
 ```
 
 > **Note:** The script prints every YAML manifest it applies to the terminal as it runs —
@@ -272,7 +278,7 @@ Abort to restore the base `Deployment` and remove all wave resources. The base m
 version is not changed — the region returns to `v1`.
 
 ```shell
-samples/progressive-rollout/wave-rollout.sh abort all
+./wave-rollout.sh abort all
 ```
 
 **What to observe in the dashboard:**
