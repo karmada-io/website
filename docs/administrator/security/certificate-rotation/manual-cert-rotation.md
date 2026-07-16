@@ -4,7 +4,9 @@ title: Manual Certificate Rotation
 
 # Manual Certificate Rotation
 
-This document describes how to manually rotate Karmada control plane certificates. Manual rotation is needed when certificates are approaching expiration or have already expired, and you are not using an automated solution like cert-manager.
+In Karmada, TLS certificates are used to secure communication between control plane components like the API server and etcd. By default, these certificates expire after one year. If they expire, components will lose the ability to communicate, resulting in a control plane outage. 
+
+This document describes how to manually rotate Karmada control plane certificates to recover your system or prevent an outage. Manual rotation is needed when certificates are approaching expiration or have already expired, and you are not using an automated solution like cert-manager.
 
 For background on which certificates exist and how they are used, see the [Karmada Certificate Framework](pathname://../cert-framework).
 
