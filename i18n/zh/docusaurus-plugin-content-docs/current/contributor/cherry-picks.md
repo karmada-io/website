@@ -56,6 +56,10 @@ title: 如何进行 PR 的 Cherry-pick 操作
 
 ## 发起 Cherry-pick 操作
 
+有两种方式可以发起 cherry-pick：使用 cherry-pick 脚本，或使用 Prow 的 `cherry-picker` 插件。
+
+### 使用 Cherry-pick 脚本
+
 - 执行 [cherry-pick script](https://github.com/karmada-io/karmada/blob/master/hack/cherry_pick_pull.sh)
 
   例如，将 PR #1206 从 `master` 回移到远程分支 `upstream/release-1.0`：
@@ -69,6 +73,40 @@ title: 如何进行 PR 的 Cherry-pick 操作
   - 每一个目标发布分支需要单独执行一次 cherry-pick 脚本。请确保将修复应用于所有受影响的活跃发布分支。
 
   - 若未设置环境变量 `GITHUB_TOKEN`，脚本将提示输入 GitHub 密码：此处应提供您的 [个人访问令牌](https://github.com/settings/tokens)，而**非** GitHub 账户密码。为了避免交互式输入，建议将令牌安全地设置为环境变量 `GITHUB_TOKEN`。可参考[此问题评论](https://github.com/github/hub/issues/2655#issuecomment-735836048)。
+
+### 使用 Prow cherry-picker 插件
+
+除了使用 cherry-pick 脚本外，Karmada 的 Prow 机器人现已提供 `cherry-picker` 插件，
+可自动为您创建 cherry-pick PR。
+
+使用方法很简单，只需在 Pull Request 中留言并指定目标发布分支，例如：
+
+```
+/cherry-pick release-1.18
+```
+
+在该 Pull Request 合并后，机器人会自动向指定的发布分支创建 cherry-pick PR。
+如果补丁无法干净地应用，机器人会在评论中报告失败，此时您需要回退到
+[cherry-pick 脚本](#使用-cherry-pick-脚本)方式。
+
+如需 cherry-pick 到多个发布分支，有两种留言方式：
+
+- 每个发布分支单独一行（推荐），这样将为不同分支并行创建 cherry-pick PR：
+
+  ```
+  /cherry-pick release-1.18
+  /cherry-pick release-1.17
+  /cherry-pick release-1.16
+  ```
+
+- 将多个发布分支放在同一行，以空格分隔。这种方式下 cherry-pick PR 将串行创建：
+  机器人先创建第一个分支的 PR，等其合并后再创建下一个分支的 PR，依次进行：
+
+  ```
+  /cherry-pick release-1.18 release-1.17 release-1.16
+  ```
+
+关于该命令的更多说明，请参阅 [Prow 命令帮助](https://prow.k8s.io/command-help)。
 
 ## Cherry-pick 的评审流程
 
