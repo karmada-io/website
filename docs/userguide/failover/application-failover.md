@@ -1,8 +1,8 @@
 ---
-title: Application-level failover
+title: Application Failover
 ---
 
-In the multi-cluster scenario, user workloads may be deployed in multiple clusters to improve service high availability. Karmada already supports multi-cluster failover when detecting a cluster fault. 
+In the multi-cluster scenario, user workloads may be deployed in multiple clusters to improve service high availability. Karmada already supports multi-cluster failover when detecting a cluster fault.
 It's a consideration from a cluster perspective. However, some failures of clusters will only affect specific applications. From the perspective of the cluster, it may be necessary to distinguish between affected and unaffected applications.
 Also, the application may still be unavailable when the control plane of the cluster is in a healthy state. Therefore, Karmada needs to provide a means of fault migration from an application perspective.
 
@@ -15,15 +15,16 @@ The following describes some scenarios of application-level failover:
 In this scenario, the amount of resource perceived by the scheduler is the size of the resource quota, not the actual available resources. At this time, users want to schedule the application other than the one that failed previously.
 * ....
 
-## How Do I Enable the Feature?
+## Prerequisites
 
-When an application migrates from one cluster to another, it needs to ensure that its dependencies are migrated synchronously.
-Therefore, you need to ensure that `PropagateDeps` feature gate is enabled and `propagateDeps: true` is set in the propagation policy. `PropagateDeps` feature gate has evolved to Beta since Karmada v1.4 and is enabled by default.
+Before enabling application failover, ensure the following requirements are met:
 
-Also, whether the application needs to be migrated depends on the health status of the application. Karmada's `Resource Interpreter Framework` is designed for interpreting resource structure. It provides users with
-a interpreter operation to tell Karmada how to figure out the health status of a specific object. It's up to users to decide when to reschedule. Before you use the feature, you need to ensure that the `interpretHealth` rules for the application is configured.
-
-If you use the purge mode with graceful eviction, `GracefulEviction` feature gate should be enabled. `GracefulEviction` feature gate has also evolved to Beta since Karmada v1.4 and is enabled by default.
+| Requirement | Details |
+|-------------|---------|
+| **`PropagateDeps` feature gate** | Must be enabled and `propagateDeps: true` set in PropagationPolicy to ensure application dependencies are migrated together. `PropagateDeps` has been Beta since Karmada v1.4 and is **on by default**. |
+| **`interpretHealth` rules** | The `Resource Interpreter Framework` must be configured with `interpretHealth` rules for your application so Karmada knows when to trigger failover. |
+| **`GracefulEviction` feature gate** | Required when using `Graciously` purge mode. Has been Beta since Karmada v1.4 and is **on by default**. |
+| **`StatefulFailoverInjection` feature gate** | Required only for stateful application failover (state preservation). Currently Alpha and **off by default**. |
 
 ## Configure Application Failover
 
@@ -190,11 +191,22 @@ spec:
 
 You can edit `suppressDeletion` to false in `gracefulEvictionTasks` to evict the application in the failed cluster after you confirm the failure.
 
-## Application State Preservation
+## Application State Preservation (Stateful Failover)
 
 Starting from v1.12, the application-level failover feature adds support for stateful application failover, it provides a generalized way for users to define application state preservation in the context of cluster-to-cluster failovers.
 
 In releases prior to v1.12, Karmada’s scheduling logic runs on the assumption that resources that are scheduled and rescheduled are stateless. In some cases, users may desire to conserve a certain state so that applications can resume from where they left off in the previous cluster. For CRDs dealing with data-processing (such as Flink or Spark), it can be particularly useful to restart applications from a previous checkpoint. That way applications can seamlessly resume processing data while avoiding double processing.
+
+:::note Prerequisites
+
+This feature requires enabling the `StatefulFailoverInjection` feature gate. `StatefulFailoverInjection` is currently in `Alpha` and is turned off by default.
+
+There are also some limitations when using this feature:
+1. Only the scenario where an application is deployed in one cluster and migrated to another cluster is considered.
+2. If consecutive failovers occur (e.g., clusterA → clusterB → clusterC), the `PreservedLabelState` before the last failover is used for injection. If empty, injection is skipped.
+3. The injection operation is performed only when `PurgeMode` is set to `Immediately`.
+
+:::
 
 ### Defining StatePreservation
 
@@ -240,12 +252,7 @@ spec:
 3. Kyverno running on a member cluster intercepts the FlinkDeployment creation request and gets the checkpoint data storage path for the job based on the `jobID`, e.g. `/<shared-path>/<job-namespace>/<jobId>/checkpoints/xxx`, then configures the `initialSavepointPath` to indicate that it will start from the save point.  
 4. The FlinkDeployment starts based on the checkpoint data under `initialSavepointPath`, thus inheriting the final state saved before the migration.
 
-This capability requires enabling the `StatefulFailoverInjection` feature gate. `StatefulFailoverInjection` is currently in `Alpha` and is turned off by default.
 
-> There are currently some restrictions on the use of this function, please pay attention when using it:
-> 1. Only the scenario where an application is deployed in one cluster and migrated to another cluster is considered.
-> 2. If consecutive failovers occur, for example, an application is migrated form clusterA to clusterB and then to clusterC, the PreservedLabelState before the last failover is used for injection. If the PreservedLabelState is empty, the injection is skipped.
-> 3. The injection operation is performed only when PurgeMode is set to Immediately.
 
 :::note
 
