@@ -70,6 +70,11 @@ patch release branches.
 
 ## Initiate a Cherry Pick
 
+There are two ways to initiate a cherry pick: using the cherry pick script, or
+using the Prow `cherry-picker` plugin.
+
+### Use the Cherry Pick Script
+
 - Run the [cherry pick script][cherry-pick-script]
 
   This example applies a master branch PR #1206 to the remote branch
@@ -91,6 +96,47 @@ patch release branches.
     password. If you can securely set the environment variable `GITHUB_TOKEN`
     to your personal access token then you can avoid an interactive prompt.
     Refer [https://github.com/github/hub/issues/2655#issuecomment-735836048](https://github.com/github/hub/issues/2655#issuecomment-735836048)
+
+### Use the Prow cherry-picker Plugin
+
+In addition to the cherry pick script, the Karmada Prow bot now provides the
+`cherry-picker` plugin, which can automatically create cherry pick PRs for you.
+
+To use it, simply leave a comment on the pull request with the target release
+branch, for example:
+
+```
+/cherry-pick release-1.18
+```
+
+Once the pull request is merged, the bot will automatically create a cherry
+pick PR against the specified release branch. If the patch does not apply
+cleanly, the bot will report the failure in a comment, and you will need to
+fall back to the [cherry pick script](#use-the-cherry-pick-script).
+
+To cherry pick to multiple release branches, there are two ways to leave the
+comments:
+
+- Specify one release branch per line (recommended), so that the cherry pick
+  PRs for different branches will be created in parallel:
+
+  ```
+  /cherry-pick release-1.18
+  /cherry-pick release-1.17
+  /cherry-pick release-1.16
+  ```
+
+- Specify multiple release branches on a single line, separated by a space.
+  In this case, the cherry pick PRs are created serially: the bot creates the
+  PR for the first branch, waits until it is merged, then creates the PR for
+  the next branch, and so on:
+
+  ```
+  /cherry-pick release-1.18 release-1.17 release-1.16
+  ```
+
+For more details about this command, refer to the
+[Prow command help](https://prow.k8s.io/command-help).
 
 ## Cherry Pick Review
 
