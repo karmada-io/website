@@ -187,3 +187,49 @@ spec:
 
 Then, Karmada finally propagates `autoscaling/v2` HPA to member clusters, if your member clusters doesn't support 
 `autoscaling/v2` version HPA, you will get propagation failure event like "cluster(s) did not have the API resource".
+
+## "The server could not find the requested resource" when accessing Karmada resources
+
+When running `karmadactl join`, `kubectl get clusters`, or other Karmada commands, you may see:
+
+```log
+error: the server could not find the requested resource (get clusters.cluster.karmada.io)
+```
+
+Cause: The command is targeting the **host cluster** API server instead of the **Karmada** API server.
+The `clusters.cluster.karmada.io` resource (and all other Karmada CRDs) only exist in the Karmada
+API server — the host cluster has no knowledge of them.
+
+Locate your Karmada kubeconfig depending on your install method:
+
+| Install method | Default Karmada kubeconfig path |
+|---|---|
+| `karmadactl init` | `$HOME/.kube/karmada.config` |
+| Privileged / binary install | `/etc/karmada/karmada-apiserver.config` |
+| Helm chart | Extract from secret (see below) |
+
+For Helm installs, extract the kubeconfig from the host cluster first:
+
+```shell
+kubectl -n karmada-system get secret kubeconfig --template={{.data.kubeconfig}} | base64 -d > $HOME/.kube/karmada.config
+```
+
+Then use the Karmada kubeconfig explicitly:
+
+```shell
+# Verify you are targeting the Karmada API server
+kubectl --kubeconfig=$HOME/.kube/karmada.config api-resources | grep cluster.karmada.io
+
+# List registered member clusters
+kubectl --kubeconfig=$HOME/.kube/karmada.config get clusters
+
+# Join a member cluster (note: two separate kubeconfigs)
+karmadactl join <MEMBER_CLUSTER_NAME> \
+  --kubeconfig=<KARMADA_KUBECONFIG> \
+  --cluster-kubeconfig=<MEMBER_CLUSTER_KUBECONFIG>
+```
+
+For the distinction between `--kubeconfig` (Karmada control plane) and `--cluster-kubeconfig`
+(member cluster), see [Cluster Registration](../userguide/clustermanager/cluster-registration.md).
+
+Related Issue: [#2892](https://github.com/karmada-io/karmada/issues/2892), [#3175](https://github.com/karmada-io/karmada/issues/3175), [#4963](https://github.com/karmada-io/karmada/issues/4963), [#5143](https://github.com/karmada-io/karmada/issues/5143).
