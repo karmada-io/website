@@ -2,6 +2,8 @@
 title: Cluster Taint Management
 ---
 
+Taints are the **core mechanism that triggers cluster failover** in Karmada. When a cluster carries a `NoExecute` taint that a workload cannot tolerate, Karmada evicts that workload and reschedules it to another healthy cluster. This document explains how taints are managed on clusters and how you can configure taint rules using the `ClusterTaintPolicy` API.
+
 Taints in a cluster, specifically configured in the `.spec.taints` field of the `Cluster` object, have a significant impact
 on application scheduling and execution. For instance, if a cluster has a `NoSchedule` taint, it can prevent new applications
 from being scheduled onto that cluster. The effect of a taint on an application depends on the `Effect` configuration of
@@ -238,3 +240,9 @@ has the **NoSchedule** taint.
 
 When a workload tolerates a **NoExecute** taint, the workload can be able to still run on the cluster even if the cluster
 has the **NoExecute** taint.
+
+## Next Steps
+
+Now that you understand how cluster taints work, configure cluster-level failover behavior:
+
+- [Cluster Failover](./cluster-failover.md)

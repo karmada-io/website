@@ -15,18 +15,16 @@ title: 应用故障迁移
 在这种情况下，调度器感知到的资源量是资源配额的大小，而不是实际可用的资源。这时候，用户希望将之前失败的应用调度到另一个可用的集群。
 * ....
 
-## 如何启用该功能
+## 前提条件
 
-当应用程序从一个集群迁移到另一个集群时，应用需要确保它的依赖项同步迁移。
-因此，您需要确保启用了 `PropagateDeps` 特性开关并且在 PropagationPolicy 中设置了 `propagateDeps: true`。
-自 Karmada v1.4 以来，`PropagateDeps` 特性开关已经处于 Beta 阶段，并且默认启用。
+在启用应用故障迁移前，请确保满足以下要求：
 
-另外，应用是否需要迁移取决于应用的健康状态。Karmada 的“资源解释器框架”是为解释资源结构而设计的，
-它为用户提供解释器操作来告诉 Karmada 如何确定特定对象的健康状态。如何解析资源的健康状态由用户决定。
-在使用应用的故障迁移之前，您需要确保已配置应用程序的 interpretHealth 规则。
-
-
-如果您使用优雅驱逐的清除模式，则需要启用 `GracefulEviction` 特性开关。自 Karmada v1.4 以来，`GracefulEviction` 特性开关也已处于 Beta 阶段，并且默认启用。
+| 要求 | 说明 |
+|------|------|
+| **`PropagateDeps` 特性开关** | 必须启用，并在 PropagationPolicy 中设置 `propagateDeps: true`，以确保应用依赖项随应用一同迁移。自 Karmada v1.4 起已处于 Beta 阶段，**默认开启**。 |
+| **`interpretHealth` 规则** | 必须为应用配置 `Resource Interpreter Framework` 的 `interpretHealth` 规则，以便 Karmada 判断何时触发故障迁移。 |
+| **`GracefulEviction` 特性开关** | 使用 `Graciously` 驱逐模式时需要。自 Karmada v1.4 起已处于 Beta 阶段，**默认开启**。 |
+| **`StatefulFailoverInjection` 特性开关** | 仅有状态应用故障迁移（状态保留）时需要。目前处于 Alpha 阶段，**默认关闭**。 |
 
 ## 配置应用故障迁移
 
@@ -192,11 +190,22 @@ spec:
 
 您可以在 gracefulEvictionTasks 中将 suppressDeletion 修改为 false，确认故障后驱逐故障集群中的应用。
 
-## 应用状态中继
+## 应用状态保留（有状态故障迁移）
 
 从 v1.12 开始，应用故障转移特性增加了对有状态应用故障转移的支持，它为用户提供了一种通用的方式来定义在集群间故障转移情境下的应用状态保留。
 
 在 v1.12 之前的版本中，Karmada 的调度逻辑基于这样的假设运行：被调度和重新调度的资源是无状态的。在某些情况下，用户可能希望保留某种状态，以便应用可以从之前集群中停止的地方恢复。对于处理数据加工的 CRD（例如 Flink 或 Spark），从之前的检查点重新启动应用可能特别有用。这样应用可以无缝地恢复数据处理，同时避免重复处理。
+
+:::note 前提条件
+
+该功能需要启用 `StatefulFailoverInjection` 特性开关。`StatefulFailoverInjection` 目前处于 `Alpha` 阶段，默认关闭。
+
+使用该功能时还有如下限制：
+1. 仅考虑应用部署在一个集群并迁移到另一个集群的场景。
+2. 若发生连续故障迁移（如 clusterA → clusterB → clusterC），则仅注入上一次故障迁移前的 `PreservedLabelState`。如果 `PreservedLabelState` 为空，则跳过注入。
+3. 仅当 `PurgeMode` 设置为 `Immediately` 时才会进行注入操作。
+
+:::
 
 ### 定义 StatePreservation
 
@@ -242,12 +251,7 @@ spec:
 3. 运行在成员集群的 Kyverno 拦截 Flink 应用创建请求，并根据 `jobID`  获取该 job 的 checkpoint 数据存储路径，比如  `/<shared-path>/<job-namespace>/<jobId>/checkpoints/xxx`，然后配置 `initialSavepointPath` 指示从save point 启动。  
 4. Flink 应用根据 `initialSavepointPath` 下的 checkpoint 数据启动，从而继承迁移前保存的最终状态。
 
-此功能需要启用 `StatefulFailoverInjection` 特性门控。`StatefulFailoverInjection` 目前处于 `Alpha` 阶段，默认情况下是关闭的。
 
-> 目前该功能的使用尚有些限制，使用时请注意：
-> 1. 仅考虑应用程序在一个集群中部署并迁移到另一个集群的场景。
-> 2. 如果发生连续故障转移，例如，应用程序从 clusterA 迁移到 clusterB，然后再到 clusterC，最后一次故障转移前的 PreservedLabelState 用于注入。如果 PreservedLabelState 为空，则跳过注入。
-> 3. 仅当 PurgeMode 设置为 Immediately 时，才执行注入操作。
 
 :::note
 

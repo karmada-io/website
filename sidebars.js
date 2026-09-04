@@ -94,10 +94,11 @@ module.exports = {
                     type: "category",
                     label: "Multi-cluster Failover",
                     items: [
+                        "userguide/failover/overview",
                         "userguide/failover/cluster-status-maintenance",
-                        "userguide/failover/cluster-failover",
                         "userguide/failover/cluster-taint-management",
-                        "userguide/failover/failover-analysis",
+                        "userguide/failover/cluster-failover",
+                        "userguide/failover/cluster-failover-internals",
                         "userguide/failover/application-failover",
                     ],
                 },
