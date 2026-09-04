@@ -484,10 +484,12 @@ To use this configuration file with `karmadactl init`, simply pass the path to t
 karmadactl init --config /path/to/karmada-init.yaml
 ```
 
-### Overriding Configuration File Values
+### Configuration File Precedence
 
-If necessary, command line flags can still be used in conjunction with the configuration file. The parameters specified via the command line will override those in the configuration file. For example, to override the number of API server replicas, you could use:
+Command line flags can still be used together with the configuration file. However, when both specify the same parameter, the value from the configuration file takes precedence over the command line flag. For example, if you run:
 
 ```bash
 karmadactl init --config /path/to/karmada-init.yaml --karmada-apiserver-replicas 5
 ```
+
+and the configuration file sets components.karmadaAPIServer.replicas to 3, the final value will be 3 (from the config file), not 5.
