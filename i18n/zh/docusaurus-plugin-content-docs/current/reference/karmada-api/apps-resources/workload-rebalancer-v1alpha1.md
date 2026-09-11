@@ -234,6 +234,10 @@ GET /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
+
 - **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
@@ -543,6 +547,10 @@ DELETE /apis/apps.karmada.io/v1alpha1/workloadrebalancers
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 

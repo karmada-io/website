@@ -17,37 +17,37 @@ karmadactl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 ```
   # Create a single ingress called 'simple' that directs requests to foo.com/bar to svc
   # svc1:8080 with a TLS secret "my-cert"
-  kubectl create ingress simple --rule="foo.com/bar=svc1:8080,tls=my-cert"
+  karmadactl create ingress simple --rule="foo.com/bar=svc1:8080,tls=my-cert"
   
   # Create a catch all ingress of "/path" pointing to service svc:port and Ingress Class as "otheringress"
-  kubectl create ingress catch-all --class=otheringress --rule="/path=svc:port"
+  karmadactl create ingress catch-all --class=otheringress --rule="/path=svc:port"
   
   # Create an ingress with two annotations: ingress.annotation1 and ingress.annotations2
-  kubectl create ingress annotated --class=default --rule="foo.com/bar=svc:port" \
+  karmadactl create ingress annotated --class=default --rule="foo.com/bar=svc:port" \
   --annotation ingress.annotation1=foo \
   --annotation ingress.annotation2=bla
   
   # Create an ingress with the same host and multiple paths
-  kubectl create ingress multipath --class=default \
+  karmadactl create ingress multipath --class=default \
   --rule="foo.com/=svc:port" \
   --rule="foo.com/admin/=svcadmin:portadmin"
   
   # Create an ingress with multiple hosts and the pathType as Prefix
-  kubectl create ingress ingress1 --class=default \
+  karmadactl create ingress ingress1 --class=default \
   --rule="foo.com/path*=svc:8080" \
   --rule="bar.com/admin*=svc2:http"
   
   # Create an ingress with TLS enabled using the default ingress certificate and different path types
-  kubectl create ingress ingtls --class=default \
+  karmadactl create ingress ingtls --class=default \
   --rule="foo.com/=svc:https,tls" \
   --rule="foo.com/path/subpath*=othersvc:8080"
   
   # Create an ingress with TLS enabled using a specific secret and pathType as Prefix
-  kubectl create ingress ingsecret --class=default \
+  karmadactl create ingress ingsecret --class=default \
   --rule="foo.com/*=svc:8080,tls=secret1"
   
   # Create an ingress with a default backend
-  kubectl create ingress ingdefault --class=default \
+  karmadactl create ingress ingdefault --class=default \
   --default-backend=defaultsvc:http \
   --rule="foo.com/*=svc:8080,tls=secret1"
 ```
@@ -73,22 +73,24 @@ karmadactl create ingress NAME --rule=host/path=service:port[,tls[=secret]]
 ### Options inherited from parent commands
 
 ```
-      --add-dir-header                   If true, adds the file directory to the header of the log messages
-      --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --karmada-context string           The name of the kubeconfig context to use
-      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
-      --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
-      --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
-      --log-file-max-size uint           Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logtostderr                      log to standard error instead of files (default true)
-  -n, --namespace string                 If present, the namespace scope for this CLI request.
-      --one-output                       If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
-      --skip-headers                     If true, avoid header prefixes in the log messages
-      --skip-log-headers                 If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity         logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
-  -v, --v Level                          number for the log level verbosity
-      --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging
+      --add-dir-header                      If true, adds the file directory to the header of the log messages
+      --alsologtostderr                     log to standard error as well as files (no effect when -logtostderr=true)
+      --alsologtostderrthreshold severity   logs at or above this threshold go to stderr when -alsologtostderr=true (no effect when -logtostderr=true)
+      --karmada-context string              The name of the kubeconfig context to use
+      --kubeconfig string                   Path to the kubeconfig file to use for CLI requests.
+      --legacy-stderr-threshold-behavior    If true, stderrthreshold is ignored when logtostderr=true (legacy behavior). If false, stderrthreshold is honored even when logtostderr=true (default true)
+      --log-backtrace-at traceLocation      when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                      If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                     If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint              Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --logtostderr                         log to standard error instead of files (default true)
+  -n, --namespace string                    If present, the namespace scope for this CLI request.
+      --one-output                          If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                        If true, avoid header prefixes in the log messages
+      --skip-log-headers                    If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity            logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true unless -legacy_stderr_threshold_behavior=false) (default 2)
+  -v, --v Level                             number for the log level verbosity
+      --vmodule moduleSpec                  comma-separated list of pattern=N settings for file-filtered logging
 ```
 
 ### SEE ALSO

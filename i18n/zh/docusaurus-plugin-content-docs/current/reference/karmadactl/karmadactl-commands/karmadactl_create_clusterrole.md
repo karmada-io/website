@@ -16,22 +16,22 @@ karmadactl create clusterrole NAME --verb=verb --resource=resource.group [--reso
 
 ```
   # Create a cluster role named "pod-reader" that allows user to perform "get", "watch" and "list" on pods
-  kubectl create clusterrole pod-reader --verb=get,list,watch --resource=pods
+  karmadactl create clusterrole pod-reader --verb=get,list,watch --resource=pods
   
   # Create a cluster role named "pod-reader" with ResourceName specified
-  kubectl create clusterrole pod-reader --verb=get --resource=pods --resource-name=readablepod --resource-name=anotherpod
+  karmadactl create clusterrole pod-reader --verb=get --resource=pods --resource-name=readablepod --resource-name=anotherpod
   
   # Create a cluster role named "foo" with API Group specified
-  kubectl create clusterrole foo --verb=get,list,watch --resource=rs.apps
+  karmadactl create clusterrole foo --verb=get,list,watch --resource=rs.apps
   
   # Create a cluster role named "foo" with SubResource specified
-  kubectl create clusterrole foo --verb=get,list,watch --resource=pods,pods/status
+  karmadactl create clusterrole foo --verb=get,list,watch --resource=pods,pods/status
   
   # Create a cluster role name "foo" with NonResourceURL specified
-  kubectl create clusterrole "foo" --verb=get --non-resource-url=/logs/*
+  karmadactl create clusterrole "foo" --verb=get --non-resource-url=/logs/*
   
   # Create a cluster role name "monitoring" with AggregationRule specified
-  kubectl create clusterrole monitoring --aggregation-rule="rbac.example.com/aggregate-to-monitoring=true"
+  karmadactl create clusterrole monitoring --aggregation-rule="rbac.example.com/aggregate-to-monitoring=true"
 ```
 
 ### Options
@@ -56,22 +56,24 @@ karmadactl create clusterrole NAME --verb=verb --resource=resource.group [--reso
 ### Options inherited from parent commands
 
 ```
-      --add-dir-header                   If true, adds the file directory to the header of the log messages
-      --alsologtostderr                  log to standard error as well as files (no effect when -logtostderr=true)
-      --karmada-context string           The name of the kubeconfig context to use
-      --kubeconfig string                Path to the kubeconfig file to use for CLI requests.
-      --log-backtrace-at traceLocation   when logging hits line file:N, emit a stack trace (default :0)
-      --log-dir string                   If non-empty, write log files in this directory (no effect when -logtostderr=true)
-      --log-file string                  If non-empty, use this log file (no effect when -logtostderr=true)
-      --log-file-max-size uint           Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
-      --logtostderr                      log to standard error instead of files (default true)
-  -n, --namespace string                 If present, the namespace scope for this CLI request.
-      --one-output                       If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
-      --skip-headers                     If true, avoid header prefixes in the log messages
-      --skip-log-headers                 If true, avoid headers when opening log files (no effect when -logtostderr=true)
-      --stderrthreshold severity         logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true) (default 2)
-  -v, --v Level                          number for the log level verbosity
-      --vmodule moduleSpec               comma-separated list of pattern=N settings for file-filtered logging
+      --add-dir-header                      If true, adds the file directory to the header of the log messages
+      --alsologtostderr                     log to standard error as well as files (no effect when -logtostderr=true)
+      --alsologtostderrthreshold severity   logs at or above this threshold go to stderr when -alsologtostderr=true (no effect when -logtostderr=true)
+      --karmada-context string              The name of the kubeconfig context to use
+      --kubeconfig string                   Path to the kubeconfig file to use for CLI requests.
+      --legacy-stderr-threshold-behavior    If true, stderrthreshold is ignored when logtostderr=true (legacy behavior). If false, stderrthreshold is honored even when logtostderr=true (default true)
+      --log-backtrace-at traceLocation      when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                      If non-empty, write log files in this directory (no effect when -logtostderr=true)
+      --log-file string                     If non-empty, use this log file (no effect when -logtostderr=true)
+      --log-file-max-size uint              Defines the maximum size a log file can grow to (no effect when -logtostderr=true). Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --logtostderr                         log to standard error instead of files (default true)
+  -n, --namespace string                    If present, the namespace scope for this CLI request.
+      --one-output                          If true, only write logs to their native severity level (vs also writing to each lower severity level; no effect when -logtostderr=true)
+      --skip-headers                        If true, avoid header prefixes in the log messages
+      --skip-log-headers                    If true, avoid headers when opening log files (no effect when -logtostderr=true)
+      --stderrthreshold severity            logs at or above this threshold go to stderr when writing to files and stderr (no effect when -logtostderr=true or -alsologtostderr=true unless -legacy_stderr_threshold_behavior=false) (default 2)
+  -v, --v Level                             number for the log level verbosity
+      --vmodule moduleSpec                  comma-separated list of pattern=N settings for file-filtered logging
 ```
 
 ### SEE ALSO

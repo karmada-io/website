@@ -88,6 +88,22 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
     Name of target cluster.
 
+  - **clusters.components** ([]TargetComponent)
+
+    Components represents the per-component replica assignment in this cluster. It is populated only for workloads with multiple pod templates, and only when the MultiplePodTemplatesScheduling feature gate is enabled. Each entry corresponds to an entry in spec.Components by Name.
+
+    <a name="TargetComponent"></a>
+
+    *TargetComponent represents the replica assignment of a component in a cluster.*
+
+    - **clusters.components.name** (string), required
+
+      Name of the component, matching spec.components[*].name.
+
+    - **clusters.components.replicas** (int32), required
+
+      Replicas of this component assigned to the cluster.
+
   - **clusters.replicas** (int32)
 
     Replicas in target cluster
@@ -239,15 +255,17 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
       - **failover.application.decisionConditions.tolerationSeconds** (int32)
 
-        TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process. If not specified, Karmada will immediately perform failover process. Defaults to 300s.
+        TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process.
+        
+        Defaults to 300s if not specified. Set it to 0 to perform failover immediately.
 
     - **failover.application.gracePeriodSeconds** (int32)
 
-      GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Graciously" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
+      GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Gracefully" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
 
     - **failover.application.purgeMode** (string)
 
-      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never", "Immediately"(deprecated), and "Graciously"(deprecated). Defaults to "Gracefully".
+      PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never". Defaults to "Gracefully".
 
     - **failover.application.statePreservation** (StatePreservation)
 
@@ -377,7 +395,7 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
   - **gracefulEvictionTasks.purgeMode** (string)
 
-    PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Immediately", "Directly", "Graciously", "Gracefully" and "Never".
+    PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully" and "Never".
 
   - **gracefulEvictionTasks.replicas** (int32)
 
@@ -837,6 +855,22 @@ ResourceBindingSpec represents the expectation of ResourceBinding.
 
       Name of target cluster.
 
+    - **requiredBy.clusters.components** ([]TargetComponent)
+
+      Components represents the per-component replica assignment in this cluster. It is populated only for workloads with multiple pod templates, and only when the MultiplePodTemplatesScheduling feature gate is enabled. Each entry corresponds to an entry in spec.Components by Name.
+
+      <a name="TargetComponent"></a>
+
+      *TargetComponent represents the replica assignment of a component in a cluster.*
+
+      - **requiredBy.clusters.components.name** (string), required
+
+        Name of the component, matching spec.components[*].name.
+
+      - **requiredBy.clusters.components.replicas** (int32), required
+
+        Replicas of this component assigned to the cluster.
+
     - **requiredBy.clusters.replicas** (int32)
 
       Replicas in target cluster
@@ -1158,6 +1192,10 @@ GET /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
+
 - **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
@@ -1213,6 +1251,10 @@ GET /apis/work.karmada.io/v1alpha2/resourcebindings
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 
@@ -1551,6 +1593,10 @@ DELETE /apis/work.karmada.io/v1alpha2/namespaces/`{namespace}`/resourcebindings
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 

@@ -142,6 +142,10 @@ GET /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
+
 - **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
@@ -451,6 +455,10 @@ DELETE /apis/work.karmada.io/v1alpha2/clusterresourcebindings
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 

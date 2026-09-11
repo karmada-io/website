@@ -118,15 +118,17 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
 
         - **spec.failover.application.decisionConditions.tolerationSeconds** (int32)
 
-          TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process. If not specified, Karmada will immediately perform failover process. Defaults to 300s.
+          TolerationSeconds represents the period of time Karmada should wait after reaching the desired state before performing failover process.
+          
+          Defaults to 300s if not specified. Set it to 0 to perform failover immediately.
 
       - **spec.failover.application.gracePeriodSeconds** (int32)
 
-        GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Graciously" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
+        GracePeriodSeconds is the maximum waiting duration in seconds before application on the migrated cluster should be deleted. Required only when PurgeMode is "Gracefully" and defaults to 600s. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after GracePeriodSeconds is reached. Value must be positive integer.
 
       - **spec.failover.application.purgeMode** (string)
 
-        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never", "Immediately"(deprecated), and "Graciously"(deprecated). Defaults to "Gracefully".
+        PurgeMode represents how to deal with the legacy applications on the cluster from which the application is migrated. Valid options are "Directly", "Gracefully", "Never". Defaults to "Gracefully".
 
       - **spec.failover.application.statePreservation** (StatePreservation)
 
@@ -556,7 +558,7 @@ ClusterPropagationPolicy represents the cluster-wide policy that propagates a gr
     
     This setting is useful for controlling the scheduling behavior of offline workloads. By setting a higher or lower priority, users can control which workloads are scheduled first. Additionally, it allows specifying a preemption policy where higher-priority workloads can preempt lower-priority ones in scenarios of resource contention.
     
-    Note: This feature is currently in the alpha stage. The priority-based scheduling functionality is controlled by the PriorityBasedScheduling feature gate, and preemption is controlled by the PriorityBasedPreemptiveScheduling feature gate. Currently, only priority-based scheduling is supported. Preemption functionality is not yet available and will be introduced in future releases as the feature matures.
+    Note: This feature is currently in the beta stage. The priority-based scheduling functionality is controlled by the PriorityBasedScheduling feature gate, and preemption is controlled by the PriorityBasedPreemptiveScheduling feature gate. Currently, only priority-based scheduling is supported. Preemption functionality is not yet available and will be introduced in future releases as the feature matures.
 
     <a name="SchedulePriority"></a>
 
@@ -707,6 +709,10 @@ GET /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 
@@ -1017,6 +1023,10 @@ DELETE /apis/policy.karmada.io/v1alpha1/clusterpropagationpolicies
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 

@@ -319,6 +319,10 @@ GET /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
 
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
+
 - **timeoutSeconds** (*in query*): integer
 
   [timeoutSeconds](../common-parameter/common-parameters#timeoutseconds)
@@ -374,6 +378,10 @@ GET /apis/work.karmada.io/v1alpha1/works
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 
@@ -712,6 +720,10 @@ DELETE /apis/work.karmada.io/v1alpha1/namespaces/`{namespace}`/works
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 

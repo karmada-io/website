@@ -136,6 +136,33 @@ Defaults to true if `resourceVersion=""` or `resourceVersion="0"` (for backward 
 
 <hr/>
 
+## shardSelector 
+
+shardSelector restricts the list of returned objects using a CEL-based shard selector expression. The format uses the shardRange() function combined with || (logical OR) to specify one or more hash ranges:
+
+  shardRange(object.metadata.uid, '0x0', '0x8000000000000000')
+  shardRange(object.metadata.uid, '0x0', '0x8000000000000000') || shardRange(object.metadata.uid, '0x8000000000000000', '0x10000000000000000')
+
+Field paths use CEL-style object-rooted syntax (e.g. "object.metadata.uid"), NOT the fieldSelector format ("metadata.uid"). Currently supported paths:
+  - object.metadata.uid
+  - object.metadata.namespace
+
+hexStart and hexEnd are single-quoted CEL string literals with a '0x' prefix, defining the inclusive lower and exclusive upper bounds over the 64-bit FNV-1a hash space. The full range is [0x0, 0x10000000000000000), where the exclusive upper bound equals 2^64.
+
+Examples:
+  2-shard split:
+    shard 0: shardRange(object.metadata.uid, '0x0000000000000000', '0x8000000000000000')
+    shard 1: shardRange(object.metadata.uid, '0x8000000000000000', '0x10000000000000000')
+  4-shard split:
+    shard 0: shardRange(object.metadata.uid, '0x0000000000000000', '0x4000000000000000')
+    shard 1: shardRange(object.metadata.uid, '0x4000000000000000', '0x8000000000000000')
+    shard 2: shardRange(object.metadata.uid, '0x8000000000000000', '0xc000000000000000')
+    shard 3: shardRange(object.metadata.uid, '0xc000000000000000', '0x10000000000000000')
+
+This is an alpha field and requires enabling the ShardedListAndWatch feature gate.
+
+<hr/>
+
 ## timeoutSeconds 
 
 Timeout for the list/watch call. This limits the duration of the call, regardless of any activity or inactivity.

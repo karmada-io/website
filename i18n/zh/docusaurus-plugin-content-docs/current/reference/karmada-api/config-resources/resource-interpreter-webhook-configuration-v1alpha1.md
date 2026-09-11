@@ -65,11 +65,11 @@ ResourceInterpreterWebhookConfiguration describes the configuration of webhooks 
 
     - **webhooks.clientConfig.caBundle** ([]byte)
 
-      `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
+      caBundle is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
 
     - **webhooks.clientConfig.service** (ServiceReference)
 
-      `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
+      service is a reference to the service for this webhook. Either `service` or `url` must be specified.
       
       If the webhook is running within the cluster, then you should use `service`.
 
@@ -79,23 +79,23 @@ ResourceInterpreterWebhookConfiguration describes the configuration of webhooks 
 
       - **webhooks.clientConfig.service.name** (string), required
 
-        `name` is the name of the service. Required
+        name is the name of the service. Required
 
       - **webhooks.clientConfig.service.namespace** (string), required
 
-        `namespace` is the namespace of the service. Required
+        namespace is the namespace of the service. Required
 
       - **webhooks.clientConfig.service.path** (string)
 
-        `path` is an optional URL path which will be sent in any request to this service.
+        path is an optional URL path which will be sent in any request to this service.
 
       - **webhooks.clientConfig.service.port** (int32)
 
-        If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive).
+        port is the port on the service that hosts the webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive).
 
     - **webhooks.clientConfig.url** (string)
 
-      `url` gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
+      url gives the location of the webhook, in standard URL form (`scheme://host:port/path`). Exactly one of `url` or `service` must be specified.
       
       The `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.
       
@@ -254,6 +254,10 @@ GET /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 
@@ -564,6 +568,10 @@ DELETE /apis/config.karmada.io/v1alpha1/resourceinterpreterwebhookconfigurations
 - **sendInitialEvents** (*in query*): boolean
 
   [sendInitialEvents](../common-parameter/common-parameters#sendinitialevents)
+
+- **shardSelector** (*in query*): string
+
+  [shardSelector](../common-parameter/common-parameters#shardselector)
 
 - **timeoutSeconds** (*in query*): integer
 
