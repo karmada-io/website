@@ -91,7 +91,7 @@ module.exports = {
     announcementBar: {
       id: "start",
       content:
-        '⭐️ If you like Karmada, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/karmada-io/karmada">GitHub</a>! ⭐️',
+        '🎉️ Meet us in Salt Lake City for KubeCon + CloudNativeCon North America · Nov 9-12 · <b><a target="_blank" href="https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/register/?utm_source=karmada&utm_medium=ribbon-banner&utm_campaign=KubeCon-CloudNativeCon-NA-2026&utm_content=hero">Register Today!</a></b> 🥳️',
     },
     algolia: {
       appId: '5IDBLUX6VJ',
