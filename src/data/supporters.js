@@ -30,6 +30,7 @@ import jetbrains from "../../static/img/supporters/jetbrains.png"
 import songke from "../../static/img/supporters/songke.png"
 import gmicloud from "../../static/img/supporters/gmicloud.png"
 import wellhub from "../../static/img/supporters/wellhub.png"
+import qwen from "../../static/img/supporters/qwen.png"
 
 const supportersData = [
     {
@@ -159,6 +160,10 @@ const supportersData = [
     {
         logo: wellhub,
         alt: 'Wellhub'
+    },
+    {
+        logo: qwen,
+        alt: "Alibaba's Qwen App",
     },
 
 ]
