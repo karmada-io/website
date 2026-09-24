@@ -1,12 +1,12 @@
 ---
-title: Cluster Failover Process Analysis
+title: Cluster Failover Internals
 ---
 
-Let's analyze the Karmada failover feature.
+This page provides a deep-dive into how Karmada's cluster failover mechanism works — covering how taints trigger workload eviction, the rescheduling logic for different scheduling types, and the graceful eviction process. For high-level concepts and configuration, see [Cluster Failover](./cluster-failover.md).
 
 ## Add taints on fault cluster
 
-After the [cluster status becomes unhealthy](./cluster-status-maintenance.md), a `taint{effect: NoSchedule}` will be added to the cluster as follows:
+After the [cluster becomes unhealthy](./cluster-status-maintenance.md), a `taint{effect: NoSchedule}` will be added to the cluster as follows:
 
 - when cluster status's `Ready` condition changes to `False`, Karmada controller will add the following taint to the target cluster object:
 
