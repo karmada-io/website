@@ -74,7 +74,7 @@ Users whose commits are in this release (alphabetically by username)
 ```
 
 ### Update manifest(manually)
-When installing `Karmada`, the images needed to be pulled from DockerHub/SWR, so we should update manifests with image tags of the new version in the minor release branch. The following files need to be updated:
+When installing `Karmada`, the images needed to be pulled from DockerHub, so we should update manifests with image tags of the new version in the minor release branch. The following files need to be updated:
 * `charts/karmada/values.yaml`: Update `Karmada` related image tag with the new version.
 * `charts/index.yaml`: Add helm repository index.
 
@@ -93,12 +93,12 @@ After the release is published, GitHub will run workflow `.github/workflows/rele
 
 
 ### Build/Push images(automatically)
-After the release is published, GitHub will run `.github/workflows/swr-released-image.yml` and `.github/workflows/dockerhub-released-image.yml` to build all `Karmada` components' images and push them to DockerHub/SWR.
+After the release is published, GitHub will run `.github/workflows/dockerhub-released-image.yml` to build all `Karmada` components' images and push them to DockerHub.
 
 ### Verifying release(manually)
 After all the workflows have been finished, we should perform manual checks to see if the release came out correctly:
  * Check if all required assets are attached.
- * Check if all the required images have been published on DockerHub/SWR.
+ * Check if all the required images have been published on DockerHub.
 
 ## Patch release
 The patch version should be released from the corresponding minor release branch.

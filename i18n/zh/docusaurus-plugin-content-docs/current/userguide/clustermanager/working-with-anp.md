@@ -30,9 +30,9 @@ cd apiserver-network-proxy/
 构建 proxy-server 和 proxy-agent 镜像，执行以下命令：
 
 ```shell
-docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24
+docker build . --build-arg ARCH=amd64 -f artifacts/images/agent-build.Dockerfile -t docker.io/karmada/proxy-agent:0.0.24
 
-docker build . --build-arg ARCH=amd64 -f artifacts/images/server-build.Dockerfile -t swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24
+docker build . --build-arg ARCH=amd64 -f artifacts/images/server-build.Dockerfile -t docker.io/karmada/proxy-server:0.0.24
 ```
 
 ### 步骤 3：生成证书
@@ -89,7 +89,7 @@ spec:
           - --server-ca-cert=/var/certs/server/server-ca-cert.crt
           - --server-cert=/var/certs/server/server-cert.crt 
           - --server-key=/var/certs/server/server-key.key
-        image: swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24
+        image: docker.io/karmada/proxy-server:0.0.24
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -177,7 +177,7 @@ bash replace-proxy-server.sh
 在 karmada-host 集群上部署 proxy-server：
 
 ```shell
-kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-server:0.0.24 --name karmada-host
+kind load docker-image docker.io/karmada/proxy-server:0.0.24 --name karmada-host
 export KUBECONFIG=/root/.kube/karmada.config
 kubectl --context=karmada-host apply -f proxy-server.yaml
 ```
@@ -219,7 +219,7 @@ spec:
             - '--proxy-server-host={{proxy_server_addr}}'
             - '--proxy-server-port=8091'
             - '--agent-identifiers=host={{identifiers}}'
-          image: swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24
+          image: docker.io/karmada/proxy-agent:0.0.24
           imagePullPolicy: IfNotPresent
           name: proxy-agent
           livenessProbe:
@@ -291,7 +291,7 @@ bash replace-proxy-agent.sh
 以拉取模式为成员集群部署 proxy-agent（本文以 `member3` 集群为例，该集群已配置为拉取模式）：
 
 ```shell
-kind load docker-image swr.ap-southeast-1.myhuaweicloud.com/karmada/proxy-agent:0.0.24 --name member3
+kind load docker-image docker.io/karmada/proxy-agent:0.0.24 --name member3
 kubectl --kubeconfig=/root/.kube/members.config --context=member3 apply -f proxy-agent.yaml
 ```
 

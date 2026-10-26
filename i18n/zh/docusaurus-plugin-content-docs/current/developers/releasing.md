@@ -74,7 +74,7 @@ Users whose commits are in this release (alphabetically by username)
 ```
 
 ### 更新描述文件(手动)
-安装`Karmada`时，对应镜像需要从DockerHub/SWR拉取，所以我们需要更新描述文件中的镜像tag为最新的minor版本。如下文件需要更新：
+安装`Karmada`时，对应镜像需要从DockerHub拉取，所以我们需要更新描述文件中的镜像tag为最新的minor版本。如下文件需要更新：
 * `charts/karmada/values.yaml`: 更新 `Karmada` 相关的镜像tag为即将发布的版本。
 * `charts/index.yaml`: 增加对应版本的helm仓库索引。
 
@@ -91,12 +91,12 @@ Users whose commits are in this release (alphabetically by username)
 在版本发布后，GitHub会运行流水线`.github/workflows/release.yml`，构建`karmadactl`和`kubectl-karmada`二进制，并且将其添加到新发布的产物中。
 
 ### 构建/发布镜像(自动)
-在版本发布后，Github会运行流水线`.github/workflows/swr-released-image.yml` 和 `.github/workflows/dockerhub-released-image.yml`，构建所有`Karmada`相关的组件镜像，并推送到DockerHub/SWR。
+在版本发布后，Github会运行流水线`.github/workflows/dockerhub-released-image.yml`，构建所有`Karmada`相关的组件镜像，并推送到DockerHub。
 
 ### 验证发布(手动)
 在所有流水线完成后，你应该执行手动检查，确认所有发布产物都正确构建：
 * 检查所有产物是否都被添加。
-* 检查所有镜像是否都被推送到DockerHub/SWR。
+* 检查所有镜像是否都被推送到DockerHub。
 
 ## Patch版本发布
 Patch版本应该从对应的minor release分支发布。
