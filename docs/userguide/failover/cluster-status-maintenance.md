@@ -1,6 +1,12 @@
 ---
-title: Cluster Status Maintenance
+title: Cluster Health Monitoring
 ---
+
+:::info Background Knowledge
+
+This page explains how Karmada monitors cluster health and determines when a cluster is unhealthy. A healthy cluster status is the prerequisite for cluster failover — when a cluster becomes unhealthy, Karmada can automatically add taints to it, which in turn triggers workload eviction and rescheduling. See [Cluster Taint Management](./cluster-taint-management.md) for details.
+
+:::
 
 Karmada supports both `Push` and `Pull` modes to manage member clusters. More details about cluster registration please refer to [Cluster Registration](../clustermanager/cluster-registration.md).
 
@@ -81,3 +87,9 @@ Status:
 Events:                    <none>
 ```
 </details>
+
+## Next Steps
+
+Once you understand how Karmada determines cluster health, learn how taints are used to control scheduling and trigger failover:
+
+- [Cluster Taint Management](./cluster-taint-management.md)

@@ -1,6 +1,12 @@
 ---
-title: 集群状态维护
+title: 集群健康监控
 ---
+
+:::info 背景知识
+
+本文介绍 Karmada 如何监控集群健康状态，以及如何判断集群是否不健康。健康的集群状态是集群故障迁移的前提——当集群变为不健康时，Karmada 可以自动为其添加污点，进而触发工作负载驱逐和重新调度。详情请参见[集群污点管理](./cluster-taint-management.md)。
+
+:::
 
 Karmada 支持 `Push` 和 `Pull` 两种模式来管理成员集群，有关集群注册的更多详细信息，
 请参考 [Cluster Registration](../clustermanager/cluster-registration.md)。
@@ -83,3 +89,9 @@ Status:
 Events:                    <none>
 ```
 </details>
+
+## 下一步
+
+了解 Karmada 如何判断集群健康状态后，接下来学习污点如何用于控制调度并触发故障迁移：
+
+- [集群污点管理](./cluster-taint-management.md)
