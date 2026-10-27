@@ -278,6 +278,7 @@ module.exports = {
                             label: "Certificate Rotation",
                             items: [
                                 "administrator/security/certificate-rotation/overview",
+                                "administrator/security/certificate-rotation/manual-cert-rotation",
                                 "administrator/security/certificate-rotation/built-in-cert-rotation",
                             ],
                         },
