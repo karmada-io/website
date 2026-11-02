@@ -15,33 +15,30 @@ Here is an example of the configuration file for Karmada deployment:
 apiVersion: config.karmada.io/v1alpha1
 kind: KarmadaInitConfig
 spec:
-  karmadaCrds: "https://github.com/karmada-io/karmada/releases/download/v1.10.3/crds.tar.gz"
+  karmadaCRDs: "https://github.com/karmada-io/karmada/releases/download/v1.16.9/crds.tar.gz"
   etcd:
     local:
-      imageRepository: "registry.k8s.io/etcd"
-      imageTag: "3.5.13-0"
-      initImage:
-        imageRepository: "docker.io/library/alpine"
-        imageTag: "3.19.1"
+      repository: "registry.k8s.io/etcd"
+      tag: "3.6.0-0"
   components:
     karmadaAPIServer:
-      imageRepository: "registry.k8s.io/kube-apiserver"
-      imageTag: "v1.30.0"
+      repository: "registry.k8s.io/kube-apiserver"
+      tag: "v1.34.1"
     karmadaAggregatedAPIServer:
-      imageRepository: "docker.io/karmada/karmada-aggregated-apiserver"
-      imageTag: "v1.10.3"
+      repository: "docker.io/karmada/karmada-aggregated-apiserver"
+      tag: "v1.16.9"
     kubeControllerManager:
-      imageRepository: "registry.k8s.io/kube-controller-manager"
-      imageTag: "v1.30.0"
+      repository: "registry.k8s.io/kube-controller-manager"
+      tag: "v1.34.1"
     karmadaControllerManager:
-      imageRepository: "docker.io/karmada/karmada-controller-manager"
-      imageTag: "v1.10.3"
+      repository: "docker.io/karmada/karmada-controller-manager"
+      tag: "v1.16.9"
     karmadaScheduler:
-      imageRepository: "docker.io/karmada/karmada-scheduler"
-      imageTag: "v1.10.3"
+      repository: "docker.io/karmada/karmada-scheduler"
+      tag: "v1.16.9"
     karmadaWebhook:
-      imageRepository: "docker.io/karmada/karmada-webhook"
-      imageTag: "v1.10.3"
+      repository: "docker.io/karmada/karmada-webhook"
+      tag: "v1.16.9"
 ```
 
 ### Deploying Karmada with Configuration File
