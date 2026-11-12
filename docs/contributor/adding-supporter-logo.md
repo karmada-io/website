@@ -22,7 +22,7 @@ Clone the website repository and create a branch:
 ```shell
 git clone https://github.com/karmada-io/website.git
 cd website
-git checkout -b add-<organization>-supporter
+git checkout -b add-example-company-supporter
 ```
 
 Copy the logo to `static/img/supporters/`. Use a descriptive lowercase file name, for example:
