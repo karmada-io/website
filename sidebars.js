@@ -326,6 +326,7 @@ module.exports = {
                 "casestudies/daocloud",
                 "casestudies/hurricane_engine",
                 "casestudies/unionbigdata",
+                "casestudies/qwen",
             ],
         },
         {
