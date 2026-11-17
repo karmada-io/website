@@ -62,8 +62,8 @@ spec:
 `PurgeMode` 代表如何从一个故障的集群迁移到另一个集群的方式。
 Karmada 支持三种不同的驱逐模式：
 
-* `Immediately` 表示 Karmada 将立即驱逐遗留的应用。
-* `Graciously` 表示 Karmada 将等待应用在新集群上恢复健康，或者在达到超时后才驱逐应用。
+* `Directly` 表示 Karmada 将直接驱逐遗留的应用。
+* `Gracefully` 表示 Karmada 将等待应用在新集群上恢复健康，或者在达到超时后才驱逐应用。
 你同时需要配置 `GracePeriodSeconds`。如果新集群上的应用无法达到 Healthy 状态，Karmada 将在达到 GracePeriodSeconds 后删除该应用。默认为 600 秒。
 * `Never` 表示 Karmada 不会驱逐应用，用户手动确认如何清理冗余副本。
 
@@ -80,7 +80,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 300
       gracePeriodSeconds: 600
-      purgeMode: Graciously
+      purgeMode: Gracefully
       #...  
 ```
 
@@ -114,6 +114,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 120
       purgeMode: Never
+  propagateDeps: true      # application failover is set, propagateDeps must be true
   resourceSelectors:
     - apiVersion: apps/v1
       kind: Deployment
@@ -220,11 +221,12 @@ spec:
     application:
       decisionConditions:
         tolerationSeconds: 60
-      purgeMode: Immediately
+      purgeMode: Directly
       statePreservation:
         rules:
           - aliasLabelName: application.karmada.io/failover-jobid
             jsonPath: "{ .jobStatus.jobID }"
+  propagateDeps: true
   placement:
     clusterAffinity:
       clusterNames:
@@ -247,7 +249,7 @@ spec:
 > 目前该功能的使用尚有些限制，使用时请注意：
 > 1. 仅考虑应用程序在一个集群中部署并迁移到另一个集群的场景。
 > 2. 如果发生连续故障转移，例如，应用程序从 clusterA 迁移到 clusterB，然后再到 clusterC，最后一次故障转移前的 PreservedLabelState 用于注入。如果 PreservedLabelState 为空，则跳过注入。
-> 3. 仅当 PurgeMode 设置为 Immediately 时，才执行注入操作。
+> 3. 仅当 PurgeMode 设置为 Directly 时，才执行注入操作。
 
 :::note
 
