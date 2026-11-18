@@ -31,6 +31,7 @@ import songke from "../../static/img/supporters/songke.png"
 import gmicloud from "../../static/img/supporters/gmicloud.png"
 import wellhub from "../../static/img/supporters/wellhub.png"
 import qwen from "../../static/img/supporters/qwen.png"
+import xiaomi from "../../static/img/supporters/xiaomi.png"
 
 const supportersData = [
     {
@@ -159,13 +160,16 @@ const supportersData = [
     },
     {
         logo: wellhub,
-        alt: 'Wellhub'
+        alt: 'Wellhub',
     },
     {
         logo: qwen,
         alt: "Alibaba's Qwen App",
     },
-
+    {
+        logo: xiaomi,
+        alt: "Xiaomi",
+    },
 ]
 
 export default supportersData
