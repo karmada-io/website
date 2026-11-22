@@ -274,4 +274,4 @@ git rebase upstream/master
 git push ${your_remote_name} myrevert
 ```
 
-- 使用该分支 [创建 Pull Request](#7-create-a-pull-request)
+- 使用该分支 [创建 Pull Request](#7-创建-pull-request)

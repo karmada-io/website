@@ -14,7 +14,7 @@ We can install Karmada by referring to [Quick Start](https://github.com/karmada-
 
 ### Cluster Network
 
-Currently, we need to use the [Multi-cluster Service](./multi-cluster-service.md#the-serviceexport-and-serviceimport-crds-have-been-installed) feature to import external traffic.
+Currently, we need to use the [Multi-cluster Service](./multi-cluster-service.md#安装-serviceexport-和-serviceimport-crd) feature to import external traffic.
 
 So we need to ensure that the container networks between the **host cluster** and member clusters are connected. The **host cluster** indicates the cluster where the **Karmada Control Plane** is deployed.
 
@@ -101,7 +101,7 @@ spec:
 
 #### Install ServiceExport and ServiceImport CRDs
 
-Refer to [here](./multi-cluster-service.md#the-serviceexport-and-serviceimport-crds-have-been-installed).
+Refer to [here](./multi-cluster-service.md#安装-serviceexport-和-serviceimport-crd).
 
 #### Deploy web on member1 cluster
 

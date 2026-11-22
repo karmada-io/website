@@ -2,7 +2,7 @@
 title: 资源分发
 ---
 
-Karmada 提供了 [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) 和 [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) 两种 API 用于资源分发。关于这两种 API 的区别，可参考 [此处](../../faq/faq.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)。
+Karmada 提供了 [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) 和 [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) 两种 API 用于资源分发。关于这两种 API 的区别，可参考 [此处](../../faq/faq.md#propagationpolicy-与-clusterpropagationpolicy-有什么区别)。
 
 本文将以 PropagationPolicy 为例，介绍资源分发的具体操作方法。
 

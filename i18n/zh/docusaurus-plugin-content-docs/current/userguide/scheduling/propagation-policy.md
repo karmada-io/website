@@ -2,7 +2,7 @@
 title: 分发策略
 ---
 
-Karmada 提供了 [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) 和 [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) 两种 API 用于资源分发。关于这两种 API 的区别,可参考 [此处](../../faq/faq.md#what-is-the-difference-between-propagationpolicy-and-clusterpropagationpolicy)。
+Karmada 提供了 [PropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L13) 和 [ClusterPropagationPolicy](https://github.com/karmada-io/karmada/blob/master/pkg/apis/policy/v1alpha1/propagation_types.go#L292) 两种 API 用于资源分发。关于这两种 API 的区别,可参考 [此处](../../faq/faq.md#propagationpolicy-与-clusterpropagationpolicy-有什么区别)。
 
 本指南通过解释 API 规范中的每个字段来描述 PropagationPolicy 的配置选项。ClusterPropagationPolicy 与其共享相同的 spec 结构,因此示例对两者均适用。
 
@@ -523,7 +523,7 @@ spec:
       replicaSchedulingType: Duplicated
 ```
 
-这创建了 `member1` 和 `member2` 的候选集,并将完整的副本数发送到选定的集群。要确切确保选择多少个集群,请使用 `spreadConstraints`(参见 [SpreadConstraints](#spreadconstraints) 部分)。
+这创建了 `member1` 和 `member2` 的候选集,并将完整的副本数发送到选定的集群。要确切确保选择多少个集群,请使用 `spreadConstraints`(参见 [SpreadConstraints](#spreadconstraints扩散约束) 部分)。
 
 #### Divided 模式
 

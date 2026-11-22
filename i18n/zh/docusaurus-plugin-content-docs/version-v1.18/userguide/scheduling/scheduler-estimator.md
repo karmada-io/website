@@ -31,7 +31,7 @@ karmada-scheduler-estimator-member2-774fb84c5d-md4wt   1/1     Running   0      
 karmada-scheduler-estimator-member3-5c7d87f4b4-76gv9   1/1     Running   0          72s
 ```
 
-- 如果你在物理机上部署 Karmada，请参阅[通过二进制文件安装](../../installation/install-binary.md#install-karmada-scheduler-estimator)。
+- 如果你在物理机上部署 Karmada，请参阅[通过二进制文件安装](../../installation/install-binary.md#安装-karmada-scheduler-estimator选装)。
 - 如果你在宿主 Kubernetes 集群中部署 Karmada：
   - 如果成员集群尚未接入，可以使用 `hack/deploy-agent-and-estimator.sh` 同时部署 `karmada-agent` 和 `karmada-scheduler-estimator`。
   - 如果成员集群已接入，可以使用 `hack/deploy-scheduler-estimator.sh` 仅部署 `karmada-scheduler-estimator`。
