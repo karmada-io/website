@@ -228,7 +228,7 @@ docker cp hey member1-control-plane:/usr/local/bin/hey
   nginx-service   member1   ClusterIP   10.11.59.213      <none>        80/TCP    20m   Y
   ```
 
-* Request the service from `member1` with `hey` to increase the the nginx Pods' CPU usage across both clusters.
+* Request the service from `member1` with `hey` to increase the nginx Pods' CPU usage across both clusters.
   ```sh
   docker exec member1-control-plane hey -c 1000 -z 1m http://10.11.59.213
   ```
