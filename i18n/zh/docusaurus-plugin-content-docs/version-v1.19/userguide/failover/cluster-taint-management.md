@@ -65,7 +65,7 @@ spec:
 ### 选择一组目标集群
 
 `TargetClusters` 字段指定了 `ClusterTaintPolicy` 需要关注的集群。它使用 `PropagationPolicy` API 中的`ClusterAffinity` 结构来选
-择目标集群，其用法完全相同，因此你可以直接参考[其文档](../scheduling/propagation-policy#cluster-affinity) 获取用户指南。
+择目标集群，其用法完全相同，因此你可以直接参考[其文档](../scheduling/propagation-policy#cluster-affinity集群亲和性) 获取用户指南。
 
 > 注意：如果您修改 `TargetClusters` 字段或更改集群的标签，使集群不再符合 `ClusterTaintPolicy` 的标准，此前由该 `ClusterTaintPolicy`
 添加的现有污点将不会自动移除。
