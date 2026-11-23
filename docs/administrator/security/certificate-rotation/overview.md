@@ -10,4 +10,5 @@ This guide covers the available approaches for performing certificate rotation i
 
 ## Guides
 
+- For manually rotating certificates using openssl, see [Manual Certificate Rotation](manual-cert-rotation.md).
 - For the built-in certificate rotation workflow, see [Built-in Certificate Rotation](built-in-cert-rotation.md).
