@@ -59,8 +59,8 @@ spec:
 `PurgeMode` represents represents how to deal with the legacy applications on the cluster from which the application is migrated.
 Karmada supports three different purgeMode for eviction:
 
-* `Immediately` represents that Karmada will immediately evict the legacy application.
-* `Graciously` represents that Karmada will wait for the application to come back to healthy on the new cluster or after a timeout is reached before evicting the application. 
+* `Directly` represents that Karmada will directly evict the legacy application.
+* `Gracefully` represents that Karmada will wait for the application to come back to healthy on the new cluster or after a timeout is reached before evicting the application.
 You need to configure `GracePeriodSeconds` meanwhile. If the application on the new cluster cannot reach a Healthy state, Karmada will delete the application after `GracePeriodSeconds` is reached. It's 600s by default.
 * `Never` represents that Karmada will not evict the application and users manually confirms how to clean up redundant copies.
 
@@ -77,7 +77,7 @@ spec:
       decisionConditions:
         tolerationSeconds: 300
       gracePeriodSeconds: 600
-      purgeMode: Graciously
+      purgeMode: Gracefully
       #...  
 ```
 
@@ -218,11 +218,12 @@ spec:
     application:
       decisionConditions:
         tolerationSeconds: 60
-      purgeMode: Immediately
+      purgeMode: Directly
       statePreservation:
         rules:
           - aliasLabelName: application.karmada.io/failover-jobid
             jsonPath: "{ .jobStatus.jobID }"
+  propagateDeps: true
   placement:
     clusterAffinity:
       clusterNames:
@@ -245,7 +246,7 @@ This capability requires enabling the `StatefulFailoverInjection` feature gate. 
 > There are currently some restrictions on the use of this function, please pay attention when using it:
 > 1. Only the scenario where an application is deployed in one cluster and migrated to another cluster is considered.
 > 2. If consecutive failovers occur, for example, an application is migrated form clusterA to clusterB and then to clusterC, the PreservedLabelState before the last failover is used for injection. If the PreservedLabelState is empty, the injection is skipped.
-> 3. The injection operation is performed only when PurgeMode is set to Immediately.
+> 3. The injection operation is performed only when PurgeMode is set to Directly.
 
 :::note
 
