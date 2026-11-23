@@ -96,3 +96,74 @@ spec:
         - /bin/karmada-controller-manager
         - --metrics-bind-address=$(POD_IP):8080
 ```
+
+### Certificate Configuration
+
+As a vital security measure, Karmada uses certificates for identity verification and encrypted communication between components. When deploying Karmada, a variety of configurations are available to meet different user needs. Users can select appropriate certificate options based on their security policies and requirements. The following outlines the default certificate behaviors and configuration options for different installation methods:
+
+#### Helm
+
+##### Default Behavior
+
+When installing via Helm, a `pre-install` job automatically generates the required certificates.
+- The default validity period for the CA certificate is 10 years (3650 days).
+- The default validity period for leaf certificates is 5 years (43800h).
+- The default RSA key length for certificates is 3072 bits.
+
+##### Customization
+
+Users can customize certificate-related options by modifying the `values.yaml` file in the Helm chart, for example:
+- `certs.auto.rootCAExpiryDays`: The validity period for the CA certificate, in days.
+- `certs.auto.expiry`: The validity period for leaf certificates, as a duration string (e.g., `43800h` for 5 years).
+- `certs.auto.rsaSize`: The RSA key length for the certificates.
+
+Additionally, if users have their own certificates, the Helm chart can be configured to skip the auto-generation step and use the provided certificates directly. The options are as follows:
+- `certs.mode`: The certificate mode. Set to `custom` to use custom certificates. The default is `auto`.
+- `certs.custom`: When `certs.mode` is `custom`, this section is used to configure fields for the user-provided certificates, such as `caCrt`, `caKey`, `frontProxyCaCrt`, etc.
+
+#### karmadactl init
+
+##### Default Behavior
+
+When installing via `karmadactl init`, karmadactl automatically generates the required certificates.
+- The default validity period for the CA certificate is 10 years (3650 days). This value is fixed and cannot be adjusted during auto-generation.
+- The default validity period for leaf certificates is 1 year (8760h).
+- The default RSA key length for certificates is 3072 bits. This value is fixed and cannot be adjusted during auto-generation.
+
+##### Customization
+
+Users can customize certificate options by passing flags when running the `karmadactl init` command.
+
+To adjust the validity period of **leaf certificates**, use:
+- `--cert-validity-period`: The validity period for leaf certificates, as a duration string (e.g., `8760h` for 1 year).
+
+To use a **custom CA**, you can specify the CA file paths. This will skip the CA auto-generation step:
+- `--ca-cert-file`: Path to the custom root CA certificate file.
+- `--ca-key-file`: Path to the custom root CA private key file. Must be used with `--ca-cert-file`.
+
+Alternatively, you can pass a configuration file via the `--config` flag to specify these options. Here is an example:
+```yaml
+apiVersion: config.karmada.io/v1alpha1
+kind: KarmadaInitConfig
+spec:
+  certificates:
+    caCertFile: "path/to/ca.crt"
+    caKeyFile: "path/to/ca.key"
+    validityPeriod: "43800h" # 5 years
+```
+
+#### Operator
+
+##### Default Behavior
+
+When installing via an Operator, the karmada-operator automatically generates the required certificates.
+- The default validity period for the CA certificate is 10 years (3650 days). This value is fixed and cannot be adjusted during auto-generation.
+- The default validity period for leaf certificates is 1 year (8760h).
+- The default RSA key length for certificates is 3072 bits. This value is fixed and cannot be adjusted during auto-generation.
+
+##### Customization
+
+Users can customize certificate options by modifying the `Karmada` CR.
+
+- `spec.customCertificate.leafCertValidityDays`: The validity period of the **leaf certificate**, in days.
+- `spec.customCertificate.apiServerCACert`: Used to specify a Secret containing a custom CA certificate and private key. If this field is set, the Operator will skip the CA auto-generation process and use the credentials from this Secret directly.
