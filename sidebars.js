@@ -310,6 +310,7 @@ module.exports = {
             label: "Contributor Guide",
             items: [
                 "contributor/contribute-docs",
+                "contributor/adding-supporter-logo",
                 "contributor/cherry-picks",
                 "contributor/github-workflow",
                 "contributor/lifted",
