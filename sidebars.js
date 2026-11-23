@@ -341,6 +341,10 @@ module.exports = {
             id: "releases",
         },
         {
+            type: "doc",
+            id: "releases/version-skew-policy",
+        },
+        {
             type: "category",
             label: "Reference",
             items: [
