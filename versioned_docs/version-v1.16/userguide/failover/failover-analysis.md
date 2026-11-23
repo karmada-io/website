@@ -208,6 +208,6 @@ The [GracefulEvictionTasks](https://github.com/karmada-io/karmada/blob/12e8f01d0
 
 When the faulty cluster is removed from the resource scheduling result by `taint-manager`, it will be added to the eviction task queue.
 
-The `gracefulEviction` controller is responsible for processing tasks in the eviction task queue. During the procession, the The `gracefulEviction` controller evaluates whether the current task can be removed form the eviction task queue one by one. The judgement conditions are as follows:
+The `gracefulEviction` controller is responsible for processing tasks in the eviction task queue. During processing, the `gracefulEviction` controller evaluates whether the current task can be removed from the eviction task queue one by one. The judgement conditions are as follows:
 - Check the health status of the current resource scheduling result. If the resource health status is healthy, the condition is met.
 - Check whether the waiting duration of the current task exceeds the timeout interval, which can be configured via `graceful-eviction-timeout` flag(default is 10 minutes). If exceeds, and meets the condition.
