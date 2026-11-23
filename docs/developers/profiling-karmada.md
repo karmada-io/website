@@ -51,7 +51,19 @@ curl "http://localhost:6060/debug/pprof/profile?seconds=7200" > cpu.pprof
 
 ## Analyze the data
 
-To analyze the data:
+Profiling data can be inspected using the `go tool pprof` command.
+
+To view top memory consumers you can use:
+
+```shell
+go tool pprof -top heap.pprof
+```
+To view top cpu consumers you can use:
+
+```shell
+go tool pprof -top cpu.pprof
+```
+You can enter interactive mode for deeper analysis:
 
 ```shell
 go tool pprof heap.pprof
