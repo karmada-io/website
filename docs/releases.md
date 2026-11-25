@@ -22,7 +22,7 @@ Major releases contain large features, design and architectural changes, and may
 
 Minor releases contain features, enhancements, and fixes that are introduced in a backwards-compatible manner. Since Karmada is a fast growing project and features continue to iterate rapidly, having a minor release approximately every few months helps balance speed and stability.
 
-* Roughly every 3 months
+* Roughly every 4 months
 
 ### PATCH release
 
@@ -128,7 +128,7 @@ wget https://github.com/karmada-io/karmada/releases/download/v1.3.0/karmadactl-d
 
 ![release-cycle](resources/releases/release-cycle.png)
 
-Currently, each karmada release cycle takes about 3 months. The release process can be thought of as having three main phases:
+Starting with Karmada v1.20, each karmada release cycle takes about 4 months. The release process can be thought of as having three main phases:
 
 - Enhancement Definition
 - Implementation
@@ -142,7 +142,7 @@ Karmada's releases follow a certain time specification, which facilitates releas
 
 ![release-time-lines](resources/releases/release-time-lines.png)
 
-In each minor release cycle of Karmada, the tags include `alpha.1`, `alpha.2`, `beta.0`, and `rc.0`. These tags represent important milestones as the release matures. Each phase indicates different levels of stability and feature completeness, ranging from the initial alpha test versions to the near-final release candidate (rc). This structured progression ensures a consistent improvement in software quality.
+In each minor release cycle of Karmada, the tags include `alpha.1`, `alpha.2`, `alpha.3`, `beta.0`, `rc.0` and `rc.1`. These tags represent important milestones as the release matures. Each phase indicates different levels of stability and feature completeness, ranging from the initial alpha test versions to the near-final release candidate (rc). This structured progression ensures a consistent improvement in software quality.
 
 Notes: 
 
@@ -150,6 +150,6 @@ Notes:
 - Important decisions, such as whether to delay a release, will be made by the release team.
 
 ### Support Versions
-Karmada maintains the three most recent minor releases, meaning that each minor release receives approximately nine months of patch maintenance following its release. However, in exceptional cases where severe issues arise, we may consider releasing patches for earlier versions as well, based on the specific circumstances.
+Karmada maintains the three most recent minor releases, meaning that each minor release receives approximately twelve months of patch maintenance following its release. However, in exceptional cases where severe issues arise, we may consider releasing patches for earlier versions as well, based on the specific circumstances.
 
 ![lifecycle](resources/releases/release-life-cycle.png)
