@@ -1027,7 +1027,7 @@ EOF
 
 `karmada-scheduler` 使用 gRPC 访问 karmada-scheduler-estimator。你可以将 "Linux 虚拟服务器"用作负载均衡器。
 
-你需要先部署上述组件并将成员集群接入到 Karmada 控制面。请参见[安装 Karmada 到你自己的集群](./installation.md#install-karmada-on-your-own-cluster)。
+你需要先部署上述组件并将成员集群接入到 Karmada 控制面。请参见[安装 Karmada 到你自己的集群](./installation.md#在你自己的集群上安装-karmada)。
 
 ### 创建 Systemd 服务
 

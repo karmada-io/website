@@ -13,7 +13,7 @@ title: 常见问题
 
 ## 集群的 'Push' 和 'Pull' 模式有何区别？
 
-请参阅 [Push 和 Pull 概述](../userguide/clustermanager/cluster-registration.md#overview-of-cluster-mode)。
+请参阅 [Push 和 Pull 概述](../userguide/clustermanager/cluster-registration.md#集群模式概述)。
 
 ## 为什么 Karmada 需要 `kube-controller-manager`？
 
